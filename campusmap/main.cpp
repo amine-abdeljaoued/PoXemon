@@ -9,11 +9,19 @@
 
 int main()
 {
-    sf::Texture texture;
-    if (!texture.loadFromFile(/* resourcePath() + */ "Sprites/meuf_face.png")) {
+    sf::Texture texturePlayer;
+    if (!texturePlayer.loadFromFile(/* resourcePath() + */ "Sprites/fullch.png")) {
         return EXIT_FAILURE;
     }
-    sf::Sprite shape(texture);
+    sf::Sprite spritePlayer(texturePlayer);
+
+    spritePlayer.setTextureRect(sf::IntRect(0,0,64,64));
+    spritePlayer.setScale(sf::Vector2f(0.5f, 0.5f));
+    
+    //Variables for the character
+    float playerMovementSpeed = 4;
+
+    int counterWalk = 0;
     
     sf::View view(sf::Vector2f(272, 272), sf::Vector2f(544, 544));
     view.zoom(0.5f);
@@ -22,7 +30,7 @@ int main()
 //    sf::View minimapView(sf::Vector2f(272, 272), sf::Vector2f(544, 544));
 //    minimapView.setViewport(sf::FloatRect(0.75f, 0, 0.25f, 0.25f));
     
-    shape.setPosition(262, 272);
+    spritePlayer.setPosition(262, 272);
     
 
     sf::RenderWindow window(sf::VideoMode(544, 544), "Tilemap");
@@ -99,29 +107,37 @@ int main()
             if(event.type == sf::Event::Closed) window.close();
             
             if (event.type == sf::Event::KeyPressed){
-                sf::Vector2f position = shape.getPosition();
+                sf::Vector2f position = spritePlayer.getPosition();
                 std::cout<<(position.x+10)/16<<","<<(position.y/16)+1<<std::endl;
                 
             
                 if (event.key.code == sf::Keyboard::Left) {
-                    shape.move(-16, 0);
-                    view.move(-16, 0);
-                    if (!texture.loadFromFile(/* resourcePath() +  */"Sprites/meuf_gauche.png")) return EXIT_FAILURE;
+                    spritePlayer.move(-playerMovementSpeed, 0);
+                    spritePlayer.setTextureRect(sf::IntRect(counterWalk * 64,64,64,64));
+                    view.move(-playerMovementSpeed, 0);
+                    
                 }
                 if (event.key.code == sf::Keyboard::Right) {
-                    shape.move(16, 0);
-                    view.move(16, 0);
-                    if (!texture.loadFromFile(/* resourcePath() + */ "Sprites/meuf_droite.png")) return EXIT_FAILURE;
+                    spritePlayer.move(playerMovementSpeed, 0);
+                    spritePlayer.setTextureRect(sf::IntRect(counterWalk * 64,2*64,64,64));
+                    view.move(playerMovementSpeed, 0);
+                   
                 }
                 if (event.key.code == sf::Keyboard::Up) {
-                    shape.move(0, -16);
-                    view.move(0, -16);
-                    if (!texture.loadFromFile(/* resourcePath() +  */"Sprites/meuf_dos.png")) return EXIT_FAILURE;
+                    spritePlayer.move(0, -playerMovementSpeed);
+                    spritePlayer.setTextureRect(sf::IntRect(counterWalk * 64,3*64,64,64));
+                    view.move(0, -playerMovementSpeed);
+                    
                 }
                 if (event.key.code == sf::Keyboard::Down) {
-                    shape.move(0, 16);
-                    view.move(0,16);
-                    if (!texture.loadFromFile(/* resourcePath() +  */"Sprites/meuf_face.png")) return EXIT_FAILURE;
+                    spritePlayer.move(0, playerMovementSpeed);
+                    spritePlayer.setTextureRect(sf::IntRect(counterWalk * 64,0,64,64));
+                    view.move(0,playerMovementSpeed);
+                    
+                }
+                counterWalk++;
+                if(counterWalk==3){
+                    counterWalk=0;
                 }
             }
         }
@@ -133,7 +149,7 @@ int main()
         
         window.draw(map);
         
-        window.draw(shape);
+        window.draw(spritePlayer);
 
         window.setView(view);
         
@@ -142,3 +158,4 @@ int main()
 
     return 0;
 }
+
