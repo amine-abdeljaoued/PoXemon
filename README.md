@@ -1,6 +1,6 @@
 # Pokemon
 Repository for our CSE201 Project in C++
 
-It is a Pokemon based-game.
-
-We are stll brainstorming about which functionalities we want to keep from the traditional Pokemon and what should be added.
+This is a program that generates pokemon-like names. 
+The principe of the program is to compute conditionnal probabilities of appearances of letters in pokemon names.
+Out of a freqtable, we just have to generate some randoms numbers and then construct the generated name.
