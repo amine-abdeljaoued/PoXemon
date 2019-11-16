@@ -19,7 +19,7 @@ int main()
     spritePlayer.setScale(sf::Vector2f(0.5f, 0.5f));
     
     //Variables for the character
-    float playerMovementSpeed = 4;
+    float playerMovementSpeed = 3;
 
     int counterWalk = 0;
     
@@ -136,7 +136,7 @@ int main()
                     
                 }
                 counterWalk++;
-                if(counterWalk==3){
+                if(counterWalk==4){
                     counterWalk=0;
                 }
             }
