@@ -30,12 +30,14 @@ float groundX = 1000.f;
 
 class Pokeball{
 public:
-    float velocityX;
+    float velocityX = 800;  //Set the speed of each of the pokeballs
+    float ballHeight = 30;
+    float velocityY;
     float x;
     float y;
-    float speed = 1; //Set the speed of each of the pokeballs
-    float power;// To know how much the health is reduced when hit
+    float power;            // To know how much the health is reduced when hit
     sf::Sprite ball;
+    float gravity = 981.0f/2;   //This will make the parabolic trajectory
     
     Pokeball(){   // Thing to add: should also initialise ball                                            image, with views for rotation
         sf::Texture pic;
@@ -51,6 +53,18 @@ public:
         x = xpos;
         y = ypos;
         ball.setPosition(xpos, ypos);
+    }
+    bool update(float deltaTime){
+        velocityY += gravity*deltaTime;
+        x += velocityX*deltaTime;
+        y += velocityY*deltaTime;
+        
+        setPosition(x, y);
+        if (x >= groundX){     // Ball off the screen, we want to remove it from                               visible, to avoid any complications
+            dissapear();
+            return false;
+        }
+        return true;
     }
 };
 
@@ -97,19 +111,17 @@ public:
             velocityY = -sqrt(2.0f * 981.0f * jumpHeight);
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
-            ball.setPosition(x, y);
+            ball.setPosition(x, y);     // Need to figure out where the starting x and y position are
+            ball.velocityY = -sqrt(2.0f * 981.0f * ball.ballHeight); //We need to reset the ball's position and starting speed when you shoot, that's why its in this class
             shooting = true;
         }
-        
-        velocityY += 981.0f*deltaTime;
         if (shooting){
-            ball.velocityX += ball.speed;
+            bool shoot = ball.update(deltaTime);
+            if (!shoot){shooting = false;}
         }
-        
+        velocityY += 981.0f*deltaTime;
         move(deltaTime);
     }
-    
-
     
     void move(float &deltaTime){
         x += velocityX * deltaTime;
@@ -118,17 +130,6 @@ public:
             y = groundY;
             velocityY = 0.0f;
             canJump = true;
-        }
-        
-        if (shooting){
-            ball.x += ball.velocityX * deltaTime;
-            if (ball.x >= groundX){     // Ball off the screen, we want to remove it from                               visible, to avoid any complications
-                ball.dissapear();
-                shooting = false;
-            }
-            else{
-                ball.setPosition(ball.x, ball.y); // Otherwise we update it's position
-            }
         }
         sprite.setPosition(x, y);
     }
