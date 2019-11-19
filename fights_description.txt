@@ -1,0 +1,45 @@
+FIGHTS
+
+//basic description---------------------------------------------------------------
+
+When we encounter a pokemon in the map, we can choose to fight it
+When we fight against a pokemon:
+- we gain some xp, by causing damage to the other pokemon. ?
+- we can try to catch it (the probability of catching it will depend on 
+the amount of life it still has, and maybe other parameters like its scarcity )
+
+First, when we decide to fight, a window appears and we can choose our pokemon
+among those that are available in our 'backpack'.
+
+Then the fight begins.
+The idea is to create a 2d shooter game.
+
+our pokemon can move right and left, jump, shoot 'bullets', use 'special attacks'
+
+if we catch a pokemon or if we kill it, the fight ends.
+
+/---------------------------------------------------------------------------------
+
+some features to implement :
+
+-make the pokemon move and shoot with mouse and keyboard
+-detect collisions -> decrease life
+-life bars
+-special attacks availability (with a timer)
+-create a pause/menu window
+-possibility to change our pokemon or leave the fight when the first is dead
+
+-throw a pokeball and catch the pokemon with a certain probability 
+
+-'intelligent' opponent, that is able to shoot in our direction
+
+additional stuff :
+- animated movement of the pokemon
+- animated background
+- sound effects and music
+
+
+
+
+
+
