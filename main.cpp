@@ -10,7 +10,8 @@
 float groundY = 300.0f; //Cannot go below this height
 float groundX = 1000.f;
 
-int main()
+
+int main ()
 {
 	sf::RenderWindow window(sf::VideoMode(1400, 700), "My window");
 	//video mode defines the size of the window
@@ -37,7 +38,7 @@ int main()
 				window.close();
 			}
 		}
-		
+
 		window.clear(sf::Color::Blue);
 
 
@@ -55,6 +56,3 @@ int main()
 	}
 	return 0;
 }
-
-
-
