@@ -41,13 +41,15 @@ int main()
 
     TileMap map;
     
-    if (!map.load("Sprites/eau_trouble.png", sf::Vector2u(16, 16), level, 34, 11)) return -1;
+    if (!map.load("Sprites/tileset1.png", sf::Vector2u(16, 16), level, 34, 34)) return -1;
 
     
 
     TileMap bigmap;
     
     if (!bigmap.load("Sprites/herbe.png", sf::Vector2u(16, 16), level2, 34,34 )) return -1;
+    
+
     
     while (window.isOpen())
     {
@@ -56,14 +58,15 @@ int main()
         while (window.pollEvent(event))
         {
             if(event.type == sf::Event::Closed) window.close();
-            
+            Arthur.setSpeed(event);
             Arthur.displacement(event,view);
+            
         }
         
         
         window.clear();
         
-        window.draw(bigmap);
+        //window.draw(bigmap);
         
         window.draw(map);
         
