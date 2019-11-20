@@ -25,6 +25,7 @@ void Trainer::displacement(sf::Event &event, sf::View &view)
                 if (event.key.code == sf::Keyboard::Left) {
                     (*spritePlayer).move(-playerMovementSpeed, 0);
                     (*spritePlayer).setTextureRect(sf::IntRect(counterWalk * sheetRect,sheetRect,sheetRect,sheetRect));
+                    
                     view.move(-playerMovementSpeed, 0);
                     
                 }
@@ -50,5 +51,6 @@ void Trainer::displacement(sf::Event &event, sf::View &view)
                 if(counterWalk==sizeAnim){
                     counterWalk=0;
                 }
+
             }
 }
