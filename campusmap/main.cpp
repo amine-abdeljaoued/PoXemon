@@ -20,7 +20,7 @@ int main()
     spritePlayer.setScale(sf::Vector2f(0.5f, 0.5f));
     spritePlayer.setPosition(262, 272);
     //Variables for the character
-    float playerMovementSpeed = 3;
+    float playerMovementSpeed = 16;
     int sheetRect = 64;
     int sizeAnim = 4;
     
