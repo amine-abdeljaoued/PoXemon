@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <iostream>
 #include <stdio.h>
-#include <iostream>
+#include <string>
 
 Trainer::Trainer(sf::Sprite *sprite, float Speed, int sheetRect, int sizeAnim)
 {
@@ -12,41 +12,92 @@ Trainer::Trainer(sf::Sprite *sprite, float Speed, int sheetRect, int sizeAnim)
     playerMovementSpeed = Speed;
     this->sheetRect = sheetRect;
     this->sizeAnim = sizeAnim;
+
     
+}
+
+void Trainer::setSpeed(sf::Event &event){
+    if ((event.type == sf::Event::KeyPressed)&&((event.key.code == sf::Keyboard::LShift)||(event.key.code == sf::Keyboard::RShift)))
+    {
+        playerMovementSpeed = 32;
+        std::cout << "0" << std::endl;
+    }
+    if ((event.type == sf::Event::KeyReleased)&&((event.key.code == sf::Keyboard::LShift)||(event.key.code == sf::Keyboard::RShift)))
+    {
+        playerMovementSpeed = 16;
+        std::cout << "0" << std::endl;
+    }
 }
 
 void Trainer::displacement(sf::Event &event, sf::View &view)
 {
     if (event.type == sf::Event::KeyPressed){
                 sf::Vector2f position = (*spritePlayer).getPosition();
+                int x = position.x;
+                int y = position.y;
                 std::cout<<(position.x+10)/16<<","<<(position.y/16)+1<<std::endl;
-                
+                std::cout<< facingDirection << std::endl;
             
                 if (event.key.code == sf::Keyboard::Left) {
-                    (*spritePlayer).move(-playerMovementSpeed, 0);
-                    (*spritePlayer).setTextureRect(sf::IntRect(counterWalk * sheetRect,sheetRect,sheetRect,sheetRect));
-                    
-                    view.move(-playerMovementSpeed, 0);
-                    
+                    if (facingDirection != "Left"){
+                        (*spritePlayer).setTextureRect(sf::IntRect(0,sheetRect,sheetRect,sheetRect));
+                        facingDirection = "Left";
+                        counterWalk = 0;
+                    }
+                    else{
+
+                            (*spritePlayer).move(-playerMovementSpeed, 0);
+                            (*spritePlayer).setTextureRect(sf::IntRect(counterWalk * sheetRect,sheetRect,sheetRect,sheetRect));
+                            view.move(-playerMovementSpeed, 0);
+                        
+                    }
                 }
+        
                 if (event.key.code == sf::Keyboard::Right) {
-                    (*spritePlayer).move(playerMovementSpeed, 0);
-                    (*spritePlayer).setTextureRect(sf::IntRect(counterWalk * sheetRect,2*sheetRect,sheetRect,sheetRect));
-                    view.move(playerMovementSpeed, 0);
-                   
+                    if (facingDirection != "Right"){
+                        (*spritePlayer).setTextureRect(sf::IntRect(0,2*sheetRect,sheetRect,sheetRect));
+                        facingDirection = "Right";
+                        counterWalk = 0;
+                    }
+                    else{
+                        
+                            (*spritePlayer).move(playerMovementSpeed, 0);
+                            (*spritePlayer).setTextureRect(sf::IntRect(counterWalk * sheetRect,2*sheetRect,sheetRect,sheetRect));
+                            view.move(playerMovementSpeed, 0);
+                        
+                    }
                 }
+        
                 if (event.key.code == sf::Keyboard::Up) {
-                    (*spritePlayer).move(0, -playerMovementSpeed);
-                    (*spritePlayer).setTextureRect(sf::IntRect(counterWalk * sheetRect,3*sheetRect,sheetRect,sheetRect));
-                    view.move(0, -playerMovementSpeed);
-                    
+                    if (facingDirection != "Up"){
+                        (*spritePlayer).setTextureRect(sf::IntRect(0,3*sheetRect,sheetRect,sheetRect));
+                        facingDirection = "Up";
+                        counterWalk = 0;
+                    }
+                    else{
+                        
+                            (*spritePlayer).move(0, -playerMovementSpeed);
+                            (*spritePlayer).setTextureRect(sf::IntRect(counterWalk * sheetRect,3*sheetRect,sheetRect,sheetRect));
+                            view.move(0, -playerMovementSpeed);
+                        
+                    }
                 }
+        
                 if (event.key.code == sf::Keyboard::Down) {
-                    (*spritePlayer).move(0, playerMovementSpeed);
-                    (*spritePlayer).setTextureRect(sf::IntRect(counterWalk * 64,0,sheetRect,sheetRect));
-                    view.move(0,playerMovementSpeed);
-                    
+                    if (facingDirection != "Down"){
+                        (*spritePlayer).setTextureRect(sf::IntRect(0,0,sheetRect,sheetRect));
+                        facingDirection = "Down";
+                        counterWalk = 0;
+                    }
+                    else{
+
+                            (*spritePlayer).move(0, playerMovementSpeed);
+                            (*spritePlayer).setTextureRect(sf::IntRect(counterWalk * 64,0,sheetRect,sheetRect));
+                            view.move(0,playerMovementSpeed);
+                        
+                    }
                 }
+        
                 counterWalk++;
                 if(counterWalk==sizeAnim){
                     counterWalk=0;
