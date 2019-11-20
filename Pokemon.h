@@ -1,7 +1,7 @@
 #pragma once
 #include "Bullet.h"
 #include "Pokeball.h"
-#include <SFML\Graphics.hpp>
+#include <SFML/Graphics.hpp>
 
 
 
