@@ -17,6 +17,12 @@
 		pic.loadFromFile("eevee.png");
 		sprite.setTexture(pic);
 		sprite.setScale(sf::Vector2f(0.4f, 0.4f));
+		was_released = true;
+
+		max_available_bullets = 15;
+		available_bullets = 15; //will be regenerated with time
+
+
 	}
 
 	void Pokemon::update(float& deltaTime, sf::RenderWindow& window) {   // Movement is dependant on time not on frame rate
@@ -47,24 +53,44 @@
 
 		//we should not be able to shoot continuously
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-			Bullet new_bullet;
-			//we want the bullet to start from the midlle right of the pokemon
-			//for later: careful if we change the origin of the pokemon
-			float x_bullet = x + sprite.getGlobalBounds().width;
-			float y_bullet = y + sprite.getGlobalBounds().height / 2;
-			sf::Vector2f initial_pos(x_bullet, y_bullet);
-			new_bullet.setPosition(initial_pos); // start at the 'middle-right' of the pokemon
+			if (was_released && available_bullets > 0) {
 
-			//Get the mouse position:
-			sf::Vector2i mouse = sf::Mouse::getPosition(window);
-			//sf::Mouse::getPosition returns the position of the curson in window coordinates 
-			//while all the entities use world coordinates.
-			//We fix this by using the mapPixelToCoords member function.
-			sf::Vector2f mouse_position = window.mapPixelToCoords(mouse);
-			new_bullet.set_shoot_dir( mouse_position, initial_pos);
+				Bullet new_bullet;
+				//we want the bullet to start from the midlle right of the pokemon
+				//for later: careful if we change the origin of the pokemon
+				float x_bullet = x + sprite.getGlobalBounds().width;
+				float y_bullet = y + sprite.getGlobalBounds().height / 2;
+				sf::Vector2f initial_pos(x_bullet, y_bullet);
+				new_bullet.setPosition(initial_pos); // start at the 'middle-right' of the pokemon
+				//that stuff should go in the bullet class
 
-			bullets.push_back(new_bullet);//append the new bullet to our array
+				//Get the mouse position:
+				sf::Vector2i mouse = sf::Mouse::getPosition(window);
+				//sf::Mouse::getPosition returns the position of the curson in window coordinates 
+				//while all the entities use world coordinates.
+				//We fix this by using the mapPixelToCoords member function.
+				sf::Vector2f mouse_position = window.mapPixelToCoords(mouse);
+				new_bullet.set_shoot_dir(mouse_position, initial_pos);
+
+				bullets.push_back(new_bullet);//append the new bullet to our array
+
+				available_bullets -= 1;
+				std::cout << "available bullets -1 : " << available_bullets<<std::endl;
+			}
+
+			was_released = false;
+
+			//to do: We should not be able to shoot 'as many bullets as we want'
+			//if we shoot too much too fast, we have no bullets left and have to wait a little bit
+			//we should also draw a bar that shows how much bullets we have remaining
+
+
 		}
+
+		if (! sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+			was_released = true;
+		}
+
 		//-----------------------------------
 
 		 ball.update(deltaTime);

@@ -4,7 +4,6 @@
 #include <SFML/Graphics.hpp>
 
 
-
 class Pokemon {
 public:
 	sf::Sprite sprite;
@@ -21,11 +20,15 @@ public:
 
 
 	//-----------
+
 	Bullet bullet; //the bullet might depend on the pokemon
 	//ex : the sprite could vary depending on the pokemon type, the damages can be different...
-	bool shooting_bullet;
+	bool was_released; // this is used to shoot only one bullet per click
 	std::vector<Bullet> bullets;
 	void update_bullets(float& deltaTime);
+
+	int max_available_bullets;
+	int available_bullets;
 	//-----------
 
 
