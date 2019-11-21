@@ -4,7 +4,6 @@
 
 
 	Pokeball::Pokeball() {   // Thing to add: should also initialise ball                                            image, with views for rotation
-		sf::Texture pic;
 		pic.loadFromFile("pokeball.png");
 		ball.setTexture(pic);
 		ball.setScale(sf::Vector2f(0.4f, 0.4f));

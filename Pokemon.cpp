@@ -12,8 +12,8 @@
 		x = xstart;
 		y = ystart;
 		sprite.setPosition(sf::Vector2f(x, y));
-		sf::Texture pic;
-		if (!pic.loadFromFile("eevee.png")) std::cout << "could not load" << std::endl;
+		
+		if (!pic.loadFromFile("eevee.png")){ std::cout << "could not load" << std::endl;}
 		pic.loadFromFile("eevee.png");
 		sprite.setTexture(pic);
 		sprite.setScale(sf::Vector2f(0.4f, 0.4f));
@@ -22,26 +22,30 @@
 	void Pokemon::update(float& deltaTime, sf::RenderWindow& window) {   // Movement is dependant on time not on frame rate
 									// This means that we can have smooth movement over multiple frames, instead of static movement per each frame
 		velocityX = 0.0f;
+		//Left and right movement
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
 			velocityX -= speed;
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
 			velocityX += speed;
 		}
+		//Jumps
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && canJump) {
 			canJump = false;       //While jumping you can't jump
 			velocityY = -sqrt(2.0f * 981.0f * jumpHeight);
 		}
+		//One parabolic shot - use for Pokeballs?
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
 			ball.setPosition(x, y);     // Need to figure out where the starting x and y position are
 			ball.velocityY = -sqrt(2.0f * 981.0f * ball.ballHeight); //We need to reset the ball's position and starting speed when you shoot, that's why its in this class
 			shooting = true;
 		}
-
+		//Continuation of the one shot as time goes by
 		if (shooting) {
 			bool shoot = ball.update(deltaTime);
 			if (!shoot) { shooting = false; }
 		}
+
 
 		//bullets---------------------------
 
@@ -67,7 +71,7 @@
 		}
 		//-----------------------------------
 
-		 ball.update(deltaTime);
+		ball.update(deltaTime);
 		 
 		velocityY += 981.0f * deltaTime;
 		move(deltaTime);
