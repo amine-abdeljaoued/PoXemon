@@ -28,4 +28,6 @@ public:
 
 	void setPosition(float& xpos, float& ypos);
 	bool update(float deltaTime);
+private:
+	sf::Texture pic;
 };
