@@ -37,4 +37,6 @@ public:
 	void move(float& deltaTime);
 
 	sf::RectangleShape rect;
+private:
+	sf::Texture pic;
 };
