@@ -20,8 +20,10 @@ int main ()
 
 	Pokemon eevee(10.0f, groundY, 200.f, 500.f);
 	float deltaTime = 0.0f;
+	
 
 	sf::Clock clock;
+
 	// run the program as long as the window is open
 	while (window.isOpen())
 	{
@@ -43,13 +45,19 @@ int main ()
 
 
 		// clear the window with black color - need to clear before drawing anything (overlap)
-		eevee.update(deltaTime);
+		eevee.update(deltaTime, window);
+		eevee.update_bullets(deltaTime);
 		window.clear(sf::Color::Blue);
 		window.draw(eevee.sprite);
 
 		if (eevee.shooting) {
 			window.draw(eevee.ball.ball);
 		}
+
+		for (unsigned i = 0; i < eevee.bullets.size(); i++) {
+			window.draw(eevee.bullets[i].bullet);
+		}
+
 		// end the current frame - mandatory: takes what was drawn since the last call to display and displays it on the window
 		window.display();
 
