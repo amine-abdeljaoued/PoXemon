@@ -24,6 +24,11 @@ int main ()
 
 	sf::Clock clock;
 
+	sf::Clock clock_regenerate_bullets;
+	sf::Time elapsed;
+
+
+
 	// run the program as long as the window is open
 	while (window.isOpen())
 	{
@@ -54,8 +59,19 @@ int main ()
 			window.draw(eevee.ball.ball);
 		}
 
+
+
 		for (unsigned i = 0; i < eevee.bullets.size(); i++) {
 			window.draw(eevee.bullets[i].bullet);
+		}
+
+		elapsed = clock_regenerate_bullets.getElapsedTime();
+		//std::cout << elapsed.asSeconds() << std::endl;
+		if (elapsed.asSeconds() > 2.0f && eevee.available_bullets < eevee.max_available_bullets) {
+			eevee.available_bullets += 1;
+			std::cout << eevee.available_bullets << std::endl;
+			std::cout << "adding a bullet" << std::endl;
+			clock_regenerate_bullets.restart();
 		}
 
 		// end the current frame - mandatory: takes what was drawn since the last call to display and displays it on the window
