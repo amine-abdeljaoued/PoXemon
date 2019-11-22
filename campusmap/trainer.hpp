@@ -10,10 +10,10 @@
 class Trainer {
     public:
         Trainer(sf::Sprite *sprite, float Speed, int sheetRect, int sizeAnim);
-        void displacement(sf::Event &event, sf::View &view);
+        void displacement(sf::Event &event, sf::View &view, int deltaT);
         void setSpeed(sf::Event &event);
         sf::Sprite *spritePlayer; // With texture already loaded
-
+        //sf::Clock* clock;
     private:
         
         float playerMovementSpeed;
