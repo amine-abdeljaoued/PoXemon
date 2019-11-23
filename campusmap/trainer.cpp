@@ -21,16 +21,14 @@ void Trainer::setSpeed(sf::Event &event){
     if ((event.type == sf::Event::KeyPressed)&&((event.key.code == sf::Keyboard::LShift)||(event.key.code == sf::Keyboard::RShift)))
     {
         playerMovementSpeed = 32;
-        std::cout << "0" << std::endl;
     }
     if ((event.type == sf::Event::KeyReleased)&&((event.key.code == sf::Keyboard::LShift)||(event.key.code == sf::Keyboard::RShift)))
     {
         playerMovementSpeed = 16;
-        std::cout << "0" << std::endl;
     }
 }
 
-void Trainer::displacement(sf::Event &event, sf::View &view)
+void Trainer::displacement(sf::Event &event, sf::View &view, int deltaT)
 {
     
     const int collision[] =
@@ -52,6 +50,12 @@ void Trainer::displacement(sf::Event &event, sf::View &view)
         0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
         0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
         0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+        1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
         0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
         0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
         0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -62,25 +66,18 @@ void Trainer::displacement(sf::Event &event, sf::View &view)
         0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
         0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
         0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
         
     };
     
-    
+    if (deltaT >= 500){
     if (event.type == sf::Event::KeyPressed){
                 sf::Vector2f position = (*spritePlayer).getPosition();
                 int x = position.x/16+1;
                 int y = position.y/16 +1;
-//                std::cout<<x<<","<<y<<std::endl;
-//                std::cout<<collision_list[y][x]<<std::endl;
-//                std::cout<< facingDirection << std::endl;
+                std::cout<<x<<","<<y<<std::endl;
             
+        if(event.type == sf::Event::KeyPressed){
                 if (event.key.code == sf::Keyboard::Left) {
                     if (facingDirection != "Left"){
                         (*spritePlayer).setTextureRect(sf::IntRect(0,sheetRect,sheetRect,sheetRect));
@@ -89,13 +86,13 @@ void Trainer::displacement(sf::Event &event, sf::View &view)
                     }
                     else{
                         if(collision[x-1+(y*34)]==0 && x>0){
-                            (*spritePlayer).move(-playerMovementSpeed, 0);
+                            (*spritePlayer).move(-playerMovementSpeed*1/3, 0);
                             (*spritePlayer).setTextureRect(sf::IntRect(counterWalk * sheetRect,sheetRect,sheetRect,sheetRect));
-                            view.move(-playerMovementSpeed, 0);
+                            view.move(-playerMovementSpeed*1/3, 0);
                         }
                     }
                 }
-        
+        }
                 if (event.key.code == sf::Keyboard::Right) {
                     if (facingDirection != "Right"){
                         (*spritePlayer).setTextureRect(sf::IntRect(0,2*sheetRect,sheetRect,sheetRect));
@@ -104,9 +101,9 @@ void Trainer::displacement(sf::Event &event, sf::View &view)
                     }
                     else{
                         if(collision[x+1+(y*34)]==0 && x<33){
-                            (*spritePlayer).move(playerMovementSpeed, 0);
+                            (*spritePlayer).move(playerMovementSpeed*1/3, 0);
                             (*spritePlayer).setTextureRect(sf::IntRect(counterWalk * sheetRect,2*sheetRect,sheetRect,sheetRect));
-                            view.move(playerMovementSpeed, 0);
+                            view.move(playerMovementSpeed*1/3, 0);
                         }
                     }
                 }
@@ -119,9 +116,9 @@ void Trainer::displacement(sf::Event &event, sf::View &view)
                     }
                     else{
                         if(collision[x+((y-1)*34)]==0 && y>0){
-                            (*spritePlayer).move(0, -playerMovementSpeed);
+                            (*spritePlayer).move(0, -playerMovementSpeed*1/3);
                             (*spritePlayer).setTextureRect(sf::IntRect(counterWalk * sheetRect,3*sheetRect,sheetRect,sheetRect));
-                            view.move(0, -playerMovementSpeed);
+                            view.move(0, -playerMovementSpeed*1/3);
                         }
                     }
                 }
@@ -134,9 +131,9 @@ void Trainer::displacement(sf::Event &event, sf::View &view)
                     }
                     else{
                         if(collision[x+((y+1)*34)]==0 && y<33){
-                            (*spritePlayer).move(0, playerMovementSpeed);
+                            (*spritePlayer).move(0, playerMovementSpeed*1/3);
                             (*spritePlayer).setTextureRect(sf::IntRect(counterWalk * 64,0,sheetRect,sheetRect));
-                            view.move(0,playerMovementSpeed);
+                            view.move(0,playerMovementSpeed*1/3);
                         }
                     }
                 }
@@ -146,6 +143,7 @@ void Trainer::displacement(sf::Event &event, sf::View &view)
                     counterWalk=0;
                 }
 
-
+                }
             }
+    deltaT = 0;
 }
