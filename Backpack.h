@@ -7,13 +7,21 @@
 
 class Backpack
 {
-	Backpack();
+    public:
+        
+        std::map<std::string, int> dict_pokeball;
+    
+        void Pokeball_shoot(float& deltaTime, sf::RenderWindow& window);
+    
+        Backpack();
+    
+        
+        //void update();
+        //We can have up to 6 pokemons in our backpack
+        //we can have up to 3 pokeballs
 
-	//We can have up to 6 pokemons in our backpack
-	//we can have up to 3 pokeballs
-
-	//It should have several methods
-	// for example : replace pokemons, heal them ...
+        //It should have several methods
+        // for example : replace pokemons, heal them ...
 
 };
 

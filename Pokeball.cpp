@@ -7,6 +7,7 @@
 		pic.loadFromFile("Images/pokeball.png");
 		ball.setTexture(pic);
 		ball.setScale(sf::Vector2f(0.4f, 0.4f));
+        in_air = false;
 	}
 	void Pokeball::dissapear() {
 		ball.setPosition(500.f, 2000.f);
@@ -17,13 +18,23 @@
 		y = ypos;
 		ball.setPosition(xpos, ypos);
 	}
-	bool Pokeball::update(float deltaTime) {
+
+    
+
+	bool Pokeball::update(float deltaTime,sf::RenderWindow& window) {
+        
 		velocityY += gravity * deltaTime;
 		x += velocityX * deltaTime;
 		y += velocityY * deltaTime;
 
-		float groundX = 1000.f;
 		setPosition(x, y);
+        
+        sf::Vector2u size = window.getSize();
+        float w = size.x;
+        float width = (float) w;
+        
+        float groundX = width;
+        
 		if (x >= groundX) {     // Ball off the screen, we want to remove it from                               visible, to avoid any complications
 			dissapear();
 			return false;

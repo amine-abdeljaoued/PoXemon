@@ -21,13 +21,19 @@ public:
 	float y;
 	sf::Sprite ball;
 	float gravity = 981.0f / 2;   //This will make the parabolic trajectory
-
-	Pokeball();
-
+    bool in_air;
+    
+	
+    
+    
+    void Pokeball_shoot(float& deltaTime, sf::RenderWindow& window);
+    
 	void dissapear();
-
+    
 	void setPosition(float& xpos, float& ypos);
-	bool update(float deltaTime);
+	bool update(float deltaTime,sf::RenderWindow& window);
+    
+    Pokeball();
 private:
 	sf::Texture pic;
 };
