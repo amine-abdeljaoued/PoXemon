@@ -6,6 +6,7 @@
 #include "Pokemon.h"
 #include "Pokeball.h"
 #include "Bullet.h"
+#include "Artillery.h"
 
 float groundY = 300.0f; //Cannot go below this height
 float groundX = 1000.f;
@@ -29,6 +30,8 @@ int main ()
 	while (window.isOpen())
 	{
 		deltaTime = clock.restart().asSeconds();
+		elapsed = clock_regenerate_bullets.getElapsedTime();
+
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
@@ -42,23 +45,18 @@ int main ()
 		window.clear(sf::Color::Blue);
 
 		// clear the window with black color - need to clear before drawing anything (overlap)
-		eevee.update(deltaTime, window);
-		eevee.update_bullets(deltaTime);
+		eevee.update(deltaTime, window, clock_regenerate_bullets, elapsed);
 		window.clear(sf::Color::Blue);
 		eevee.draw(window);
 
-		for (unsigned i = 0; i < eevee.bullets.size(); i++) {
-			window.draw(eevee.bullets[i].bullet);
-		}
-
-		elapsed = clock_regenerate_bullets.getElapsedTime();
-		//std::cout << elapsed.asSeconds() << std::endl;
+		
+		/* //std::cout << elapsed.asSeconds() << std::endl;
 		if (elapsed.asSeconds() > 2.0f && eevee.available_bullets < eevee.max_available_bullets) {
 			eevee.available_bullets += 1;
 			std::cout << eevee.available_bullets << std::endl;
 			std::cout << "adding a bullet" << std::endl;
 			clock_regenerate_bullets.restart();
-		}
+		} */
 
 		// end the current frame - mandatory: takes what was drawn since the last call to display and displays it on the window
 		window.display();

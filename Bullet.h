@@ -21,8 +21,8 @@
 class Bullet 
 {
 public:
-	float x;
-	float y;
+	float x = 0;
+	float y = 0;
 	float max_speed = 2000.0;
 
 	sf::Vector2f position;

@@ -13,11 +13,14 @@ bullet.o: Bullet.cpp Bullet.h
 health.o: Health.cpp Health.h 
 	$(CXX) -c Health.cpp
 
-main.o: main.cpp Pokemon.h Pokeball.h Bullet.h Health.h
+artillery.o: Artillery.cpp Artillery.h 
+	$(CXX) -c Artillery.cpp
+
+main.o: main.cpp Pokemon.h Pokeball.h Bullet.h Health.h Artillery.h
 	$(CXX) -c main.cpp
 
-game:  Pokeball.o main.o Pokemon.o Bullet.o Health.o
-	$(CXX) main.o  Pokeball.o Pokemon.o Bullet.o Health.o  -o game $(LDLIBS)  
+game:  Pokeball.o main.o Pokemon.o Bullet.o Health.o Artillery.o
+	$(CXX) main.o  Pokeball.o Pokemon.o Bullet.o Health.o Artillery.o  -o game $(LDLIBS)  
 
 
 clean:
