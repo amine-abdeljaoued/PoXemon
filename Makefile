@@ -10,11 +10,14 @@ tilemap.o: Pokemon.cpp Pokemon.h
 bullet.o: Bullet.cpp Bullet.h 
 	$(CXX) -c Bullet.cpp
 
-main.o: main.cpp Pokemon.h Pokeball.h Bullet.h
+health.o: Health.cpp Health.h 
+	$(CXX) -c Health.cpp
+
+main.o: main.cpp Pokemon.h Pokeball.h Bullet.h Health.h
 	$(CXX) -c main.cpp
 
-game:  Pokeball.o main.o Pokemon.o Bullet.o
-	$(CXX) main.o  Pokeball.o Pokemon.o Bullet.o  -o game $(LDLIBS)  
+game:  Pokeball.o main.o Pokemon.o Bullet.o Health.o
+	$(CXX) main.o  Pokeball.o Pokemon.o Bullet.o Health.o  -o game $(LDLIBS)  
 
 
 clean:

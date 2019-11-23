@@ -3,6 +3,7 @@
 
 	Pokemon::Pokemon(float xstart, float ystart, float h, float v)
 	{
+		health.setHealth(100); 		// Pokemon starts with full health when it is created
 		velocityX = 0.0f;
 		velocityY = 0.0f;
 		jumpHeight = h;
@@ -13,8 +14,8 @@
 		y = ystart;
 		sprite.setPosition(sf::Vector2f(x, y));
 		
-		if (!pic.loadFromFile("eevee.png")){ std::cout << "could not load" << std::endl;}
-		pic.loadFromFile("eevee.png");
+		if (!pic.loadFromFile("Images/eevee.png")){ std::cout << "could not load" << std::endl;}
+		pic.loadFromFile("Images/eevee.png");
 		sprite.setTexture(pic);
 		sprite.setScale(sf::Vector2f(0.4f, 0.4f));
 		was_released = true;
@@ -22,6 +23,12 @@
 		max_available_bullets = 15;
 		available_bullets = 15; //will be regenerated with time
 
+
+	}
+
+	void Pokemon::draw(sf::RenderTarget& target) const {
+    	target.draw(sprite);
+		health.draw(target);
 
 	}
 
@@ -40,7 +47,11 @@
 			canJump = false;       //While jumping you can't jump
 			velocityY = -sqrt(2.0f * 981.0f * jumpHeight);
 		}
-		//One parabolic shot - use for Pokeballs?
+		//Testing health - will change when we have collision recognition
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+			health.setHealth(health.getHealth() - 1);
+		}
+		/* //One parabolic shot - use for Pokeballs?
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
 			ball.setPosition(x, y);     // Need to figure out where the starting x and y position are
 			ball.velocityY = -sqrt(2.0f * 981.0f * ball.ballHeight); //We need to reset the ball's position and starting speed when you shoot, that's why its in this class
@@ -50,7 +61,7 @@
 		if (shooting) {
 			bool shoot = ball.update(deltaTime);
 			if (!shoot) { shooting = false; }
-		}
+		} */
 
 
 		//bullets---------------------------
@@ -97,7 +108,8 @@
 
 		//-----------------------------------
 
-		ball.update(deltaTime);
+		health.update(); 	// Need to still react to bullets and decrease our health
+							//AND NB need to make this change health.health
 		 
 		velocityY += 981.0f * deltaTime;
 		move(deltaTime);

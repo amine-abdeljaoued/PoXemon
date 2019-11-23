@@ -21,23 +21,24 @@
 class Bullet 
 {
 public:
-	public:
-		float x;
-		float y;
-		float max_speed = 2000.0;
+	float x;
+	float y;
+	float max_speed = 2000.0;
 
-		sf::Vector2f position;
-		sf::Vector2f shoot_dir;
-		sf::Sprite bullet;
+	sf::Vector2f position;
+	sf::Vector2f shoot_dir;
+	sf::Sprite bullet;
 
-		Bullet();
+	Bullet();
 
-		//void setPosition(float& xpos, float& ypos);
-		void setPosition(sf::Vector2f& pos);
-		void set_shoot_dir(sf::Vector2f mouse_position, sf::Vector2f initial_position);
-		bool update(float deltaTime);
-		bool offscreen();
-		bool collide();
+	//void setPosition(float& xpos, float& ypos);
+	void setPosition(sf::Vector2f& pos);
+	void set_shoot_dir(sf::Vector2f mouse_position, sf::Vector2f initial_position);
+	bool update(float deltaTime);
+	bool offscreen();
+	bool collide();
+private:
+	sf::Texture bpic;
 };
 
 

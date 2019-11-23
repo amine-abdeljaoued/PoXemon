@@ -4,9 +4,9 @@
 
 Bullet::Bullet() {
 
-	sf::Texture pic;
-	pic.loadFromFile("pokeball.png");//to change
-	bullet.setTexture(pic);
+	
+	bpic.loadFromFile("Images/pokeball.png");//to change
+	bullet.setTexture(bpic);
 	//I find easier to set the origin at center
 	bullet.setOrigin(sf::Vector2f(bullet.getLocalBounds().width / 2, bullet.getLocalBounds().height / 2));
 	bullet.setScale(sf::Vector2f(0.2f, 0.2f));
