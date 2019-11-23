@@ -10,15 +10,18 @@
 
 int main()
 {
-<<<<<<< HEAD
     sf::RenderWindow window(sf::VideoMode(544*2, 544*2), "Tilemap");
     sf::View view(sf::Vector2f(272, 272), sf::Vector2f(544, 544));
     view.zoom(0.5f);
     window.setPosition(sf::Vector2i(0, 0));
     TileMap map;
     
-=======
->>>>>>> 99eea4697172e5b91c556c244f93aaa2d2ad42c8
+    sf::Music music;
+    if (!music.openFromFile(resourcePath() + "town_1.ogg")) {
+        return EXIT_FAILURE;
+    }
+    music.play();
+    
     int deltaT = 0;
     
     sf::Texture texturePlayer;
@@ -37,21 +40,9 @@ int main()
     
     Trainer Arthur( &spritePlayer , playerMovementSpeed, sheetRect, sizeAnim);
 
-<<<<<<< HEAD
 
 
 
-=======
-    sf::View view(sf::Vector2f(272, 272), sf::Vector2f(544, 544));
-    //view.zoom(0.5f);
-    
-    
-//    sf::View minimapView(sf::Vector2f(272, 272), sf::Vector2f(544, 544));
-//    minimapView.setViewport(sf::FloatRect(0.75f, 0, 0.25f, 0.25f));
-    
-    sf::RenderWindow window(sf::VideoMode(544, 544), "Tilemap");
-    TileMap map;
->>>>>>> 99eea4697172e5b91c556c244f93aaa2d2ad42c8
     
     if (!map.load("Sprites/tileset1.png", sf::Vector2u(16, 16), level, 34, 34)) return -1;
 
@@ -73,18 +64,6 @@ int main()
         sf::Event event;
         window.pollEvent(event);
         if(event.type == sf::Event::Closed) window.close();
-<<<<<<< HEAD
-=======
-        
-        
-        sf::Time elapsed1 = clock.getElapsedTime();
-        
-    
-        Arthur.setSpeed(event);
-        Arthur.displacement(event,view, deltaT);
-            
-        
->>>>>>> 99eea4697172e5b91c556c244f93aaa2d2ad42c8
         
         
         sf::Time elapsed1 = clock.getElapsedTime();
