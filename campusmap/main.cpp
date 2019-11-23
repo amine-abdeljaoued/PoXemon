@@ -10,6 +10,14 @@
 
 int main()
 {
+    sf::RenderWindow window(sf::VideoMode(544*2, 544*2), "Tilemap");
+    sf::View view(sf::Vector2f(272, 272), sf::Vector2f(544, 544));
+    view.zoom(0.5f);
+    window.setPosition(sf::Vector2i(0, 0));
+    TileMap map;
+    
+    int deltaT = 0;
+    
     sf::Texture texturePlayer;
     if (!texturePlayer.loadFromFile(/* resourcePath() + */ "Sprites/fullch.png")) {
         return EXIT_FAILURE;
@@ -26,20 +34,9 @@ int main()
     
     Trainer Arthur( &spritePlayer , playerMovementSpeed, sheetRect, sizeAnim);
 
-    sf::View view(sf::Vector2f(272, 272), sf::Vector2f(544, 544));
-    view.zoom(0.5f);
-    
-    
-//    sf::View minimapView(sf::Vector2f(272, 272), sf::Vector2f(544, 544));
-//    minimapView.setViewport(sf::FloatRect(0.75f, 0, 0.25f, 0.25f));
-    
-    
-    
-
-    sf::RenderWindow window(sf::VideoMode(544, 544), "Tilemap");
 
 
-    TileMap map;
+
     
     if (!map.load("Sprites/tileset1.png", sf::Vector2u(16, 16), level, 34, 34)) return -1;
 
@@ -49,24 +46,29 @@ int main()
     
     if (!bigmap.load("Sprites/herbe.png", sf::Vector2u(16, 16), level2, 34,34 )) return -1;
     
-
+    sf::Clock clock;
+    
+    window.setFramerateLimit(30);
     
     while (window.isOpen())
     {
+        deltaT += 30;
+//        clock.getElapsedTime().asMilliseconds();
         
         sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if(event.type == sf::Event::Closed) window.close();
-            Arthur.setSpeed(event);
-            Arthur.displacement(event,view);
+        window.pollEvent(event);
+        if(event.type == sf::Event::Closed) window.close();
+        
+        
+        sf::Time elapsed1 = clock.getElapsedTime();
+        
+    
+        Arthur.setSpeed(event);
+        Arthur.displacement(event,view, deltaT);
             
-        }
         
-        
-        window.clear();
-        
-        //window.draw(bigmap);
+        window.clear(sf::Color(112,200,160));
+
         
         window.draw(map);
         
