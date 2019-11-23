@@ -76,6 +76,7 @@ void Trainer::displacement(sf::Event &event, sf::View &view, int deltaT)
                 int x = position.x/16+1;
                 int y = position.y/16 +1;
                 std::cout<<x<<","<<y<<std::endl;
+
             
         if(event.type == sf::Event::KeyPressed){
                 if (event.key.code == sf::Keyboard::Left) {
