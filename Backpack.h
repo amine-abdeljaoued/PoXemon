@@ -8,11 +8,13 @@
 class Backpack
 {
     public:
-        
+        Pokeball new_Pokeball;
         std::map<std::string, int> dict_pokeball;
     
         void Pokeball_shoot(float& deltaTime, sf::RenderWindow& window);
-    
+        
+        void draw (sf::RenderTarget &target) const;
+        
         Backpack();
     
         
