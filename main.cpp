@@ -7,24 +7,26 @@
 #include "Pokeball.h"
 #include "Bullet.h"
 #include "Artillery.h"
+#include "Backpack.h"
 
 float groundY = 300.0f; //Cannot go below this height
 float groundX = 1000.f;
 
 int main ()
 {
-	sf::RenderWindow window(sf::VideoMode(1400, 700), "My window");
-	//video mode defines the size of the window
-	//constructor accepts a third optional argument: a style (decorations and features)
-	//see https://www.sfml-dev.org/tutorials/2.5/window-window.php
+    sf::RenderWindow window(sf::VideoMode(1400, 700), "My window");
+    //video mode defines the size of the window
+    //constructor accepts a third optional argument: a style (decorations and features)
+    //see https://www.sfml-dev.org/tutorials/2.5/window-window.php
 
-	Pokemon eevee(10.0f, groundY, 200.f, 500.f);
-	float deltaTime = 0.0f;
+    Pokemon eevee(10.f, groundY, 200.f, 500.f);
+    float deltaTime = 0.0f;
 
-	sf::Clock clock;
-
-	sf::Clock clock_regenerate_bullets;
-	sf::Time elapsed;
+    sf::Clock clock;
+    sf::Clock clock_regenerate_bullets;
+    sf::Time elapsed;
+    
+    Backpack bag;
 
 	// run the program as long as the window is open
 	while (window.isOpen())
@@ -42,25 +44,14 @@ int main ()
 			}
 		}
 
+        // clear the window with black color - need to clear before drawing anything (overlap)
+        eevee.update(deltaTime, window, clock_regenerate_bullets, elapsed);
+	 	bag.Pokeball_shoot(deltaTime, window);
 		window.clear(sf::Color::Blue);
+        bag.draw(window);
+        eevee.draw(window);
 
-		// clear the window with black color - need to clear before drawing anything (overlap)
-		eevee.update(deltaTime, window, clock_regenerate_bullets, elapsed);
-		window.clear(sf::Color::Blue);
-		eevee.draw(window);
-
-		
-		/* //std::cout << elapsed.asSeconds() << std::endl;
-		if (elapsed.asSeconds() > 2.0f && eevee.available_bullets < eevee.max_available_bullets) {
-			eevee.available_bullets += 1;
-			std::cout << eevee.available_bullets << std::endl;
-			std::cout << "adding a bullet" << std::endl;
-			clock_regenerate_bullets.restart();
-		} */
-
-		// end the current frame - mandatory: takes what was drawn since the last call to display and displays it on the window
 		window.display();
-
-	}
-	return 0;
+    }
+    return 0;
 }
