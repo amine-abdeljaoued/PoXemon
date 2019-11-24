@@ -1,6 +1,6 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
-#include "ResourcePath.hpp"
+/* #include "ResourcePath.hpp" */
 #include <unistd.h>
 #include <stdio.h>
 #include <iostream>
@@ -12,46 +12,28 @@ int main()
 {
     sf::RenderWindow window(sf::VideoMode(544*2, 544*2), "Tilemap");
     sf::View view(sf::Vector2f(272, 272), sf::Vector2f(544, 544));
-    view.zoom(0.5f);
+    view.zoom(0.7f);
     window.setPosition(sf::Vector2i(0, 0));
     TileMap map;
-    
-    sf::Music music;
+    if (!map.load("Sprites/tileset1.png", sf::Vector2u(16, 16), level, 34, 34)) return -1;
+
+    TileMap bigmap;
+    if (!bigmap.load("Sprites/herbe.png", sf::Vector2u(16, 16), level2, 34,34 )) return -1;
+    /* sf::Music music;
     if (!music.openFromFile(resourcePath() + "town_1.ogg")) {
         return EXIT_FAILURE;
     }
-    music.play();
+    music.play(); */
     
     int deltaT = 0;
-    
-    sf::Texture texturePlayer;
-    if (!texturePlayer.loadFromFile(/* resourcePath() + */ "Sprites/fullch.png")) {
-        return EXIT_FAILURE;
-    }
-    sf::Sprite spritePlayer(texturePlayer);
-
-    spritePlayer.setTextureRect(sf::IntRect(0,0,64,64));
-    spritePlayer.setScale(sf::Vector2f(0.5f, 0.5f));
-    spritePlayer.setPosition(262, 272);
+    sf::Sprite spritePlayer;
     //Variables for the character
     float playerMovementSpeed = 16;
     int sheetRect = 64;
     int sizeAnim = 4;
     
-    Trainer Arthur( &spritePlayer , playerMovementSpeed, sheetRect, sizeAnim);
+    Trainer Arthur(playerMovementSpeed, sheetRect, sizeAnim);
 
-
-
-
-    
-    if (!map.load("Sprites/tileset1.png", sf::Vector2u(16, 16), level, 34, 34)) return -1;
-
-    
-
-    TileMap bigmap;
-    
-    if (!bigmap.load("Sprites/herbe.png", sf::Vector2u(16, 16), level2, 34,34 )) return -1;
-    
     sf::Clock clock;
     
     window.setFramerateLimit(30);
@@ -78,7 +60,7 @@ int main()
         
         window.draw(map);
         
-        window.draw(spritePlayer);
+        Arthur.draw(window);
 
         window.setView(view);
         
