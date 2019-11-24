@@ -15,9 +15,29 @@ float groundX = 1000.f;
 int main ()
 {
     sf::RenderWindow window(sf::VideoMode(1400, 700), "My window");
-    //video mode defines the size of the window
-    //constructor accepts a third optional argument: a style (decorations and features)
-    //see https://www.sfml-dev.org/tutorials/2.5/window-window.php
+
+	// -----------------------------------------------------------------
+	// This gives us a background that is the same size as the window
+	sf::Texture BackgroundTexture;
+	sf::Sprite background;
+	sf::Vector2u TextureSize;  //Added to store texture size.
+	sf::Vector2u WindowSize;   //Added to store window size.
+
+	if(!BackgroundTexture.loadFromFile("Images/grassbg.png")){
+		std::cout<<"BG didn't load"<<std::endl;
+	}
+	else
+	{
+		TextureSize = BackgroundTexture.getSize(); //Get size of texture.
+		WindowSize = window.getSize();             //Get size of window.
+
+		float ScaleX = (float) WindowSize.x / TextureSize.x;
+		float ScaleY = (float) WindowSize.y / TextureSize.y;     //Calculate scale.
+
+		background.setTexture(BackgroundTexture);
+		background.setScale(ScaleX, ScaleY);      //Set scale.  
+  	}
+	// -----------------------------------------------------------------
 
     Pokemon eevee(10.f, groundY, 200.f, 500.f);
     float deltaTime = 0.0f;
@@ -48,6 +68,7 @@ int main ()
         eevee.update(deltaTime, window, clock_regenerate_bullets, elapsed);
 	 	bag.Pokeball_shoot(deltaTime, window);
 		window.clear(sf::Color::Blue);
+		window.draw(background);
         bag.draw(window);
         eevee.draw(window);
 
