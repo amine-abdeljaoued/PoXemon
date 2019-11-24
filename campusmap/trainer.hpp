@@ -9,10 +9,10 @@
 
 class Trainer {
     public:
-        Trainer(sf::Sprite *sprite, float Speed, int sheetRect, int sizeAnim);
+        Trainer(float Speed, int sheetRect, int sizeAnim);
         void displacement(sf::Event &event, sf::View &view, int deltaT);
         void setSpeed(sf::Event &event);
-        sf::Sprite *spritePlayer; // With texture already loaded
+        void draw(sf::RenderWindow &window) const;
         //sf::Clock* clock;
     private:
         
@@ -21,4 +21,6 @@ class Trainer {
         int sizeAnim; //Number of animations per direction of movement
         int counterWalk = 0;
         std::string facingDirection = "Down";
+        sf::Texture texturePlayer;
+        sf::Sprite spritePlayer;
 };
