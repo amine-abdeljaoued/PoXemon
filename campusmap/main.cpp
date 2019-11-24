@@ -18,8 +18,7 @@ int main()
     TileMap map;
     if (!map.load("Sprites/tileset1.png", sf::Vector2u(16, 16), level, 34, 34)) return -1;
 
-    TileMap bigmap;
-    if (!bigmap.load("Sprites/herbe.png", sf::Vector2u(16, 16), level2, 34,34 )) return -1;
+    
     /* sf::Music music;
     if (!music.openFromFile(resourcePath() + "town_1.ogg")) {
         return EXIT_FAILURE;
@@ -60,8 +59,9 @@ int main()
         window.clear(sf::Color(112,200,160));     
         window.draw(map);
         
-        Arthur.draw(window);
         Vieux.draw(window);
+        Arthur.draw(window);
+        
 
         window.setView(view);
         
