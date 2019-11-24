@@ -7,6 +7,7 @@
 #include "tilemap.hpp"
 #include "trainer.hpp"
 #include "const.hpp"
+#include "npc.hpp"
 
 int main()
 {
@@ -27,12 +28,15 @@ int main()
     
     int deltaT = 0;
     sf::Sprite spritePlayer;
-    //Variables for the character
+    //Variables for the character and declaration of him/ we need to put it in constructor
     float playerMovementSpeed = 16;
     int sheetRect = 64;
     int sizeAnim = 4;
     
     Trainer Arthur(playerMovementSpeed, sheetRect, sizeAnim);
+    //Test of our first Npc
+
+    Npc Vieux;
 
     sf::Clock clock;
     
@@ -52,15 +56,12 @@ int main()
         
     
         Arthur.setSpeed(event);
-        Arthur.displacement(event,view, deltaT);
-            
-        
-        window.clear(sf::Color(112,200,160));
-
-        
+        Arthur.displacement(event,view, deltaT);     
+        window.clear(sf::Color(112,200,160));     
         window.draw(map);
         
         Arthur.draw(window);
+        Vieux.draw(window);
 
         window.setView(view);
         
