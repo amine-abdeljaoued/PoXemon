@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <string>
 #include <deque>
+#include <list>
 using namespace std;
 
 Trainer::Trainer( float Speed=16, int sheetRect=64, int sizeAnim=4)
@@ -40,6 +41,10 @@ void Trainer::setSpeed(sf::Event &event){
     {
         playerMovementSpeed = 16;
     }
+}
+sf::Vector2f Trainer::getPos(){
+    sf::Vector2f position = (spritePlayer).getPosition();
+    return position;
 }
 
 void Trainer::displacement(sf::Event &event, sf::View &view, const int* collision)

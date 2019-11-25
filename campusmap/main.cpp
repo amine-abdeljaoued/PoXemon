@@ -8,6 +8,7 @@
 #include "trainer.hpp"
 #include "const.hpp"
 #include "npc.hpp"
+#include "map.hpp"
 
 int main()
 {
@@ -15,10 +16,10 @@ int main()
     sf::View view(sf::Vector2f(272, 272), sf::Vector2f(544, 544));
     view.zoom(0.7f);
     window.setPosition(sf::Vector2i(0, 0));
-    TileMap map;
-    if (!map.load("Sprites/tileset1.png", sf::Vector2u(16, 16), level, 34, 34)) return -1;
-
     
+
+    Map map1(1);
+
     /* sf::Music music;
     if (!music.openFromFile(resourcePath() + "town_1.ogg")) {
         return EXIT_FAILURE;
@@ -32,10 +33,7 @@ int main()
     int sizeAnim = 4;
     
     Trainer Arthur(playerMovementSpeed, sheetRect, sizeAnim);
-    //Test of our first Npc
-
-    Npc Vieux("Sprites/NPC2.png",70,50,0.5f,200,212);
-
+    
     sf::Clock clock;
     
     window.setFramerateLimit(30);
@@ -49,13 +47,11 @@ int main()
         
         sf::Time elapsed1 = clock.getElapsedTime();
         
-        Arthur.displacement(event,view, collision);
+        
         window.clear(sf::Color(112,200,160));     
-        window.draw(map);
         
-        Vieux.draw(window);
-        Arthur.draw(window);
-        
+        Arthur.displacement(event,view, collision);
+        map1.draw(window, Arthur);
 
         window.setView(view);
         
