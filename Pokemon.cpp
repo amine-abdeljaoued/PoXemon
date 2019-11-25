@@ -19,10 +19,12 @@
 		sprite.setScale(sf::Vector2f(0.4f, 0.4f));
 	}
 
-	void Pokemon::draw(sf::RenderTarget& target) const {
+	
+	void Pokemon::draw(sf::RenderTarget& target) {//const ?
     	target.draw(sprite);
 		health.draw(target);
 		bullets.draw(target);
+		bullets.bulletbar.draw(target);
 	}
 
 	void Pokemon::update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clock, sf::Time& elapsed) {   // Movement is dependant on time not on frame rate
