@@ -1,7 +1,7 @@
 #include "Artillery.h"
 
 Artillery::Artillery(){
-    max_available_bullets = 100;
+    max_available_bullets = 20;
     available_bullets = max_available_bullets;  // STart with all bullets available
     was_released = true;                        // Start being able to shoot
 }
@@ -35,6 +35,8 @@ void Artillery::new_shot(float& x, float& y, const sf::FloatRect& bounds, sf::Re
         bullets.push_back(new_bullet);//append the new bullet to our array
 
         available_bullets -= 1;
+		bulletbar.update(-1);
+
         std::cout << "available bullets -1 : " << available_bullets<<std::endl;
     }
 
@@ -51,8 +53,10 @@ void Artillery::update(float& deltaTime, sf::Clock& clock, sf::Time& elapsed){
         // I think the 'erase()' this is pretty inefficient, we might need to find a better way
     }
 
-    if (elapsed.asSeconds() > 2.0f && available_bullets < max_available_bullets) {
+	//regenerate bullets every 1 second
+    if (elapsed.asSeconds() > 1.0f && available_bullets < max_available_bullets) {
 			available_bullets += 1;
+			bulletbar.update(1);
 			clock.restart();
 		}
 

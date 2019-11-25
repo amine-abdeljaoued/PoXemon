@@ -24,7 +24,7 @@ public:
 							
 	Pokemon(float xstart, float ystart, float h, float v);
 	void update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clock, sf::Time& elapsed);
-	void draw(sf::RenderTarget& target) const;
+	void draw(sf::RenderTarget& target) ;// const ?
 	void move(float& deltaTime);
 
 	sf::RectangleShape rect;
