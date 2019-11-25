@@ -8,9 +8,11 @@
         ball.setTexture(pic);
         ball.setScale(sf::Vector2f(0.4f, 0.4f));
         in_air = false;
+        bounce = false;
     }
     void Pokeball::dissapear() {
-        ball.setPosition(500.f, 2000.f);
+        ball.setPosition(200.f, 2000.f);
+        bounce=false;
         // I just set this randomly, we must figure out if we wan't to delete the balls, keep them in pokemon class/etc...
     }
     void Pokeball::setPosition(float& xpos, float& ypos) {
@@ -22,11 +24,11 @@
     
 
     bool Pokeball::update(float deltaTime,sf::RenderWindow& window) {
-        
-        velocityY += gravity * deltaTime;
-        x += velocityX * deltaTime;
+        //update the velocityY of the pokeball using low gravity and airfriction
+        velocityY += gravity * deltaTime - airfriction * velocityY * deltaTime;
+        x += velocityX * deltaTime - airfriction * velocityX * deltaTime;
         y += velocityY * deltaTime;
-
+        
         setPosition(x, y);
         
         
@@ -35,7 +37,12 @@
         float width = (float) w;
         
         float groundX = width;
+        float bounceX = 0.6 * width;
         
+        if ((x >= bounceX)&&(bounce==false)) {     // does the bounce only one time
+            velocityY = -velocityY;
+            bounce=true;
+        }
         if (x >= groundX) {     // Ball off the screen, we want to remove it from                               visible, to avoid any complications
             dissapear();
             return false;
