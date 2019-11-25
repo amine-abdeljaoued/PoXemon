@@ -10,7 +10,7 @@
 class Trainer {
     public:
         Trainer(float Speed, int sheetRect, int sizeAnim);
-        void displacement(sf::Event &event, sf::View &view, int deltaT);
+        void displacement(sf::Event &event, sf::View &view, int deltaT, const int* collision);
         void setSpeed(sf::Event &event);
         void draw(sf::RenderWindow &window) const;
         //sf::Clock* clock;

@@ -11,7 +11,7 @@
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(544*2, 544*2), "Tilemap");
+    sf::RenderWindow window(sf::VideoMode(544, 544), "Tilemap");
     sf::View view(sf::Vector2f(272, 272), sf::Vector2f(544, 544));
     view.zoom(0.7f);
     window.setPosition(sf::Vector2i(0, 0));
@@ -55,7 +55,7 @@ int main()
         
     
         Arthur.setSpeed(event);
-        Arthur.displacement(event,view, deltaT);     
+        Arthur.displacement(event,view, deltaT, collision);     
         window.clear(sf::Color(112,200,160));     
         window.draw(map);
         
