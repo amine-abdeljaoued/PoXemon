@@ -34,7 +34,7 @@ int main()
     Trainer Arthur(playerMovementSpeed, sheetRect, sizeAnim);
     //Test of our first Npc
 
-    Npc Vieux;
+    Npc Vieux("Sprites/NPC2.png",70,50,0.5f,200,212);
 
     sf::Clock clock;
     
