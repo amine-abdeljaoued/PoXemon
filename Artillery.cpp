@@ -1,7 +1,7 @@
 #include "Artillery.h"
 
 Artillery::Artillery(){
-    max_available_bullets = 12;
+    max_available_bullets = 100;
     available_bullets = max_available_bullets;  // STart with all bullets available
     was_released = true;                        // Start being able to shoot
 }
@@ -12,7 +12,7 @@ void Artillery::draw(sf::RenderTarget& target) const {
 	}
 }
 
-void Artillery::new_shot(float x, float y, sf::FloatRect bounds, sf::RenderTarget& window, sf::Vector2i mouse){ 
+void Artillery::new_shot(float& x, float& y, const sf::FloatRect& bounds, sf::RenderTarget& window, const sf::Vector2i& mouse){ 
     // takes bounds of sprite to know from where to shoot
     // takes our window
     // takes the clicked mouse position
