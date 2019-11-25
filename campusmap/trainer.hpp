@@ -13,6 +13,7 @@ class Trainer {
         void displacement(sf::Event &event, sf::View &view, const int* collision);
         void setSpeed(sf::Event &event);
         void draw(sf::RenderWindow &window) const;
+        sf::Vector2f getPos();
         //sf::Clock* clock;
     private:
         

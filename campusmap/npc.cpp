@@ -21,3 +21,8 @@ Npc::Npc(string pathName, int sheetRectX,int sheetRectY, float scale , int posX,
 void Npc::draw(sf::RenderWindow &window) const {
     window.draw(spriteNpc);
 }
+
+sf::Vector2f Npc::getPos(){
+    sf::Vector2f position = (spriteNpc).getPosition();
+    return position;
+}
