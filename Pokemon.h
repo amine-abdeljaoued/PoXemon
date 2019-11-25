@@ -1,5 +1,6 @@
 #pragma once
 #include "Bullet.h"
+#include "Artillery.h"
 #include "Pokeball.h"
 #include "Health.h"
 #include <SFML/Graphics.hpp>
@@ -18,24 +19,12 @@ public:
 	bool canJump;           // If you're on the ground, you can jump
 	bool shooting;          // If you're shooting, we want to draw the pokeball
 	Healthbar health;				// Health between 1 and 100
-
-
-	//-----------
-
-	Bullet bullet; //the bullet might depend on the pokemon
-	//ex : the sprite could vary depending on the pokemon type, the damages can be different...
-	bool was_released; // this is used to shoot only one bullet per click
-	std::vector<Bullet> bullets;
-	void update_bullets(float& deltaTime);
-
-	int max_available_bullets;
-	int available_bullets;
-	//-----------
-
-
+	Artillery bullets; 		// This is where all bullets are stored
+							// If we want bullets to depend on Pokemon, bullets must have a constructor
+							
 	Pokemon(float xstart, float ystart, float h, float v);
-	void update(float& deltaTime, sf::RenderWindow& window);
-	void draw(sf::RenderTarget& target) const;
+	void update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clock, sf::Time& elapsed);
+	void draw(sf::RenderTarget& target) ;// const ?
 	void move(float& deltaTime);
 
 	sf::RectangleShape rect;

@@ -68,6 +68,7 @@ Backpack::Backpack(){
         target.draw(clickbox);
         target.draw(normalball);
 }
+
 //function that updates the backpack containt
 //void Backpack::update(){
 //    if (ball_nbre>0){

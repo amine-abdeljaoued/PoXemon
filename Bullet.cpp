@@ -21,7 +21,7 @@ void Bullet::setPosition(sf::Vector2f& pos) {
 }
 
 
-void Bullet::set_shoot_dir(sf::Vector2f mouse_position, sf::Vector2f initial_pos) {
+void Bullet::set_shoot_dir(const sf::Vector2f& mouse_position, const sf::Vector2f& initial_pos) {
 	//float x and float y stand for the initial position
 	shoot_dir = mouse_position - initial_pos;
 	//now we normalize this vector
@@ -29,7 +29,7 @@ void Bullet::set_shoot_dir(sf::Vector2f mouse_position, sf::Vector2f initial_pos
 	shoot_dir = shoot_dir / norm;
 }
 
-bool Bullet::update(float deltaTime) {
+bool Bullet::update(float& deltaTime) {
 	
 	//x += shoot_dir.x * deltaTime *max_speed;
 	//y += shoot_dir.y * deltaTime *max_speed;
