@@ -5,11 +5,11 @@
 #include <stdio.h>
 #include <iostream>
 #include <string>
+using namespace std;
 
-
-class Npc{
+class Npc {
     public:
-        Npc();
+        Npc(string pathName, int sheetRectX,int sheetRectY, float scale, int posX, int posY);
         void draw(sf::RenderWindow &window) const;
 
     private:

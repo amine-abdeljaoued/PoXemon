@@ -8,7 +8,7 @@
 #include <deque>
 using namespace std;
 
-Trainer::Trainer( float Speed, int sheetRect, int sizeAnim)
+Trainer::Trainer( float Speed=16, int sheetRect=64, int sizeAnim=4)
 {
     
     if (!texturePlayer.loadFromFile(/* resourcePath() + */ "Sprites/fullch.png")) {

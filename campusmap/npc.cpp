@@ -8,14 +8,14 @@
 #include <deque>
 using namespace std;
 
-Npc::Npc() {
-    if (!textureNpc.loadFromFile(/* resourcePath() + */ "Sprites/NPC1.png")) {
+Npc::Npc(string pathName, int sheetRectX,int sheetRectY, float scale , int posX, int posY) {
+    if (!textureNpc.loadFromFile(/* resourcePath() + */ pathName)) {
         cout << "Error loading sprite";
     }
     (spriteNpc).setTexture(textureNpc);
-    spriteNpc.setTextureRect(sf::IntRect(0,0,64,100));
-    spriteNpc.setScale(sf::Vector2f(0.45f, 0.45f));
-    spriteNpc.setPosition(200, 212);
+    spriteNpc.setTextureRect(sf::IntRect(0,0,sheetRectX,sheetRectY));
+    spriteNpc.setScale(sf::Vector2f(scale, scale));
+    spriteNpc.setPosition(posX, posY);
 }
 
 void Npc::draw(sf::RenderWindow &window) const {
