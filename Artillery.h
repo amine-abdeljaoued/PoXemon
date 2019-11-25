@@ -10,7 +10,7 @@ public:
     Artillery();
     bool was_released; // this is used to shoot only one bullet per click
     void draw(sf::RenderTarget& target) const;
-    void new_shot(float x, float y, sf::FloatRect bounds, sf::RenderTarget& window, sf::Vector2i mouse);
+    void new_shot(float& x, float& y, const sf::FloatRect& bounds, sf::RenderTarget& window, const sf::Vector2i& mouse);
     void update(float& deltaTime, sf::Clock& clock, sf::Time& elapsed);
 
 //private:
