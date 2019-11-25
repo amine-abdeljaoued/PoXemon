@@ -26,7 +26,7 @@ int main()
     }
     music.play(); */
 
-    sf::Sprite spritePlayer;
+
     //Variables for the character and declaration of him/ we need to put it in constructor
     float playerMovementSpeed = 16;
     int sheetRect = 64;
