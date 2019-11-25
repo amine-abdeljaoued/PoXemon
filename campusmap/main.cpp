@@ -24,8 +24,7 @@ int main()
         return EXIT_FAILURE;
     }
     music.play(); */
-    
-    int deltaT = 0;
+
     sf::Sprite spritePlayer;
     //Variables for the character and declaration of him/ we need to put it in constructor
     float playerMovementSpeed = 16;
@@ -43,9 +42,6 @@ int main()
     
     while (window.isOpen())
     {
-        deltaT += 30;
-//        clock.getElapsedTime().asMilliseconds();
-        
         sf::Event event;
         window.pollEvent(event);
         if(event.type == sf::Event::Closed) window.close();
@@ -53,9 +49,7 @@ int main()
         
         sf::Time elapsed1 = clock.getElapsedTime();
         
-    
-        Arthur.setSpeed(event);
-        Arthur.displacement(event,view, deltaT, collision);     
+        Arthur.displacement(event,view, collision);
         window.clear(sf::Color(112,200,160));     
         window.draw(map);
         

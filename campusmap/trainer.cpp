@@ -42,9 +42,9 @@ void Trainer::setSpeed(sf::Event &event){
     }
 }
 
-void Trainer::displacement(sf::Event &event, sf::View &view, int deltaT, const int* collision)
+void Trainer::displacement(sf::Event &event, sf::View &view, const int* collision)
 {
-    if (deltaT >= 500){
+    setSpeed(event);
     if (event.type == sf::Event::KeyPressed){
                 sf::Vector2f position = (spritePlayer).getPosition();
                 int x = position.x/16+1;
@@ -117,8 +117,5 @@ void Trainer::displacement(sf::Event &event, sf::View &view, int deltaT, const i
                 if(counterWalk==sizeAnim){
                     counterWalk=0;
                 }
-
-                }
-            }
-    deltaT = 0;
+    }
 }
