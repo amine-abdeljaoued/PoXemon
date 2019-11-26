@@ -1,6 +1,8 @@
 CXX = g++
 LDLIBS = -lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system
 
+opponent.o: Opponent.cpp Pokemon.h 
+	$(CXX) -c Opponent.cpp
 pokeball.o: Pokeball.cpp Pokeball.h
 	$(CXX) -c Pokeball.cpp
 
@@ -19,11 +21,11 @@ artillery.o: Artillery.cpp Artillery.h
 backpack.o: Backpack.cpp Backpack.h 
 	$(CXX) -c Backpack.cpp
 
-main.o: main.cpp Pokemon.h Pokeball.h Bullet.h Health.h Artillery.h Backpack.h
+main.o: main.cpp Pokemon.h Pokeball.h Bullet.h Health.h Artillery.h Backpack.h Opponent.h
 	$(CXX) -c main.cpp
 
-game:  Pokeball.o main.o Pokemon.o Bullet.o Health.o Artillery.o Backpack.o
-	$(CXX) main.o  Pokeball.o Pokemon.o Bullet.o Health.o Artillery.o Backpack.o  -o game $(LDLIBS)  
+game:  Opponent.o Pokeball.o main.o Pokemon.o Bullet.o Health.o Artillery.o Backpack.o
+	$(CXX) main.o  Opponent.o Pokeball.o Pokemon.o Bullet.o Health.o Artillery.o Backpack.o  -o game $(LDLIBS)  
 
 
 clean:
