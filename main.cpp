@@ -9,6 +9,8 @@
 #include "Artillery.h"
 #include "Backpack.h"
 
+#include "Opponent.h"
+
 float groundY = 300.0f; //Cannot go below this height
 float groundX = 1000.f;
 
@@ -40,6 +42,7 @@ int main ()
 	// -----------------------------------------------------------------
 
     Pokemon eevee(10.f, groundY, 200.f, 500.f);
+	Opponent opponent1(1000.f,groundY,200.f, 800.f);
     float deltaTime = 0.0f;
 
     sf::Clock clock;
@@ -66,11 +69,13 @@ int main ()
 
         // clear the window with black color - need to clear before drawing anything (overlap)
         eevee.update(deltaTime, window, clock_regenerate_bullets, elapsed);
-	 	bag.Pokeball_shoot(deltaTime, window);
+	 	opponent1.update(deltaTime);
+		bag.Pokeball_shoot(deltaTime, window);
 		window.clear(sf::Color::Blue);
 		window.draw(background);
         bag.draw(window);
         eevee.draw(window);
+		opponent1.draw(window);
 
 		window.display();
     }
