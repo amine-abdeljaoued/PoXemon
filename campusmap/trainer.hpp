@@ -20,8 +20,11 @@ class Trainer {
         float playerMovementSpeed;
         int sheetRect; //Size of a single character position on the sprite sheet
         int sizeAnim; //Number of animations per direction of movement
-        int counterWalk = 0;
+        int counterWalk = 1;
         std::string facingDirection = "Down";
         sf::Texture texturePlayer;
         sf::Sprite spritePlayer;
+        std::string state = "Stop";
+        int a;
+        int b;
 };

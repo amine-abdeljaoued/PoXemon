@@ -9,7 +9,7 @@
 #include <list>
 using namespace std;
 
-Trainer::Trainer( float Speed=16, int sheetRect=64, int sizeAnim=4)
+Trainer::Trainer( float Speed, int sheetRect, int sizeAnim)
 {
     
     if (!texturePlayer.loadFromFile(/* resourcePath() + */ "Sprites/fullch.png")) {
@@ -49,78 +49,165 @@ sf::Vector2f Trainer::getPos(){
 
 void Trainer::displacement(sf::Event &event, sf::View &view, const int* collision)
 {
+    sf::Vector2f position = (spritePlayer).getPosition();
+    int x = position.x + 16;
+    int y = position.y + 16;
+    std::cout<<x<<","<<y<<std::endl;
+    
     setSpeed(event);
-    if (event.type == sf::Event::KeyPressed){
-                sf::Vector2f position = (spritePlayer).getPosition();
-                int x = position.x/16+1;
-                int y = position.y/16 +1;
-                std::cout<<x<<","<<y<<std::endl;
-
-            
-        if(event.type == sf::Event::KeyPressed){
-                if (event.key.code == sf::Keyboard::Left) {
-                    if (facingDirection != "Left"){
-                        (spritePlayer).setTextureRect(sf::IntRect(0,sheetRect,sheetRect,sheetRect));
-                        facingDirection = "Left";
-                        counterWalk = 0;
-                    }
-                    else{
-                        if(collision[x-1+(y*34)]==0 && x>0){
-                            (spritePlayer).move(-playerMovementSpeed, 0);
-                            (spritePlayer).setTextureRect(sf::IntRect(counterWalk * sheetRect,sheetRect,sheetRect,sheetRect));
-                            view.move(-playerMovementSpeed, 0);
-                        }
-                    }
-                }
-        }
-                if (event.key.code == sf::Keyboard::Right) {
-                    if (facingDirection != "Right"){
-                        (spritePlayer).setTextureRect(sf::IntRect(0,2*sheetRect,sheetRect,sheetRect));
-                        facingDirection = "Right";
-                        counterWalk = 0;
-                    }
-                    else{
-                        if(collision[x+1+(y*34)]==0 && x<33){
-                            (spritePlayer).move(playerMovementSpeed, 0);
-                            (spritePlayer).setTextureRect(sf::IntRect(counterWalk * sheetRect,2*sheetRect,sheetRect,sheetRect));
-                            view.move(playerMovementSpeed, 0);
-                        }
-                    }
-                }
+    
+    if (state == "Walking")
+    {
         
-                if (event.key.code == sf::Keyboard::Up) {
-                    if (facingDirection != "Up"){
-                        (spritePlayer).setTextureRect(sf::IntRect(0,3*sheetRect,sheetRect,sheetRect));
-                        facingDirection = "Up";
-                        counterWalk = 0;
-                    }
-                    else{
-                        if(collision[x+((y-1)*34)]==0 && y>0){
-                            (spritePlayer).move(0, -playerMovementSpeed);
-                            (spritePlayer).setTextureRect(sf::IntRect(counterWalk * sheetRect,3*sheetRect,sheetRect,sheetRect));
-                            view.move(0, -playerMovementSpeed);
-                        }
-                    }
-                }
-        
-                if (event.key.code == sf::Keyboard::Down) {
-                    if (facingDirection != "Down"){
-                        (spritePlayer).setTextureRect(sf::IntRect(0,0,sheetRect,sheetRect));
-                        facingDirection = "Down";
-                        counterWalk = 0;
-                    }
-                    else{
-                        if(collision[x+((y+1)*34)]==0 && y<33){
-                            (spritePlayer).move(0, playerMovementSpeed);
-                            (spritePlayer).setTextureRect(sf::IntRect(counterWalk * 64,0,sheetRect,sheetRect));
-                            view.move(0,playerMovementSpeed);
-                        }
-                    }
-                }
-        
+        if (facingDirection == "Down")
+        {
+            if (y >= b + 16){
+                state = "Stop";
+                counterWalk = 1;
+            }
+            else{
+                (spritePlayer).move(0, playerMovementSpeed);
+                (spritePlayer).setTextureRect(sf::IntRect(counterWalk * 64,0,sheetRect,sheetRect));
+                view.move(0,playerMovementSpeed);
+                    
                 counterWalk++;
                 if(counterWalk==sizeAnim){
-                    counterWalk=0;
+                    counterWalk = 0;
                 }
+            }
+        }
+        
+        if (facingDirection == "Up")
+        {
+            if ( y <= b - 16){
+                state = "Stop";
+                counterWalk = 1;
+            }
+            else{
+                (spritePlayer).move(0, -playerMovementSpeed);
+                (spritePlayer).setTextureRect(sf::IntRect(counterWalk * sheetRect,3*sheetRect,sheetRect,sheetRect));
+                view.move(0, -playerMovementSpeed);
+                     
+                counterWalk++;
+                if(counterWalk == sizeAnim){
+                    counterWalk = 0;
+                 }
+            }
+        }
+        
+        if (facingDirection == "Right")
+        {
+            if (x >= a + 16){ // -10 because of initial position
+                state = "Stop";
+                counterWalk = 1;
+            }
+            else{
+                (spritePlayer).move(playerMovementSpeed, 0);
+                (spritePlayer).setTextureRect(sf::IntRect(counterWalk * sheetRect,2*sheetRect,sheetRect,sheetRect));
+                view.move(playerMovementSpeed, 0);
+                     
+                counterWalk++;
+                if(counterWalk == sizeAnim){
+                    counterWalk = 0;
+                 }
+            }
+            
+        }
+        
+        if (facingDirection == "Left")
+        {
+            if (x <= a - 16 ){ // because of initial position
+                state = "Stop";
+                counterWalk = 1;
+            }
+            else{
+                (spritePlayer).move(-playerMovementSpeed, 0);
+                (spritePlayer).setTextureRect(sf::IntRect(counterWalk * sheetRect,sheetRect,sheetRect,sheetRect));
+                view.move(-playerMovementSpeed, 0);
+                
+                counterWalk++;
+                if(counterWalk == sizeAnim){
+                    counterWalk = 0;
+                }
+            }
+        }
+
     }
+   
+    if (state == "Stop"){
+    
+        if (event.type == sf::Event::KeyPressed){
+                
+            if (event.key.code == sf::Keyboard::Left) {
+                if (facingDirection != "Left"){
+                    (spritePlayer).setTextureRect(sf::IntRect(0,sheetRect,sheetRect,sheetRect));
+                    facingDirection = "Left";
+                    counterWalk = 1;
+                }
+                else{
+                    if(collision[(int) x/16 -1+( (int)y/16 *34)] == 0 && x > 10){ //&& x>0
+                        facingDirection = "Left";
+                        state = "Walking";
+                        a = x;
+                        b = y;
+                    }
+                }
+            }
+        
+            if (event.key.code == sf::Keyboard::Right) {
+                if (facingDirection != "Right"){
+                    (spritePlayer).setTextureRect(sf::IntRect(0,2*sheetRect,sheetRect,sheetRect));
+                    facingDirection = "Right";
+                    counterWalk = 1;
+                }
+                else{
+                    if(collision[(int) x/16 +1+( (int) y/16 *34)]==0 && x<538){ //&& x<33
+                        facingDirection = "Right";
+                        state = "Walking";
+                        a = x;
+                        b = y;
+                    }
+                }
+            }
+                
+        
+            if (event.key.code == sf::Keyboard::Up) {
+                if (facingDirection != "Up"){
+                    (spritePlayer).setTextureRect(sf::IntRect(0,3*sheetRect,sheetRect,sheetRect));
+                    facingDirection = "Up";
+                    counterWalk = 1;
+                }
+                else{
+                    if(collision[(int) x/16 +(((int) y/16 -1)*34)]==0 ){  //&& y>0
+                        facingDirection = "Up";
+                        state = "Walking";
+                        a = x;
+                        b = y;
+                    }
+                }
+            }
+        
+            if (event.key.code == sf::Keyboard::Down) {
+                if (facingDirection != "Down"){
+                    (spritePlayer).setTextureRect(sf::IntRect(0,0,sheetRect,sheetRect));
+                    facingDirection = "Down";
+                    counterWalk = 1;
+                }
+                else{
+                    if(collision[(int) x/16 + ((y/16 +1)*34)]==0 ){  // && y<33
+                        facingDirection = "Down";
+                        state = "Walking";
+                        a = x;
+                        b = y;
+                    }
+                }
+            }
+        
+              
+        }
+    }
+    
+    std::cout << facingDirection << std::endl;
+    std::cout << state << std::endl;
+    
 }

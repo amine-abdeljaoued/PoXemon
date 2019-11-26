@@ -1,6 +1,6 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
-/* #include "ResourcePath.hpp" */
+ #include "ResourcePath.hpp"
 #include <unistd.h>
 #include <stdio.h>
 #include <iostream>
@@ -28,7 +28,7 @@ int main()
 
 
     //Variables for the character and declaration of him/ we need to put it in constructor
-    float playerMovementSpeed = 16;
+    float playerMovementSpeed = 4;
     int sheetRect = 64;
     int sizeAnim = 4;
     
