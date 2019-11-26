@@ -33,8 +33,8 @@ public:
 
 	//void setPosition(float& xpos, float& ypos);
 	void setPosition(sf::Vector2f& pos);
-	void set_shoot_dir(sf::Vector2f mouse_position, sf::Vector2f initial_position);
-	bool update(float deltaTime);
+	void set_shoot_dir(const sf::Vector2f& mouse_position, const sf::Vector2f& initial_position);
+	bool update(float& deltaTime);
 	bool offscreen();
 	bool collide();
 private:

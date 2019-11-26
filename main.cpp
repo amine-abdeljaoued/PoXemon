@@ -50,6 +50,7 @@ int main ()
     sf::Time elapsed;
     
     Backpack bag;
+	static int counter=0;
 
 	// run the program as long as the window is open
 	while (window.isOpen())
@@ -77,6 +78,8 @@ int main ()
         eevee.draw(window);
 		opponent1.draw(window);
 
+		std::cout << counter++ << std::endl;
+		
 		window.display();
     }
     return 0;

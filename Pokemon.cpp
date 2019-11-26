@@ -19,10 +19,12 @@
 		sprite.setScale(sf::Vector2f(0.4f, 0.4f));
 	}
 
-	void Pokemon::draw(sf::RenderTarget& target) const {
+	
+	void Pokemon::draw(sf::RenderTarget& target) {//const ?
     	target.draw(sprite);
 		health.draw(target);
 		bullets.draw(target);
+		bullets.bulletbar.draw(target);
 	}
 
 	void Pokemon::update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clock, sf::Time& elapsed) {   // Movement is dependant on time not on frame rate
@@ -44,18 +46,6 @@
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
 			health.setHealth(health.getHealth() - 1);
 		}
-//		 //One parabolic shot - use for Pokeballs?
-//		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-//			ball.setPosition(x, y);     // Need to figure out where the starting x and y position are
-//			ball.velocityY = -sqrt(2.0f * 981.0f * ball.ballHeight); //We need to reset the ball's position and starting speed when you shoot, that's why its in this class
-//			shooting = true;
-//		}
-//		//Continuation of the one shot as time goes by
-//		if (shooting) {
-//			bool shoot = ball.update(deltaTime);
-//			if (!shoot) { shooting = false; }
-//        }
-
 		//Bullets: shooting
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 			bullets.new_shot(x,y,sprite.getGlobalBounds(), window, sf::Mouse::getPosition(window));
