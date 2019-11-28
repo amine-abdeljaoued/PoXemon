@@ -71,6 +71,14 @@ const int level2[] =
         243, 243, 243, 243, 243, 243, 243, 243, 243, 243, 243, 243, 243, 243, 243, 243, 243, 243, 243, 243, 243, 243, 243,243,243, 243, 243, 243, 243, 243, 243, 243, 243, 243,
     };
 
+// <6 = case ou on peu aller
+// 0 = rien ne se passe
+// 1 = herbe haute donc on peut trouver des pokemon
+// 2 = passage a une autre map ou une maison
+// 6 = on peut juste pas aller
+// 7 = eau donc on peut y aller avec des pokemons eau
+// etc...
+
 const int collision[] =
 {
     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
