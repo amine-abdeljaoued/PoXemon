@@ -11,4 +11,4 @@ And the third one on fights to which we'd like to add more dynamism.
 
 Sources: 
 
-TO PRECISE
+Fonts: https://www.dafont.com/fr/search.php?q=Pokemon
