@@ -16,7 +16,7 @@ BulletBar::BulletBar() {
 	empty_part = 0;
 
 	//initialize the text (string of numbers representing the available bullets)
-	//you will need to download the font, here's a link https://www.dafont.com/fr/upheaval.font
+	//link for the font: https://www.dafont.com/fr/upheaval.font
 	//(We might change the font later)
 	if (!font.loadFromFile("upheavtt.ttf")) { std::cout << "could not load bullet_bar font" << std::endl; }
 	nb_text.setFont(font);
@@ -43,6 +43,7 @@ void BulletBar::update(int additional_bullet) {
 
 	available_bullets += additional_bullet;
 	nb_text.setString(std::to_string(available_bullets));
+	std::cout << available_bullets << std::endl;
 
 	//this does not work
 

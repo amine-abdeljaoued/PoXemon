@@ -1,6 +1,6 @@
 #include "Pokemon.h"
 
-	Pokemon::Pokemon(float xstart, float ystart, float h, float v, float hp, char path[100], float pokemon_rarity)
+	Pokemon::Pokemon(float xstart, float ystart, float h, float v, float hp, std::string path, float pokemon_rarity)
 	{
 		rarity = pokemon_rarity; //1 == common, 2 == rare, 3 == epic, 4 == legendary
 
