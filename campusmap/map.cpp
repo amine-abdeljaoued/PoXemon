@@ -11,12 +11,20 @@ using namespace std;
 
 Map::Map(int i)
 {
-    if(i==1)
+    if(i==0)
     {
         if (!background.load("Sprites/tileset1.png", sf::Vector2u(16, 16), level, 34, 34)){
             cout << "Error loading the sprite";
         }
        
+        Npc* toto = new  Npc("Sprites/NPC2.png",70,50,0.5f,200,212);
+        npcs.push_back(toto) ;
+    }
+    if(i==2)
+    {
+        if (!background.load("Sprites/tileset1.png", sf::Vector2u(16, 16), level2, 34, 34)){
+            cout << "Error loading the sprite";
+        }
         Npc* toto = new  Npc("Sprites/NPC2.png",70,50,0.5f,200,212);
         npcs.push_back(toto) ;
     }

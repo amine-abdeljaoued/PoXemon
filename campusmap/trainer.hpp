@@ -9,11 +9,12 @@ using namespace std;
 
 class Trainer {
     public:
-        Trainer(float Speed, int sheetRect, int sizeAnim);
+        Trainer(float Speed, int sheetRect, int sizeAnim, int& map_num);
         void displacement(sf::Event &event, sf::View &view, const int* collision);
         void setSpeed(sf::Event &event);
         void draw(sf::RenderWindow &window) const;
         sf::Vector2f getPos();
+        int map_num;
         //sf::Clock* clock;
     private:
         

@@ -9,7 +9,7 @@
 #include <list>
 using namespace std;
 
-Trainer::Trainer( float Speed, int sheetRect, int sizeAnim)
+Trainer::Trainer( float Speed, int sheetRect, int sizeAnim, int& map_num)
 {
     
     if (!texturePlayer.loadFromFile(/* resourcePath() + */ "Sprites/fullch.png")) {
@@ -24,6 +24,7 @@ Trainer::Trainer( float Speed, int sheetRect, int sizeAnim)
     playerMovementSpeed = Speed;
     this->sheetRect = sheetRect;
     this->sizeAnim = sizeAnim;
+    this->map_num = map_num;
 
     
 }
@@ -35,11 +36,11 @@ void Trainer::draw(sf::RenderWindow &window) const {
 void Trainer::setSpeed(sf::Event &event){
     if ((event.type == sf::Event::KeyPressed)&&((event.key.code == sf::Keyboard::LShift)||(event.key.code == sf::Keyboard::RShift)))
     {
-        playerMovementSpeed = 32;
+        playerMovementSpeed = 8;
     }
     if ((event.type == sf::Event::KeyReleased)&&((event.key.code == sf::Keyboard::LShift)||(event.key.code == sf::Keyboard::RShift)))
     {
-        playerMovementSpeed = 16;
+        playerMovementSpeed = 4;
     }
 }
 sf::Vector2f Trainer::getPos(){
@@ -52,10 +53,12 @@ void Trainer::displacement(sf::Event &event, sf::View &view, const int* collisio
     sf::Vector2f position = (spritePlayer).getPosition();
     int x = position.x + 16;
     int y = position.y + 16;
-    std::cout<<x<<","<<y<<std::endl;
+//    std::cout<<x<<","<<y<<std::endl;
     
     setSpeed(event);
     
+    if (collision[(int) x/16 +( (int)y/16 *34)]==2) map_num = 2;
+
     if (state == "Walking")
     {
         
@@ -145,7 +148,7 @@ void Trainer::displacement(sf::Event &event, sf::View &view, const int* collisio
                     counterWalk = 1;
                 }
                 else{
-                    if(collision[(int) x/16 -1+( (int)y/16 *34)] == 0 && x > 10){ //&& x>0
+                    if(collision[(int) x/16 -1+( (int)y/16 *34)] <6 && x > 10){ //&& x>0
                         facingDirection = "Left";
                         state = "Walking";
                         a = x;
@@ -161,7 +164,7 @@ void Trainer::displacement(sf::Event &event, sf::View &view, const int* collisio
                     counterWalk = 1;
                 }
                 else{
-                    if(collision[(int) x/16 +1+( (int) y/16 *34)]==0 && x<538){ //&& x<33
+                    if(collision[(int) x/16 +1+( (int) y/16 *34)]<6 && x<538){ //&& x<33
                         facingDirection = "Right";
                         state = "Walking";
                         a = x;
@@ -169,7 +172,6 @@ void Trainer::displacement(sf::Event &event, sf::View &view, const int* collisio
                     }
                 }
             }
-                
         
             if (event.key.code == sf::Keyboard::Up) {
                 if (facingDirection != "Up"){
@@ -178,7 +180,7 @@ void Trainer::displacement(sf::Event &event, sf::View &view, const int* collisio
                     counterWalk = 1;
                 }
                 else{
-                    if(collision[(int) x/16 +(((int) y/16 -1)*34)]==0 ){  //&& y>0
+                    if(collision[(int) x/16 +(((int) y/16 -1)*34)]<6 ){  //&& y>0
                         facingDirection = "Up";
                         state = "Walking";
                         a = x;
@@ -194,7 +196,7 @@ void Trainer::displacement(sf::Event &event, sf::View &view, const int* collisio
                     counterWalk = 1;
                 }
                 else{
-                    if(collision[(int) x/16 + ((y/16 +1)*34)]==0 ){  // && y<33
+                    if(collision[(int) x/16 + ((y/16 +1)*34)]<6 ){  // && y<33
                         facingDirection = "Down";
                         state = "Walking";
                         a = x;
@@ -207,7 +209,7 @@ void Trainer::displacement(sf::Event &event, sf::View &view, const int* collisio
         }
     }
     
-    std::cout << facingDirection << std::endl;
-    std::cout << state << std::endl;
+//    std::cout << facingDirection << std::endl;
+//    std::cout << state << std::endl;
     
 }
