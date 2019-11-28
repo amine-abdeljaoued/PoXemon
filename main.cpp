@@ -26,7 +26,7 @@ int main ()
 	sf::Vector2u WindowSize;   //Added to store window size.
 
 	if(!BackgroundTexture.loadFromFile("Images/grassbg.png")){
-		std::cout<<"BG didn't load"<<std::endl;
+                std::cout<<"BG didn't load"<<std::endl;
 	}
 	else
 	{
@@ -41,7 +41,7 @@ int main ()
   	}
 	// -----------------------------------------------------------------
 
-    Pokemon eevee(10.f, groundY, 200.f, 500.f);
+    Pokemon eevee(10.f, groundY, 200.f, 500.f, 100, "Images/eevee.png", 2);
 	Opponent opponent1(1000.f,groundY,200.f, 800.f);
     float deltaTime = 0.0f;
 

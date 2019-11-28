@@ -1,8 +1,10 @@
 #include "Pokemon.h"
 
-	Pokemon::Pokemon(float xstart, float ystart, float h, float v)
+	Pokemon::Pokemon(float xstart, float ystart, float h, float v, float hp, char path[100], float pokemon_rarity)
 	{
-		health.setHealth(100); 		// Pokemon starts with full health when it is created
+		rarity = pokemon_rarity; //1 == common, 2 == rare, 3 == epic, 4 == legendary
+
+		health.setHealth(hp); 		// Pokemon starts with full health when it is created
 		velocityX = 0.0f;
 		velocityY = 0.0f;
 		jumpHeight = h;
@@ -12,14 +14,14 @@
 		x = xstart;
 		y = ystart;
 		sprite.setPosition(sf::Vector2f(x, y));
-		
-		if (!pic.loadFromFile("Images/eevee.png")){ std::cout << "could not load" << std::endl;}
-		pic.loadFromFile("Images/eevee.png");
+
+                if (!pic.loadFromFile(path)){ std::cout << "could not load" << std::endl;} //path = Images/eevee.png
+		pic.loadFromFile(path);
 		sprite.setTexture(pic);
 		sprite.setScale(sf::Vector2f(0.4f, 0.4f));
 	}
 
-	
+
 	void Pokemon::draw(sf::RenderTarget& target) {//const ?
     	target.draw(sprite);
 		health.draw(target);
@@ -57,7 +59,7 @@
 		health.update(); 	// Need to still react to bullets and decrease our health
 							//AND NB need to make this change health.health
 		bullets.update(deltaTime, clock, elapsed);
-		 
+
 		velocityY += 981.0f * deltaTime;
 		move(deltaTime);
 	}

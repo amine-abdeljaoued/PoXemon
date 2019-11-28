@@ -8,6 +8,8 @@
 
 class Pokemon {
 public:
+	float rarity;
+
 	sf::Sprite sprite;
 	float x;                //x and y store current position
 	float y;
@@ -21,7 +23,7 @@ public:
 	Healthbar health;				// Health between 1 and 100
 	Artillery bullets; 		// This is where all bullets are stored
 							// If we want bullets to depend on Pokemon, bullets must have a constructor
-	Pokemon()=default;					
+	Pokemon()=default;
 	Pokemon(float xstart, float ystart, float h, float v);
 	void update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clock, sf::Time& elapsed);
 	void draw(sf::RenderTarget& target) ;// const ?
