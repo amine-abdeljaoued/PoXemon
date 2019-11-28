@@ -4,6 +4,8 @@
 
 Backpack::Backpack(){
     dict_pokeball["Normalball"] = 3;
+    dict_pokeball["Superball"] = 3;
+    dict_pokeball["Masterball"] = 3;
     
     //Outline with white base
     clickbox.setFillColor(sf::Color::White);

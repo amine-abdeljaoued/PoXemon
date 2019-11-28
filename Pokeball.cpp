@@ -3,6 +3,7 @@
 
 
 
+
     Pokeball::Pokeball() {   // Thing to add: should also initialise ball                                            image, with views for rotation
         pic.loadFromFile("Images/pokeball.png");
         ball.setTexture(pic);
@@ -52,3 +53,23 @@
     }
 
 
+Normalball::Normalball() {  //derived class
+        proba = 0.20;
+        pic1.loadFromFile("Images/pokeball.png");
+        ball.setTexture(pic1);
+        ball.setScale(sf::Vector2f(0.4f, 0.4f));
+}
+
+Superball::Superball() {  //derived class
+        proba = 0.40;
+        pic2.loadFromFile("Images/pokeball.png");
+        ball.setTexture(pic2);
+        ball.setScale(sf::Vector2f(0.4f, 0.4f));
+}
+
+Masterball::Masterball() {  //derived class
+        proba = 0.60;
+        pic3.loadFromFile("Images/pokeball.png");
+        ball.setTexture(pic3);
+        ball.setScale(sf::Vector2f(0.4f, 0.4f));
+}
