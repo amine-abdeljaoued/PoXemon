@@ -10,7 +10,7 @@ using namespace std;
 class Trainer {
     public:
         Trainer(float Speed, int sheetRect, int sizeAnim, int& map_num);
-        void displacement(sf::Event &event, sf::View &view, const int* collision);
+        void displacement(sf::Event &event, sf::View &view, const int* collision, sf::Clock& clock, int& alpha);
         void setSpeed(sf::Event &event);
         void draw(sf::RenderWindow &window) const;
         sf::Vector2f getPos();

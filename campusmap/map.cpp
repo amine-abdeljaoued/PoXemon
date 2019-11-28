@@ -9,7 +9,8 @@
 #include <list>
 using namespace std;
 
-Map::Map(int i)
+
+Map::Map(int i, sf::RenderWindow &window)
 {
     if(i==0)
     {
@@ -39,8 +40,26 @@ Map::~Map()
     }
 }
 
-void Map::draw(sf::RenderWindow &window, Trainer &trainer) const {
+void Map::initialisation(sf::Clock& clock, sf::RenderWindow &window, int& alpha) const{
+    std::cout << clock.getElapsedTime().asSeconds() << std::endl;
+    std::cout << alpha << std::endl;
     
+    sf::ConvexShape black;
+    black.setPointCount(4);
+    black.setPoint(0, sf::Vector2f(0, 0));
+    black.setPoint(1, sf::Vector2f(544, 0));
+    black.setPoint(2, sf::Vector2f(544, 544));
+    black.setPoint(3, sf::Vector2f(0, 544));
+
+    if (clock.getElapsedTime().asSeconds() < 2) {
+        black.setFillColor(sf::Color(10, 10, 10, alpha));
+        window.draw(black);
+        if (0.05 < clock.getElapsedTime().asSeconds() && alpha >= 5) alpha = alpha - 5;
+        }
+}
+
+
+void Map::draw(sf::RenderWindow &window, Trainer &trainer, sf::Clock& clock, int& alpha) const {
     sf::Vector2f pos =trainer.getPos();
     window.draw(background);
     for (auto const& np : npcs) 
@@ -56,6 +75,8 @@ void Map::draw(sf::RenderWindow &window, Trainer &trainer) const {
             (*np).draw(window);
         }
         
-    } 
+    }
     
+    initialisation(clock, window, alpha);
 }
+

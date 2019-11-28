@@ -48,7 +48,7 @@ sf::Vector2f Trainer::getPos(){
     return position;
 }
 
-void Trainer::displacement(sf::Event &event, sf::View &view, const int* collision)
+void Trainer::displacement(sf::Event &event, sf::View &view, const int* collision, sf::Clock& clock, int& alpha)
 {
     sf::Vector2f position = (spritePlayer).getPosition();
     int x = position.x + 16;
@@ -57,7 +57,11 @@ void Trainer::displacement(sf::Event &event, sf::View &view, const int* collisio
     
     setSpeed(event);
     
-    if (collision[(int) x/16 +( (int)y/16 *34)]==2) map_num = 2;
+    if (collision[(int) x/16 +( (int)y/16 *34)]==2){
+        map_num = 2;
+        clock.restart();
+        alpha = 250;
+    }
 
     if (state == "Walking")
     {
