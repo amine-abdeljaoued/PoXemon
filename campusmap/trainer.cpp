@@ -164,7 +164,7 @@ void Trainer::displacement(sf::Event &event, sf::View &view, const int* collisio
                     counterWalk = 1;
                 }
                 else{
-                    if(collision[(int) x/16 +1+( (int) y/16 *34)]<6 && x<538){ //&& x<33
+                    if(collision[(int) x/16 +1+( (int) y/16 *34)]<6 && x<528){ //&& x<33
                         facingDirection = "Right";
                         state = "Walking";
                         a = x;
@@ -180,7 +180,7 @@ void Trainer::displacement(sf::Event &event, sf::View &view, const int* collisio
                     counterWalk = 1;
                 }
                 else{
-                    if(collision[(int) x/16 +(((int) y/16 -1)*34)]<6 ){  //&& y>0
+                    if(collision[(int) x/16 +(((int) y/16 -1)*34)]<6 && y > 10){  //&& y>0
                         facingDirection = "Up";
                         state = "Walking";
                         a = x;
@@ -196,7 +196,7 @@ void Trainer::displacement(sf::Event &event, sf::View &view, const int* collisio
                     counterWalk = 1;
                 }
                 else{
-                    if(collision[(int) x/16 + ((y/16 +1)*34)]<6 ){  // && y<33
+                    if(collision[(int) x/16 + ((y/16 +1)*34)]<6 && y < 528){  // && y<33
                         facingDirection = "Down";
                         state = "Walking";
                         a = x;
