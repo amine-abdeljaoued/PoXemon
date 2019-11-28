@@ -50,17 +50,11 @@ int main()
         window.clear(sf::Color(112,200,160));
              
         Arthur.displacement(event,view, collision);
-        if (Arthur.map_num == 0){
-            Map map1(map_num);
-            map1.draw(window, Arthur);
-        }
-        
-        if (Arthur.map_num == 2){
-            Map map1(2);
-            map1.draw(window, Arthur);
-        }
 
         sf::Time elapsed1 = clock.getElapsedTime();
+        
+        Map map1(Arthur.map_num);
+        map1.draw(window, Arthur);
         
         window.setView(view);
      
