@@ -4,14 +4,21 @@ LDLIBS = -lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system
 trainer.o: trainer.cpp trainer.hpp
 	$(CXX) -c trainer.cpp
 
+npc.o: npc.cpp npc.hpp
+	$(CXX) -c npc.cpp
+
 tilemap.o: tilemap.cpp tilemap.hpp
 	$(CXX) -c tilemap.cpp
 	
-main.o: main.cpp tilemap.hpp trainer.hpp const.hpp
-	$(CXX) -c main.cpp
+map.o: map.cpp map.hpp tilemap.hpp npc.hpp trainer.hpp const.hpp
+	$(CXX) -c map.cpp
 
-game:  tilemap.o main.o trainer.o 
-	$(CXX) main.o  trainer.o tilemap.o  -o game $(LDLIBS)  
+main.o: main.cpp tilemap.hpp npc.hpp map.hpp trainer.hpp const.hpp
+	$(CXX) -c main.cpp
+	
+
+game: main.o map.o tilemap.o trainer.o npc.o
+	$(CXX) main.o map.o trainer.o tilemap.o npc.o  -o game $(LDLIBS)  
 
 
 clean:
