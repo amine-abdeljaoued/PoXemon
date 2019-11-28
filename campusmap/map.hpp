@@ -13,12 +13,11 @@ using namespace std;
 class Map 
 {
     public:
-        Map(int i);
+        Map(int i, sf::RenderWindow &window);
         ~Map();
-        void draw(sf::RenderWindow &window, Trainer &trainer) const;
+        void draw(sf::RenderWindow &window, Trainer &trainer, sf::Clock& clock, int& alpha) const;
+        void initialisation(sf::Clock& clock, sf::RenderWindow &window, int& alpha) const;
     private:
         TileMap background;
         list<Npc*> npcs;
-
-        
 };

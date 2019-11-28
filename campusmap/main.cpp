@@ -12,12 +12,12 @@
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(544*2, 544*2), "Tilemap");
+    sf::RenderWindow window(sf::VideoMode(544, 544), "Tilemap");
     sf::View view(sf::Vector2f(272, 272), sf::Vector2f(544, 544));
-    view.zoom(0.5f);
+    //view.zoom(0.5f);
     window.setPosition(sf::Vector2i(0, 0));
 
-    std::cout<<collision[0]<<std::endl;
+
 
     /* sf::Music music;
     if (!music.openFromFile(resourcePath() + "town_1.ogg")) {
@@ -34,8 +34,8 @@ int main()
     
     Trainer Arthur(playerMovementSpeed, sheetRect, sizeAnim, map_num);
     
-   
-
+    // const for the transition
+    int alpha = 250;
     sf::Clock clock;
     
     window.setFramerateLimit(30);
@@ -48,13 +48,14 @@ int main()
         if(event.type == sf::Event::Closed) window.close();
         
         window.clear(sf::Color(112,200,160));
-             
-        Arthur.displacement(event,view, collision);
+            
+        Arthur.displacement(event,view, collision, clock, alpha);
 
         sf::Time elapsed1 = clock.getElapsedTime();
         
-        Map map1(Arthur.map_num);
-        map1.draw(window, Arthur);
+        Map map1(Arthur.map_num, window);
+        map1.draw(window, Arthur, clock, alpha);
+       
         
         window.setView(view);
      
