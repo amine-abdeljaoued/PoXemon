@@ -5,20 +5,26 @@
 #include <stdio.h>
 #include <iostream>
 #include <string>
-
+using namespace std;
 
 class Trainer {
     public:
-        Trainer(sf::Sprite *sprite, float Speed, int sheetRect, int sizeAnim);
-        void displacement(sf::Event &event, sf::View &view, int deltaT);
+        Trainer(float Speed, int sheetRect, int sizeAnim);
+        void displacement(sf::Event &event, sf::View &view, const int* collision);
         void setSpeed(sf::Event &event);
-        sf::Sprite *spritePlayer; // With texture already loaded
+        void draw(sf::RenderWindow &window) const;
+        sf::Vector2f getPos();
         //sf::Clock* clock;
     private:
         
         float playerMovementSpeed;
         int sheetRect; //Size of a single character position on the sprite sheet
         int sizeAnim; //Number of animations per direction of movement
-        int counterWalk = 0;
+        int counterWalk = 1;
         std::string facingDirection = "Down";
+        sf::Texture texturePlayer;
+        sf::Sprite spritePlayer;
+        std::string state = "Stop";
+        int a;
+        int b;
 };
