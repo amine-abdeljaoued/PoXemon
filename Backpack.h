@@ -8,17 +8,27 @@
 class Backpack
 {
     public:
-        Pokeball new_Pokeball;
+        Normalball new_Normalball;
         Superball new_Superball;
         Masterball new_Masterball;
     
         std::map<std::string, int> dict_pokeball;
         sf::RectangleShape clickbox;
         sf::Sprite normalball;
+        sf::Sprite superball;
+        sf::Sprite masterball;
     
         void Pokeball_shoot(float& deltaTime, sf::RenderWindow& window);
         
+        void Pokeball_throw(Pokeball Poke,float& deltaTime, sf::RenderWindow& window);
+        
         void draw (sf::RenderTarget &target) const;
+        
+        bool masternow;
+        bool supernow;
+        bool normalnow;
+        
+        
         
         Backpack();
     
@@ -30,6 +40,8 @@ class Backpack
         //It should have several methods
         // for example : replace pokemons, heal them ...
     private:
-    sf::Texture normaltext;
+    sf::Texture normaltext1;
+    sf::Texture normaltext2;
+    sf::Texture normaltext3;
 };
 

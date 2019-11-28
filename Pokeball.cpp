@@ -5,15 +5,15 @@
 
 
     Pokeball::Pokeball() {   // Thing to add: should also initialise ball                                            image, with views for rotation
-        pic.loadFromFile("Images/pokeball.png");
-        ball.setTexture(pic);
+        //pic.loadFromFile("Images/pokeball.png");
+        //ball.setTexture(pic);
         ball.setScale(sf::Vector2f(0.4f, 0.4f));
         in_air = false;
-        bounce = false;
+        bounce = 0;
     }
     void Pokeball::dissapear() {
         ball.setPosition(200.f, 2000.f);
-        bounce=false;
+        bounce=0;
         // I just set this randomly, we must figure out if we wan't to delete the balls, keep them in pokemon class/etc...
     }
     void Pokeball::setPosition(float& xpos, float& ypos) {
@@ -36,13 +36,17 @@
         sf::Vector2u size = window.getSize();
         float w = size.x;
         float width = (float) w;
-        
+        float z = size.y;
+        float height = (float) z;
+        float miheight = height/2;
         float groundX = width;
-        float bounceX = 0.6 * width;
+        float bounceX = 0.4 * width;
         
-        if ((x >= bounceX)&&(bounce==false)) {     // does the bounce only one time
+        
+        if ((x >= bounceX)&&(bounce<5)&&(y>miheight)) {     // does the bounce only one time
             velocityY = -velocityY;
-            bounce=true;
+            bounce+=1;
+            std::cout<<bounce<<std::endl;
         }
         if (x >= groundX) {     // Ball off the screen, we want to remove it from                               visible, to avoid any complications
             dissapear();
@@ -57,19 +61,19 @@ Normalball::Normalball() {  //derived class
         proba = 0.20;
         pic1.loadFromFile("Images/pokeball.png");
         ball.setTexture(pic1);
-        ball.setScale(sf::Vector2f(0.4f, 0.4f));
+        ball.setScale(sf::Vector2f(0.25f, 0.25f));
 }
 
 Superball::Superball() {  //derived class
         proba = 0.40;
-        pic2.loadFromFile("Images/pokeball.png");
+        pic2.loadFromFile("Images/superball.png");
         ball.setTexture(pic2);
-        ball.setScale(sf::Vector2f(0.4f, 0.4f));
+        ball.setScale(sf::Vector2f(0.25f, 0.25f));
 }
 
 Masterball::Masterball() {  //derived class
         proba = 0.60;
-        pic3.loadFromFile("Images/pokeball.png");
+        pic3.loadFromFile("Images/masterball.png");
         ball.setTexture(pic3);
-        ball.setScale(sf::Vector2f(0.4f, 0.4f));
+        ball.setScale(sf::Vector2f(0.07f, 0.07f));
 }
