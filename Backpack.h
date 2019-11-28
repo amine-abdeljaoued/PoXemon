@@ -9,6 +9,9 @@ class Backpack
 {
     public:
         Pokeball new_Pokeball;
+        Superball new_Superball;
+        Masterball new_Masterball;
+    
         std::map<std::string, int> dict_pokeball;
         sf::RectangleShape clickbox;
         sf::Sprite normalball;
