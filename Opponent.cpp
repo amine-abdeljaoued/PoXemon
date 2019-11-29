@@ -1,25 +1,17 @@
 #include "Opponent.h"
 #include <iostream>
+#include <random>
+
+
 
 
 
 void Opponent::update(float& deltaTime){
-    		velocityX = 0.0f;
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-			std::cout<<"left"<<std::endl;
-			velocityX += speed;
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-			velocityX -= speed;
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && player.canJump) {
-			
-		}
-		
+    	velocityX = 0.0f;
+		int randomDirection[2]={-1,1};
+		int randomIndex=rand() % 2;
+		velocityX = randomDirection[randomIndex]*speed;
 
-		if (player.shooting) {
-			
-		}
 
 		velocityY += 981.0f * deltaTime;
 		
