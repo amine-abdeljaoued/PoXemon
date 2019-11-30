@@ -49,6 +49,9 @@ int main ()
     sf::Clock clock_regenerate_bullets;
     sf::Time elapsed;
     
+    sf::Clock clock2;
+    sf::Time elapsed2;
+    
     Backpack bag;
 	static int counter=0;
 
@@ -57,6 +60,7 @@ int main ()
 	{
 		deltaTime = clock.restart().asSeconds();
 		elapsed = clock_regenerate_bullets.getElapsedTime();
+        elapsed2 = clock2.getElapsedTime();
 
 		sf::Event event;
 		while (window.pollEvent(event))
@@ -71,14 +75,14 @@ int main ()
         // clear the window with black color - need to clear before drawing anything (overlap)
         eevee.update(deltaTime, window, clock_regenerate_bullets, elapsed);
 	 	opponent1.update(deltaTime);
-		bag.Pokeball_shoot(deltaTime, window);
+		bag.Pokeball_shoot(deltaTime, window, clock2, elapsed2);
 		window.clear(sf::Color::Blue);
 		window.draw(background);
         bag.draw(window);
         eevee.draw(window);
 		opponent1.draw(window);
 
-		std::cout << counter++ << std::endl;
+		//std::cout << counter++ << std::endl;
 		
 		window.display();
     }
