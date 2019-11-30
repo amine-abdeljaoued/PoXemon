@@ -18,7 +18,7 @@ class Backpack
         sf::Sprite superball;
         sf::Sprite masterball;
     
-        void Pokeball_shoot(float& deltaTime, sf::RenderWindow& window);
+        void Pokeball_shoot(float& deltaTime, sf::RenderWindow& window, sf::Clock &clock2, sf::Time & elapsed2);
         
         void Pokeball_throw(Pokeball Poke,float& deltaTime, sf::RenderWindow& window);
         

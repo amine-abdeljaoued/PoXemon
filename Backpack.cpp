@@ -38,7 +38,7 @@ Backpack::Backpack(){
     
 
     }
-    void Backpack::Pokeball_shoot(float& deltaTime, sf::RenderWindow& window){
+    void Backpack::Pokeball_shoot(float& deltaTime, sf::RenderWindow& window, sf::Clock &clock2, sf::Time & elapsed2){
         
         
         //if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
@@ -66,6 +66,7 @@ Backpack::Backpack(){
 
                     new_Normalball.setPosition(width4, height);// Need to figure out where the starting x and y position are
                     new_Normalball.velocityY = -sqrt(5.0f * 981.0f * new_Normalball.ballHeight); //We need to reset the ball's position and starting speed when you shoot, that's why its in this class
+                    new_Normalball.velocityX = 500;
                     new_Normalball.in_air = true;
             }
         }
@@ -94,7 +95,8 @@ Backpack::Backpack(){
 
 
                                new_Superball.setPosition(width4, height);// Need to figure out where the starting x and y position are
-                               new_Superball.velocityY = -sqrt(5.0f * 981.0f * new_Superball.ballHeight); //We need to reset the ball's position and starting speed when you shoot, that's why its in this class
+                               new_Superball.velocityY = -sqrt(5.0f * 981.0f * new_Superball.ballHeight);//We need to reset the ball's position and starting speed when you shoot, that's why its in this class
+                               new_Superball.velocityX = 500;
                                new_Superball.in_air = true;
                        }
                 
@@ -125,6 +127,7 @@ Backpack::Backpack(){
 
                                    new_Masterball.setPosition(width4, height);// Need to figure out where the starting x and y position are
                                    new_Masterball.velocityY = -sqrt(5.0f * 981.0f * new_Masterball.ballHeight); //We need to reset the ball's position and starting speed when you shoot, that's why its in this class
+                                   new_Masterball.velocityX = 500;
                                    new_Masterball.in_air = true;
                            }
                     
@@ -133,7 +136,7 @@ Backpack::Backpack(){
         
         //Continuation of the one shot as time goes by
         if (new_Normalball.in_air) {
-                bool still_on_screen = new_Normalball.update(deltaTime, window);
+                bool still_on_screen = new_Normalball.update(deltaTime, window,new_Normalball.proba, clock2, elapsed2);
                     //if the ball reached the end of the window, then the ball is not in air
                 if (!still_on_screen) {
                             new_Normalball.in_air = false;
@@ -142,7 +145,7 @@ Backpack::Backpack(){
         }
         //Continuation of the one shot as time goes by
         if (new_Superball.in_air) {
-                bool still_on_screen = new_Superball.update(deltaTime, window);
+                bool still_on_screen = new_Superball.update(deltaTime, window,new_Superball.proba, clock2, elapsed2);
             
                     //if the ball reached the end of the window, then the ball is not in air
                 if (!still_on_screen) {
@@ -151,7 +154,7 @@ Backpack::Backpack(){
         }
         //Continuation of the one shot as time goes by
         if (new_Masterball.in_air) {
-                bool still_on_screen = new_Masterball.update(deltaTime, window);
+                bool still_on_screen = new_Masterball.update(deltaTime, window,new_Masterball.proba, clock2, elapsed2);
                     //if the ball reached the end of the window, then the ball is not in air
                 if (!still_on_screen) {
                             new_Masterball.in_air = false;
@@ -159,6 +162,7 @@ Backpack::Backpack(){
                 }
         }
     }
+    
 
 
 //void Backpack::Pokeball_throw(Pokeball Pokeball,float& deltaTime, sf::RenderWindow& window){
