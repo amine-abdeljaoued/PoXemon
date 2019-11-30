@@ -11,6 +11,9 @@ Pokemon.o: Pokemon.cpp Pokemon.h
 
 opponent.o: Opponent.cpp Opponent.h Pokemon.h 
 	$(CXX) -c -02 Opponent.cpp
+
+player.o: Player.cpp Player.h Pokemon.h 
+	$(CXX) -c -02 Player.cpp
 	
 bullet.o: Bullet.cpp Bullet.h 
 	$(CXX) -c -O2 Bullet.cpp
@@ -31,8 +34,8 @@ main.o: main.cpp Pokemon.h Pokeball.h Bullet.h Health.h Artillery.h Backpack.h O
 	$(CXX) -c -O2 main.cpp
 
 
-game:  Opponent.o Pokeball.o main.o Pokemon.o Bullet.o Health.o Artillery.o Backpack.o Bullet_bar.o
-	$(CXX) main.o  Opponent.o Pokeball.o Pokemon.o Bullet.o Health.o Artillery.o Backpack.o Bullet_bar.o  -o game $(LDLIBS)  
+game:  Opponent.o Pokeball.o main.o Pokemon.o Bullet.o Health.o Artillery.o Backpack.o Bullet_bar.o Player.o
+	$(CXX) main.o  Opponent.o Pokeball.o Pokemon.o Bullet.o Health.o Artillery.o Backpack.o Bullet_bar.o Player.o  -o game $(LDLIBS)  
 
 
 clean:

@@ -2,10 +2,6 @@
 #include <iostream>
 #include <random>
 
-
-
-
-
 void Opponent::update(float& deltaTime){
     	velocityX = 0.0f;
 		int randomDirection[2]={-1,1};
