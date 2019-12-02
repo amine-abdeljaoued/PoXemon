@@ -60,7 +60,9 @@ void Artillery::new_shot_opp(float& x, float& y, const sf::FloatRect& bounds, sf
     }
 }
 
-void Artillery::update(float& deltaTime, sf::Clock& clock, sf::Time& elapsed, const sf::Sprite& opponent_sprite, float& groundY){
+int Artillery::update(float& deltaTime, sf::Clock& clock, sf::Time& elapsed, const sf::Sprite& opponent_sprite, float& groundY){
+	int res = 0;
+
     for (int  i = 0; i < bullets.size(); i++) {
         bullets[i].update(deltaTime, groundY);
         if (bullets[i].offscreen())
@@ -73,6 +75,7 @@ void Artillery::update(float& deltaTime, sf::Clock& clock, sf::Time& elapsed, co
 		if (Collision::PixelPerfectTest(bullets[i].bullet, opponent_sprite)) {
 			std::cout << "collision !" << std::endl;
 			bullets.erase(bullets.begin() + i);
+			res = 3; //it means that the enemy of the pokemon shooting thes bullets will get -3 health 
 		}
     }
 
@@ -83,4 +86,5 @@ void Artillery::update(float& deltaTime, sf::Clock& clock, sf::Time& elapsed, co
 			clock.restart();
 	}
 
+	return res;
 }

@@ -10,9 +10,11 @@
         ball.setScale(sf::Vector2f(0.4f, 0.4f));
         in_air = false;
         bounce = 0;
+        waiting=false;
     }
     void Pokeball::dissapear() {
         ball.setPosition(200.f, 2000.f);
+        waiting = false;
         bounce=0;
         // I just set this randomly, we must figure out if we wan't to delete the balls, keep them in pokemon class/etc...
     }
@@ -62,15 +64,21 @@
             bounce+=1;
             //std::cout<<bounce<<std::endl;
         }
-        if (bounce==8){
+        if (bounce==7){
             velocityY = 0;
             velocityX = 0;
             bounce+=1;
         }
 
-        if (bounce>8){
+        if (bounce>7){
+            waiting = true;
+//            if (bounce == 50){
+//                velocityX-=30;
+//            }
+//            else{
             velocityY = 0;
             velocityX = 0;
+            //}
             //catched(proba, clock2, elapsed2);
             if (catched(proba, clock2, elapsed2)==true){
                 dissapear();
@@ -89,35 +97,18 @@
         return true;
     }
 
-//void Artillery::update(float& deltaTime, sf::Clock& clock, sf::Time& elapsed){
-//for (int  i = 0; i < bullets.size(); i++) {
-//    bullets[i].update(deltaTime);
-//    if (bullets[i].offscreen())
-//        bullets.erase(bullets.begin() + i);
-//    //we loop over the bullets and if a bullet is offscreen, remove it
-//    //we will also need to chack collisions
-//    // I think the 'erase()' this is pretty inefficient, we might need to find a better way
-//}
-//
-////regenerate bullets every 1 second
-//if (elapsed.asSeconds() > 1.0f && available_bullets < max_available_bullets) {
-//        available_bullets += 1;
-//        bulletbar.update(1);
-//        clock.restart();
-//    }
-
 bool Pokeball::catched(float proba, sf::Clock& clock2, sf::Time& elapsed2){
     // //Prints the elapsed time
     //std::cout<<elapsed2.asSeconds()<<std::endl;
     
     //Not very beautiful way to restart the clock at the eight bounce since the
     //clock is running since the throw
-    if (elapsed2.asSeconds() > 4.0f) {
+    if (elapsed2.asSeconds() > 5.0f) {
         clock2.restart();
         return false;
     }
     //wait 3 seconds to catch the pokemon
-    if (elapsed2.asSeconds() > 3.0f) {
+    if (elapsed2.asSeconds() > 4.0f) {
         clock2.restart();
         
         //compares a random number between 0 and 1 with the proba of the ball

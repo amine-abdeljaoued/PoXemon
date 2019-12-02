@@ -38,6 +38,7 @@ public:
     void setPosition(float& xpos, float& ypos);
     bool update(float deltaTime,sf::RenderWindow& window,float proba, sf::Clock &clock2, sf::Time &elapsed2);
     bool catched(float proba, sf::Clock& clock, sf::Time& elapsed);
+    bool waiting = false;
     
     Pokeball();
 private:

@@ -62,6 +62,11 @@ void Healthbar::setHealth(int a){
     update();
 }
 
+void Healthbar::decrease(int i) {
+	health -= i;
+	//std::cout << "ouch !" << std::endl;
+}
+
 void Healthbar::update(){
     //Text
     name_text.setString(name);

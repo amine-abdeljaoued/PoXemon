@@ -23,4 +23,11 @@ Pokemon::Pokemon(float xstart, float ystart, float h, float v, float hp, std::st
 	pic.loadFromFile(path);
 	sprite.setTexture(pic);
 	sprite.setScale(sf::Vector2f(0.4f, 0.4f));
+
 }
+
+void Pokemon::set_enemy(Pokemon* enemy) {
+	this->enemy = enemy;
+}
+
+

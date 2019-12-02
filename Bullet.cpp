@@ -46,8 +46,8 @@ bool Bullet::offscreen() {
 }
 
 void Bullet::reflect_ground(float& groundY) {
-	if (bullet.getPosition().y > groundY + 10){
-		shoot_dir.y = -abs(shoot_dir.y); // make it 'bounce'
+	if (bullet.getPosition().y > groundY + 70){
+		shoot_dir.y = -abs(shoot_dir.y); // make it 'bounce' on the ground
 		}
 }
 
