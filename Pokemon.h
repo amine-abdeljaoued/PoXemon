@@ -26,8 +26,7 @@ public:
 							// If we want bullets to depend on Pokemon, bullets must have a constructor
 	Pokemon()=default;
 	Pokemon(float xstart, float ystart, float h, float v, float hp, std::string path, float pokemon_rarity);
-	void draw(sf::RenderTarget& target) ;// const ?
-
+	
 protected:
 	sf::Texture pic;
 };

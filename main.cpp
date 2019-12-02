@@ -43,7 +43,7 @@ int main ()
 	// -----------------------------------------------------------------
 
     Player eevee(10.f, groundY, 200.f, 500.f, 100, "Images/Pokemon_Images/vulari.png", 2);
-	Opponent opponent1(eevee,1000.f,groundY,200.f, 800.f, 100, "Images/Pokemon_Images/urach.png", 2);
+	Opponent opponent1(&eevee,1000.f,groundY,200.f, 800.f, 100, "Images/Pokemon_Images/urach.png", 2);
     float deltaTime = 0.0f;
 
     sf::Clock clock;
@@ -75,7 +75,7 @@ int main ()
 
         // clear the window with black color - need to clear before drawing anything (overlap)
         eevee.update(deltaTime, window, clock_regenerate_bullets, elapsed);
-	 	opponent1.update(deltaTime);
+	 	opponent1.update(deltaTime, window, clock_regenerate_bullets, elapsed);
 		bag.Pokeball_shoot(deltaTime, window, clock2, elapsed2);
 		window.clear(sf::Color::Blue);
 		window.draw(background);
