@@ -11,6 +11,7 @@ class Backpack
         Normalball new_Normalball;
         Superball new_Superball;
         Masterball new_Masterball;
+
     
         std::map<std::string, int> dict_pokeball;
         sf::RectangleShape clickbox;

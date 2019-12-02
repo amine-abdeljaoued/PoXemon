@@ -1,11 +1,13 @@
 #include "Backpack.h"
 #include<map>
 #include<string>
+#include<cmath>
 
 Backpack::Backpack(){
     dict_pokeball["Normalball"] = 3;
     dict_pokeball["Superball"] = 3;
     dict_pokeball["Masterball"] = 3;
+    
     
     bool masternow = true;
     bool supernow = true;
@@ -68,6 +70,7 @@ Backpack::Backpack(){
                     new_Normalball.velocityY = -sqrt(5.0f * 981.0f * new_Normalball.ballHeight); //We need to reset the ball's position and starting speed when you shoot, that's why its in this class
                     new_Normalball.velocityX = 500;
                     new_Normalball.in_air = true;
+                    
             }
         }
             
@@ -134,19 +137,40 @@ Backpack::Backpack(){
                 
             }
         
+        
         //Continuation of the one shot as time goes by
         if (new_Normalball.in_air) {
                 bool still_on_screen = new_Normalball.update(deltaTime, window,new_Normalball.proba, clock2, elapsed2);
+            if(new_Normalball.waiting == false){
+                new_Normalball.ball.setOrigin(100, 100);//I suppose (100,100) is close to the center of the sprite before rescaling
+//                const sf::Vector2f vector= new_Normalball.ball.getOrigin();
+//                std::cout<<vector.x<<std::endl;
+//                std::cout<<vector.y<<std::endl;
+                new_Normalball.ball.rotate(2.0f);
+            }
+            else{
+                new_Normalball.ball.setRotation(0);
+            }
+                //new_Normalball.ball.move(-(37/2)*(1-cos(5.0)),20*sin(5.0));
                     //if the ball reached the end of the window, then the ball is not in air
                 if (!still_on_screen) {
                             new_Normalball.in_air = false;
-
+                            
                 }
         }
         //Continuation of the one shot as time goes by
         if (new_Superball.in_air) {
                 bool still_on_screen = new_Superball.update(deltaTime, window,new_Superball.proba, clock2, elapsed2);
-            
+                    if(new_Superball.waiting == false){
+                        new_Superball.ball.setOrigin(100, 100);//I suppose (100,100) is close to the center of the sprite before rescaling
+            //          const sf::Vector2f vector= new_Superball.ball.getOrigin();
+            //          std::cout<<vector.x<<std::endl;
+            //          std::cout<<vector.y<<std::endl;
+                        new_Superball.ball.rotate(1.5f);
+                    }
+                    else{
+                        new_Superball.ball.setRotation(0);
+                    }
                     //if the ball reached the end of the window, then the ball is not in air
                 if (!still_on_screen) {
                             new_Superball.in_air = false;
@@ -155,6 +179,16 @@ Backpack::Backpack(){
         //Continuation of the one shot as time goes by
         if (new_Masterball.in_air) {
                 bool still_on_screen = new_Masterball.update(deltaTime, window,new_Masterball.proba, clock2, elapsed2);
+                    if(new_Masterball.waiting == false){
+                        new_Masterball.ball.setOrigin(310, 310);//I suppose (310,310) is close to the center of the sprite before rescaling
+            //          const sf::Vector2f vector= new_Masterball.ball.getOrigin();
+            //          std::cout<<vector.x<<std::endl;
+            //          std::cout<<vector.y<<std::endl;
+                        new_Masterball.ball.rotate(1.5f);
+                    }
+                    else{
+                        new_Masterball.ball.setRotation(0);
+                    }
                     //if the ball reached the end of the window, then the ball is not in air
                 if (!still_on_screen) {
                             new_Masterball.in_air = false;
