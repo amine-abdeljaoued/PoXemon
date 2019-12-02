@@ -42,8 +42,8 @@ int main ()
   	}
 	// -----------------------------------------------------------------
 
-    Player eevee(10.f, groundY, 200.f, 500.f, 100, "Images/Pokemon_Images/vulari.png", 2);
-	Opponent opponent1(&eevee,1000.f,groundY,200.f, 800.f, 100, "Images/Pokemon_Images/urach.png", 2);
+    Player eevee(10.f, groundY, 200.f, 500.f, 100, "Images/Pokemon_Images/vulari.png", 2,"Eevee");
+	Opponent opponent1(&eevee,1000.f,groundY,200.f, 800.f, 100, "Images/Pokemon_Images/urach.png", 2, "Opponent");
     float deltaTime = 0.0f;
 
     sf::Clock clock;

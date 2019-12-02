@@ -23,8 +23,8 @@ BulletBar::BulletBar() {
 	nb_text.setCharacterSize(20);
 	nb_text.setString(std::to_string(available_bullets));
 
-	xpos = 70;
-	ypos = 100;
+	xpos = 200;
+	ypos = 150;
 	setPosition(xpos, ypos);//might change it 
 
 }

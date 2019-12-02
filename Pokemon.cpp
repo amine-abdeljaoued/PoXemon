@@ -1,11 +1,14 @@
 #include "Pokemon.h"
 
-Pokemon::Pokemon(float xstart, float ystart, float h, float v, float hp, std::string path, float pokemon_rarity)
+Pokemon::Pokemon(float xstart, float ystart, float h, float v, float hp, std::string path, float pokemon_rarity, std::string pname)
 {
 	rarity = pokemon_rarity; //1 == common, 2 == rare, 3 == epic, 4 == legendary
-
-	health.setHealth(hp); 		// Pokemon starts with full health when it is created
+	name = pname;
+	health.setHealth(hp); 		
 	health.setPosition(xstart+50, ystart-250);
+	health.name = name;
+	health.level = level;
+
 	velocityX = 0.0f;
 	velocityY = 0.0f;
 	jumpHeight = h;
@@ -21,5 +24,3 @@ Pokemon::Pokemon(float xstart, float ystart, float h, float v, float hp, std::st
 	sprite.setTexture(pic);
 	sprite.setScale(sf::Vector2f(0.4f, 0.4f));
 }
-
-
