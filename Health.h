@@ -7,6 +7,7 @@ public:
     Healthbar();
     int getHealth();
     void setHealth(int a);          // Sets health and calls update
+	void decrease(int i);
     void draw(sf::RenderTarget& target) const;
     void setPosition(float x, float y);     // the two components of the health bar must be moved together
 

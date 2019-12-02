@@ -24,8 +24,12 @@ public:
 	Healthbar health;				// Health between 1 and 100
 	Artillery bullets; 		// This is where all bullets are stored
 							// If we want bullets to depend on Pokemon, bullets must have a constructor
+	Pokemon* enemy;
+
 	Pokemon()=default;
 	Pokemon(float xstart, float ystart, float h, float v, float hp, std::string path, float pokemon_rarity);
+
+	void set_enemy(Pokemon* enemy);
 	
 protected:
 	sf::Texture pic;

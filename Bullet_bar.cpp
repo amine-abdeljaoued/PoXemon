@@ -24,7 +24,7 @@ BulletBar::BulletBar() {
 	nb_text.setString(std::to_string(available_bullets));
 
 	xpos = 70;
-	ypos = 100;
+	ypos = 200;
 	setPosition(xpos, ypos);//might change it 
 
 }
