@@ -74,7 +74,7 @@ int main ()
 		}
 
         // clear the window with black color - need to clear before drawing anything (overlap)
-        eevee.update(deltaTime, window, clock_regenerate_bullets, elapsed);
+        eevee.update(deltaTime, window, clock_regenerate_bullets, elapsed, opponent1.sprite, groundY);
 	 	opponent1.update(deltaTime, window);
 		bag.Pokeball_shoot(deltaTime, window, clock2, elapsed2);
 		window.clear(sf::Color::Blue);

@@ -2,6 +2,7 @@
 #include "Bullet.h"
 #include "Bullet_bar.h"
 #include <SFML/Graphics.hpp>
+#include "Collisions/Collision.h"
 
 // This is the class that stores how many bullets we have/can shoot/are shooting 
 // It also controls the movement of all of the bullets being shot
@@ -12,7 +13,7 @@ public:
     bool was_released; // this is used to shoot only one bullet per click
     void draw(sf::RenderTarget& target) const;
     void new_shot(float& x, float& y, const sf::FloatRect& bounds, sf::RenderTarget& window, const sf::Vector2i& mouse);
-    void update(float& deltaTime, sf::Clock& clock, sf::Time& elapsed);
+    void update(float& deltaTime, sf::Clock& clock, sf::Time& elapsed, const sf::Sprite & opponent_sprite, float& groundY);
 
 
 //private:

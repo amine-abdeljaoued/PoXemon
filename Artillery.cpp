@@ -43,14 +43,20 @@ void Artillery::new_shot(float& x, float& y, const sf::FloatRect& bounds, sf::Re
     was_released = false;
 }
 
-void Artillery::update(float& deltaTime, sf::Clock& clock, sf::Time& elapsed){
+void Artillery::update(float& deltaTime, sf::Clock& clock, sf::Time& elapsed, const sf::Sprite& opponent_sprite, float& groundY){
     for (int  i = 0; i < bullets.size(); i++) {
-        bullets[i].update(deltaTime);
+        bullets[i].update(deltaTime, groundY);
         if (bullets[i].offscreen())
             bullets.erase(bullets.begin() + i);
         //we loop over the bullets and if a bullet is offscreen, remove it
         //we will also need to chack collisions
         // I think the 'erase()' this is pretty inefficient, we might need to find a better way
+
+		//collisions with the opponenent
+		if (Collision::PixelPerfectTest(bullets[i].bullet, opponent_sprite)) {
+			std::cout << "collision !" << std::endl;
+			bullets.erase(bullets.begin() + i);
+		}
     }
 
 	//regenerate bullets every 1 second

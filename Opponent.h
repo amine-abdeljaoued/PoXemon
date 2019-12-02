@@ -1,7 +1,6 @@
 #include <iostream>
 #include "Pokemon.h"
 #pragma once
-#include "noise\SimplexNoise.h"
 
 
 
