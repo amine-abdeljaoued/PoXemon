@@ -5,10 +5,13 @@ void Player::draw(sf::RenderTarget& target) {//const ?
 	health.draw(target);
 	bullets.draw(target);
 	bullets.bulletbar.draw(target);
+	std::cout<< health.health << std::endl;
+	std::cout << health.bar.getSize().x << std::endl;
 }
 
-void Player::update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clock, sf::Time& elapsed, const sf::Sprite& opponent_sprite, float& groundY) {   // Movement is dependant on time not on frame rate
+void Player::update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clock, sf::Time& elapsed, float& groundY) {   // Movement is dependant on time not on frame rate
 									// This means that we can have smooth movement over multiple frames, instead of static movement per each frame
+
 		velocityX = 0.0f;
 		//Left and right movement
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
@@ -34,9 +37,12 @@ void Player::update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clock
 			bullets.was_released = true;
 		}
 
-		health.update(); 	// Need to still react to bullets and decrease our health
-							//AND NB need to make this change health.health
-		bullets.update(deltaTime, clock, elapsed, opponent_sprite, groundY);
+
+		int i = bullets.update(deltaTime, clock, elapsed, (*enemy).sprite, groundY);
+		if (i!=0) (*enemy).health.decrease(i);
+		
+
+		health.update();
 
 		velocityY += 981.0f * deltaTime;
 		move(deltaTime);
@@ -54,3 +60,11 @@ void Player::move(float& deltaTime) {
 
 		sprite.setPosition(x, y);
 	}
+
+
+void Player::collision_opponent() {
+	if (Collision::PixelPerfectTest(sprite, (*enemy).sprite)) {
+		//make it impossible for the pokemons to 'cross' each other
+		//maybe use some mechanics equations ?
+	}
+}

@@ -23,7 +23,7 @@ class Bullet
 public:
 	float x = 0;
 	float y = 0;
-	float max_speed = 1500.0;
+	float max_speed = 1000.0;
 
 	sf::Vector2f position;
 	sf::Vector2f shoot_dir;
@@ -38,7 +38,7 @@ public:
 	bool offscreen();
 	void reflect_ground(float& groundY);
 
-private:
+//private:
 
 	sf::Texture bpic;
 };

@@ -36,6 +36,11 @@ void Healthbar::setHealth(int a){
     update();
 }
 
+void Healthbar::decrease(int i) {
+	health -= i;
+	//std::cout << "ouch !" << std::endl;
+}
+
 void Healthbar::update(){
     bar.setSize(sf::Vector2f(health,20));
     //Bar changes from green to red as health decreases

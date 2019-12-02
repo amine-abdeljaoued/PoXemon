@@ -16,10 +16,10 @@ void Opponent::update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clo
 		//random left-right movement
 		//We choose a random amount of time (time_change_dir) throughout which we dont change direction.
 		//once it has elapsed, we change direction and repeat the process.
-		elapsed_direction = clock.getElapsedTime();
+		elapsed_direction = this->clock.getElapsedTime();
 		if (elapsed_direction.asSeconds() > time_change_dir) {
 			time_change_dir = 0.3 + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (2 - 0.3)));
-			clock.restart();
+			this->clock.restart();
 			direction *= -1;
 		}
 
@@ -41,14 +41,18 @@ void Opponent::update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clo
 		move(deltaTime);
 
 	// shooting
-		float& vp = (*player).velocityY;
-		float& xp = (*player).x;
-		float& yp = (*player).y;
-		float time = (x-xp)/2000.f; // note: this is the max speed defined in bullets
+		float& vp = (*enemy).velocityY;
+		float& xp = (*enemy).x;
+		float& yp = (*enemy).y;
+	    float time = (x-xp)/2000.f; // note: this is the max speed defined in bullets
 		float delta = vp + 981.0f*time;
 
 		bullets.new_shot_opp(x, y, sprite.getGlobalBounds(), window, xp, yp);
-		bullets.update(deltaTime, clock, elapsed, (*player).sprite, groundY);
+		int i = bullets.update(deltaTime, clock, elapsed, (*enemy).sprite, groundY);
+		if (i != 0) {
+			(*enemy).health.decrease(i);
+			//std::cout<<(*enemy).health.health << std::endl;
+		}
 
 	// health
 		health.update();
