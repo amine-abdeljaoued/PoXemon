@@ -10,7 +10,8 @@
 class Pokemon {
 public:
 	float rarity;
-
+	int level = 1; 			// must be implemented by pokemon team!!
+	std::string name;
 	sf::Sprite sprite;
 	float x;                //x and y store current position
 	float y;
@@ -21,11 +22,11 @@ public:
 	float jumpHeight;       // how high this pokemon can jump
 	bool canJump;           // If you're on the ground, you can jump
 	bool shooting;          // If you're shooting, we want to draw the pokeball
-	Healthbar health;				// Health between 1 and 100
+	Healthbar health;		// Health between 1 and 100
 	Artillery bullets; 		// This is where all bullets are stored
 							// If we want bullets to depend on Pokemon, bullets must have a constructor
 	Pokemon()=default;
-	Pokemon(float xstart, float ystart, float h, float v, float hp, std::string path, float pokemon_rarity);
+	Pokemon(float xstart, float ystart, float h, float v, float hp, std::string path, float pokemon_rarity, std::string pname);
 	
 protected:
 	sf::Texture pic;
