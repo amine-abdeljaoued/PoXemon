@@ -20,7 +20,7 @@ void Artillery::new_shot(float& x, float& y, const sf::FloatRect& bounds, sf::Re
         Bullet new_bullet;
         //we want the bullet to start from the midlle right of the pokemon
         //for later: careful if we change the origin of the pokemon
-        float x_bullet = x + bounds.width;
+        float x_bullet = x + bounds.width / 2;
         float y_bullet = y + bounds.height / 2;
         sf::Vector2f initial_pos(x_bullet, y_bullet);
         new_bullet.setPosition(initial_pos); // start at the 'middle-right' of the pokemon
@@ -43,6 +43,23 @@ void Artillery::new_shot(float& x, float& y, const sf::FloatRect& bounds, sf::Re
     was_released = false;
 }
 
+void Artillery::new_shot_opp(float& x, float& y, const sf::FloatRect& bounds, sf::RenderTarget& window, float& xshoot, float& yshoot){
+    if (was_released && available_bullets > 0) {
+        Bullet new_bullet;
+        float x_bullet = x + bounds.width / 2;
+        float y_bullet = y + bounds.height / 2;
+        sf::Vector2f initial_pos(x_bullet, y_bullet);
+        new_bullet.setPosition(initial_pos); 
+
+        sf::Vector2f direction(xshoot, yshoot);
+        sf::Vector2f current(x,y);
+    
+        new_bullet.set_shoot_dir(direction, current);
+        bullets.push_back(new_bullet);//append the new bullet to our array
+        available_bullets -= 1;
+    }
+}
+
 void Artillery::update(float& deltaTime, sf::Clock& clock, sf::Time& elapsed){
     for (int  i = 0; i < bullets.size(); i++) {
         bullets[i].update(deltaTime);
@@ -58,6 +75,6 @@ void Artillery::update(float& deltaTime, sf::Clock& clock, sf::Time& elapsed){
 			available_bullets += 1;
 			bulletbar.update(1);
 			clock.restart();
-		}
+	}
 
 }

@@ -1,5 +1,13 @@
 #include "Player.h"
 
+void Player::draw(sf::RenderTarget& target) {//const ?
+	target.draw(sprite);
+	health.draw(target);
+	bullets.draw(target);
+	bullets.bulletbar.draw(target);
+}
+
+
 void Player::update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clock, sf::Time& elapsed) {   // Movement is dependant on time not on frame rate
 									// This means that we can have smooth movement over multiple frames, instead of static movement per each frame
 		velocityX = 0.0f;

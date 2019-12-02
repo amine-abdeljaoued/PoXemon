@@ -23,9 +23,3 @@ Pokemon::Pokemon(float xstart, float ystart, float h, float v, float hp, std::st
 }
 
 
-void Pokemon::draw(sf::RenderTarget& target) {//const ?
-	target.draw(sprite);
-	health.draw(target);
-	bullets.draw(target);
-	bullets.bulletbar.draw(target);
-}

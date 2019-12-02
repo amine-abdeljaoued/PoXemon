@@ -9,4 +9,5 @@ public:
 
     void update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clock, sf::Time& elapsed);
     void move(float& deltaTime);
+    void draw(sf::RenderTarget& target);
 };
