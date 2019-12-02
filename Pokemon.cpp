@@ -16,7 +16,7 @@ Pokemon::Pokemon(float xstart, float ystart, float h, float v, float hp, std::st
 	y = ystart;
 	sprite.setPosition(sf::Vector2f(x, y));
 
-			if (!pic.loadFromFile(path)){ std::cout << "could not load" << std::endl;} //path = Images/eevee.png
+	if (!pic.loadFromFile(path)){ std::cout << "could not load" << std::endl;} //path = Images/eevee.png
 	pic.loadFromFile(path);
 	sprite.setTexture(pic);
 	sprite.setScale(sf::Vector2f(0.4f, 0.4f));

@@ -7,8 +7,7 @@ void Player::draw(sf::RenderTarget& target) {//const ?
 	bullets.bulletbar.draw(target);
 }
 
-
-void Player::update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clock, sf::Time& elapsed) {   // Movement is dependant on time not on frame rate
+void Player::update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clock, sf::Time& elapsed, const sf::Sprite& opponent_sprite, float& groundY) {   // Movement is dependant on time not on frame rate
 									// This means that we can have smooth movement over multiple frames, instead of static movement per each frame
 		velocityX = 0.0f;
 		//Left and right movement
@@ -37,7 +36,7 @@ void Player::update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clock
 
 		health.update(); 	// Need to still react to bullets and decrease our health
 							//AND NB need to make this change health.health
-		bullets.update(deltaTime, clock, elapsed);
+		bullets.update(deltaTime, clock, elapsed, opponent_sprite, groundY);
 
 		velocityY += 981.0f * deltaTime;
 		move(deltaTime);
