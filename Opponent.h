@@ -12,7 +12,7 @@ public:
 
     Opponent(float xstart, float ystart, float h, float v, float hp, std::string path, float pokemon_rarity, std::string name)
     :Pokemon(xstart, ystart, h, v, hp, path,pokemon_rarity, name){
-        //player=player_poke; we don't need this anymore as we have enemy
+		sprite.setScale(sf::Vector2f(0.5f, 0.5f));
 		speed = 400;
 		int randomDirection[2] = { -1,1 };
 		int randomIndex = rand() % 2;

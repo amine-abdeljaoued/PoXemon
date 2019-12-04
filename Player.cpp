@@ -56,6 +56,7 @@ void Player::move(float& deltaTime) {
 			canJump = true;
 		}
 
+		update_sprite_orientation();
 		sprite.setPosition(x, y);
 	}
 
@@ -66,3 +67,23 @@ void Player::collision_opponent() {
 		//maybe use some mechanics equations ?
 	}
 }
+
+
+void Player::update_sprite_orientation() {
+	if (x > (*enemy).x + 2*sprite.getGlobalBounds().width/3 && was_left) { // if player goes at the right of the oppenent 
+																		   // a bit messy (found some numbers to make it look decent)
+		//flip the sprites
+		sprite.setScale(sf::Vector2f(0.5f, 0.5f));
+		(*enemy).sprite.setScale(sf::Vector2f(-0.5f, 0.5f));
+		was_left = false;
+	}
+
+	if (x + 2*sprite.getGlobalBounds().width/3 < (*enemy).x && !was_left){ //if player goes at the left of the opponent
+		//flip the sprites
+		sprite.setScale(sf::Vector2f(-0.5f, 0.5f)); 
+		(*enemy).sprite.setScale(sf::Vector2f(0.5f, 0.5f));
+		was_left = true;
+	}
+}
+
+

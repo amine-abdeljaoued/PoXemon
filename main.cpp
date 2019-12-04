@@ -42,8 +42,8 @@ int main ()
   	}
 	// -----------------------------------------------------------------
 	
-	Player eevee(10.f, groundY, 200.f, 500.f, 100, "Images/Pokemon_Images/vulari.png", 2, "Eevee");
-	Opponent opponent1(1000.f,groundY,200.f, 800.f, 100, "Images/Pokemon_Images/urach.png", 2, "Opponent");
+	Player eevee(10.f, groundY, 200.f, 500.f, 100, "Images/Pokemon_Images/rhykarp.png", 2, "Eevee");
+	Opponent opponent1(1000.f,groundY,200.f, 800.f, 100, "Images/Pokemon_Images/raporoy.png", 2, "Opponent");
 	eevee.set_enemy(&opponent1);
 	opponent1.set_enemy(&eevee);
 
