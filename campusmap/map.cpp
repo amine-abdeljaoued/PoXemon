@@ -41,8 +41,8 @@ Map::~Map()
 }
 
 void Map::initialisation(sf::Clock& clock, sf::RenderWindow &window, int& alpha) const{
-    std::cout << clock.getElapsedTime().asSeconds() << std::endl;
-    std::cout << alpha << std::endl;
+//    std::cout << clock.getElapsedTime().asSeconds() << std::endl;
+//    std::cout << alpha << std::endl;
     
     sf::ConvexShape black;
     black.setPointCount(4);
@@ -51,7 +51,7 @@ void Map::initialisation(sf::Clock& clock, sf::RenderWindow &window, int& alpha)
     black.setPoint(2, sf::Vector2f(544, 544));
     black.setPoint(3, sf::Vector2f(0, 544));
 
-    if (clock.getElapsedTime().asSeconds() < 2) {
+    if (clock.getElapsedTime().asSeconds() < 2 && alpha>200) {
         black.setFillColor(sf::Color(10, 10, 10, alpha));
         window.draw(black);
         if (0.05 < clock.getElapsedTime().asSeconds() && alpha >= 5) alpha = alpha - 5;

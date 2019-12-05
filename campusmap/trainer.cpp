@@ -7,9 +7,10 @@
 #include <string>
 #include <deque>
 #include <list>
+#include <random>
 using namespace std;
 
-Trainer::Trainer( float Speed, int sheetRect, int sizeAnim, int& map_num)
+Trainer::Trainer( float Speed, int sheetRect, int sizeAnim, int& map_num, int& coll_num)
 {
     
     if (!texturePlayer.loadFromFile(/* resourcePath() + */ "Sprites/fullch.png")) {
@@ -25,6 +26,7 @@ Trainer::Trainer( float Speed, int sheetRect, int sizeAnim, int& map_num)
     this->sheetRect = sheetRect;
     this->sizeAnim = sizeAnim;
     this->map_num = map_num;
+    this->map_num = coll_num;
 
     
 }
@@ -48,7 +50,7 @@ sf::Vector2f Trainer::getPos(){
     return position;
 }
 
-void Trainer::displacement(sf::Event &event, sf::View &view, const int* collision, sf::Clock& clock, int& alpha)
+void Trainer::displacement(sf::Event &event, sf::View &view, const int* collision, sf::Clock& clock, int& alpha, const std::string* case_num)
 {
     sf::Vector2f position = (spritePlayer).getPosition();
     int x = position.x + 16;
@@ -62,10 +64,29 @@ void Trainer::displacement(sf::Event &event, sf::View &view, const int* collisio
         clock.restart();
         alpha = 250;
     }
+    
+
+    
+
+    if ((collision[(int) x/16 +(((int) y/16 +1)*34)]==8 && facingDirection=="Down") || (collision[(int) x/16 +(((int) y/16 -1)*34)]==8 && facingDirection=="Up") || (collision[(int) x/16 -1+((int) y/16 *34)]==8 && facingDirection=="Left") || (collision[(int) x/16 +1+((int) y/16 *34)]==8 && facingDirection=="Right")){
+        if ((event.type == sf::Event::KeyPressed)&&((event.key.code == sf::Keyboard::D))){
+            coll_num=8;
+            std::cout<<"Bonjour, je suis votre premier PNJ"<<std::endl;
+        }
+    }
 
     if (state == "Walking")
     {
+        if (collision[(int) x/16 +( (int)y/16 *34)]==1){
+            std::random_device rd;
+            std::mt19937 gen(rd());
+            std::uniform_real_distribution<> dis(0.0, 1.0);
+            float probagenerated = dis(gen);
+            if (probagenerated<0.02) std::cout<<"POKEEEEMMMOONNN"<<std::endl;
+        }
         
+        coll_num=0;
+//        std::cout<<case_num[collision[(int) x/16 +(((int) y/16)*34)]]<<std::endl;
         if (facingDirection == "Down")
         {
             if (y >= b + 16){
