@@ -6,7 +6,7 @@ void Opponent::draw(sf::RenderTarget& target) {
 	target.draw(sprite);
 	health.draw(target);
 	bullets.draw(target);
-	//unhandled exception here !
+	//unhandeled exception here !
 }
 
 void Opponent::update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clock, sf::Time& elapsed, float& groundY){

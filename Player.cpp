@@ -39,7 +39,7 @@ void Player::update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clock
 		int i = bullets.update(deltaTime, clock, elapsed, (*enemy).sprite, groundY);
 		if (i!=0) (*enemy).health.decrease(i);
 		
-
+		collision_opponent();
 		health.update();
 
 		velocityY += 981.0f * deltaTime;
@@ -65,12 +65,15 @@ void Player::collision_opponent() {
 	if (Collision::PixelPerfectTest(sprite, (*enemy).sprite)) {
 		//make it impossible for the pokemons to 'cross' each other
 		//maybe use some mechanics equations ?
+		velocityX *= -1;
 	}
 }
 
 
 void Player::update_sprite_orientation() {
-	if (x > (*enemy).x + 2*sprite.getGlobalBounds().width/3 && was_left) { // if player goes at the right of the oppenent 
+	//not very optimal
+
+	if (x > (*enemy).x + 2*sprite.getGlobalBounds().width/3 && was_left) { // if player gets at the right of the oppenent 
 																		   // a bit messy (found some numbers to make it look decent)
 		//flip the sprites
 		sprite.setScale(sf::Vector2f(0.5f, 0.5f));
@@ -78,7 +81,7 @@ void Player::update_sprite_orientation() {
 		was_left = false;
 	}
 
-	if (x + 2*sprite.getGlobalBounds().width/3 < (*enemy).x && !was_left){ //if player goes at the left of the opponent
+	if (x + 2*sprite.getGlobalBounds().width/3 < (*enemy).x && !was_left){ //if player gets at the left of the opponent
 		//flip the sprites
 		sprite.setScale(sf::Vector2f(-0.5f, 0.5f)); 
 		(*enemy).sprite.setScale(sf::Vector2f(0.5f, 0.5f));
