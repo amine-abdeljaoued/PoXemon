@@ -9,7 +9,7 @@ public:
 		was_left = true;
 		sprite.setScale(sf::Vector2f(-0.5f, 0.5f));//it has to face towards the right (intially, the images are all 'facing towards the left')
 	};
-
+	
     void update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clock, sf::Time& elapsed, float& groundY);
     void move(float& deltaTime);
     void draw(sf::RenderTarget& target);

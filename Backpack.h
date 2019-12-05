@@ -28,18 +28,36 @@ class Backpack
         bool masternow;
         bool supernow;
         bool normalnow;
-        
-        
-        
+
+		class Backpack_Pokemon{
+
+		public:
+			Backpack_Pokemon(std::string& n, int& i, int& h) {
+				name = n;
+				index = i;
+				health = h;
+			}
+
+			std::string name;
+			int index;//to find it easily
+			int health;
+		};
+
+		Backpack_Pokemon backpack_pokemons[3];
+
         Backpack();
     
-        
-        //void update();
-        //We can have up to 6 pokemons in our backpack
-        //we can have up to 3 pokeballs
+		void change_pokemons() {//to be completed
+		}
 
-        //It should have several methods
-        // for example : replace pokemons, heal them ...
+		void heal_pokemons() {//should be called every time we enter the shop
+			for (unsigned int i = 0; i < 3; i = i + 1) {
+				backpack_pokemons[i].health = 100;
+			}
+		}
+
+
+
     private:
     sf::Texture normaltext1;
     sf::Texture normaltext2;
