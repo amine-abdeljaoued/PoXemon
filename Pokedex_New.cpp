@@ -8,7 +8,7 @@ void main(int argc, char** argv[]) {
 	sf::RenderWindow window(sf::VideoMode(880, 720), "Pokedex?");
 
 	sf::Texture PokedexTexture;
-	PokedexTexture.loadFromFile("test2.png");
+	PokedexTexture.loadFromFile("pokedex.png");
 	sf::Sprite Pokedex(PokedexTexture);
 
 	Pokedex.setOrigin(0.f,0.f);
