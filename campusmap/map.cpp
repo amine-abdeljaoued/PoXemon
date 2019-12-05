@@ -7,7 +7,11 @@
 #include <stdio.h>
 #include <iostream>
 #include <list>
+#include <string>
+#include <vector>
+
 using namespace std;
+
 
 
 Map::Map(int i, sf::RenderWindow &window)
@@ -18,23 +22,23 @@ Map::Map(int i, sf::RenderWindow &window)
             cout << "Error loading the sprite";
         }
        
-        Npc* toto = new  Npc("Sprites/NPC2.png",70,50,0.5f,200,212);
+        vector<string> dialogue1;
+        dialogue1.push_back("Welcome on our campus!");
+        dialogue1.push_back("Start by exploring"); /* 
+        string dialogue1 [2] = {"Welcome on our campus!","Start by exploring"}; */
+        Npc* toto = new  Npc("Sprites/NPC2.png",70,50,0.5f,200,212,dialogue1);
         npcs.push_back(toto) ;
     }
-    if(i==2)
+    /* if(i==2)
     {
-        if (!background.load("Sprites/tileset1.png", sf::Vector2u(16, 16), level2, 34, 34)){
-            cout << "Error loading the sprite";
-        }
-        Npc* toto = new  Npc("Sprites/NPC2.png",70,50,0.5f,200,212);
-        npcs.push_back(toto) ;
-    }
+        ... other map
+    } */
     
 }
 
 Map::~Map()
 {
-    for (list<Npc*>::iterator it = npcs.begin(); it != npcs.end(); it++)
+    for (vector<Npc*>::iterator it = npcs.begin(); it != npcs.end(); it++)
     {
         delete *it;
     }
@@ -51,7 +55,7 @@ void Map::initialisation(sf::Clock& clock, sf::RenderWindow &window, int& alpha)
     black.setPoint(2, sf::Vector2f(544, 544));
     black.setPoint(3, sf::Vector2f(0, 544));
 
-    if (clock.getElapsedTime().asSeconds() < 2 && alpha>200) {
+    if (clock.getElapsedTime().asSeconds() < 2  && alpha>200 ) {
         black.setFillColor(sf::Color(10, 10, 10, alpha));
         window.draw(black);
         if (0.05 < clock.getElapsedTime().asSeconds() && alpha >= 5) alpha = alpha - 5;
@@ -59,7 +63,8 @@ void Map::initialisation(sf::Clock& clock, sf::RenderWindow &window, int& alpha)
 }
 
 
-void Map::draw(sf::RenderWindow &window, Trainer &trainer, sf::Clock& clock, int& alpha) const {
+void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Clock& clock, int& alpha) const {
+    
     sf::Vector2f pos =trainer.getPos();
     window.draw(background);
     for (auto const& np : npcs) 
@@ -69,14 +74,28 @@ void Map::draw(sf::RenderWindow &window, Trainer &trainer, sf::Clock& clock, int
         if(pos.y> pos2.y){
             (*np).draw(window);
             trainer.draw(window);
+            
+
         }
         else{
             trainer.draw(window);
             (*np).draw(window);
+
+            
         }
         
-    }
-    
-    initialisation(clock, window, alpha);
+        }
+        if (trainer.coll_num >= 8){ //case of contact with npc
+            
+            (*(npcs[0])).speak(window, view); 
+        }
+
+        initialisation(clock, window, alpha);
+
 }
+        
+    
+    
+
+
 
