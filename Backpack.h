@@ -43,7 +43,7 @@ class Backpack
 			int health;
 		};
 
-		Backpack_Pokemon backpack_pokemons[3];
+		Backpack_Pokemon* backpack_pokemons[3];
 
         Backpack();
     
@@ -52,7 +52,7 @@ class Backpack
 
 		void heal_pokemons() {//should be called every time we enter the shop
 			for (unsigned int i = 0; i < 3; i = i + 1) {
-				backpack_pokemons[i].health = 100;
+				(*backpack_pokemons[i]).health = 100;
 			}
 		}
 
