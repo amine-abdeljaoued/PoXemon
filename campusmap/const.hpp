@@ -155,7 +155,9 @@ const int collision2[] =
 // 2 = passage a une autre map ou une maison
 // 6 = on peut juste pas aller
 // 7 = eau donc on peut y aller avec des pokemons eau
-// 8 = pnj's
+// 8 = First Npc in list of Npcs of our object Map
+// 9 = Second Npc
+// 10 = Third...
 // etc...
 
 const std::string case_num[] = {
