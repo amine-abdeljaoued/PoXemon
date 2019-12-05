@@ -17,13 +17,16 @@ Pokemon::Pokemon(float xstart, float ystart, float h, float v, float hp, std::st
 	shooting = false;
 	x = xstart;
 	y = ystart;
+
 	sprite.setPosition(sf::Vector2f(x, y));
 
 	if (!pic.loadFromFile(path)){ std::cout << "could not load" << std::endl;} //path = Images/eevee.png
 	pic.loadFromFile(path);
 	sprite.setTexture(pic);
-	sprite.setScale(sf::Vector2f(0.4f, 0.4f));
-
+	//set the x origin at the middle
+	//useful when we flip (mirror image) the sprite with update_sprite_orientation (in the player class)
+	//indeed the sprites are flipped wrt the origin so it doesn't look good if it's not at the middle.
+	sprite.setOrigin(sf::Vector2f(sprite.getGlobalBounds().width / 2, 0));
 }
 
 void Pokemon::set_enemy(Pokemon* enemy) {
