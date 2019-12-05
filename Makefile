@@ -5,6 +5,9 @@ LDLIBS = -lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system
 collision.o: Collision.cpp Collision.h 
 	$(CXX) -c -02 Collision.cpp 
 
+functions.o: functions_state1.cpp 
+	$(CXX) -c -02 functions_state1.cpp 
+
 pokeball.o: Pokeball.cpp Pokeball.h
 	$(CXX) -c -O2 Pokeball.cpp
 
@@ -32,12 +35,12 @@ artillery.o: Artillery.cpp Artillery.h
 backpack.o: Backpack.cpp Backpack.h 
 	$(CXX) -c -O2 Backpack.cpp
 
-main.o: main.cpp Pokemon.h Pokeball.h Bullet.h Health.h Artillery.h Backpack.h Opponent.h Bullet_bar.h Collision.h
+main.o: main.cpp Pokemon.h Pokeball.h Bullet.h Health.h Artillery.h Backpack.h Opponent.h Bullet_bar.h Collision.h functions_state1.cpp
 	$(CXX) -c -O2 main.cpp
 
 
-game:  Opponent.o Pokeball.o main.o Pokemon.o Bullet.o Health.o Artillery.o Backpack.o Bullet_bar.o Player.o Collision.o
-	$(CXX) main.o  Opponent.o Pokeball.o Pokemon.o Bullet.o Health.o Artillery.o Backpack.o Bullet_bar.o Player.o Collision.o  -o game $(LDLIBS)  
+game:  Opponent.o Pokeball.o main.o Pokemon.o Bullet.o Health.o Artillery.o Backpack.o Bullet_bar.o Player.o Collision.o 
+	$(CXX) main.o  Opponent.o Pokeball.o Pokemon.o Bullet.o Health.o Artillery.o Backpack.o Bullet_bar.o Player.o Collision.o   -o game $(LDLIBS)  
 
 
 clean:
