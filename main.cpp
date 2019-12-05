@@ -31,19 +31,16 @@ void initialise_background(sf::RenderWindow& window, std::string path, sf::Sprit
 		float ScaleY = (float) WindowSize.y / TextureSize.y;     //Calculate scale.
 
 		background.setTexture(texture);
-		background.setScale(ScaleX, ScaleY);      //Set scale.
+		background.setScale(ScaleX, ScaleY);      //Set scale.  
   	}
 }
 
-// We declare a global variable for fights which shows the game state
+// We declare a variable "state" for fights which shows the game state
 // 1 = start menu
 // 2 = normal fight mode
 // 3 = pokeball landed in centre -- to be implemented
 // 4 = caught the pokemon
 // 5 = we died -> choose another or quit
-// 6 = opponent dies
-int state = 2;
-
 
 int main ()
 {
@@ -51,47 +48,50 @@ int main ()
 	Opponent opponent1(1000.f,groundY,200.f, 800.f, 100, "Images/Pokemon_Images/urach.png", 2, "Opponent");
 	eevee.set_enemy(&opponent1);
 	opponent1.set_enemy(&eevee);
+	int state = 1;
 
     sf::RenderWindow window(sf::VideoMode(1400, 700), "My window");
 
-	if (state==1){
-		//...
-	}
+	sf::Texture BackgroundTexture;
+	sf::Sprite background;
+	initialise_background(window, "Images/grassbg.png", background, BackgroundTexture);
 	
-	if (state == 2){
-		sf::Texture BackgroundTexture;
-		sf::Sprite background;
-		initialise_background(window, "Images/grassbg.png", background, BackgroundTexture);
+	
 
-		float deltaTime = 0.0f;
+    float deltaTime = 0.0f;
 
-		sf::Clock clock;
-		sf::Clock clock_regenerate_bullets;
-		sf::Time elapsed;
+    sf::Clock clock;
+    sf::Clock clock_regenerate_bullets;
+    sf::Time elapsed;
+    
+    sf::Clock clock2;
+    sf::Time elapsed2;
+    
+    Backpack bag;
+	static int counter=0;
 
-		sf::Clock clock2;
-		sf::Time elapsed2;
+	// run the program as long as the window is open
+	while (window.isOpen())
+	{
+		deltaTime = clock.restart().asSeconds();
+		elapsed = clock_regenerate_bullets.getElapsedTime();
+        elapsed2 = clock2.getElapsedTime();
 
-		Backpack bag;
-		static int counter=0;
-
-		// run the program as long as the window is open
-		while (window.isOpen())
+		sf::Event event;
+		while (window.pollEvent(event))
 		{
-			deltaTime = clock.restart().asSeconds();
-			elapsed = clock_regenerate_bullets.getElapsedTime();
-			elapsed2 = clock2.getElapsedTime();
-
-			sf::Event event;
-			while (window.pollEvent(event))
+			if (event.type == sf::Event::Closed)
 			{
-				if (event.type == sf::Event::Closed)
-				{
-					std::cout << "Goodbye" << std::endl;
-					window.close();
-				}
+				std::cout << "Goodbye" << std::endl;
+				window.close();
 			}
+		}
 
+		if (state==1){
+			//...
+		}		]
+
+		if (state==2){
 			// clear the window with black color - need to clear before drawing anything (overlap)
 			eevee.update(deltaTime, window, clock_regenerate_bullets, elapsed, groundY);
 			opponent1.update(deltaTime, window, clock_regenerate_bullets, elapsed, groundY);
@@ -102,11 +102,11 @@ int main ()
 			bag.draw(window);
 			eevee.draw(window);
 			opponent1.draw(window);
-
-			//std::cout << counter++ << std::endl;
-
-			window.display();
 		}
+
+		//std::cout << counter++ << std::endl;
+		
+		window.display();
     }
     return 0;
 }
