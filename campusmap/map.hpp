@@ -20,7 +20,7 @@ class Map
         void initialisation(sf::Clock& clock, sf::RenderWindow &window, int& alpha);
         static sf::FloatRect getViewBounds(const sf::View &view);
         void trainerDisplacement(Trainer &trainer, sf::Event &event, sf::Clock& clock, int& alpha, string &map_name);
-        void fillTree();
+        void fillTree(sf::RenderWindow &window);
     
     private:
         TileMap background;
