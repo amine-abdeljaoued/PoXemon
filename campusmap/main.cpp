@@ -18,7 +18,7 @@ int main()
 
     sf::RenderWindow window(sf::VideoMode(544, 544), "Tilemap");
     sf::View view(sf::Vector2f(272, 272), sf::Vector2f(544, 544));
-//    view.zoom(0.5f);
+    //view.zoom(0.5f);
     window.setPosition(sf::Vector2i(0, 0));
 
    /*  sf::Font font;
@@ -53,7 +53,8 @@ int main()
     
     window.setFramerateLimit(30);
     
-
+    Map map1(window, map_name);
+    
     while (window.isOpen())
     {
         
@@ -63,13 +64,10 @@ int main()
         if(event.type == sf::Event::Closed) window.close();
         
         window.clear(sf::Color(112,200,160));
-        
-        
 
         sf::Time elapsed1 = clock.getElapsedTime();
         
         
-        Map map1(window, map_name);
         map1.draw(window,view, Arthur, clock, alpha, event, map_name);
         Arthur.displacement(event,view, collision, clock, alpha, case_num);
         
