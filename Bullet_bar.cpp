@@ -43,7 +43,7 @@ void BulletBar::update(int additional_bullet) {
 
 	available_bullets += additional_bullet;
 	nb_text.setString(std::to_string(available_bullets));
-	std::cout << available_bullets << std::endl;
+	//std::cout << available_bullets << std::endl;
 
 	//this does not work
 

@@ -18,13 +18,8 @@ void Artillery::new_shot(float& x, float& y, const sf::FloatRect& bounds, sf::Re
     // takes the clicked mouse position
     if (was_released && available_bullets > 0) {
         Bullet new_bullet;
-        //we want the bullet to start from the midlle right of the pokemon
-        //for later: careful if we change the origin of the pokemon
-        float x_bullet = x + bounds.width / 2;
-        float y_bullet = y + bounds.height / 2;
-        sf::Vector2f initial_pos(x_bullet, y_bullet);
-        new_bullet.setPosition(initial_pos); // start at the 'middle-right' of the pokemon
-        //that stuff should go in the bullet class
+        sf::Vector2f initial_pos(x, y);
+        new_bullet.setPosition(initial_pos); 
 
         //sf::Mouse::getPosition returns the position of the curson in window coordinates 
         //while all the entities use world coordinates.
@@ -37,7 +32,7 @@ void Artillery::new_shot(float& x, float& y, const sf::FloatRect& bounds, sf::Re
         available_bullets -= 1;
 		bulletbar.update(-1);
 
-        std::cout << "available bullets -1 : " << available_bullets<<std::endl;
+        //std::cout << "available bullets -1 : " << available_bullets<<std::endl;
     }
 
     was_released = false;
@@ -46,9 +41,7 @@ void Artillery::new_shot(float& x, float& y, const sf::FloatRect& bounds, sf::Re
 void Artillery::new_shot_opp(float& x, float& y, const sf::FloatRect& bounds, sf::RenderTarget& window, float& xshoot, float& yshoot){
     if (was_released && available_bullets > 0) {
         Bullet new_bullet;
-        float x_bullet = x + bounds.width / 2;
-        float y_bullet = y + bounds.height / 2;
-        sf::Vector2f initial_pos(x_bullet, y_bullet);
+        sf::Vector2f initial_pos(x, y);
         new_bullet.setPosition(initial_pos); 
 
         sf::Vector2f direction(xshoot, yshoot);
@@ -73,7 +66,7 @@ int Artillery::update(float& deltaTime, sf::Clock& clock, sf::Time& elapsed, con
 
 		//collisions with the opponenent
 		if (Collision::PixelPerfectTest(bullets[i].bullet, opponent_sprite)) {
-			std::cout << "collision !" << std::endl;
+			//std::cout << "collision !" << std::endl;
 			bullets.erase(bullets.begin() + i);
 			res = 3; //it means that the enemy of the pokemon shooting thes bullets will get -3 health 
 		}

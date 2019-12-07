@@ -25,12 +25,37 @@ Pokemon::Pokemon(float xstart, float ystart, float h, float v, float hp, std::st
 	sprite.setTexture(pic);
 	//set the x origin at the middle
 	//useful when we flip (mirror image) the sprite with update_sprite_orientation (in the player class)
-	//indeed the sprites are flipped wrt the origin so it doesn't look good if it's not at the middle.
-	sprite.setOrigin(sf::Vector2f(sprite.getGlobalBounds().width / 2, 0));
+	//also useful for death_dissapear()
+	//these functions both scale sprites, which is is done wrt the origin so if it is not set at center, it won't look nice
+	sprite.setOrigin(sf::Vector2f(sprite.getGlobalBounds().width / 2, sprite.getGlobalBounds().height / 2));
+
 }
 
 void Pokemon::set_enemy(Pokemon* enemy) {
 	this->enemy = enemy;
 }
 
+
+void Pokemon::death_disappear(float& deltaTime) {//to improve
+
+	float total_time = 0.3; 
+	float initial_scale = 0.5;
+	float new_x;
+
+	//scale it down until zero
+	if (sprite.getScale().y > 0) {
+		if (sprite.getScale().x < 0) {
+			new_x = sprite.getScale().x + (deltaTime / total_time) * initial_scale;
+		}
+		if (sprite.getScale().x > 0) {
+			new_x = sprite.getScale().x - (deltaTime / total_time) * initial_scale;
+		}
+
+		float new_y = sprite.getScale().y - (deltaTime / total_time) * initial_scale;
+		sprite.setScale(new_x, new_y);
+	}
+
+	//now a little animation of 'implosion' ?
+
+}
 
