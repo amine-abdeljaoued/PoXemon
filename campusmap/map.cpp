@@ -16,29 +16,17 @@ using namespace std;
 
 Map::Map(sf::RenderWindow &window, string &map_name)
 {
+    
     collision_.insert(pair<string, const int*>("first", collision));
     collision_.insert(pair<string, const int*>("second", collision2));
     
-    if(map_name == "first")
-    {
-        if (!background.load("Sprites/tileset1.png", sf::Vector2u(16, 16), level, 34, 34)){
-            cout << "Error loading the sprite";
-        }
-        
-        vector<string> dialogue1;
-        dialogue1.push_back("Welcome on our campus!");
-        dialogue1.push_back("Start by exploring"); /* 
-        string dialogue1 [2] = {"Welcome on our campus!","Start by exploring"}; */
-        Npc* toto = new  Npc("Sprites/NPC2.png",70,50,0.5f,200,212,dialogue1);
-        npcs.push_back(toto) ;
-    }
-    if(map_name == "second")
-    {
-        if (!background.load("Sprites/tileset1.png", sf::Vector2u(16, 16), level2, 34, 34)){
-        cout << "Error loading the sprite";
-        }
-    }
-    
+    this->map_name= map_name;    
+    vector<string> dialogue1;
+    dialogue1.push_back("Welcome on our campus!");
+    dialogue1.push_back("Start by exploring"); /*
+    string dialogue1 [2] = {"Welcome on our campus!","Start by exploring"}; */
+    Npc* toto = new  Npc("Sprites/NPC2.png",70,50,0.5f,200,212,dialogue1);
+    npcs.push_back(toto) ;
 }
 
 Map::~Map()
@@ -156,6 +144,20 @@ void Map::trainerDisplacement(Trainer &trainer, sf::Event &event, sf::Clock& clo
 
 void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Clock& clock, int& alpha, sf::Event &event, string &map_name){
     
+    if(map_name == "first")
+    {
+        if (!background.load("Sprites/tileset1.png", sf::Vector2u(16, 16), level, 34, 34)){
+            cout << "Error loading the sprite";
+        }
+    }
+    
+    if(map_name == "second")
+       {
+           if (!background.load("Sprites/tileset1.png", sf::Vector2u(16, 16), level2, 34, 34)){
+           cout << "Error loading the sprite";
+           }
+       }
+    
     sf::Vector2f pos =trainer.getPos();
     window.draw(background);
     for (auto const& np : npcs) 
@@ -184,7 +186,15 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
 }
         
     
+void Map::fillTree(){
+    TileMap fill;
     
+    
+    if (!background.load("Sprites/tileset1.png", sf::Vector2u(16, 16), level, 68, 68)){
+               cout << "Error loading the sprite";
+           }
+}
+
 
 
 
