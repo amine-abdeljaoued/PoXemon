@@ -10,7 +10,7 @@
 #include <random>
 using namespace std;
 
-Trainer::Trainer( float Speed, int sheetRect, int sizeAnim, int& map_num, int& coll_num)
+Trainer::Trainer( float Speed, int sheetRect, int sizeAnim, int& coll_num)
 {
     
     if (!texturePlayer.loadFromFile(/* resourcePath() + */ "Sprites/fullch.png")) {
@@ -25,8 +25,7 @@ Trainer::Trainer( float Speed, int sheetRect, int sizeAnim, int& map_num, int& c
     playerMovementSpeed = Speed;
     this->sheetRect = sheetRect;
     this->sizeAnim = sizeAnim;
-    this->map_num = map_num;
-    this->map_num = coll_num;
+    this->coll_num = coll_num;
 
     
 }
@@ -57,16 +56,7 @@ void Trainer::displacement(sf::Event &event, sf::View &view, const int* collisio
     int y = position.y + 16;
 //    std::cout<<x<<","<<y<<std::endl;
     
-    setSpeed(event);
-    
-    if (collision[(int) x/16 +( (int)y/16 *34)]==2){
-        map_num = 2;
-        clock.restart();
-        alpha = 250;
-    }
-    
-
-    
+    setSpeed(event); 
 
     if ((collision[(int) x/16 +(((int) y/16 +1)*34)]==8 && facingDirection=="Down") || (collision[(int) x/16 +(((int) y/16 -1)*34)]==8 && facingDirection=="Up") || (collision[(int) x/16 -1+((int) y/16 *34)]==8 && facingDirection=="Left") || (collision[(int) x/16 +1+((int) y/16 *34)]==8 && facingDirection=="Right")){
         if ((event.type == sf::Event::KeyPressed)&&((event.key.code == sf::Keyboard::D))){
@@ -160,78 +150,6 @@ void Trainer::displacement(sf::Event &event, sf::View &view, const int* collisio
             }
         }
 
-    }
-   
-    if (state == "Stop"){
-    
-        if (event.type == sf::Event::KeyPressed){
-                
-            if (event.key.code == sf::Keyboard::Left) {
-                if (facingDirection != "Left"){
-                    (spritePlayer).setTextureRect(sf::IntRect(0,sheetRect,sheetRect,sheetRect));
-                    facingDirection = "Left";
-                    counterWalk = 1;
-                }
-                else{
-                    if(collision[(int) x/16 -1+( (int)y/16 *34)] <6 && x > 10){ //&& x>0
-                        facingDirection = "Left";
-                        state = "Walking";
-                        a = x;
-                        b = y;
-                    }
-                }
-            }
-        
-            if (event.key.code == sf::Keyboard::Right) {
-                if (facingDirection != "Right"){
-                    (spritePlayer).setTextureRect(sf::IntRect(0,2*sheetRect,sheetRect,sheetRect));
-                    facingDirection = "Right";
-                    counterWalk = 1;
-                }
-                else{
-                    if(collision[(int) x/16 +1+( (int) y/16 *34)]<6 && x<528){ //&& x<33
-                        facingDirection = "Right";
-                        state = "Walking";
-                        a = x;
-                        b = y;
-                    }
-                }
-            }
-        
-            if (event.key.code == sf::Keyboard::Up) {
-                if (facingDirection != "Up"){
-                    (spritePlayer).setTextureRect(sf::IntRect(0,3*sheetRect,sheetRect,sheetRect));
-                    facingDirection = "Up";
-                    counterWalk = 1;
-                }
-                else{
-                    if(collision[(int) x/16 +(((int) y/16 -1)*34)]<6 && y > 10){  //&& y>0
-                        facingDirection = "Up";
-                        state = "Walking";
-                        a = x;
-                        b = y;
-                    }
-                }
-            }
-        
-            if (event.key.code == sf::Keyboard::Down) {
-                if (facingDirection != "Down"){
-                    (spritePlayer).setTextureRect(sf::IntRect(0,0,sheetRect,sheetRect));
-                    facingDirection = "Down";
-                    counterWalk = 1;
-                }
-                else{
-                    if(collision[(int) x/16 + ((y/16 +1)*34)]<6 && y < 528){  // && y<33
-                        facingDirection = "Down";
-                        state = "Walking";
-                        a = x;
-                        b = y;
-                    }
-                }
-            }
-        
-              
-        }
     }
     
 //    std::cout << facingDirection << std::endl;

@@ -14,6 +14,7 @@
 
 int main()
 {
+    std::string map_name = "first";
 
     sf::RenderWindow window(sf::VideoMode(544, 544), "Tilemap");
     sf::View view(sf::Vector2f(272, 272), sf::Vector2f(544, 544));
@@ -42,10 +43,9 @@ int main()
     float playerMovementSpeed = 4;
     int sheetRect = 64;
     int sizeAnim = 4;
-    int map_num = 0;
     int coll_num = 0;
     
-    Trainer Arthur(playerMovementSpeed, sheetRect, sizeAnim, map_num, coll_num);
+    Trainer Arthur(playerMovementSpeed, sheetRect, sizeAnim, coll_num);
     
     // const for the transition
     int alpha = 250;
@@ -68,10 +68,11 @@ int main()
 
         sf::Time elapsed1 = clock.getElapsedTime();
         
+        
+        Map map1(window, map_name);
+        map1.draw(window,view, Arthur, clock, alpha, event, map_name);
         Arthur.displacement(event,view, collision, clock, alpha, case_num);
-
-        Map map1(Arthur.map_num, window);
-        map1.draw(window,view, Arthur, clock, alpha);
+        
 //        sf::RectangleShape rectangle(sf::Vector2f(524, 50));
 //        rectangle.setPosition(10, 480);
 //        rectangle.setOutlineColor(sf::Color::Red);
