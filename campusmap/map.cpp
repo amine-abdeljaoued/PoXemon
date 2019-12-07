@@ -16,29 +16,17 @@ using namespace std;
 
 Map::Map(sf::RenderWindow &window, string &map_name)
 {
+    
     collision_.insert(pair<string, const int*>("first", collision));
     collision_.insert(pair<string, const int*>("second", collision2));
     
-    if(map_name == "first")
-    {
-        if (!background.load("Sprites/tileset1.png", sf::Vector2u(16, 16), level, 34, 34)){
-            cout << "Error loading the sprite";
-        }
-        
-        vector<string> dialogue1;
-        dialogue1.push_back("Welcome on our campus!");
-        dialogue1.push_back("Start by exploring"); /* 
-        string dialogue1 [2] = {"Welcome on our campus!","Start by exploring"}; */
-        Npc* toto = new  Npc("Sprites/NPC2.png",70,50,0.5f,200,212,dialogue1);
-        npcs.push_back(toto) ;
-    }
-    if(map_name == "second")
-    {
-        if (!background.load("Sprites/tileset1.png", sf::Vector2u(16, 16), level2, 34, 34)){
-        cout << "Error loading the sprite";
-        }
-    }
-    
+    this->map_name= map_name;    
+    vector<string> dialogue1;
+    dialogue1.push_back("Welcome on our campus!");
+    dialogue1.push_back("Start by exploring"); /*
+    string dialogue1 [2] = {"Welcome on our campus!","Start by exploring"}; */
+    Npc* toto = new  Npc("Sprites/NPC2.png",70,50,0.5f,200,212,dialogue1);
+    npcs.push_back(toto) ;
 }
 
 Map::~Map()
@@ -140,7 +128,7 @@ void Map::trainerDisplacement(Trainer &trainer, sf::Event &event, sf::Clock& clo
                        trainer.counterWalk = 1;
                    }
                    else{
-                       if(collision_[map_name][(int) x/16 + ((y/16 +1)*34)]<6 && y < 528){  // && y<33
+                       if(collision_[map_name][(int) x/16 + ((y/16 +1)*34)]<6 && y < 512){  // && y<32
                            trainer.facingDirection = "Down";
                            trainer.state = "Walking";
                            trainer.a = x;
@@ -155,6 +143,22 @@ void Map::trainerDisplacement(Trainer &trainer, sf::Event &event, sf::Clock& clo
 }
 
 void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Clock& clock, int& alpha, sf::Event &event, string &map_name){
+    
+    fillTree(window);
+    
+    if(map_name == "first")
+    {
+        if (!background.load("Sprites/tileset1.png", sf::Vector2u(16, 16), level, 34, 33)){
+            cout << "Error loading the sprite";
+        }
+    }
+    
+    if(map_name == "second")
+       {
+           if (!background.load("Sprites/tileset1.png", sf::Vector2u(16, 16), level2, 34, 33)){
+           cout << "Error loading the sprite";
+           }
+       }
     
     sf::Vector2f pos =trainer.getPos();
     window.draw(background);
@@ -184,7 +188,44 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
 }
         
     
+void Map::fillTree(sf::RenderWindow &window){
+    sf::Texture texture;
+    texture.loadFromFile("Sprites/tileset1.png");
+    for(int i = 0; i < 26; i++){
+        for(int j = 0; j < 26; j++){
+            for(int k = 0; k < 2; k++){
+                for(int l = 0; l < 2; l++){
+                    sf::Sprite sprite;
+                    (sprite).setTexture(texture);
+                    (sprite).setTextureRect(sf::IntRect(273 + k * 17, 290 + l*17, 16, 16));
+                    sprite.setPosition(-160 + k * 16 + i * 32, -176 + l * 16 + j * 32);
+                    window.draw(sprite);
+                }
+            }
+        }
+    }
     
-
+    //Top
+    for(int i = 0; i < 17; i++){
+        for(int k = 0; k < 2; k++){
+            sf::Sprite sprite;
+            (sprite).setTexture(texture);
+            (sprite).setTextureRect(sf::IntRect(239 + k * 17, 324, 16, 16));
+            sprite.setPosition(0 + k * 16 + i * 32, -16);
+            window.draw(sprite);
+        }
+    }
+    
+    //Bottom
+    for(int i = 0; i < 17; i++){
+        for(int k = 0; k < 2; k++){
+            sf::Sprite sprite;
+            (sprite).setTexture(texture);
+            (sprite).setTextureRect(sf::IntRect(239 + k * 17, 291, 16, 16));
+            sprite.setPosition(0 + k * 16 + i * 32, 528);
+            window.draw(sprite);
+        }
+    }
+}
 
 
