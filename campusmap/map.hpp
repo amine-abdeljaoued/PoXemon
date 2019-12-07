@@ -14,12 +14,16 @@ using namespace std;
 class Map 
 {
     public:
-        Map(int i, sf::RenderWindow &window);
+        Map(sf::RenderWindow &window, string &map_name);
         ~Map();
-        void draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Clock& clock, int& alpha) const;
-        void initialisation(sf::Clock& clock, sf::RenderWindow &window, int& alpha) const;
+        void draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Clock& clock, int& alpha, sf::Event &event, string &map_name);
+        void initialisation(sf::Clock& clock, sf::RenderWindow &window, int& alpha);
         static sf::FloatRect getViewBounds(const sf::View &view);
+        void trainerDisplacement(Trainer &trainer, sf::Event &event, sf::Clock& clock, int& alpha, string &map_name);
+    
     private:
         TileMap background;
         vector<Npc*> npcs;
+        map<string, const int*> collision_;
+        //dictionnary of map names and the collision map associated to it, initiaised in the constructor.
 };  
