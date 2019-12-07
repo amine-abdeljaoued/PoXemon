@@ -122,8 +122,8 @@ bool Pokeball::catched(float proba, sf::Clock& clock2, sf::Time& elapsed2){
         //}
         
         float probagenerated = dis(gen);
-        std::cout<< probagenerated <<std::endl;
-        std::cout<< proba <<std::endl;
+        //std::cout<< probagenerated <<std::endl;
+        //std::cout<< proba <<std::endl;
         if (probagenerated < proba){
             std::cout<<"Catched !"<<std::endl;
             return true;

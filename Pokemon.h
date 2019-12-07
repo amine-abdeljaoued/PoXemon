@@ -30,6 +30,8 @@ public:
 	Pokemon()=default;
 	Pokemon(float xstart, float ystart, float h, float v, float hp, std::string path, float pokemon_rarity, std::string pname);
 	void set_enemy(Pokemon* enemy);
+
+	void death_disappear(float& deltaTime); //scale down and make the pokemon 'implode'
 	
 protected:
 	sf::Texture pic;
