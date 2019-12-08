@@ -20,7 +20,7 @@ Trainer::Trainer( float Speed, int sheetRect, int sizeAnim, int& coll_num)
 
     (spritePlayer).setTextureRect(sf::IntRect(0,0,64,64));
     spritePlayer.setScale(sf::Vector2f(0.5f, 0.5f));
-    spritePlayer.setPosition(262, 272);
+    spritePlayer.setPosition(264, 272);
 
     playerMovementSpeed = Speed;
     this->sheetRect = sheetRect;
@@ -37,11 +37,11 @@ void Trainer::draw(sf::RenderWindow &window) const {
 void Trainer::setSpeed(sf::Event &event){
     if ((event.type == sf::Event::KeyPressed)&&((event.key.code == sf::Keyboard::LShift)||(event.key.code == sf::Keyboard::RShift)))
     {
-        playerMovementSpeed = 8;
+        playerMovementSpeed = 4;
     }
     if ((event.type == sf::Event::KeyReleased)&&((event.key.code == sf::Keyboard::LShift)||(event.key.code == sf::Keyboard::RShift)))
     {
-        playerMovementSpeed = 4;
+        playerMovementSpeed = 2;
     }
 }
 sf::Vector2f Trainer::getPos(){
@@ -49,12 +49,11 @@ sf::Vector2f Trainer::getPos(){
     return position;
 }
 
-void Trainer::displacement(sf::Event &event, sf::View &view, const int* collision, sf::Clock& clock, int& alpha, const std::string* case_num)
+void Trainer::displacement(sf::Event &event, sf::View &view, const int* collision, const std::string* case_num)
 {
     sf::Vector2f position = (spritePlayer).getPosition();
     int x = position.x + 16;
     int y = position.y + 16;
-//    std::cout<<x<<","<<y<<std::endl;
     
     setSpeed(event); 
 
@@ -67,90 +66,159 @@ void Trainer::displacement(sf::Event &event, sf::View &view, const int* collisio
 
     if (state == "Walking")
     {
-        if (collision[(int) x/16 +( (int)y/16 *34)]==1){
-            std::random_device rd;
-            std::mt19937 gen(rd());
-            std::uniform_real_distribution<> dis(0.0, 1.0);
-            float probagenerated = dis(gen);
-            if (probagenerated<0.02) std::cout<<"POKEEEEMMMOONNN"<<std::endl;
-        }
+        if(intern_clock.getElapsedTime().asMilliseconds() >= (float) 2000/30){
         
         coll_num=0;
 //        std::cout<<case_num[collision[(int) x/16 +(((int) y/16)*34)]]<<std::endl;
-        if (facingDirection == "Down")
-        {
-            if (y >= b + 16){
-                state = "Stop";
-                counterWalk = 1;
-            }
-            else{
-                (spritePlayer).move(0, playerMovementSpeed);
-                (spritePlayer).setTextureRect(sf::IntRect(counterWalk * 64,0,sheetRect,sheetRect));
-                view.move(0,playerMovementSpeed);
-                    
-                counterWalk++;
-                if(counterWalk==sizeAnim){
-                    counterWalk = 0;
+            if (facingDirection == "Down")
+            {
+                if (y >= b + 16) {
+                    state = "Stop";
+                    (spritePlayer).setTextureRect(sf::IntRect(0,0,sheetRect,sheetRect));
+                    counterWalk = 1;
                 }
-            }
-        }
-        
-        if (facingDirection == "Up")
-        {
-            if ( y <= b - 16){
-                state = "Stop";
-                counterWalk = 1;
-            }
-            else{
-                (spritePlayer).move(0, -playerMovementSpeed);
-                (spritePlayer).setTextureRect(sf::IntRect(counterWalk * sheetRect,3*sheetRect,sheetRect,sheetRect));
-                view.move(0, -playerMovementSpeed);
-                     
-                counterWalk++;
-                if(counterWalk == sizeAnim){
-                    counterWalk = 0;
-                 }
-            }
-        }
-        
-        if (facingDirection == "Right")
-        {
-            if (x >= a + 16){ // -10 because of initial position
-                state = "Stop";
-                counterWalk = 1;
-            }
-            else{
-                (spritePlayer).move(playerMovementSpeed, 0);
-                (spritePlayer).setTextureRect(sf::IntRect(counterWalk * sheetRect,2*sheetRect,sheetRect,sheetRect));
-                view.move(playerMovementSpeed, 0);
-                     
-                counterWalk++;
-                if(counterWalk == sizeAnim){
-                    counterWalk = 0;
-                 }
+                
+                else{
+                    (spritePlayer).move(0, playerMovementSpeed);
+                    (spritePlayer).setTextureRect(sf::IntRect(counterWalk * 64,0,sheetRect,sheetRect));
+                    view.move(0,playerMovementSpeed);
+                        
+                    counterWalk++;
+                    if(counterWalk==sizeAnim){
+                        counterWalk = 0;
+                    }
+                }
             }
             
-        }
-        
-        if (facingDirection == "Left")
-        {
-            if (x <= a - 16 ){ // because of initial position
-                state = "Stop";
-                counterWalk = 1;
-            }
-            else{
-                (spritePlayer).move(-playerMovementSpeed, 0);
-                (spritePlayer).setTextureRect(sf::IntRect(counterWalk * sheetRect,sheetRect,sheetRect,sheetRect));
-                view.move(-playerMovementSpeed, 0);
+            if (facingDirection == "Up")
+            {
+                if ( y <= b - 16){
+                    state = "Stop";
+                    counterWalk = 1;
+                    (spritePlayer).setTextureRect(sf::IntRect(0,3*sheetRect,sheetRect,sheetRect));
+                }
                 
-                counterWalk++;
-                if(counterWalk == sizeAnim){
-                    counterWalk = 0;
+                else{
+                    (spritePlayer).move(0, -playerMovementSpeed);
+                    (spritePlayer).setTextureRect(sf::IntRect(counterWalk * sheetRect,3*sheetRect,sheetRect,sheetRect));
+                    view.move(0, -playerMovementSpeed);
+                         
+                    counterWalk++;
+                    if(counterWalk == sizeAnim){
+                        counterWalk = 0;
+                     }
                 }
             }
-        }
+            
+            if (facingDirection == "Right")
+            {
+                if (x >= a + 16){// -10 because of initial position
+                        state = "Stop";
+                        counterWalk = 1;
+                    (spritePlayer).setTextureRect(sf::IntRect(0,2*sheetRect,sheetRect,sheetRect));
+                }
+                else{
+                    (spritePlayer).move(playerMovementSpeed, 0);
+                    (spritePlayer).setTextureRect(sf::IntRect(counterWalk * sheetRect,2*sheetRect,sheetRect,sheetRect));
+                    view.move(playerMovementSpeed, 0);
+                         
+                    counterWalk++;
+                    if(counterWalk == sizeAnim){
+                        counterWalk = 0;
+                     }
+                }
+                
+            }
+            
+            if (facingDirection == "Left")
+            {
+                if (x <= a - 16 ){ // because of initial position
+                    state = "Stop";
+                    counterWalk = 1;
+                    (spritePlayer).setTextureRect(sf::IntRect(0,sheetRect,sheetRect,sheetRect));
+                }
+                else{
+                    (spritePlayer).move(-playerMovementSpeed, 0);
+                    (spritePlayer).setTextureRect(sf::IntRect(counterWalk * sheetRect,sheetRect,sheetRect,sheetRect));
+                    view.move(-playerMovementSpeed, 0);
+                    
+                    counterWalk++;
+                    if(counterWalk == sizeAnim){
+                        counterWalk = 0;
+                    }
+                }
+            }
 
+                intern_clock.restart();
+        }
+        
+        else{
+            
+            if (facingDirection == "Down")
+            {
+                if (y >= b + 16) {
+                    state = "Stop";
+                    (spritePlayer).setTextureRect(sf::IntRect(0,0,sheetRect,sheetRect));
+                    counterWalk = 1;
+                }
+                
+                else{
+                    (spritePlayer).move(0, playerMovementSpeed);
+                    (spritePlayer).setTextureRect(sf::IntRect(counterWalk * 64,0,sheetRect,sheetRect));
+                    view.move(0,playerMovementSpeed);
+                }
+            }
+            
+            if (facingDirection == "Up")
+            {
+                if ( y <= b - 16){
+                    state = "Stop";
+                    counterWalk = 1;
+                    (spritePlayer).setTextureRect(sf::IntRect(0,3*sheetRect,sheetRect,sheetRect));
+                }
+                
+                else{
+                    (spritePlayer).move(0, -playerMovementSpeed);
+                    (spritePlayer).setTextureRect(sf::IntRect(counterWalk * sheetRect,3*sheetRect,sheetRect,sheetRect));
+                    view.move(0, -playerMovementSpeed);
+                }
+            }
+            
+            if (facingDirection == "Right")
+            {
+                if (x >= a + 16){// -10 because of initial position
+                        state = "Stop";
+                        counterWalk = 1;
+                    (spritePlayer).setTextureRect(sf::IntRect(0,2*sheetRect,sheetRect,sheetRect));
+                }
+                else{
+                    (spritePlayer).move(playerMovementSpeed, 0);
+                    (spritePlayer).setTextureRect(sf::IntRect(counterWalk * sheetRect,2*sheetRect,sheetRect,sheetRect));
+                    view.move(playerMovementSpeed, 0);
+                }
+                
+            }
+            
+            if (facingDirection == "Left")
+            {
+                if (x <= a - 16 ){ // because of initial position
+                    state = "Stop";
+                    counterWalk = 1;
+                    (spritePlayer).setTextureRect(sf::IntRect(0,sheetRect,sheetRect,sheetRect));
+                }
+                else{
+                    (spritePlayer).move(-playerMovementSpeed, 0);
+                    (spritePlayer).setTextureRect(sf::IntRect(counterWalk * sheetRect,sheetRect,sheetRect,sheetRect));
+                    view.move(-playerMovementSpeed, 0);
+                }
+            }
+            
+            
+        }
+    
     }
+    
+    
     
 //    std::cout << facingDirection << std::endl;
 //    std::cout << state << std::endl;

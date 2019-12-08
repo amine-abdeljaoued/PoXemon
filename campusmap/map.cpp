@@ -9,6 +9,7 @@
 #include <list>
 #include <string>
 #include <vector>
+#include <random>
 
 using namespace std;
 
@@ -16,7 +17,8 @@ using namespace std;
 
 Map::Map(sf::RenderWindow &window, string &map_name)
 {
-    
+    alpha = 255;
+    state = "start";
     collision_.insert(pair<string, const int*>("first", collision));
     collision_.insert(pair<string, const int*>("second", collision2));
     
@@ -27,35 +29,50 @@ Map::Map(sf::RenderWindow &window, string &map_name)
     string dialogue1 [2] = {"Welcome on our campus!","Start by exploring"}; */
     Npc* toto = new  Npc("Sprites/NPC2.png",70,50,0.5f,200,212,dialogue1);
     npcs.push_back(toto) ;
+    
 }
 
 Map::~Map()
 {
+    
     for (vector<Npc*>::iterator it = npcs.begin(); it != npcs.end(); it++)
     {
         delete *it;
     }
 }
 
-void Map::initialisation(sf::Clock& clock, sf::RenderWindow &window, int& alpha){
-//    std::cout << clock.getElapsedTime().asSeconds() << std::endl;
-//    std::cout << alpha << std::endl;
-    
+void Map::initialisation(sf::RenderWindow &window){
+
     sf::ConvexShape black;
     black.setPointCount(4);
-    black.setPoint(0, sf::Vector2f(0, 0));
-    black.setPoint(1, sf::Vector2f(544, 0));
-    black.setPoint(2, sf::Vector2f(544, 544));
-    black.setPoint(3, sf::Vector2f(0, 544));
+    black.setPoint(0, sf::Vector2f(-256, -256));
+    black.setPoint(1, sf::Vector2f(800, -256));
+    black.setPoint(2, sf::Vector2f(800, 800));
+    black.setPoint(3, sf::Vector2f(-256, 800));
 
-    if (clock.getElapsedTime().asSeconds() < 2  && alpha>200 ) {
-        black.setFillColor(sf::Color(10, 10, 10, alpha));
-        window.draw(black);
-        if (0.05 < clock.getElapsedTime().asSeconds() && alpha >= 5) alpha = alpha - 5;
-        }
+    black.setFillColor(sf::Color(10, 10, 10, alpha));
+    window.draw(black);
+    alpha -= 15;
+    std::cout << alpha << std::endl;
+    
 }
 
-void Map::trainerDisplacement(Trainer &trainer, sf::Event &event, sf::Clock& clock, int& alpha, string &map_name){
+void Map::end(sf::RenderWindow &window){
+    sf::ConvexShape black;
+    black.setPointCount(4);
+    black.setPoint(0, sf::Vector2f(-256, -256));
+    black.setPoint(1, sf::Vector2f(800, -256));
+    black.setPoint(2, sf::Vector2f(800, 800));
+    black.setPoint(3, sf::Vector2f(-256, 800));
+    black.setFillColor(sf::Color(10, 10, 10, alpha));
+    window.draw(black);
+    alpha += 15;
+    std::cout << alpha << std::endl;
+    
+}
+
+
+void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Event &event, sf::Clock& clock, int& alpha, string &map_name){
     
     sf::Vector2f position = trainer.spritePlayer.getPosition();
     int x = position.x + 16;
@@ -63,11 +80,36 @@ void Map::trainerDisplacement(Trainer &trainer, sf::Event &event, sf::Clock& clo
     
     //Switching map
     if (collision[(int) x/16 +( (int)y/16 *34)]==2){
-        map_name = "second";
-        clock.restart();
-        alpha = 250;
+        if (alpha < 255 && state == "end"){
+            end(window);
+        }
+        else{
+            map_name = "second";
+            clock.restart();
+            state = "start";
+        }
+            
     }
     
+    if (trainer.state == "Walking"){
+        if (collision[(int) x/16 +( (int)y/16 *34)]==1){
+            random_device rd;
+            mt19937 gen(rd());
+            uniform_real_distribution<> dis(0.0, 1.0);
+            float probagenerated = dis(gen);
+            if (probagenerated<0.02) std::cout<<"POKEEEEMMMOONNN"<<std::endl;
+            
+            sf::Texture texture;
+            texture.loadFromFile("Sprites/tileset3.png");
+            sf::Sprite sprite;
+            (sprite).setTexture(texture);
+            (sprite).setTextureRect(sf::IntRect(197, 144, 16, 16));
+            int a = (int) x/16;
+            int b = (int) y/16;
+            sprite.setPosition(16 * a , 16 * b);
+            window.draw(sprite);
+        }
+    }
     
     if (trainer.state == "Stop"){
        
@@ -86,6 +128,9 @@ void Map::trainerDisplacement(Trainer &trainer, sf::Event &event, sf::Clock& clo
                            trainer.a = x;
                            trainer.b = y;
                        }
+                       else{
+                           trainer.state = "Stop";
+                       }
                    }
                }
            
@@ -101,6 +146,9 @@ void Map::trainerDisplacement(Trainer &trainer, sf::Event &event, sf::Clock& clo
                            trainer.state = "Walking";
                            trainer.a = x;
                            trainer.b = y;
+                       }
+                       else{
+                           trainer.state = "Stop";
                        }
                    }
                }
@@ -118,6 +166,9 @@ void Map::trainerDisplacement(Trainer &trainer, sf::Event &event, sf::Clock& clo
                            trainer.a = x;
                            trainer.b = y;
                        }
+                       else{
+                           trainer.state = "Stop";
+                       }
                    }
                }
            
@@ -134,6 +185,9 @@ void Map::trainerDisplacement(Trainer &trainer, sf::Event &event, sf::Clock& clo
                            trainer.a = x;
                            trainer.b = y;
                        }
+                       else{
+                           trainer.state = "Stop";
+                       }
                    }
                }
            
@@ -142,7 +196,9 @@ void Map::trainerDisplacement(Trainer &trainer, sf::Event &event, sf::Clock& clo
     }
 }
 
-void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Clock& clock, int& alpha, sf::Event &event, string &map_name){
+void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Clock& clock, sf::Event &event, string &map_name){
+    
+    std::cout << state << std::endl;
     
     fillTree(window);
     
@@ -182,9 +238,15 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
     if (trainer.coll_num >= 8){ //case of contact with npc
         (*(npcs[0])).speak(window, view);
     }
-    initialisation(clock, window, alpha);
     
-    this->trainerDisplacement(trainer,event,clock,alpha,map_name);
+    if (alpha > 0 && state == "start"){
+        initialisation(window);
+    }
+    else{
+        state = "end";
+    }
+    
+    this->trainerDisplacement(window, trainer,event,clock,alpha,map_name);
 }
         
     
