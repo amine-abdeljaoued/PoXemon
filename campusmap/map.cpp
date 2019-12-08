@@ -232,8 +232,9 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
         }
         
     }
-    
-    trainer.draw(window);
+    if(npcs.size() == 0){
+        trainer.draw(window);
+    }
     
     if (trainer.coll_num >= 8){ //case of contact with npc
         (*(npcs[0])).speak(window, view);

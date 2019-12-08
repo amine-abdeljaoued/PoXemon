@@ -62,6 +62,7 @@ void Trainer::displacement(sf::Event &event, sf::View &view, const int* collisio
             coll_num=8;
             std::cout<<"Bonjour, je suis votre premier PNJ"<<std::endl;
         }
+        //use switchspeak?
     }
 
     if (state == "Walking")

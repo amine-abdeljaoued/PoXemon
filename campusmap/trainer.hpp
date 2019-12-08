@@ -26,6 +26,7 @@ class Trainer {
         std::string state = "Stop";
         int a;
         int b;
+        bool switchSpeak;
     
     private:
         
