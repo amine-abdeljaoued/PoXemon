@@ -16,10 +16,11 @@ class Map
     public:
         Map(sf::RenderWindow &window, string &map_name);
         ~Map();
-        void draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Clock& clock, int& alpha, sf::Event &event, string &map_name);
-        void initialisation(sf::Clock& clock, sf::RenderWindow &window, int& alpha);
+        void draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Clock& clock, sf::Event &event, string &map_name);
+        void initialisation(sf::RenderWindow &window);
+        void end(sf::RenderWindow &window);
         static sf::FloatRect getViewBounds(const sf::View &view);
-        void trainerDisplacement(Trainer &trainer, sf::Event &event, sf::Clock& clock, int& alpha, string &map_name);
+        void trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Event &event, sf::Clock& clock, int& alpha, string &map_name);
         void fillTree(sf::RenderWindow &window);
     
     private:
@@ -27,5 +28,7 @@ class Map
         vector<Npc*> npcs;
         map<string, const int*> collision_;
         string map_name;
+        int alpha;
+        string state;
         //dictionnary of map names and the collision map associated to it, initiaised in the constructor.
 };  

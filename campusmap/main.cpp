@@ -18,7 +18,7 @@ int main()
 
     sf::RenderWindow window(sf::VideoMode(544, 544), "Tilemap");
     sf::View view(sf::Vector2f(272, 272), sf::Vector2f(544, 544));
-    //view.zoom(0.5f);
+    view.zoom(0.5f);
     window.setPosition(sf::Vector2i(0, 0));
 
    /*  sf::Font font;
@@ -40,7 +40,7 @@ int main()
 
 
     //Variables for the character and declaration of him/ we need to put it in constructor
-    float playerMovementSpeed = 4;
+    float playerMovementSpeed = 2;
     int sheetRect = 64;
     int sizeAnim = 4;
     int coll_num = 0;
@@ -48,7 +48,6 @@ int main()
     Trainer Arthur(playerMovementSpeed, sheetRect, sizeAnim, coll_num);
     
     // const for the transition
-    int alpha = 250;
     sf::Clock clock;
     
     window.setFramerateLimit(30);
@@ -68,8 +67,9 @@ int main()
         sf::Time elapsed1 = clock.getElapsedTime();
         
         
-        map1.draw(window,view, Arthur, clock, alpha, event, map_name);
-        Arthur.displacement(event,view, collision, clock, alpha, case_num);
+        map1.draw(window,view, Arthur, clock, event, map_name);
+        
+        Arthur.displacement(event,view, collision, case_num);
         
 //        sf::RectangleShape rectangle(sf::Vector2f(524, 50));
 //        rectangle.setPosition(10, 480);
