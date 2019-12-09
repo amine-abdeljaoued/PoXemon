@@ -73,7 +73,6 @@ void Map::end(sf::RenderWindow &window){
 
 
 void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Event &event, sf::Clock& clock, int& alpha, string &map_name){
-    
     sf::Vector2f position = trainer.spritePlayer.getPosition();
     int x = position.x + 16;
     int y = position.y + 16;
@@ -211,7 +210,7 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
     
     if(map_name == "second")
        {
-           if (!background.load("Sprites/tileset1.png", sf::Vector2u(16, 16), level2, 34, 33)){
+           if (!background.load("Sprites/tileset2.png", sf::Vector2u(16, 16), level2, 34, 33)){
            cout << "Error loading the sprite";
            }
        }
