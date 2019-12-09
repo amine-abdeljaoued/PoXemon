@@ -5,21 +5,22 @@
 #include <stdio.h>
 #include <iostream>
 #include <string>
-#include <vector> 
+#include <vector>
+#include "trainer.hpp"
 using namespace std;
 
 class Npc {
     public:
         Npc(string pathName, int sheetRectX,int sheetRectY, float scale, int posX, int posY, vector<string> discu);
         void draw(sf::RenderWindow &window) const;
-        void speak(sf::RenderWindow &window, sf::View &view);
+        void speak(sf::RenderWindow &window, sf::View &view, Trainer &trainer);
         sf::Vector2f getPos();
+        int speakCounter;
 
     private:
         sf::Texture textureNpc;
         sf::Sprite spriteNpc;
         vector<string> discussion;
-        int speakCounter;
         sf::Font font;
         sf::Text text;
         sf::RectangleShape bubble;

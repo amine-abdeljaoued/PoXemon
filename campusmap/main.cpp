@@ -56,8 +56,6 @@ int main()
     
     while (window.isOpen())
     {
-        
-        
         sf::Event event;
         window.pollEvent(event);
         if(event.type == sf::Event::Closed) window.close();
@@ -69,17 +67,8 @@ int main()
         
         map1.draw(window,view, Arthur, clock, event, map_name);
         
-        Arthur.displacement(event,view, collision, case_num);
+        Arthur.displacement(event,view, case_num);
         
-//        sf::RectangleShape rectangle(sf::Vector2f(524, 50));
-//        rectangle.setPosition(10, 480);
-//        rectangle.setOutlineColor(sf::Color::Red);
-//        rectangle.setOutlineThickness(2);
-//        if (Arthur.coll_num == 8) window.draw(rectangle);
-        /* if (Arthur.coll_num == 8){
-            window.draw(rectangle);
-            window.draw(text);
-        } */
         window.setView(view);
      
 

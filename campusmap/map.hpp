@@ -20,7 +20,7 @@ class Map
         void initialisation(sf::RenderWindow &window);
         void end(sf::RenderWindow &window);
         static sf::FloatRect getViewBounds(const sf::View &view);
-        void trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Event &event, sf::Clock& clock, int& alpha, string &map_name);
+        void trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Event &event, sf::Clock& clock, int& alpha, string &map_name, sf::View &view);
         void fillTree(sf::RenderWindow &window);
     
     private:
