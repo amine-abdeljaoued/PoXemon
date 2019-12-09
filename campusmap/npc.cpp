@@ -39,9 +39,11 @@ void Npc::draw(sf::RenderWindow &window) const {
 
 void Npc::speak(sf::RenderWindow &window, sf::View &view)  {
     
-    if (!font.loadFromFile(/* resourcePath() + */ "Fonts/sansation.ttf")) {
-        cout << "Error in loading font";
+    sf::Font font;
+    if (!font.loadFromFile(/*resourcePath() + */ "Sprites/sansation.ttf")) {
+        return EXIT_FAILURE;
     }
+
     if(speakCounter == discussion.size()){
         speakCounter = 0;
     }

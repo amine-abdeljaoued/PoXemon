@@ -53,7 +53,7 @@ void Map::initialisation(sf::RenderWindow &window){
     black.setFillColor(sf::Color(10, 10, 10, alpha));
     window.draw(black);
     alpha -= 15;
-    std::cout << alpha << std::endl;
+//    std::cout << alpha << std::endl;
     
 }
 
@@ -67,7 +67,7 @@ void Map::end(sf::RenderWindow &window){
     black.setFillColor(sf::Color(10, 10, 10, alpha));
     window.draw(black);
     alpha += 15;
-    std::cout << alpha << std::endl;
+//    std::cout << alpha << std::endl;
     
 }
 
@@ -198,7 +198,7 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
 
 void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Clock& clock, sf::Event &event, string &map_name){
     
-    std::cout << state << std::endl;
+//    std::cout << state << std::endl;
     
     fillTree(window);
     
