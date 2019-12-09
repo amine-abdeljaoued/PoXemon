@@ -1,4 +1,3 @@
-
 #include "Pokeball.h"
 #include<random>
 
@@ -12,6 +11,8 @@
         bounce = 0;
         waiting=false;
     }
+
+
     void Pokeball::dissapear() {
         ball.setPosition(200.f, 2000.f);
         waiting = false;
@@ -26,14 +27,16 @@
 
     
 
-    bool Pokeball::update(float deltaTime,sf::RenderWindow& window,float proba, sf::Clock &clock2, sf::Time &elapsed2) {
+    bool Pokeball::update(float deltaTime,sf::RenderWindow& window,float proba, sf::Clock &clock2, sf::Time &elapsed2, float opphealth) {
         //update the velocityY of the pokeball using low gravity and airfriction
         velocityY += gravity * deltaTime - airfriction * velocityY * deltaTime;
         x += velocityX * deltaTime - airfriction * velocityX * deltaTime;
         y += velocityY * deltaTime;
         
         setPosition(x, y);
+        //Accessing to the health of the opponent to determine a better proba of catching the pokeball
         
+        //std::cout<<opphealth<<std::endl;
         
         sf::Vector2u size = window.getSize();
         float w = size.x;
@@ -80,7 +83,7 @@
             velocityX = 0;
             //}
             //catched(proba, clock2, elapsed2);
-            if (catched(proba, clock2, elapsed2)==true){
+            if (catched(proba, clock2, elapsed2,opphealth)==true){
                 dissapear();
                 return false;
             }
@@ -97,7 +100,7 @@
         return true;
     }
 
-bool Pokeball::catched(float proba, sf::Clock& clock2, sf::Time& elapsed2){
+bool Pokeball::catched(float proba, sf::Clock& clock2, sf::Time& elapsed2,float opphealth){
     // //Prints the elapsed time
     //std::cout<<elapsed2.asSeconds()<<std::endl;
     
@@ -122,9 +125,10 @@ bool Pokeball::catched(float proba, sf::Clock& clock2, sf::Time& elapsed2){
         //}
         
         float probagenerated = dis(gen);
-        //std::cout<< probagenerated <<std::endl;
-        //std::cout<< proba <<std::endl;
-        if (probagenerated < proba){
+        //std::cout<< "proba generated: "<<probagenerated <<std::endl;
+        //std::cout<<"proba modified: "<<(probagenerated * (1+opphealth/100))<<std::endl;
+        //std::cout<<"proba of the pokeball: "<< proba <<std::endl;
+        if (probagenerated * (1+opphealth/100)< proba){
             std::cout<<"Catched !"<<std::endl;
             return true;
         }
@@ -140,21 +144,21 @@ bool Pokeball::catched(float proba, sf::Clock& clock2, sf::Time& elapsed2){
 
     
 Normalball::Normalball() {  //derived class
-        proba = 0.20;
+        proba = 0.35;
         pic1.loadFromFile("Images/pokeball.png");
         ball.setTexture(pic1);
         ball.setScale(sf::Vector2f(0.25f, 0.25f));
 }
 
 Superball::Superball() {  //derived class
-        proba = 0.40;
+        proba = 0.50;
         pic2.loadFromFile("Images/superball.png");
         ball.setTexture(pic2);
         ball.setScale(sf::Vector2f(0.25f, 0.25f));
 }
 
 Masterball::Masterball() {  //derived class
-        proba = 0.60;
+        proba = 0.70;
         pic3.loadFromFile("Images/masterball.png");
         ball.setTexture(pic3);
         ball.setScale(sf::Vector2f(0.07f, 0.07f));
