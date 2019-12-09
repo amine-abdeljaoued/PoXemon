@@ -49,7 +49,7 @@ sf::Vector2f Trainer::getPos(){
     return position;
 }
 
-void Trainer::displacement(sf::Event &event, sf::View &view, const int* collision, const std::string* case_num)
+void Trainer::displacement(sf::Event &event, sf::View &view, const std::string* case_num)
 {
     sf::Vector2f position = (spritePlayer).getPosition();
     int x = position.x + 16;
@@ -57,20 +57,14 @@ void Trainer::displacement(sf::Event &event, sf::View &view, const int* collisio
     
     setSpeed(event); 
 
-    if ((collision[(int) x/16 +(((int) y/16 +1)*34)]==8 && facingDirection=="Down") || (collision[(int) x/16 +(((int) y/16 -1)*34)]==8 && facingDirection=="Up") || (collision[(int) x/16 -1+((int) y/16 *34)]==8 && facingDirection=="Left") || (collision[(int) x/16 +1+((int) y/16 *34)]==8 && facingDirection=="Right")){
-        if ((event.type == sf::Event::KeyPressed)&&((event.key.code == sf::Keyboard::D))){
-            coll_num=8;
-            std::cout<<"Bonjour, je suis votre premier PNJ"<<std::endl;
-        }
-        //use switchspeak?
-    }
+    
 
     if (state == "Walking")
     {
         if(intern_clock.getElapsedTime().asMilliseconds() >= (float) 2000/30){
         
         coll_num=0;
-//        std::cout<<case_num[collision[(int) x/16 +(((int) y/16)*34)]]<<std::endl;
+            
             if (facingDirection == "Down")
             {
                 if (y >= b + 16) {

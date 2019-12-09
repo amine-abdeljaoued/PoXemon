@@ -53,7 +53,7 @@ void Map::initialisation(sf::RenderWindow &window){
     black.setFillColor(sf::Color(10, 10, 10, alpha));
     window.draw(black);
     alpha -= 15;
-//    std::cout << alpha << std::endl;
+    //std::cout << alpha << std::endl;
     
 }
 
@@ -67,12 +67,13 @@ void Map::end(sf::RenderWindow &window){
     black.setFillColor(sf::Color(10, 10, 10, alpha));
     window.draw(black);
     alpha += 15;
-//    std::cout << alpha << std::endl;
+    //std::cout << alpha << std::endl;
     
 }
 
 
-void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Event &event, sf::Clock& clock, int& alpha, string &map_name){
+void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Event &event, sf::Clock& clock, int& alpha, string &map_name, sf::View &view){
+    
     sf::Vector2f position = trainer.spritePlayer.getPosition();
     int x = position.x + 16;
     int y = position.y + 16;
@@ -89,6 +90,14 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
         }
             
     }
+    
+    if ((collision_[map_name][(int) x/16 +(((int) y/16 +1)*34)]==8 && trainer.facingDirection=="Down") || (collision_[map_name][(int) x/16 +(((int) y/16 -1)*34)]==8 && trainer.facingDirection=="Up") || (collision_[map_name][(int) x/16 -1+((int) y/16 *34)]==8 && trainer.facingDirection=="Left") || (collision_[map_name][(int) x/16 +1+((int) y/16 *34)]==8 && trainer.facingDirection=="Right")){
+        if ((event.type == sf::Event::KeyPressed)&&((event.key.code == sf::Keyboard::D))){
+            trainer.state = "Speaking";
+            npcs[0]->speakCounter ++ ;
+        }
+    }
+    
     
     if (trainer.state == "Walking"){
         if (collision[(int) x/16 +( (int)y/16 *34)]==1){
@@ -197,7 +206,7 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
 
 void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Clock& clock, sf::Event &event, string &map_name){
     
-//    std::cout << state << std::endl;
+    
     
     fillTree(window);
     
@@ -210,7 +219,7 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
     
     if(map_name == "second")
        {
-           if (!background.load("Sprites/tileset2.png", sf::Vector2u(16, 16), level2, 34, 33)){
+           if (!background.load("Sprites/tileset1.png", sf::Vector2u(16, 16), level2, 34, 33)){
            cout << "Error loading the sprite";
            }
        }
@@ -235,18 +244,18 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
         trainer.draw(window);
     }
     
-    if (trainer.coll_num >= 8){ //case of contact with npc
-        (*(npcs[0])).speak(window, view);
-    }
-    
     if (alpha > 0 && state == "start"){
         initialisation(window);
     }
     else{
         state = "end";
     }
+
+    this->trainerDisplacement(window, trainer,event,clock,alpha,map_name, view);
     
-    this->trainerDisplacement(window, trainer,event,clock,alpha,map_name);
+    if (trainer.state == "Speaking"){
+        npcs[0]->speak(window, view, trainer);
+    }
 }
         
     
