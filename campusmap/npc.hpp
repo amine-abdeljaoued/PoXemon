@@ -23,6 +23,6 @@ class Npc {
         vector<string> discussion;
         sf::Font font;
         sf::Text text;
-        sf::RectangleShape bubble;
+        sf::ConvexShape bubble;
         sf::FloatRect getViewBounds(const sf::View &view);
 };
