@@ -17,10 +17,10 @@ class Map
         Map(sf::RenderWindow &window, string &map_name);
         ~Map();
         void draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Clock& clock, sf::Event &event, string &map_name);
-        void initialisation(sf::RenderWindow &window);
-        void end(sf::RenderWindow &window);
+        void initialisation(sf::RenderWindow &window, Trainer &trainer);
+        void end(sf::RenderWindow &window, Trainer &trainer);
         static sf::FloatRect getViewBounds(const sf::View &view);
-        void trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Event &event, sf::Clock& clock, int& alpha, string &map_name, sf::View &view);
+        void trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Event &event, sf::Clock& clock, string &map_name, sf::View &view);
         void fillTree(sf::RenderWindow &window);
     
     private:

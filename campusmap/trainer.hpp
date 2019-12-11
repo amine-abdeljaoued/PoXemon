@@ -9,12 +9,11 @@ using namespace std;
 
 class Trainer {
     public:
-        Trainer(float Speed, int sheetRect, int sizeAnim, int& coll_num);
+        Trainer(float Speed, int sheetRect, int sizeAnim);
         void displacement(sf::Event &event, sf::View &view, const std::string* case_num);
         void setSpeed(sf::Event &event);
         void draw(sf::RenderWindow &window) const;
         sf::Vector2f getPos();
-        int coll_num;
         sf::Clock intern_clock;
         float playerMovementSpeed;
         int sheetRect; //Size of a single character position on the sprite sheet
