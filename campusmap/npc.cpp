@@ -52,15 +52,25 @@ void Npc::speak(sf::RenderWindow &window, sf::View &view, Trainer &trainer)  {
     else{
         text.setFont(font);
         text.setString(discussion[speakCounter]);
-        text.setCharacterSize(24);
+        text.setCharacterSize(15);
         text.setFillColor(sf::Color::Black);
-        sf::Vector2f viewSize = view.getSize();
-        bubble.setSize(sf::Vector2f(viewSize.x, viewSize.y/4));
+        /* sf::Vector2f viewSize = view.getSize();
+        bubble.setSize(sf::Vector2f(viewSize.x, viewSize.y/4)); */
 
         sf::FloatRect viewBounds = getViewBounds(view);
-
-        text.setPosition(int(viewBounds.left), int(viewBounds.top + viewBounds.height - 50) );
-        bubble.setPosition(int(viewBounds.left), int(viewBounds.top + viewBounds.height - 50));
+        bubble.setPointCount(8);
+        bubble.setPoint(0, sf::Vector2f(float(viewBounds.left + 30), float(viewBounds.top + viewBounds.height - 60)));
+        bubble.setPoint(1, sf::Vector2f(float(viewBounds.left + viewBounds.height - 30), float(viewBounds.top + viewBounds.height - 60)));
+        bubble.setPoint(2, sf::Vector2f(float(viewBounds.left + viewBounds.height - 10), float(viewBounds.top + viewBounds.height - 45)));
+        bubble.setPoint(3, sf::Vector2f(float(viewBounds.left + viewBounds.height - 10), float(viewBounds.top + viewBounds.height - 25)));
+        bubble.setPoint(4, sf::Vector2f(float(viewBounds.left + viewBounds.height - 30), float(viewBounds.top + viewBounds.height - 10)));
+        bubble.setPoint(5, sf::Vector2f(float(viewBounds.left + 30), float(viewBounds.top + viewBounds.height - 10)));
+        bubble.setPoint(6, sf::Vector2f(float(viewBounds.left + 10), float(viewBounds.top + viewBounds.height - 25)));
+        bubble.setPoint(7, sf::Vector2f(float(viewBounds.left + 10), float(viewBounds.top + viewBounds.height - 45)));
+        bubble.setOutlineColor(sf::Color::Black);
+        bubble.setOutlineThickness(2.f);
+        text.setPosition(int(viewBounds.left) + 35, int(viewBounds.top + viewBounds.height - 40) );
+        /* bubble.setPosition(int(viewBounds.left), int(viewBounds.top + viewBounds.height - 50)); */
 
         text.setStyle(sf::Text::Bold);
         
