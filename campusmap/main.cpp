@@ -43,9 +43,8 @@ int main()
     float playerMovementSpeed = 2;
     int sheetRect = 64;
     int sizeAnim = 4;
-    int coll_num = 0;
     
-    Trainer Arthur(playerMovementSpeed, sheetRect, sizeAnim, coll_num);
+    Trainer Arthur(playerMovementSpeed, sheetRect, sizeAnim);
     
     // const for the transition
     sf::Clock clock;

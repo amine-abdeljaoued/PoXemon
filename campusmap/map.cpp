@@ -41,23 +41,8 @@ Map::~Map()
     }
 }
 
-void Map::initialisation(sf::RenderWindow &window){
-
-    sf::ConvexShape black;
-    black.setPointCount(4);
-    black.setPoint(0, sf::Vector2f(-256, -256));
-    black.setPoint(1, sf::Vector2f(800, -256));
-    black.setPoint(2, sf::Vector2f(800, 800));
-    black.setPoint(3, sf::Vector2f(-256, 800));
-
-    black.setFillColor(sf::Color(10, 10, 10, alpha));
-    window.draw(black);
-    alpha -= 15;
-    //std::cout << alpha << std::endl;
-    
-}
-
-void Map::end(sf::RenderWindow &window){
+void Map::initialisation(sf::RenderWindow &window, Trainer &trainer){
+    trainer.state = "Blocked";
     sf::ConvexShape black;
     black.setPointCount(4);
     black.setPoint(0, sf::Vector2f(-256, -256));
@@ -66,27 +51,42 @@ void Map::end(sf::RenderWindow &window){
     black.setPoint(3, sf::Vector2f(-256, 800));
     black.setFillColor(sf::Color(10, 10, 10, alpha));
     window.draw(black);
-    alpha += 15;
-    //std::cout << alpha << std::endl;
+    alpha -= 5;
     
 }
 
+void Map::end(sf::RenderWindow &window, Trainer &trainer){
+    trainer.state = "Blocked";
+    sf::ConvexShape black;
+    black.setPointCount(4);
+    black.setPoint(0, sf::Vector2f(-256, -256));
+    black.setPoint(1, sf::Vector2f(800, -256));
+    black.setPoint(2, sf::Vector2f(800, 800));
+    black.setPoint(3, sf::Vector2f(-256, 800));
+    black.setFillColor(sf::Color(10, 10, 10, alpha));
+    window.draw(black);
+    alpha += 5;
 
-void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Event &event, sf::Clock& clock, int& alpha, string &map_name, sf::View &view){
+}
+
+
+void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Event &event, sf::Clock& clock, string &map_name, sf::View &view){
     
     sf::Vector2f position = trainer.spritePlayer.getPosition();
     int x = position.x + 16;
     int y = position.y + 16;
     
     //Switching map
-    if (collision[(int) x/16 +( (int)y/16 *34)]==2){
-        if (alpha < 255 && state == "end"){
-            end(window);
+    if (collision_[map_name][(int) x/16 +( (int)y/16 *34)]==2){
+        if (alpha < 250 && state == "end"){
+            end(window, trainer);
         }
         else{
             map_name = "second";
             clock.restart();
             state = "start";
+            initialisation(window, trainer);
+            trainer.counterWalk = 0;
         }
             
     }
@@ -100,7 +100,7 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
     
     
     if (trainer.state == "Walking"){
-        if (collision[(int) x/16 +( (int)y/16 *34)]==1){
+        if (collision_[map_name][(int) x/16 +( (int)y/16 *34)]==1){
             random_device rd;
             mt19937 gen(rd());
             uniform_real_distribution<> dis(0.0, 1.0);
@@ -245,13 +245,16 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
     }
     
     if (alpha > 0 && state == "start"){
-        initialisation(window);
+        initialisation(window, trainer);
     }
     else{
+        if (trainer.state == "Blocked"){
+            trainer.state = "Stop";
+        }
         state = "end";
     }
 
-    this->trainerDisplacement(window, trainer,event,clock,alpha,map_name, view);
+    this->trainerDisplacement(window, trainer,event,clock,map_name, view);
     
     if (trainer.state == "Speaking"){
         npcs[0]->speak(window, view, trainer);
