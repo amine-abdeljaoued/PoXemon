@@ -33,7 +33,7 @@ if (!m_tileset.loadFromFile(tileset))
                 quad[0].texCoords = sf::Vector2f(tu * tileSize.x + tu + 1, tv  * tileSize.y + tv +1);
                 quad[1].texCoords = sf::Vector2f((tu + 1) * tileSize.x + tu + 1, tv * tileSize.y + tv +1);
                 quad[2].texCoords = sf::Vector2f((tu + 1) * tileSize.x + tu + 1, (tv + 1) * tileSize.y + tv +1);
-                quad[3].texCoords = sf::Vector2f(tu * tileSize.x + tu + 1, (tv + 1) * tileSize.y + tv );
+                quad[3].texCoords = sf::Vector2f(tu * tileSize.x + tu + 1, (tv + 1) * tileSize.y + tv +1 );
             }
 
         return true;
