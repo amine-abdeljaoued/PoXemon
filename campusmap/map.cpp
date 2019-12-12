@@ -219,7 +219,7 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
     
     if(map_name == "second")
        {
-           if (!background.load("Sprites/tileset1.png", sf::Vector2u(16, 16), level2, 34, 33)){
+           if (!background.load("Sprites/tileset2.png", sf::Vector2u(16, 16), level2, 34, 33)){
            cout << "Error loading the sprite";
            }
        }
