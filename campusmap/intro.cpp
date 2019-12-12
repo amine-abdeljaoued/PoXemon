@@ -17,7 +17,7 @@ int intro(std::string picture, bool side, int which) {
     
     // Create the main window
     sf::VideoMode desktop = sf::VideoMode().getDesktopMode();
-    sf::RenderWindow intro(desktop, "Pokemen");
+    sf::RenderWindow intro(desktop, "PoXemon");
 
     // Set the Icon
     sf::Image icon;
@@ -110,7 +110,7 @@ int intro(std::string picture, bool side, int which) {
     }
     
     if (which == 1){
-    std::string str = "Welcome to the world of Pokemen!";
+    std::string str = "Welcome to the world of PoXemon!";
         while (str.length() < 40){
             str = " " + str;
         }
@@ -126,7 +126,7 @@ int intro(std::string picture, bool side, int which) {
     }
     
     if (which == 3){
-    std::string str = "But everyone calls me Professor Pokemen.";
+    std::string str = "But everyone calls me Professor PoXemon.";
         while (str.length() < 40){
             str = " " + str;
         }
@@ -139,7 +139,7 @@ int intro(std::string picture, bool side, int which) {
             str = " " + str;
         }
     title.setString(str);
-    std::string str_2 = "called Pokemen.";
+    std::string str_2 = "called PoXemon.";
         while (str_2.length() < 40){
             str_2 = " " + str_2;
         }
@@ -147,7 +147,7 @@ int intro(std::string picture, bool side, int which) {
     }
     
     if (which == 5){
-    std::string str = "We humans live alongside Pokemen,";
+    std::string str = "We humans live alongside PoXemon,";
         while (str.length() < 40){
             str = " " + str;
         }
@@ -186,7 +186,7 @@ int intro(std::string picture, bool side, int which) {
             str = " " + str;
         }
     title.setString(str);
-    std::string str_2 = "we don't know everything about Pokemen.";
+    std::string str_2 = "we don't know everything about PoXemon.";
         while (str_2.length() < 40){
             str_2 = " " + str_2;
         }
@@ -202,7 +202,7 @@ int intro(std::string picture, bool side, int which) {
     }
     
     if (which == 10){
-    std::string str = "many secrets surrounding Pokemen.";
+    std::string str = "many secrets surrounding PoXemon.";
         while (str.length() < 40){
             str = " " + str;
         }
@@ -210,7 +210,7 @@ int intro(std::string picture, bool side, int which) {
     }
     
     if (which == 11){
-    std::string str = "To unravel Pokemen mysteries,";
+    std::string str = "To unravel PoXemon mysteries,";
         while (str.length() < 40){
             str = " " + str;
         }
@@ -239,7 +239,7 @@ int intro(std::string picture, bool side, int which) {
     }
     
     if (which == 16){
-    std::string str = "You have to accept your Pokemen";
+    std::string str = "You have to accept your PoXemon";
         while (str.length() < 40){
             str = " " + str;
         }
@@ -257,7 +257,7 @@ int intro(std::string picture, bool side, int which) {
             str = " " + str;
         }
     title.setString(str);
-        std::string str_2 = "one of my three precious Pokemon.";
+        std::string str_2 = "one of my three precious PoXemon.";
             while (str_2.length() < 40){
                 str_2 = " " + str_2;
             }
@@ -347,7 +347,7 @@ bool choice(std::string prof, bool side, int which) {
     
     // Create the main window
     sf::VideoMode desktop = sf::VideoMode().getDesktopMode();
-    sf::RenderWindow choice(desktop, "Pokemen");
+    sf::RenderWindow choice(desktop, "PoXemon");
 
     // Set the Icon
     sf::Image icon;
@@ -490,7 +490,7 @@ bool choice(std::string prof, bool side, int which) {
             str = " " + str;
         }
     title.setString(str);
-    std::string str_2 = "do you like Pokemon?";
+    std::string str_2 = "do you like PoXemon?";
         while (str_2.length() < 40){
             str_2 = " " + str_2;
         }
@@ -565,7 +565,7 @@ int choose(std::string prof, bool side) {
     
     // Create the main window
     sf::VideoMode desktop = sf::VideoMode().getDesktopMode();
-    sf::RenderWindow choose(desktop, "Pokemen");
+    sf::RenderWindow choose(desktop, "PoXemon");
 
     // Set the Icon
     sf::Image icon;
@@ -693,7 +693,7 @@ int choose(std::string prof, bool side) {
         expl.setPosition(WindowSize.x*(0.70), WindowSize.y*(0.90));
     }
     
-    std::string str = "Which Pokemon";
+    std::string str = "Which PoXemon";
         while (str.length() < 40){
             str = " " + str;
         }
