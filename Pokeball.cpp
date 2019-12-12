@@ -126,9 +126,11 @@ bool Pokeball::catched(float proba, sf::Clock& clock2, sf::Time& elapsed2,float 
         
         float probagenerated = dis(gen);
         //std::cout<< "proba generated: "<<probagenerated <<std::endl;
-        //std::cout<<"proba modified: "<<(probagenerated * (1+opphealth/100))<<std::endl;
-        //std::cout<<"proba of the pokeball: "<< proba <<std::endl;
-        if (probagenerated * (1+opphealth/100)< proba){
+        //std::cout<<"proba modified: "<<proba +(proba+0.4)*((100-opphealth)/100)<<std::endl;
+        
+        //now it works in fct of the life of the opponent
+        //the term (proba+0.4)*((100-opphealth)/100) increaments the chnace of catching the pokemons if it is low life
+        if (probagenerated < proba + ((proba+0.4)*((100-opphealth)/100))){
             std::cout<<"Catched !"<<std::endl;
             return true;
         }
@@ -144,21 +146,21 @@ bool Pokeball::catched(float proba, sf::Clock& clock2, sf::Time& elapsed2,float 
 
     
 Normalball::Normalball() {  //derived class
-        proba = 0.35;
+        proba = 0.20;
         pic1.loadFromFile("Images/pokeball.png");
         ball.setTexture(pic1);
         ball.setScale(sf::Vector2f(0.25f, 0.25f));
 }
 
 Superball::Superball() {  //derived class
-        proba = 0.50;
+        proba = 0.30;
         pic2.loadFromFile("Images/superball.png");
         ball.setTexture(pic2);
         ball.setScale(sf::Vector2f(0.25f, 0.25f));
 }
 
 Masterball::Masterball() {  //derived class
-        proba = 0.70;
+        proba = 0.60;
         pic3.loadFromFile("Images/masterball.png");
         ball.setTexture(pic3);
         ball.setScale(sf::Vector2f(0.07f, 0.07f));
