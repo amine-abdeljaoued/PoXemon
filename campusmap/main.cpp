@@ -4,6 +4,8 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <iostream>
+#include <sstream>
+#include <string>
 #include "tilemap.hpp"
 #include "trainer.hpp"
 #include "const.hpp"
@@ -11,6 +13,19 @@
 #include "map.hpp"
 #include "menu.hpp"
 #include "intro.hpp"
+#include "test.h"
+#include "Backpack_content.h"
+#include "Button.h"
+
+
+//Function to create strings from values
+template <typename T>
+std::string toString(T arg){
+    std::stringstream ss;
+    ss << arg;
+    return ss.str();
+}
+
 
 int main()
 {
@@ -29,27 +44,19 @@ int main()
     intro("professor3.png",0,11);
     intro("professor2.png",0,12);
     choice("professor0.png",1,13);
-    if(choice("professor0.png",1,14)==1){
-        intro("professor7.png",0,15);
-    }
+    if(choice("professor0.png",1,14)==1) intro("professor7.png",0,15);
     else{
     intro("professor4.png",0,16);
     intro("professor1.png",1,17);
         int a = choose("professor0.png",1);
-        if(a==1){
-            intro("professor5.png",0,18);
+        if(a==1) intro("professor5.png",0,18);
+        else if(a==2) intro("professor5.png",0,19);
+        else if(a==3) intro("professor5.png",0,20);
         }
-        else if(a==2){
-            intro("professor5.png",0,19);
-        }
-        else if(a==3){
-            intro("professor5.png",0,20);
-        }
-    }
-    
+
     
     std::string map_name = "first";
-    sf::RenderWindow window(sf::VideoMode().getDesktopMode(), "Tilemap");
+    sf::RenderWindow window(sf::VideoMode().getDesktopMode(), "PoXemon");
     sf::View view(sf::Vector2f(272, 272), sf::Vector2f(544, 544));
     view.zoom(0.5f);
     
@@ -74,6 +81,9 @@ int main()
         window.pollEvent(event);
         
         if(event.type == sf::Event::Closed) window.close();
+        if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::B){
+            
+        }
         
         window.clear(sf::Color(112,200,160));
         sf::Time elapsed1 = clock.getElapsedTime();
