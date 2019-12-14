@@ -151,6 +151,7 @@ const int collision2[] =
 // 0 = rien ne se passe
 // 1 = herbe haute donc on peut trouver des pokemon
 // 2 = passage a une autre map ou une maison
+// 5 = escalier
 // 6 = on peut juste pas aller
 // 7 = eau donc on peut y aller avec des pokemons eau
 // 8 = First Npc in list of Npcs of our object Map
