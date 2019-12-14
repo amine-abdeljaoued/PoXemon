@@ -85,7 +85,7 @@ const int collision[] =
     0,0,0,0,0,0,0,0,0,0,6,6,6,6,0,0,0,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,1,
     0,0,0,1,1,1,1,1,1,1,6,6,6,6,1,1,1,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,1,
     6,6,6,1,1,1,1,1,1,1,6,6,6,6,1,1,1,6,6,6,6,6,6,6,6,6,6,6,1,1,1,1,1,1,
-    6,6,6,1,1,1,1,1,1,1,6,6,2,6,1,1,0,6,6,6,6,6,6,6,6,6,6,6,1,1,1,1,1,1,
+    6,6,6,1,1,1,1,1,1,1,6,6,3,6,1,1,0,6,6,6,6,6,6,6,6,6,6,6,1,1,1,1,1,1,
     6,6,6,1,1,1,1,1,1,1,1,1,1,1,1,1,1,6,6,6,6,6,6,6,6,6,6,6,1,1,1,1,1,1,
     1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
     1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
@@ -150,7 +150,8 @@ const int collision2[] =
 // <6 = case ou on peu aller
 // 0 = rien ne se passe
 // 1 = herbe haute donc on peut trouver des pokemon
-// 2 = passage a une autre map ou une maison
+// 2 = passage a une autre map
+// 3 = batiment ou shop
 // 5 = escalier
 // 6 = on peut juste pas aller
 // 7 = eau donc on peut y aller avec des pokemons eau
@@ -160,5 +161,5 @@ const int collision2[] =
 // etc...
 
 const std::string case_num[] = {
-    "normal","herbe","change_map","","","","blocked","water","pnj"
+    "normal","herbe","change_map","house","","stairs","blocked","water","pnj"
 };
