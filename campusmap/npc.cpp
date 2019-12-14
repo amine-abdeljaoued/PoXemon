@@ -30,6 +30,8 @@ Npc::Npc(string pathName, int sheetRectX,int sheetRectY, float scale , int posX,
     spriteNpc.setPosition(posX, posY);
     discussion = discu;
     speakCounter = -1;
+    this->sheetRectX = sheetRectX;
+    this->sheetRectY = sheetRectY;
 }
 
 
@@ -38,6 +40,22 @@ void Npc::draw(sf::RenderWindow &window) const {
 }
 
 void Npc::speak(sf::RenderWindow &window, sf::View &view, Trainer &trainer)  {
+    
+    if(trainer.facingDirection == "Down"){
+        (spriteNpc).setTextureRect(sf::IntRect(0,3*sheetRectY,sheetRectX,sheetRectY));
+    }
+    
+    if(trainer.facingDirection == "Up"){
+        (spriteNpc).setTextureRect(sf::IntRect(0,0,sheetRectX,sheetRectY));
+    }
+    
+    if(trainer.facingDirection == "Right"){
+        (spriteNpc).setTextureRect(sf::IntRect(0,sheetRectY,sheetRectX,sheetRectY));
+    }
+    
+    if(trainer.facingDirection == "Left"){
+        (spriteNpc).setTextureRect(sf::IntRect(0,2*sheetRectY,sheetRectX,sheetRectY));
+    }
     
     
     if (!font.loadFromFile(/* resourcePath() + */ "Fonts/sansation.ttf")) {
