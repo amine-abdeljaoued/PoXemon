@@ -37,6 +37,11 @@ Map::Map(sf::RenderWindow &window, string &map_name)
     Npc* toto = new  Npc("Sprites/NPC2.png",70,50,0.5f,200,212,dialogue1);
     npcs.push_back(toto) ;
     
+    texture_1.loadFromFile("Sprites/tileset1.png");
+    texture_2.loadFromFile("Sprites/tileset2.png");
+    texture_3.loadFromFile("Sprites/tileset3.png");
+    
+    animationCounter = 0;
 }
 
 Map::~Map()
@@ -114,10 +119,8 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
             float probagenerated = dis(gen);
             if (probagenerated<0.02) std::cout<<"POKEEEEMMMOONNN"<<std::endl;
             
-            sf::Texture texture;
-            texture.loadFromFile("Sprites/tileset3.png");
             sf::Sprite sprite;
-            (sprite).setTexture(texture);
+            (sprite).setTexture(texture_3);
             (sprite).setTextureRect(sf::IntRect(197, 144, 16, 16));
             int a = (int) x/16;
             int b = (int) y/16;
@@ -137,7 +140,7 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
                        trainer.counterWalk = 1;
                    }
                    else{
-                       if(collision_[map_name][(int) x/16 -1+( (int)y/16 *34)] <6 && x > 10){ //&& x>0
+                       if(collision_[map_name][(int) x/16 -1+( (int)y/16 *34)] < 5 && x > 10 && collision_[map_name][(int) x/16 +( (int) y/16 *34)] != 5){ //&& x>0
                            trainer.facingDirection = "Left";
                            trainer.state = "Walking";
                            trainer.a = x;
@@ -156,7 +159,7 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
                        trainer.counterWalk = 1;
                    }
                    else{
-                       if(collision_[map_name][(int) x/16 +1+( (int) y/16 *34)]<6 && x<528){ //&& x<33
+                       if(collision_[map_name][(int) x/16 +1+( (int) y/16 *34)]<5 && x<528 && collision_[map_name][(int) x/16 +( (int) y/16 *34)] != 5){ //&& x<33
                            trainer.facingDirection = "Right";
                            trainer.state = "Walking";
                            trainer.a = x;
@@ -274,18 +277,18 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
     if (trainer.state == "Speaking"){
         npcs[0]->speak(window, view, trainer);
     }
+    
+    movingFlower(window, 176, 176);
 }
         
     
 void Map::fillTree(sf::RenderWindow &window){
-    sf::Texture texture;
-    texture.loadFromFile("Sprites/tileset1.png");
     for(int i = 0; i < 26; i++){
         for(int j = 0; j < 26; j++){
             for(int k = 0; k < 2; k++){
                 for(int l = 0; l < 2; l++){
                     sf::Sprite sprite;
-                    (sprite).setTexture(texture);
+                    (sprite).setTexture(texture_1);
                     (sprite).setTextureRect(sf::IntRect(273 + k * 17, 290 + l*17, 16, 16));
                     sprite.setPosition(-160 + k * 16 + i * 32, -176 + l * 16 + j * 32);
                     window.draw(sprite);
@@ -298,7 +301,7 @@ void Map::fillTree(sf::RenderWindow &window){
     for(int i = 0; i < 17; i++){
         for(int k = 0; k < 2; k++){
             sf::Sprite sprite;
-            (sprite).setTexture(texture);
+            (sprite).setTexture(texture_3);
             (sprite).setTextureRect(sf::IntRect(239 + k * 17, 324, 16, 16));
             sprite.setPosition(0 + k * 16 + i * 32, -16);
             window.draw(sprite);
@@ -309,12 +312,29 @@ void Map::fillTree(sf::RenderWindow &window){
     for(int i = 0; i < 17; i++){
         for(int k = 0; k < 2; k++){
             sf::Sprite sprite;
-            (sprite).setTexture(texture);
+            (sprite).setTexture(texture_3);
             (sprite).setTextureRect(sf::IntRect(239 + k * 17, 291, 16, 16));
             sprite.setPosition(0 + k * 16 + i * 32, 528);
             window.draw(sprite);
         }
     }
+}
+
+void Map::movingFlower(sf::RenderWindow &window, int x, int y){
+    
+    sf::Sprite sprite;
+    (sprite).setTexture(texture_3);
+    (sprite).setTextureRect(sf::IntRect(8 + 16 * animationCounter, 44, 16, 16));
+    sprite.setPosition(x, y);
+    
+    if (animClock.getElapsedTime().asMilliseconds() > 500){
+         animationCounter++;
+         if (animationCounter == 3){
+             animationCounter = 0;
+         }
+        animClock.restart();
+    }
+    window.draw(sprite);
 }
 
 

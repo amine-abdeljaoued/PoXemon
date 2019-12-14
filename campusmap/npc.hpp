@@ -25,4 +25,6 @@ class Npc {
         sf::Text text;
         sf::ConvexShape bubble;
         sf::FloatRect getViewBounds(const sf::View &view);
+        int sheetRectX;
+        int sheetRectY;
 };

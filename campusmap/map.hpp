@@ -22,6 +22,7 @@ class Map
         static sf::FloatRect getViewBounds(const sf::View &view);
         void trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Event &event, sf::Clock& clock, string &map_name, sf::View &view);
         void fillTree(sf::RenderWindow &window);
+        void movingFlower(sf::RenderWindow &window, int x, int y);
     
     private:
         TileMap background1_1;
@@ -33,5 +34,10 @@ class Map
         string map_name;
         int alpha;
         string state;
+        int animationCounter;
+        sf::Clock animClock;
+        sf::Texture texture_1; //tileset1
+        sf::Texture texture_2; //tileset2
+        sf::Texture texture_3; //tileset3
         //dictionnary of map names and the collision map associated to it, initiaised in the constructor.
 };  
