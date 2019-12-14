@@ -40,13 +40,13 @@ int main()
     Trainer Arthur(playerMovementSpeed, sheetRect, sizeAnim);
     Map map1(window, map_name);
     
-    //the intro ny Julien
-    startgame();
+    //the intro by Julien
+//    startgame();
     while (window.isOpen())
     {
         sf::Event event;
         window.pollEvent(event);
-        
+        if (event.type == sf::Event::Closed) window.close();
         window.clear(sf::Color(112,200,160));
         sf::Time elapsed1 = clock.getElapsedTime();
         map1.draw(window,view, Arthur, clock, event, map_name);
@@ -57,4 +57,5 @@ int main()
 
     return 0;
 }
+
 
