@@ -7,6 +7,15 @@
 //We carry this backpack throughout the game
 //->we need to talk with the other teams for that
 
+//c'etait dans le main:
+///*Function to create strings from values*/
+//template <typename T>
+//std::string toString(T arg){
+//    std::stringstream ss;
+//    ss << arg;
+//    return ss.str();
+//}
+
 class Backpack
 {
     public:
