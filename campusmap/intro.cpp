@@ -1,11 +1,3 @@
-//
-//  intro.cpp
-//  Pokemen
-//
-//  Created by Julien Luzzatto on 05/12/2019.
-//  Copyright © 2019 Julien Luzzatto. All rights reserved.
-//
-
 #include "intro.hpp"
 #include <iostream>
 #include "ResourcePath.hpp"
@@ -66,23 +58,9 @@ int menu(std::string picture) {
         sf::Event event;
         while (menu.pollEvent(event))
         {
-            // Close window: exit
-            if (event.type == sf::Event::Closed) {
-                menu.close();
-            }
-            
-            // Escape pressed: exit
-            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
-                menu.close();
-            }
-            
+            if (event.type == sf::Event::Closed) return 10;
             // Advance button:
-            if (event.type == sf::Event::KeyPressed)
-            {
-                if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter){
-                    menu.close();
-                }
-            }
+            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter) menu.close();
             
             // Click start button:
             if (event.type == sf::Event::MouseButtonPressed)
@@ -92,9 +70,7 @@ int menu(std::string picture) {
                 float end_x = title.getPosition().x + WindowSize.x*(0.10);
                 float end_y = title.getPosition().y + WindowSize.y*(0.05);
                 
-                if ( (event.mouseButton.button == sf::Mouse::Left) && (event.mouseButton.x > (spot_x-20)) && (event.mouseButton.x < (end_x+20)) && (event.mouseButton.y > (spot_y-20)) && (event.mouseButton.y < (end_y+20)) ){
-                    menu.close();
-                    }
+                if ( (event.mouseButton.button == sf::Mouse::Left) && (event.mouseButton.x > (spot_x-20)) && (event.mouseButton.x < (end_x+20)) && (event.mouseButton.y > (spot_y-20)) && (event.mouseButton.y < (end_y+20)) ) menu.close();
                 }
             }
             menu.clear();
@@ -403,25 +379,13 @@ int intro(std::string picture, bool side, int which) {
     {
         // Process events
         sf::Event event;
-        while (intro.pollEvent(event))
-        {
-            // Close window: exit
-            if (event.type == sf::Event::Closed) {
-                intro.close();
-            }
+        while (intro.pollEvent(event)) {
             
-            // Escape pressed: exit
-            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
-                intro.close();
-            }
+            if (event.type == sf::Event::Closed) return 10;
             
             // Advance button:
-            if (event.type == sf::Event::KeyPressed)
-            {
-                if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter){
-                    intro.close();
-                }
-            }
+            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter) intro.close();
+            
         intro.clear();
         intro.draw(background);
         intro.draw(professor);
@@ -434,7 +398,7 @@ int intro(std::string picture, bool side, int which) {
         intro.display();
 }
 }
-    return 99;
+    return 9;
 }
 
 bool choice(std::string prof, bool side, int which) {
@@ -607,34 +571,18 @@ bool choice(std::string prof, bool side, int which) {
     {
         // Process events
         sf::Event event;
-        while (choice.pollEvent(event))
-        {
-            // Close window: exit
-            if (event.type == sf::Event::Closed) {
-                choice.close();
-            }
-            
-            // Escape pressed: exit
-            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
-                choice.close();
-            }
-        
+        while (choice.pollEvent(event)) {
+            if (event.type == sf::Event::Closed) return 10;
             // Click button 1:
-            if (event.type == sf::Event::KeyPressed)
-            {
-                if ( (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Left)){
+            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Left) {
                     choice.close();
                     return 0;
-                    }
                 }
                 
             // Click button 2:
-            if (event.type == sf::Event::KeyPressed)
-            {
-                if ( (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Right)){
+            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Right) {
                     choice.close();
                     return 1;
-                    }
                 }
             
         choice.clear();
@@ -819,43 +767,24 @@ int choose(std::string prof, bool side) {
     {
         // Process events
         sf::Event event;
-        while (choose.pollEvent(event))
-        {
-            // Close window: exit
-            if (event.type == sf::Event::Closed) {
-                choose.close();
-            }
-            
-            // Escape pressed: exit
-            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
-                choose.close();
-            }
-        
+        while (choose.pollEvent(event)) {
+            if (event.type == sf::Event::Closed) return 10;
             // Click button 1:
-            if (event.type == sf::Event::KeyPressed)
-            {
-                if ( (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Left)){
+            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Left) {
                     choose.close();
                     return 1;
-                    }
                 }
             
             // Click button 2:
-            if (event.type == sf::Event::KeyPressed)
-            {
-                if ( (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Down)){
+            if (event.type == sf::Event::KeyPressed  && event.key.code == sf::Keyboard::Down) {
                     choose.close();
                     return 2;
-                    }
                 }
                 
             // Click button 3:
-            if (event.type == sf::Event::KeyPressed)
-            {
-                if ( (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Right)){
+            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Right){
                     choose.close();
                     return 3;
-                    }
                 }
             
         choose.clear();
@@ -874,32 +803,37 @@ int choose(std::string prof, bool side) {
         choose.display();
 }
 }
-    return 99;
+    return 9;
 }
 
 void startgame(){
-    menu("main_menu.jpg");
-    intro("professor1.png",1,0);
-    intro("professor4.png",1,1);
-    intro("professor3.png",0,2);
-    intro("professor5.png",0,3);
-    intro("professor2.png",0,4);
-    intro("professor6.png",1,5);
-    intro("professor7.png",1,6);
-    intro("professor1.png",0,7);
-    intro("professor4.png",0,8);
-    intro("professor6.png",1,9);
-    intro("professor5.png",1,10);
-    intro("professor3.png",0,11);
-    intro("professor2.png",0,12);
-    choice("professor0.png",1,13);
-    if(choice("professor0.png",1,14)==1) intro("professor7.png",0,15);
-    else{
-    intro("professor4.png",0,16);
-    intro("professor1.png",1,17);
-        int a = choose("professor0.png",1);
-        if(a==1) intro("professor5.png",0,18);
-        else if(a==2) intro("professor5.png",0,19);
-        else if(a==3) intro("professor5.png",0,20);
+    sf::Event event;
+    int closed=0;
+    closed = menu("main_menu.jpg");
+    if (closed<10)closed = intro("professor1.png",1,0);
+    std::cout<<closed<<std::endl;
+    if (closed<10)closed = intro("professor4.png",1,1);
+    if (closed<10)closed = intro("professor3.png",0,2);
+    if (closed<10)closed = intro("professor5.png",0,3);
+    if (closed<10)closed = intro("professor2.png",0,4);
+    if (closed<10)closed = intro("professor6.png",1,5);
+    if (closed<10)closed = intro("professor7.png",1,6);
+    if (closed<10)closed = intro("professor1.png",0,7);
+    if (closed<10)closed = intro("professor4.png",0,8);
+    if (closed<10)closed = intro("professor6.png",1,9);
+    if (closed<10)closed = intro("professor5.png",1,10);
+    if (closed<10)closed = intro("professor3.png",0,11);
+    if (closed<10)closed = intro("professor2.png",0,12);
+    if (closed<10)closed = choice("professor0.png",1,13);
+    if (closed<10){
+        if(choice("professor0.png",1,14)==1) intro("professor7.png",0,15);
+        else{
+            intro("professor4.png",0,16);
+            intro("professor1.png",1,17);
+            int a = choose("professor0.png",1);
+            if(a==1) intro("professor5.png",0,18);
+            else if(a==2) intro("professor5.png",0,19);
+            else if(a==3) intro("professor5.png",0,20);
+        }
     }
 }

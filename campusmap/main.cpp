@@ -41,7 +41,7 @@ int main()
     Map map1(window, map_name);
     
     //the intro by Julien
-//    startgame();
+    startgame();
     while (window.isOpen())
     {
         sf::Event event;
@@ -57,5 +57,4 @@ int main()
 
     return 0;
 }
-
 
