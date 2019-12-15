@@ -57,7 +57,6 @@ void Bullet::reflect_ground(float& groundY) {
 // SPECIAL ATTACK 1
 
 void Bullet_Attack1::update_image(){
-	std::cout<<"hELLO"<<std::endl;
 	if (!deleting){
 		if((posx < array[3]) && (posy <= array[4]-1)){			//Case 1:  not in the last line, not last element of row
 			posx++;
