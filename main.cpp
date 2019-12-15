@@ -25,39 +25,41 @@ float groundX = 1000.f;
 
 int main ()
 {
-	// Stuff used everywhere
-	sf::Font font;
-	if (!font.loadFromFile("upheavtt.ttf")) { std::cout << "could not load font" << std::endl; }
-	else {font.loadFromFile("upheavtt.ttf");}
+    // Stuff used everywhere
+    sf::Font font;
+    if (!font.loadFromFile("upheavtt.ttf")) { std::cout << "could not load font" << std::endl; }
+    else {font.loadFromFile("upheavtt.ttf");}
 
 	Player eevee(10.f, groundY, 200.f, 500.f, 100, "Images/Pokemon_Images/vulari.png", 2, "Eevee", 10); 
 	// have initialised both of these pokemons to be 'earth' pokemons with 10 at the end
 	Opponent opponent1(1000.f,groundY,200.f, 800.f, 100, "Images/Pokemon_Images/urach.png", 2, "Opponent", 10);
 	eevee.set_enemy(&opponent1);
 	opponent1.set_enemy(&eevee);
-	int state = 1;
+    Backpack bag;
+    bag.set_opponent(&opponent1);
+    int state = 1;
 
     sf::RenderWindow window(sf::VideoMode(1400, 700), "My window");
 
-	sf::Texture BackgroundTexture;
-	sf::Sprite background;
-	initialise_background(window, "Images/grassbg.png", background, BackgroundTexture);
+    sf::Texture BackgroundTexture;
+    sf::Sprite background;
+    initialise_background(window, "Images/grassbg.png", background, BackgroundTexture);
 
-	// Objects that we need for state 1:
-	// Two buttons: to start or to find out how to play
-	sf::RectangleShape start_button;
-	sf::RectangleShape info_button;
-	sf::Text start_text;
-	sf::Text info_text;
-	sf::Text intro_text;
-	intro_text.setString("You are about to fight " + opponent1.name);
-	sf::Sprite opp = opponent1.sprite;
-	sf::Sprite star;
-	sf::Texture star_texture;
-	initialise_buttons(start_button, info_button, window, font, start_text, info_text, intro_text, opp, star, star_texture);
+    // Objects that we need for state 1:
+    // Two buttons: to start or to find out how to play
+    sf::RectangleShape start_button;
+    sf::RectangleShape info_button;
+    sf::Text start_text;
+    sf::Text info_text;
+    sf::Text intro_text;
+    intro_text.setString("You are about to fight " + opponent1.name);
+    sf::Sprite opp = opponent1.sprite;
+    sf::Sprite star;
+    sf::Texture star_texture;
+    initialise_buttons(start_button, info_button, window, font, start_text, info_text, intro_text, opp, star, star_texture);
 
-	// Objects for state 2: (also used for states 5 and 6)
-	float deltaTime = 0.0f;
+    // Objects for state 2: (also used for states 5 and 6)
+    float deltaTime = 0.0f;
 
     sf::Clock clock;
     sf::Clock clock_regenerate_bullets;
@@ -66,24 +68,25 @@ int main ()
     sf::Clock clock2;
     sf::Time elapsed2;
     
-    Backpack bag;
-	static int counter=0;
-	int i = 0;
+    static int counter=0;
+    int i = 0;
 
-	//Objects needed for states 5, 6 :
+    //Objects needed for states 5, 6 :
 
-	//buttons for pokemons -> in order to change player 
-	//they should have : image, name, xp, life
-	//button to leave the fight
-	//some text elements
+    //buttons for pokemons -> in order to change player
+    //they should have : image, name, xp, life
+    //button to leave the fight
+    //some text elements
 
-	// run the program as long as the window is open
-	while (window.isOpen())
-	{
-		
-		deltaTime = clock.restart().asSeconds();
-		elapsed = clock_regenerate_bullets.getElapsedTime();
+    // run the program as long as the window is open
+    while (window.isOpen())
+    {
+        
+        deltaTime = clock.restart().asSeconds();
+        elapsed = clock_regenerate_bullets.getElapsedTime();
         elapsed2 = clock2.getElapsedTime();
+
+        
 
 		sf::Event event;
 		while (window.pollEvent(event))
@@ -106,21 +109,21 @@ int main ()
 			
 		}
 
-		else if (state==2){
-			// clear the window with black color - need to clear before drawing anything (overlap)
-			eevee.update(deltaTime, window, clock_regenerate_bullets, elapsed, groundY);
-			opponent1.update(deltaTime, window, clock_regenerate_bullets, elapsed, groundY);
+         else if (state==2){
+            // clear the window with black color - need to clear before drawing anything (overlap)
+            eevee.update(deltaTime, window, clock_regenerate_bullets, elapsed, groundY);
+            opponent1.update(deltaTime, window, clock_regenerate_bullets, elapsed, groundY);
 
-			if (eevee.health.health <= 0) state = 5;
-			if (opponent1.health.health <= 0) state = 6;
+            if (eevee.health.health <= 0) state = 5;
+            if (opponent1.health.health <= 0) state = 6;
 
-			bag.Pokeball_shoot(deltaTime, window, clock2, elapsed2);
-			window.clear(sf::Color::Blue);
-			window.draw(background);
-			bag.draw(window);
-			opponent1.draw(window);
-			eevee.draw(window);
-		}
+            bag.Pokeball_shoot(deltaTime, window, clock2, elapsed2);
+            window.clear(sf::Color::Blue);
+            window.draw(background);
+            bag.draw(window);
+            eevee.draw(window);
+            opponent1.draw(window);
+        }
 
 		else if (state == 5) {
 			//would be nice to have some animation to show that we are dead
@@ -186,10 +189,8 @@ int main ()
 					//go back to map
 
 		}
-
-		//std::cout << counter++ << std::endl;
-		
-		window.display();
+         
+        window.display();
     }
     return 0;
 }
