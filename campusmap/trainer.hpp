@@ -26,6 +26,7 @@ class Trainer {
         int a;
         int b;
         bool switchSpeak;
+        int speedSprite;
     
     private:
         

@@ -23,6 +23,7 @@ class Map
         void trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Event &event, sf::Clock& clock, string &map_name, sf::View &view);
         void fillTree(sf::RenderWindow &window);
         void movingFlower(sf::RenderWindow &window, int x, int y);
+        void openDoorS(sf::RenderWindow &window, Trainer &trainer);
     
     private:
         TileMap background1_1;
@@ -35,6 +36,7 @@ class Map
         int alpha;
         string state;
         int animationCounter;
+        int animationDoor;
         sf::Clock animClock;
         sf::Texture texture_1; //tileset1
         sf::Texture texture_2; //tileset2

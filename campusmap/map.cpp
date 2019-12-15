@@ -42,6 +42,7 @@ Map::Map(sf::RenderWindow &window, string &map_name)
     texture_3.loadFromFile("Sprites/tileset3.png");
     
     animationCounter = 0;
+    animationDoor = 0;
 }
 
 Map::~Map()
@@ -100,8 +101,8 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
             initialisation(window, trainer);
             trainer.counterWalk = 0;
         }
-            
     }
+    
     
     if ((collision_[map_name][(int) x/16 +(((int) y/16 +1)*34)]==8 && trainer.facingDirection=="Down") || (collision_[map_name][(int) x/16 +(((int) y/16 -1)*34)]==8 && trainer.facingDirection=="Up") || (collision_[map_name][(int) x/16 -1+((int) y/16 *34)]==8 && trainer.facingDirection=="Left") || (collision_[map_name][(int) x/16 +1+((int) y/16 *34)]==8 && trainer.facingDirection=="Right")){
         if ((event.type == sf::Event::KeyPressed)&&((event.key.code == sf::Keyboard::D))){
@@ -135,7 +136,7 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
                    
                if (event.key.code == sf::Keyboard::Left) {
                    if (trainer.facingDirection != "Left"){
-                    (trainer.spritePlayer).setTextureRect(sf::IntRect(0,trainer.sheetRect,trainer.sheetRect,trainer.sheetRect));
+                    (trainer.spritePlayer).setTextureRect(sf::IntRect(2,2+2*(trainer.sheetRect+2),trainer.sheetRect,trainer.sheetRect));
                        trainer.facingDirection = "Left";
                        trainer.counterWalk = 1;
                    }
@@ -154,7 +155,7 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
            
                if (event.key.code == sf::Keyboard::Right) {
                    if (trainer.facingDirection != "Right"){
-                       (trainer.spritePlayer).setTextureRect(sf::IntRect(0,2*trainer.sheetRect,trainer.sheetRect,trainer.sheetRect));
+                       (trainer.spritePlayer).setTextureRect(sf::IntRect(2,2+3*(trainer.sheetRect+2),trainer.sheetRect,trainer.sheetRect));
                        trainer.facingDirection = "Right";
                        trainer.counterWalk = 1;
                    }
@@ -173,26 +174,39 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
            
                if (event.key.code == sf::Keyboard::Up) {
                    if (trainer.facingDirection != "Up"){
-                       (trainer.spritePlayer).setTextureRect(sf::IntRect(0,3*trainer.sheetRect,trainer.sheetRect,trainer.sheetRect));
+                       (trainer.spritePlayer).setTextureRect(sf::IntRect(2,2 + trainer.sheetRect + 2,trainer.sheetRect,trainer.sheetRect));
                        trainer.facingDirection = "Up";
                        trainer.counterWalk = 1;
                    }
                    else{
-                       if(collision_[map_name][(int) x/16 +(((int) y/16 -1)*34)]<6 && y > 10){  //&& y>0
-                           trainer.facingDirection = "Up";
-                           trainer.state = "Walking";
-                           trainer.a = x;
-                           trainer.b = y;
+                       if(collision_[map_name][(int) x/16 +(((int) y/16 -1)*34)]==4){
+                           if (animationCounter > 0){
+                               trainer.state = "Entering";
+                           }
+                           else{
+                               //map_name = "Indoor";
+                               trainer.state = "Stop";
+                               end(window, trainer);
+                           }
                        }
                        else{
-                           trainer.state = "Stop";
+                           if(collision_[map_name][(int) x/16 +(((int) y/16 -1)*34)]<6 && y > 10){  //&& y>0
+                               trainer.facingDirection = "Up";
+                               trainer.state = "Walking";
+                               trainer.a = x;
+                               trainer.b = y;
+                           }
+                           else{
+                               trainer.state = "Stop";
+                           }
                        }
+                       
                    }
                }
            
                if (event.key.code == sf::Keyboard::Down) {
                    if (trainer.facingDirection != "Down"){
-                       (trainer.spritePlayer).setTextureRect(sf::IntRect(0,0,trainer.sheetRect,trainer.sheetRect));
+                       (trainer.spritePlayer).setTextureRect(sf::IntRect(2,2,trainer.sheetRect,trainer.sheetRect));
                        trainer.facingDirection = "Down";
                        trainer.counterWalk = 1;
                    }
@@ -244,6 +258,10 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
         window.draw(background2_2); //Both backgrounds associated to each tileset will have the same background
     } */
     
+    movingFlower(window, 176, 176);
+    
+    openDoorS(window, trainer);
+    
     for (auto const& np : npcs) 
     {
         sf::Vector2f pos2 = (*np).getPos(); //Here we study the respective positions of the character and the npcs 
@@ -258,6 +276,7 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
         }
         
     }
+    
     if(npcs.size() == 0){
         trainer.draw(window);
     }
@@ -272,13 +291,14 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
         state = "end";
     }
 
-    this->trainerDisplacement(window, trainer,event,clock,map_name, view);
+   
     
     if (trainer.state == "Speaking"){
         npcs[0]->speak(window, view, trainer);
     }
     
-    movingFlower(window, 176, 176);
+    this->trainerDisplacement(window, trainer,event,clock,map_name, view);
+
 }
         
     
@@ -320,6 +340,7 @@ void Map::fillTree(sf::RenderWindow &window){
     }
 }
 
+
 void Map::movingFlower(sf::RenderWindow &window, int x, int y){
     
     sf::Sprite sprite;
@@ -337,4 +358,21 @@ void Map::movingFlower(sf::RenderWindow &window, int x, int y){
     window.draw(sprite);
 }
 
-
+void Map::openDoorS(sf::RenderWindow &window, Trainer &trainer){
+    if (trainer.state == "Entering"){
+        sf::Sprite sprite;
+        (sprite).setTexture(texture_3);
+        (sprite).setTextureRect(sf::IntRect(23 + 17 * animationDoor, 232, 16, 16));
+        sprite.setPosition(192,160);
+        
+        std::cout << animationDoor << std::endl;
+        if (animClock.getElapsedTime().asMilliseconds() > 400){
+            animationDoor++;
+            if (animationDoor == 3){
+                animationDoor = 0;
+                trainer.state = "Stop";
+            }
+        }
+        window.draw(sprite);
+    }
+}
