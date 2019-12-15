@@ -30,7 +30,7 @@ void Player::update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clock
 		}
 		//Bullets: shooting
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-			bullets.new_shot(x,y,sprite.getGlobalBounds(), window, sf::Mouse::getPosition(window));
+			bullets.new_shot_special_attack1(x,y,sprite.getGlobalBounds(), window, sf::Mouse::getPosition(window));
 		}
 		if (! sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 			bullets.was_released = true;
