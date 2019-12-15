@@ -33,7 +33,7 @@ int main()
     
     //Variables for the character and declaration of him/ we need to put it in constructor
     float playerMovementSpeed = 2;
-    int sheetRect = 64;
+    int sheetRect = 32;
     int sizeAnim = 4;
     std::string map_name = "first";
     

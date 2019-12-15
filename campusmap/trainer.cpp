@@ -13,18 +13,19 @@ using namespace std;
 Trainer::Trainer( float Speed, int sheetRect, int sizeAnim)
 {
     
-    if (!texturePlayer.loadFromFile(/* resourcePath() + */ "Sprites/fullch.png")) {
+    if (!texturePlayer.loadFromFile(/* resourcePath() + */ "Sprites/trainer.png")) {
         cout << "Error loading sprite";
     }
     (spritePlayer).setTexture(texturePlayer);
 
-    (spritePlayer).setTextureRect(sf::IntRect(0,0,64,64));
-    spritePlayer.setScale(sf::Vector2f(0.5f, 0.5f));
+    (spritePlayer).setTextureRect(sf::IntRect(2,2,sheetRect,sheetRect));
+    //spritePlayer.setScale(sf::Vector2f(0.50f, 0.50f));
     spritePlayer.setPosition(264, 272);
 
     playerMovementSpeed = Speed;
     this->sheetRect = sheetRect;
     this->sizeAnim = sizeAnim;
+    speedSprite = 0;
 
     
 }
@@ -37,10 +38,12 @@ void Trainer::setSpeed(sf::Event &event){
     if ((event.type == sf::Event::KeyPressed)&&((event.key.code == sf::Keyboard::LShift)||(event.key.code == sf::Keyboard::RShift)))
     {
         playerMovementSpeed = 4;
+        speedSprite = 170;
     }
     if ((event.type == sf::Event::KeyReleased)&&((event.key.code == sf::Keyboard::LShift)||(event.key.code == sf::Keyboard::RShift)))
     {
         playerMovementSpeed = 2;
+        speedSprite = 0;
     }
 }
 sf::Vector2f Trainer::getPos(){
@@ -66,13 +69,13 @@ void Trainer::displacement(sf::Event &event, sf::View &view, const std::string* 
             {
                 if (y >= b + 16) {
                     state = "Stop";
-                    (spritePlayer).setTextureRect(sf::IntRect(0,0,sheetRect,sheetRect));
+                    (spritePlayer).setTextureRect(sf::IntRect(2,2,sheetRect,sheetRect));
                     counterWalk = 1;
                 }
                 
                 else{
                     (spritePlayer).move(0, playerMovementSpeed);
-                    (spritePlayer).setTextureRect(sf::IntRect(counterWalk * 64,0,sheetRect,sheetRect));
+                    (spritePlayer).setTextureRect(sf::IntRect(2 + counterWalk * (sheetRect+2)+speedSprite,2,sheetRect,sheetRect));
                     view.move(0,playerMovementSpeed);
                         
                     counterWalk++;
@@ -87,12 +90,12 @@ void Trainer::displacement(sf::Event &event, sf::View &view, const std::string* 
                 if ( y <= b - 16){
                     state = "Stop";
                     counterWalk = 1;
-                    (spritePlayer).setTextureRect(sf::IntRect(0,3*sheetRect,sheetRect,sheetRect));
+                    (spritePlayer).setTextureRect(sf::IntRect(2+speedSprite,2 + (sheetRect+2),sheetRect,sheetRect));
                 }
                 
                 else{
                     (spritePlayer).move(0, -playerMovementSpeed);
-                    (spritePlayer).setTextureRect(sf::IntRect(counterWalk * sheetRect,3*sheetRect,sheetRect,sheetRect));
+                    (spritePlayer).setTextureRect(sf::IntRect(2 + counterWalk * (2 + sheetRect)+speedSprite,2 + (sheetRect+2),sheetRect,sheetRect));
                     view.move(0, -playerMovementSpeed);
                          
                     counterWalk++;
@@ -107,11 +110,11 @@ void Trainer::displacement(sf::Event &event, sf::View &view, const std::string* 
                 if (x >= a + 16){// -10 because of initial position
                         state = "Stop";
                         counterWalk = 1;
-                    (spritePlayer).setTextureRect(sf::IntRect(0,2*sheetRect,sheetRect,sheetRect));
+                    (spritePlayer).setTextureRect(sf::IntRect(2+speedSprite,2+ 3*(sheetRect+2),sheetRect,sheetRect));
                 }
                 else{
                     (spritePlayer).move(playerMovementSpeed, 0);
-                    (spritePlayer).setTextureRect(sf::IntRect(counterWalk * sheetRect,2*sheetRect,sheetRect,sheetRect));
+                    (spritePlayer).setTextureRect(sf::IntRect(2+counterWalk * (sheetRect+2)+speedSprite,2+ 3*(sheetRect+2),sheetRect,sheetRect));
                     view.move(playerMovementSpeed, 0);
                          
                     counterWalk++;
@@ -127,11 +130,11 @@ void Trainer::displacement(sf::Event &event, sf::View &view, const std::string* 
                 if (x <= a - 16 ){ // because of initial position
                     state = "Stop";
                     counterWalk = 1;
-                    (spritePlayer).setTextureRect(sf::IntRect(0,sheetRect,sheetRect,sheetRect));
+                    (spritePlayer).setTextureRect(sf::IntRect(2+speedSprite,2+2*(sheetRect+2),sheetRect,sheetRect));
                 }
                 else{
                     (spritePlayer).move(-playerMovementSpeed, 0);
-                    (spritePlayer).setTextureRect(sf::IntRect(counterWalk * sheetRect,sheetRect,sheetRect,sheetRect));
+                    (spritePlayer).setTextureRect(sf::IntRect(2+counterWalk * (sheetRect+2)+speedSprite,2+2*(sheetRect+2),sheetRect,sheetRect));
                     view.move(-playerMovementSpeed, 0);
                     
                     counterWalk++;
@@ -150,13 +153,13 @@ void Trainer::displacement(sf::Event &event, sf::View &view, const std::string* 
             {
                 if (y >= b + 16) {
                     state = "Stop";
-                    (spritePlayer).setTextureRect(sf::IntRect(0,0,sheetRect,sheetRect));
+                    (spritePlayer).setTextureRect(sf::IntRect(2+speedSprite,2,sheetRect,sheetRect));
                     counterWalk = 1;
                 }
 
                 else{
                     (spritePlayer).move(0, playerMovementSpeed);
-                    (spritePlayer).setTextureRect(sf::IntRect(counterWalk * 64,0,sheetRect,sheetRect));
+                    (spritePlayer).setTextureRect(sf::IntRect(2 + counterWalk * (sheetRect+2)+speedSprite,2,sheetRect,sheetRect));
                     view.move(0,playerMovementSpeed);
                 }
             }
@@ -166,12 +169,12 @@ void Trainer::displacement(sf::Event &event, sf::View &view, const std::string* 
                 if ( y <= b - 16){
                     state = "Stop";
                     counterWalk = 1;
-                    (spritePlayer).setTextureRect(sf::IntRect(0,3*sheetRect,sheetRect,sheetRect));
+                    (spritePlayer).setTextureRect(sf::IntRect(2+speedSprite,2+sheetRect+2,sheetRect,sheetRect));
                 }
 
                 else{
                     (spritePlayer).move(0, -playerMovementSpeed);
-                    (spritePlayer).setTextureRect(sf::IntRect(counterWalk * sheetRect,3*sheetRect,sheetRect,sheetRect));
+                    (spritePlayer).setTextureRect(sf::IntRect(2+counterWalk * (sheetRect+2)+speedSprite,2+sheetRect+2,sheetRect,sheetRect));
                     view.move(0, -playerMovementSpeed);
                 }
             }
@@ -181,11 +184,11 @@ void Trainer::displacement(sf::Event &event, sf::View &view, const std::string* 
                 if (x >= a + 16){// -10 because of initial position
                         state = "Stop";
                         counterWalk = 1;
-                    (spritePlayer).setTextureRect(sf::IntRect(0,2*sheetRect,sheetRect,sheetRect));
+                    (spritePlayer).setTextureRect(sf::IntRect(2+speedSprite,2+3*(sheetRect+2),sheetRect,sheetRect));
                 }
                 else{
                     (spritePlayer).move(playerMovementSpeed, 0);
-                    (spritePlayer).setTextureRect(sf::IntRect(counterWalk * sheetRect,2*sheetRect,sheetRect,sheetRect));
+                    (spritePlayer).setTextureRect(sf::IntRect(2+counterWalk * (sheetRect+2)+speedSprite,2+3*(sheetRect+2),sheetRect,sheetRect));
                     view.move(playerMovementSpeed, 0);
                 }
 
@@ -196,11 +199,11 @@ void Trainer::displacement(sf::Event &event, sf::View &view, const std::string* 
                 if (x <= a - 16 ){ // because of initial position
                     state = "Stop";
                     counterWalk = 1;
-                    (spritePlayer).setTextureRect(sf::IntRect(0,sheetRect,sheetRect,sheetRect));
+                    (spritePlayer).setTextureRect(sf::IntRect(2+speedSprite,2+2*(sheetRect+2),sheetRect,sheetRect));
                 }
                 else{
                     (spritePlayer).move(-playerMovementSpeed, 0);
-                    (spritePlayer).setTextureRect(sf::IntRect(counterWalk * sheetRect,sheetRect,sheetRect,sheetRect));
+                    (spritePlayer).setTextureRect(sf::IntRect(2+counterWalk * (sheetRect+2)+speedSprite,2+2*(sheetRect+2),sheetRect,sheetRect));
                     view.move(-playerMovementSpeed, 0);
                 }
             }
