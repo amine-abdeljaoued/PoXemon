@@ -41,7 +41,8 @@ int main()
     Map map1(window, map_name);
     
     //the intro by Julien
-    startgame();
+    if (startgame()==1) window.close();
+    
     while (window.isOpen())
     {
         sf::Event event;

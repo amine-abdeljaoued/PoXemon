@@ -806,7 +806,7 @@ int choose(std::string prof, bool side) {
     return 9;
 }
 
-void startgame(){
+int startgame(){
     sf::Event event;
     int closed=0;
     closed = menu("main_menu.jpg");
@@ -836,4 +836,6 @@ void startgame(){
             else if(a==3) intro("professor5.png",0,20);
         }
     }
+    if (closed<10) return 0;
+    else return 1;
 }
