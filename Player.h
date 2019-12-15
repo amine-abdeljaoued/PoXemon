@@ -4,8 +4,8 @@
 
 class Player: public Pokemon {
 public:
-	Player(float xstart, float ystart, float h, float v, float hp, std::string path, float pokemon_rarity, std::string name)
-		: Pokemon(xstart, ystart, h, v, hp, path, pokemon_rarity, name) {
+	Player(float xstart, float ystart, float h, float v, float hp, std::string path, float pokemon_rarity, std::string name, int ptype)
+		: Pokemon(xstart, ystart, h, v, hp, path, pokemon_rarity, name, ptype) {
 		was_left = true;
 		sprite.setScale(sf::Vector2f(-0.5f, 0.5f));//it has to face towards the right (intially, the images are all 'facing towards the left')
 	};
