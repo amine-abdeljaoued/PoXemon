@@ -9,6 +9,6 @@ int intro(std::string, bool, int);
 bool choice(std::string, bool, int);
 int choose(std::string, bool);
 int menu(std::string);
-void startgame();
+int startgame();
 
 #endif /* intro_hpp */
