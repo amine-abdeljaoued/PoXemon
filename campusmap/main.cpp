@@ -12,11 +12,9 @@
 #include "trainer.hpp"
 #include "npc.hpp"
 #include "map.hpp"
-#include "test.hpp"
-#include "Backpack_content.hpp"
-#include "Button.hpp"
 #include "intro.hpp"
 #include "const.hpp"
+#include "openbackpack.hpp"
 
 
 int main()
@@ -46,6 +44,7 @@ int main()
     {
         sf::Event event;
         window.pollEvent(event);
+        if ((event.type == sf::Event::KeyPressed)&&((event.key.code == sf::Keyboard::P))) if(openbackpck()==1) window.close();
         if (event.type == sf::Event::Closed) window.close();
         window.clear(); //sf::Color(112,200,160)
         map1.draw(window,view, Arthur, clock, event);
