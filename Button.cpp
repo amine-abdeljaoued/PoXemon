@@ -8,14 +8,7 @@
 #include <string>
 #include <sstream>
 #include "ResourcePath.hpp"
-
-//Function to create strings from values
-template <typename T>
-std::string toString(T arg){
-    std::stringstream ss;
-    ss << arg;
-    return ss.str();
-}
+#include "toString.h"
 
 Button::Button() {
     
