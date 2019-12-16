@@ -14,8 +14,8 @@ std::string toString(T arg){
 
 Test::Test(float width, float height) {
     
-    if (!font_menu.loadFromFile(resourcePath() + "sansation.ttf")) {
-        return EXIT_FAILURE;
+    if (!font_menu.loadFromFile(/* resourcePath() + */ "Fonts/sansation.ttf")) {
+        std::cout<<"Problem"<<std::endl;
     }
    
     menu[0].setFillColor(sf::Color::White);

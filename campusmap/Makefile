@@ -16,21 +16,27 @@ map.o: map.cpp map.hpp tilemap.hpp npc.hpp trainer.hpp const.hpp
 intro.o: intro.cpp intro.hpp
 	$(CXX) -c intro.cpp
 
-Backpack_content.o: Backpack_content.cpp Backpack_content.hpp
+Backpack_content.o: Backpack_content.cpp Backpack_content.h
 	$(CXX) -c Backpack_content.cpp
 
-Button.o: Button.cpp Button.hpp
+Button.o: Button.cpp Button.h
 	$(CXX) -c Button.cpp
 
-test.o: test.cpp test.hpp
+test.o: test.cpp test.h
 	$(CXX) -c test.cpp
 
-main.o: main.cpp tilemap.hpp npc.hpp map.hpp trainer.hpp const.hpp intro.hpp Backpack_content.hpp Button.hpp test.hpp
+openbackpack.o: openbackpack.cpp openbackpack.hpp
+	$(CXX) -c openbackpack.cpp
+
+Background.o: Background.cpp Background.hpp
+	$(CXX) -c Background.cpp
+
+main.o: main.cpp tilemap.hpp npc.hpp map.hpp trainer.hpp const.hpp intro.hpp Backpack_content.h Button.h test.h openbackpack.hpp Background.hpp
 	$(CXX) -c main.cpp
 	
 
-game: main.o map.o tilemap.o trainer.o npc.o test.o Button.o Backpack_content.o intro.o
-	$(CXX) main.o map.o trainer.o tilemap.o npc.o test.o Button.o Backpack_content.o intro.o -o game $(LDLIBS)  
+game: main.o map.o tilemap.o trainer.o npc.o test.o Button.o Backpack_content.o intro.o openbackpack.o Background.o
+	$(CXX) main.o map.o trainer.o tilemap.o npc.o test.o Button.o Backpack_content.o intro.o openbackpack.o Background.o -o game $(LDLIBS)  
 
 
 clean:
