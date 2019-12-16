@@ -1,5 +1,4 @@
 #include "Artillery.h"
-#include <random>
 
 Artillery::Artillery(){
     max_available_bullets = 20;
@@ -7,15 +6,9 @@ Artillery::Artillery(){
     was_released = true;                        // Start being able to shoot
 }
 
-Artillery::~Artillery(){
-    for (unsigned i = 0; i < bullets.size(); i++) {
-        delete bullets[i];
-    }
-}
-
 void Artillery::draw(sf::RenderTarget& target) const {
     for (unsigned i = 0; i < bullets.size(); i++) {
-        target.draw((*bullets[i]).bullet);
+        target.draw(bullets[i].bullet);
 	}
 }
 
@@ -24,15 +17,15 @@ void Artillery::new_shot(float& x, float& y, const sf::FloatRect& bounds, sf::Re
     // takes our window
     // takes the clicked mouse position
     if (was_released && available_bullets > 0) {
-        Bullet* new_bullet = new Bullet;
+        Bullet new_bullet;
         sf::Vector2f initial_pos(x, y);
-        (*new_bullet).setPosition(initial_pos); 
+        new_bullet.setPosition(initial_pos); 
 
         //sf::Mouse::getPosition returns the position of the curson in window coordinates 
         //while all the entities use world coordinates.
         //We fix this by using the mapPixelToCoords member function.
         sf::Vector2f mouse_position = window.mapPixelToCoords(mouse);
-        (*new_bullet).set_shoot_dir(mouse_position, initial_pos);
+        new_bullet.set_shoot_dir(mouse_position, initial_pos);
 
         bullets.push_back(new_bullet);//append the new bullet to our array
 
@@ -45,37 +38,18 @@ void Artillery::new_shot(float& x, float& y, const sf::FloatRect& bounds, sf::Re
     was_released = false;
 }
 
-void Artillery::new_shot_special_attack1(float& x, float& y, const sf::FloatRect& bounds, sf::RenderTarget& window, const sf::Vector2i& mouse){ 
-    if (was_released && available_bullets > 0) {
-        Bullet_Attack1* new_bullet = new Bullet_Attack1(type); // MUST BE GENERALISED TO TYPE
-        sf::Vector2f initial_pos(x, y);
-        (*new_bullet).setPosition(initial_pos); 
-
-        sf::Vector2f mouse_position = window.mapPixelToCoords(mouse);
-        (*new_bullet).set_shoot_dir(mouse_position, initial_pos);
-
-        bullets.push_back(new_bullet);
-
-        available_bullets -= 1;
-		bulletbar.update(-1);
-    }
-    was_released = false;
-}
-
 void Artillery::new_shot_opp(float& x, float& y, const sf::FloatRect& bounds, sf::RenderTarget& window, float& xshoot, float& yshoot){
     if (was_released && available_bullets > 0) {
-        if (rand() < 0.08 * ((double)RAND_MAX + 1.0)) { // probability of shooting of 8% at each update -- can change depending on level?
-            Bullet* new_bullet = new Bullet;
-            sf::Vector2f initial_pos(x, y);
-            (*new_bullet).setPosition(initial_pos); 
+        Bullet new_bullet;
+        sf::Vector2f initial_pos(x, y);
+        new_bullet.setPosition(initial_pos); 
 
-            sf::Vector2f direction(xshoot, yshoot);
-            sf::Vector2f current(x,y);
-        
-            (*new_bullet).set_shoot_dir(direction, current);
-            bullets.push_back(new_bullet);  // append the new bullet to our array
-            available_bullets -= 1;
-        }
+        sf::Vector2f direction(xshoot, yshoot);
+        sf::Vector2f current(x,y);
+    
+        new_bullet.set_shoot_dir(direction, current);
+        bullets.push_back(new_bullet);//append the new bullet to our array
+        available_bullets -= 1;
     }
 }
 
@@ -83,28 +57,19 @@ int Artillery::update(float& deltaTime, sf::Clock& clock, sf::Time& elapsed, con
 	int res = 0;
 
     for (int  i = 0; i < bullets.size(); i++) {
-        
-        //Check if the bullets are offscreen
-        if ((*(bullets[i])).offscreen()){
-            delete bullets[i];
+        bullets[i].update(deltaTime, groundY);
+        if (bullets[i].offscreen())
             bullets.erase(bullets.begin() + i);
-        }
-		// Collisions with the opponenent
-        // PROBLEM HERE: with special attack 1 bullets sometimes this doesn't work .... 
-		if (Collision::PixelPerfectTest((*(bullets[i])).bullet, opponent_sprite)) {
-            bool b = (typeid(*(bullets[i])) == typeid(Bullet_Attack1)); // Bool to check what typeof bullet (special attack 1 or normal)
-            
-            if ( (b) && (!((*(bullets[i])).deleting))) {res = 10;}      // Enemy of the pokemon shooting thes bullets will get -X health 
-            else if (!b) {res = 3;}
-            if (!((*(bullets[i])).deleting)) {(*(bullets[i])).deletion();}
-		}
-        // Update individual bullets
-        (*(bullets[i])).update(deltaTime, groundY);
-        // Bullet completed its deleting process
-        if ((*(bullets[i])).deleted){
-            delete bullets[i];
+        //we loop over the bullets and if a bullet is offscreen, remove it
+        //we will also need to chack collisions
+        // I think the 'erase()' this is pretty inefficient, we might need to find a better way
+
+		//collisions with the opponenent
+		if (Collision::PixelPerfectTest(bullets[i].bullet, opponent_sprite)) {
+			//std::cout << "collision !" << std::endl;
 			bullets.erase(bullets.begin() + i);
-        }
+			res = 3; //it means that the enemy of the pokemon shooting thes bullets will get -3 health 
+		}
     }
 
 	//regenerate bullets every 1 second
@@ -113,6 +78,6 @@ int Artillery::update(float& deltaTime, sf::Clock& clock, sf::Time& elapsed, con
 			bulletbar.update(1);
 			clock.restart();
 	}
+
 	return res;
 }
-
