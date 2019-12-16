@@ -7,7 +7,7 @@
 #include <iostream>
 #include <string>
 #include <sstream>
-#include "ResourcePath.hpp"
+/* #include "ResourcePath.hpp" */
 
 template <typename T>
 std::string toString(T arg){
@@ -19,16 +19,16 @@ std::string toString(T arg){
 Button::Button() {
     
     //Load textures for button and font
-    if (!button_texture.loadFromFile(resourcePath() + "button.png")) {
-        return EXIT_FAILURE;
+    if (!button_texture.loadFromFile(/* resourcePath() + */ "Sprites/button.png")) {
+        std::cout<<"Problem"<<std::endl;
     }
     
-    if (!font_menu.loadFromFile(resourcePath() + "sansation.ttf")) {
-        return EXIT_FAILURE;
+    if (!font_menu.loadFromFile(/* resourcePath() + */ "Fonts/sansation.ttf")) {
+        std::cout<<"Problem"<<std::endl;
     }
     
-    if (!money_texture.loadFromFile(resourcePath() + "money.png")) {
-        return EXIT_FAILURE;
+    if (!money_texture.loadFromFile(/* resourcePath() + */ "Sprites/money.png")) {
+        std::cout<<"Problem"<<std::endl;
     }
     
     //Set texture and scale for button

@@ -3,7 +3,7 @@
 #include <SFML/Audio.hpp>
 #include <sstream>
 #include <SFML/Graphics.hpp>
-#include "ResourcePath.hpp"
+/* #include "ResourcePath.hpp" */
 #include "Backpack_content.h"
 
 template <typename T>
@@ -15,13 +15,13 @@ std::string toString(T arg){
 
 Background::Background(float width, float height, Backpack backpack) {
     
-    if (!texture_background.loadFromFile(resourcePath() + "screen_menu.jpg")) {
+    if (!texture_background.loadFromFile(/* resourcePath() + */ "screen_menu.jpg")) {
         std::cout<<"error"<<std::endl;
     }
-    if (!texture_backpack.loadFromFile(resourcePath() + "Pt_bag.png")) {
+    if (!texture_backpack.loadFromFile(/* resourcePath() + */ "Pt_bag.png")) {
         std::cout<<"error"<<std::endl;
     }
-    if (!font.loadFromFile(resourcePath() + "sansation.ttf")) {
+    if (!font.loadFromFile(/* resourcePath() + */ "sansation.ttf")) {
         std::cout<<"error"<<std::endl;
     }
     
