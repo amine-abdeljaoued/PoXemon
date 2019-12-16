@@ -32,7 +32,7 @@ class Map
         TileMap background1_2;
         TileMap background2_1;
         //TileMap background2_2;
-        map<string, vector<Npc*> > npcs;
+        map<string, vector<Npc*> > npcs; //Map mapping each map_name to its associated vector of npcs
         
         map<string, const int*> collision_;
         string map_name;
