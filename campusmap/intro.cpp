@@ -1,6 +1,6 @@
 #include "intro.hpp"
 #include <iostream>
-#include "ResourcePath.hpp"
+/* #include "ResourcePath.hpp" */
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <string>
@@ -13,15 +13,15 @@ int menu(std::string picture) {
 
     // Set the Icon
     sf::Image icon;
-    if (!icon.loadFromFile(resourcePath() + "icon.png")) {
-        return EXIT_FAILURE;
+    if (!icon.loadFromFile("Sprites/icon.png")) {
+        std::cout << "Error" << std::endl;
     }
     menu.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
     // Load a sprite to display
     sf::Texture texture;
-    if (!texture.loadFromFile(resourcePath() + picture)) {
-        return EXIT_FAILURE;
+    if (!texture.loadFromFile(/* resourcePath() + */ picture)) {
+        std::cout << "Error" << std::endl;
     }
     sf::Sprite background;
     sf::Vector2u TextureSize;
@@ -37,8 +37,8 @@ int menu(std::string picture) {
     
     // Create a graphical text to display
     sf::Font font;
-    if (!font.loadFromFile(resourcePath() + "sansation.ttf")) {
-        return EXIT_FAILURE;
+    if (!font.loadFromFile(/* resourcePath() + */ "Fonts/sansation.ttf")) {
+        std::cout << "Error" << std::endl;
     }
     sf::Text title("Start Game", font, 70);
     title.setStyle(sf::Text::Bold);
@@ -46,7 +46,7 @@ int menu(std::string picture) {
     title.setPosition(WindowSize.x*(0.455), WindowSize.y*(0.65));
     
     // Create an explanation
-    sf::Text expl("Click start game or press enter to go forward", font, 40);
+    sf::Text expl("Click start game or press x to go forward", font, 40);
     expl.setStyle(sf::Text::Bold);
     expl.setFillColor(sf::Color::Black);
     expl.setPosition(WindowSize.x*(0.70), WindowSize.y*(0.90));
@@ -60,7 +60,7 @@ int menu(std::string picture) {
         {
             if (event.type == sf::Event::Closed) return 10;
             // Advance button:
-            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter) menu.close();
+            if ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::X)) menu.close();
             
             // Click start button:
             if (event.type == sf::Event::MouseButtonPressed)
@@ -167,15 +167,15 @@ int intro(std::string picture, bool side, int which) {
 
     // Set the Icon
     sf::Image icon;
-    if (!icon.loadFromFile(resourcePath() + "icon.png")) {
-        return EXIT_FAILURE;
+    if (!icon.loadFromFile(/* resourcePath() +  */"Sprites/icon.png")) {
+        std::cout << "Error" << std::endl;
     }
     intro.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
     // Load a background to display
     sf::Texture texture;
-    if (!texture.loadFromFile(resourcePath() + "menu_2.jpg")) {
-        return EXIT_FAILURE;
+    if (!texture.loadFromFile(/* resourcePath() +  */"Sprites/menu_2.jpg")) {
+        std::cout << "Error" << std::endl;
     }
     sf::Sprite background;
     sf::Vector2u TextureSize;
@@ -192,8 +192,8 @@ int intro(std::string picture, bool side, int which) {
     // Create an image to appear
        
     sf::Texture image;
-    if (!image.loadFromFile(resourcePath() + picture)) {
-        return EXIT_FAILURE;
+    if (!image.loadFromFile(/* resourcePath() + */ picture)) {
+        std::cout << "Error" << std::endl;
     }
     sf::Sprite professor;
     sf::Vector2u ImageSize;
@@ -217,8 +217,8 @@ int intro(std::string picture, bool side, int which) {
     // Create a graphical text to display
     sf::Text title;
     sf::Font font;
-    if (!font.loadFromFile(resourcePath() + "sansation.ttf")) {
-        return EXIT_FAILURE;
+    if (!font.loadFromFile(/* resourcePath() + */ "Fonts/sansation.ttf")) {
+        std::cout << "Error" << std::endl;
     }
     title.setFont(font);
     title.setCharacterSize(70);
@@ -236,7 +236,7 @@ int intro(std::string picture, bool side, int which) {
     subtitle.setPosition(WindowSize.x*(y)+WindowSize.x*(0.02), WindowSize.y*(0.15)+WindowSize.y*(0.10));
     
     // Create an explanation
-    sf::Text expl("Press enter to go forward", font, 40);
+    sf::Text expl("Press X to go forward", font, 40);
     expl.setStyle(sf::Text::Bold);
     expl.setFillColor(sf::Color::Black);
     if (side == 1){
@@ -460,7 +460,7 @@ int intro(std::string picture, bool side, int which) {
             if (event.type == sf::Event::Closed) return 10;
             
             // Advance button:
-            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter) intro.close();
+            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::X) intro.close();
             
         intro.clear();
         intro.draw(background);
@@ -485,16 +485,16 @@ bool choice(std::string prof, bool side, int which) {
 
     // Set the Icon
     sf::Image icon;
-    if (!icon.loadFromFile(resourcePath() + "icon.png")) {
-        return EXIT_FAILURE;
+    if (!icon.loadFromFile(/* resourcePath() + */ "Sprites/icon.png")) {
+        std::cout << "Error" << std::endl;
     }
     choice.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
     // Load a background to display
     
     sf::Texture texture;
-    if (!texture.loadFromFile(resourcePath() + "menu_2.jpg")) {
-        return EXIT_FAILURE;
+    if (!texture.loadFromFile(/* resourcePath() + */ "Sprites/menu_2.jpg")) {
+        std::cout << "Error" << std::endl;
     }
     sf::Sprite background;
     sf::Vector2u TextureSize;
@@ -511,8 +511,8 @@ bool choice(std::string prof, bool side, int which) {
     // Create an image to appear
        
     sf::Texture image;
-    if (!image.loadFromFile(resourcePath() + prof)) {
-        return EXIT_FAILURE;
+    if (!image.loadFromFile(/* resourcePath() + */ prof)) {
+        std::cout << "Error" << std::endl;
     }
     sf::Sprite professor;
     sf::Vector2u ImageSize;
@@ -548,8 +548,8 @@ bool choice(std::string prof, bool side, int which) {
     // Create a graphical text to display
     sf::Text title;
     sf::Font font;
-    if (!font.loadFromFile(resourcePath() + "sansation.ttf")) {
-        return EXIT_FAILURE;
+    if (!font.loadFromFile(/* resourcePath() + */ "Fonts/sansation.ttf")) {
+        std::cout << "Error" << std::endl;
     }
     title.setFont(font);
     title.setCharacterSize(70);
@@ -687,15 +687,15 @@ int choose(std::string prof, bool side) {
 
     // Set the Icon
     sf::Image icon;
-    if (!icon.loadFromFile(resourcePath() + "icon.png")) {
-        return EXIT_FAILURE;
+    if (!icon.loadFromFile(/* resourcePath() + */ "Sprites/icon.png")) {
+        std::cout << "Error" << std::endl;
     }
     choose.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
     // Load a background to display
     sf::Texture texture;
-    if (!texture.loadFromFile(resourcePath() + "menu_3.png")) {
-        return EXIT_FAILURE;
+    if (!texture.loadFromFile(/* resourcePath() +  */"Sprites/menu_3.png")) {
+        std::cout << "Error" << std::endl;
     }
     sf::Sprite background;
     sf::Vector2u TextureSize;
@@ -711,8 +711,8 @@ int choose(std::string prof, bool side) {
     
     // Create an image to appear
     sf::Texture image;
-    if (!image.loadFromFile(resourcePath() + prof)) {
-        return EXIT_FAILURE;
+    if (!image.loadFromFile(/* resourcePath() + */ prof)) {
+        std::cout << "Error" << std::endl;
     }
     sf::Sprite professor;
     sf::Vector2u ImageSize;
@@ -754,8 +754,8 @@ int choose(std::string prof, bool side) {
     // Create a graphical text to display
     sf::Text title;
     sf::Font font;
-    if (!font.loadFromFile(resourcePath() + "sansation.ttf")) {
-        return EXIT_FAILURE;
+    if (!font.loadFromFile(/* resourcePath() + */ "Fonts/sansation.ttf")) {
+        std::cout << "Error" << std::endl;
     }
     title.setFont(font);
     title.setCharacterSize(70);
@@ -885,31 +885,31 @@ int choose(std::string prof, bool side) {
 int startgame(){
     sf::Event event;
     int closed=0;
-    closed = menu("main_menu.jpg");
-    if (closed<10)closed = loadgame("main_menu.png");
-    if (closed<10)closed = intro("professor1.png",1,0);
-    if (closed<10)closed = intro("professor4.png",1,1);
-    if (closed<10)closed = intro("professor3.png",0,2);
-    if (closed<10)closed = intro("professor5.png",0,3);
-    if (closed<10)closed = intro("professor2.png",0,4);
-    if (closed<10)closed = intro("professor6.png",1,5);
-    if (closed<10)closed = intro("professor7.png",1,6);
-    if (closed<10)closed = intro("professor1.png",0,7);
-    if (closed<10)closed = intro("professor4.png",0,8);
-    if (closed<10)closed = intro("professor6.png",1,9);
-    if (closed<10)closed = intro("professor5.png",1,10);
-    if (closed<10)closed = intro("professor3.png",0,11);
-    if (closed<10)closed = intro("professor2.png",0,12);
-    if (closed<10)closed = choice("professor0.png",1,13);
+    closed = menu("Sprites/main_menu.jpg");
+    if (closed<10)closed = intro("Sprites/professor1.png",1,0);
+    std::cout<<closed<<std::endl;
+    if (closed<10)closed = intro("Sprites/professor4.png",1,1);
+    if (closed<10)closed = intro("Sprites/professor3.png",0,2);
+    if (closed<10)closed = intro("Sprites/professor5.png",0,3);
+    if (closed<10)closed = intro("Sprites/professor2.png",0,4);
+    if (closed<10)closed = intro("Sprites/professor6.png",1,5);
+    if (closed<10)closed = intro("Sprites/professor7.png",1,6);
+    if (closed<10)closed = intro("Sprites/professor1.png",0,7);
+    if (closed<10)closed = intro("Sprites/professor4.png",0,8);
+    if (closed<10)closed = intro("Sprites/professor6.png",1,9);
+    if (closed<10)closed = intro("Sprites/professor5.png",1,10);
+    if (closed<10)closed = intro("Sprites/professor3.png",0,11);
+    if (closed<10)closed = intro("Sprites/professor2.png",0,12);
+    if (closed<10)closed = choice("Sprites/professor0.png",1,13);
     if (closed<10){
-        if(choice("professor0.png",1,14)==1) intro("professor7.png",0,15);
+        if(choice("Sprites/professor0.png",1,14)==1) intro("Sprites/professor7.png",0,15);
         else{
-            intro("professor4.png",0,16);
-            intro("professor1.png",1,17);
-            int a = choose("professor0.png",1);
-            if(a==1) intro("professor5.png",0,18);
-            else if(a==2) intro("professor5.png",0,19);
-            else if(a==3) intro("professor5.png",0,20);
+            intro("Sprites/professor4.png",0,16);
+            intro("Sprites/professor1.png",1,17);
+            int a = choose("Sprites/professor0.png",1);
+            if(a==1) intro("Sprites/professor5.png",0,18);
+            else if(a==2) intro("Sprites/professor5.png",0,19);
+            else if(a==3) intro("Sprites/professor5.png",0,20);
         }
     }
     if (closed<10) return 0;

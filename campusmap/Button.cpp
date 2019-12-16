@@ -1,13 +1,13 @@
-#include "Button.h"
-#include "Backpack_content.h"
-#include "test.h"
+#include "Button.hpp"
+#include "Backpack_content.hpp"
+#include "test.hpp"
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/OpenGL.hpp>
 #include <iostream>
 #include <string>
 #include <sstream>
-#include "ResourcePath.hpp"
+/* #include "ResourcePath.hpp" */
 
 //Function to create strings from values
 template <typename T>
@@ -20,16 +20,16 @@ std::string toString(T arg){
 Button::Button() {
     
     //Load textures for button and font
-    if (!button_texture.loadFromFile(resourcePath() + "button.png")) {
-        return EXIT_FAILURE;
+    if (!button_texture.loadFromFile(/* resourcePath() + */ "button.png")) {
+        std::cout << "Error" << std::endl;
     }
     
-    if (!font_menu.loadFromFile(resourcePath() + "sansation.ttf")) {
-        return EXIT_FAILURE;
+    if (!font_menu.loadFromFile(/* resourcePath() + */ "sansation.ttf")) {
+        std::cout << "Error" << std::endl;
     }
     
-    if (!money_texture.loadFromFile(resourcePath() + "money.png")) {
-        return EXIT_FAILURE;
+    if (!money_texture.loadFromFile(/* resourcePath() + */ "money.png")) {
+        std::cout << "Error" << std::endl;
     }
     
     //Set texture and scale for button
