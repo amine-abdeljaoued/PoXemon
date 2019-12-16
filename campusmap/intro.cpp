@@ -5,6 +5,8 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 
+//This is the menu that appears at the beggining of the game
+
 int menu(std::string picture) {
     
     // Create the main window
@@ -90,14 +92,14 @@ int loadgame(std::string picture) {
 
     // Set the Icon
     sf::Image icon;
-    if (!icon.loadFromFile(resourcePath() + "icon.png")) {
+    if (!icon.loadFromFile(/* resourcePath() + */ "icon.png")) {
         return EXIT_FAILURE;
     }
     menu.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
     // Load a sprite to display
     sf::Texture texture;
-    if (!texture.loadFromFile(resourcePath() + picture)) {
+    if (!texture.loadFromFile(/* resourcePath() + */ picture)) {
         return EXIT_FAILURE;
     }
     sf::Sprite background;
@@ -114,7 +116,7 @@ int loadgame(std::string picture) {
     
     // Create a graphical text to display
     sf::Font font;
-    if (!font.loadFromFile(resourcePath() + "sansation.ttf")) {
+    if (!font.loadFromFile(/* resourcePath() +  */"Fonts/sansation.ttf")) {
         return EXIT_FAILURE;
     }
     sf::Text title("hvghgvvjvh", font, 70);
@@ -123,7 +125,7 @@ int loadgame(std::string picture) {
     title.setPosition(WindowSize.x*(0.455), WindowSize.y*(0.65));
     
     // Create an explanation
-    sf::Text expl("Click start game or press enter to go forward", font, 40);
+    sf::Text expl("Click start game or press x to go forward", font, 40);
     expl.setStyle(sf::Text::Bold);
     expl.setFillColor(sf::Color::Black);
     expl.setPosition(WindowSize.x*(0.70), WindowSize.y*(0.90));
@@ -137,7 +139,7 @@ int loadgame(std::string picture) {
         {
             if (event.type == sf::Event::Closed) return 10;
             // Advance button:
-            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter) menu.close();
+            if ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::X)) menu.close();
             
             // Click start button:
             if (event.type == sf::Event::MouseButtonPressed)

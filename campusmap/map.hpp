@@ -11,6 +11,8 @@
 #include "trainer.hpp"
 using namespace std;
 
+//This is our class for our map
+
 class Map 
 {
     public:
