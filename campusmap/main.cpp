@@ -41,7 +41,7 @@ int main()
     Map map1(window, map_name);
     
     //the intro by Julien
-    if (startgame()==1) window.close();
+    //if (startgame()==1) window.close();
     
     while (window.isOpen())
     {
@@ -51,7 +51,6 @@ int main()
         window.clear(sf::Color(112,200,160));
         sf::Time elapsed1 = clock.getElapsedTime();
         map1.draw(window,view, Arthur, clock, event, map_name);
-        Arthur.displacement(event,view, case_num);
         window.setView(view);
         window.display();
     }

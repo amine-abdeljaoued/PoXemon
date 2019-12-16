@@ -103,6 +103,19 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
         }
     }
     
+    //Fishing for François
+    if (event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::X){
+        if ((collision_[map_name][(int) x/16 + 1 +( (int)y/16 *34)]==6 &&trainer.facingDirection=="Right") || (collision_[map_name][(int) x/16 -1 +( (int)y/16 *34)]==6 &&trainer.facingDirection=="Left") || (collision_[map_name][(int) x/16  + (((int) y/16 -1) *34)]==6 &&trainer.facingDirection=="Up") || (collision_[map_name][(int) x/16 +(((int) y/16 +1) *34)]==6 &&trainer.facingDirection=="Down")){
+            if (trainer.state == "Fishing"){
+                trainer.state = "stopFishing";
+                trainer.counterWalk = 3;
+            }
+            else{
+                trainer.counterWalk = 0;
+                trainer.state = "Fishing";
+            }
+        }
+    }
     
     if ((collision_[map_name][(int) x/16 +(((int) y/16 +1)*34)]==8 && trainer.facingDirection=="Down") || (collision_[map_name][(int) x/16 +(((int) y/16 -1)*34)]==8 && trainer.facingDirection=="Up") || (collision_[map_name][(int) x/16 -1+((int) y/16 *34)]==8 && trainer.facingDirection=="Left") || (collision_[map_name][(int) x/16 +1+((int) y/16 *34)]==8 && trainer.facingDirection=="Right")){
         if ((event.type == sf::Event::KeyPressed)&&((event.key.code == sf::Keyboard::D))){
@@ -266,19 +279,19 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
     {
         sf::Vector2f pos2 = (*np).getPos(); //Here we study the respective positions of the character and the npcs 
                                             //to check in which order we draw them
-        if(pos.y> pos2.y){
+        if(pos.y == pos2.y - 1){
+            trainer.draw(window, event, view);
             (*np).draw(window);
-            trainer.draw(window);
         }
         else{
-            trainer.draw(window);
             (*np).draw(window);
+            trainer.draw(window, event, view);
         }
         
     }
     
     if(npcs.size() == 0){
-        trainer.draw(window);
+        trainer.draw(window, event, view);
     }
     
     if (alpha > 0 && state == "start"){
