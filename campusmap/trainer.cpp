@@ -27,11 +27,13 @@ Trainer::Trainer( float Speed, int sheetRect, int sizeAnim)
     this->sizeAnim = sizeAnim;
     speedSprite = 0;
 
-    
+    font.loadFromFile("Fonts/sansation.ttf");
 }
 
-void Trainer::draw(sf::RenderWindow &window) const {
+void Trainer::draw(sf::RenderWindow &window, sf::Event &event, sf::View &view){
     window.draw(spritePlayer);
+    displacement(event,view);
+    fishing(window, view);
 }
 
 void Trainer::setSpeed(sf::Event &event){
@@ -51,7 +53,7 @@ sf::Vector2f Trainer::getPos(){
     return position;
 }
 
-void Trainer::displacement(sf::Event &event, sf::View &view, const std::string* case_num)
+void Trainer::displacement(sf::Event &event, sf::View &view)
 {
     sf::Vector2f position = (spritePlayer).getPosition();
     int x = position.x + 16;
@@ -209,6 +211,103 @@ void Trainer::displacement(sf::Event &event, sf::View &view, const std::string* 
             }
 
 
+        }
+
+    }
+    
+}
+
+sf::FloatRect Trainer::getViewBounds(const sf::View &view)
+{
+        sf::FloatRect rt;
+        rt.left = view.getCenter().x - view.getSize().x/2.f;
+        rt.top  = view.getCenter().y - view.getSize().y/2.f;
+        rt.width  = view.getSize().x;
+        rt.height = view.getSize().y;
+        return rt;
+}
+
+
+void Trainer::fishing(sf::RenderWindow &window, sf::View &view){
+    int y = 0;
+    int a = 0;
+    int b = 0;
+    int c = 0;
+    int d = 0;
+    
+    if (facingDirection == "Down"){
+        y = 0;
+        c = 1;
+        d = 8;
+    }
+    if (facingDirection == "Up"){
+        y = 1;
+    }
+    if (facingDirection == "Left"){
+        y = 2;
+        a = -1;
+        b = -8;
+    }
+    if (facingDirection == "Right"){
+        y = 3;
+        a = 1;
+        b = 8;
+    }
+    
+    if (state == "Fishing"){
+        
+        
+        text.setFont(font);
+        text.setString("Fishing...");
+        text.setCharacterSize(15);
+        text.setFillColor(sf::Color::Black);
+        /* sf::Vector2f viewSize = view.getSize();
+        bubble.setSize(sf::Vector2f(viewSize.x, viewSize.y/4)); */
+
+        sf::FloatRect viewBounds = getViewBounds(view);
+        bubble.setPointCount(8);
+        bubble.setPoint(0, sf::Vector2f(float(viewBounds.left + 30), float(viewBounds.top + viewBounds.height - 60)));
+        bubble.setPoint(1, sf::Vector2f(float(viewBounds.left + viewBounds.height - 30), float(viewBounds.top + viewBounds.height - 60)));
+        bubble.setPoint(2, sf::Vector2f(float(viewBounds.left + viewBounds.height - 10), float(viewBounds.top + viewBounds.height - 45)));
+        bubble.setPoint(3, sf::Vector2f(float(viewBounds.left + viewBounds.height - 10), float(viewBounds.top + viewBounds.height - 25)));
+        bubble.setPoint(4, sf::Vector2f(float(viewBounds.left + viewBounds.height - 30), float(viewBounds.top + viewBounds.height - 10)));
+        bubble.setPoint(5, sf::Vector2f(float(viewBounds.left + 30), float(viewBounds.top + viewBounds.height - 10)));
+        bubble.setPoint(6, sf::Vector2f(float(viewBounds.left + 10), float(viewBounds.top + viewBounds.height - 25)));
+        bubble.setPoint(7, sf::Vector2f(float(viewBounds.left + 10), float(viewBounds.top + viewBounds.height - 45)));
+        bubble.setOutlineColor(sf::Color::Black);
+        bubble.setOutlineThickness(2.f);
+        text.setPosition(int(viewBounds.left) + 35, int(viewBounds.top + viewBounds.height - 40) );
+        /* bubble.setPosition(int(viewBounds.left), int(viewBounds.top + viewBounds.height - 50)); */
+
+        text.setStyle(sf::Text::Bold);
+        
+        window.draw(bubble);
+        window.draw(text);
+        
+        if (counterWalk < 4){
+            (spritePlayer).setTextureRect(sf::IntRect(512 + counterWalk * (sheetRect+2),2+y*(sheetRect+2),sheetRect,sheetRect));
+            if (counterWalk == 0){
+                (spritePlayer).move(-a,-c);
+            }
+            if (counterWalk == 2){
+                (spritePlayer).move(b,d);
+            }
+            counterWalk ++;
+        }
+
+    }
+    if (state == "stopFishing"){
+        (spritePlayer).setTextureRect(sf::IntRect(2 + 510 + counterWalk * (sheetRect+2),2 + y*(sheetRect+2),sheetRect,sheetRect));
+        if (counterWalk == 1){
+            (spritePlayer).move(-b,-d);
+        }
+        if (counterWalk > 0){
+            counterWalk = counterWalk-1;
+        }
+        else{
+            state = "Stop";
+            (spritePlayer).setTextureRect(sf::IntRect(2,2+ y*(sheetRect+2),sheetRect,sheetRect));
+            (spritePlayer).move(a,c);
         }
 
     }
