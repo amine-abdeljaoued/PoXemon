@@ -30,8 +30,9 @@ int main ()
 	if (!font.loadFromFile("upheavtt.ttf")) { std::cout << "could not load font" << std::endl; }
 	else {font.loadFromFile("upheavtt.ttf");}
 
-	Player eevee(10.f, groundY, 200.f, 500.f, 100, "Images/Pokemon_Images/vulari.png", 2, "Eevee");
-	Opponent opponent1(1000.f,groundY,200.f, 800.f, 100, "Images/Pokemon_Images/urach.png", 2, "Opponent");
+	Player eevee(10.f, groundY, 200.f, 500.f, 100, "Images/Pokemon_Images/vulari.png", 2, "Eevee", 10); 
+	// have initialised both of these pokemons to be 'earth' pokemons with 10 at the end
+	Opponent opponent1(1000.f,groundY,200.f, 800.f, 100, "Images/Pokemon_Images/urach.png", 2, "Opponent", 10);
 	eevee.set_enemy(&opponent1);
 	opponent1.set_enemy(&eevee);
 	int state = 1;
@@ -117,8 +118,8 @@ int main ()
 			window.clear(sf::Color::Blue);
 			window.draw(background);
 			bag.draw(window);
-			eevee.draw(window);
 			opponent1.draw(window);
+			eevee.draw(window);
 		}
 
 		else if (state == 5) {

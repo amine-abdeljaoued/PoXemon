@@ -1,8 +1,8 @@
-
 #include "Bullet.h"
 
-
 Bullet::Bullet() {
+	deleted = false;
+	deleting = false;
 	if (!bpic.loadFromFile("Images/red_bullet.png")) std::cout << "could not load bullet image" << std::endl; 
 	bpic.loadFromFile("Images/red_bullet.png");//to change
 	bullet.setTexture(bpic);
@@ -11,6 +11,9 @@ Bullet::Bullet() {
 	bullet.setScale(sf::Vector2f(0.05f, 0.05f));
 }
 
+void Bullet::deletion(){
+	deleted = true;
+}
 
 void Bullet::setPosition(sf::Vector2f& pos) {
 	//x = xpos;
@@ -29,7 +32,6 @@ void Bullet::set_shoot_dir(const sf::Vector2f& mouse_position, const sf::Vector2
 }
 
 bool Bullet::update(float& deltaTime, float& groundY) {
-	
 	//x += shoot_dir.x * deltaTime *max_speed;
 	//y += shoot_dir.y * deltaTime *max_speed;
 	reflect_ground(groundY);
@@ -51,3 +53,68 @@ void Bullet::reflect_ground(float& groundY) {
 		}
 }
 
+//---------------------------------------------------------------------------------------------------
+// SPECIAL ATTACK 1
+
+void Bullet_Attack1::update_image(){
+	if (!deleting){
+		if((posx < array[4]) && (posy <= array[5]-1)){			//Case 1:  not in the last line, not last element of row
+			posx++;
+		}
+		else if((posx == array[4]) && (posy <= array[5]-1)){	//Case 2: not in the last line, last element of row
+			posx = 0;
+			posy ++;
+		}
+		else if((posx < array[6]) && (posy == array[5])){		//Case 3: last line, not last element of row
+			posx ++;
+		}
+		else if((posx == array[6]) && (posy == array[5])){		//Case 4: last line, last element of row
+			posx = 0;
+			posy = 0;
+		}
+		bullet.setTexture(bpic);
+		bullet.setTextureRect(sf::IntRect(posx*(array[2]), posy*(array[3]), array[2], array[3]));
+	}
+	else{
+		if((posx < array[12]) && (posy <= array[13]-1)){		//Case 1:  not in the last line, not last element of row
+			posx++;
+		}
+		else if((posx == array[12]) && (posy <= array[13]-1)){	//Case 2: not in the last line, last element of row
+			posx = 0;
+			posy ++;
+		}
+		else if((posx < array[14]) && (posy == array[13])){		//Case 3: last line, not last element of row
+			posx ++;
+		}
+		else if((posx == array[14]) && (posy == array[13])){	//Case 4: last line, last element of row
+			deleted = true;
+		}
+
+		bullet.setTexture(deleting_pic);
+		bullet.setTextureRect(sf::IntRect(array[8]+posx*(array[10]),array[9]+posy*(array[11]),array[10],array[11]));
+		bullet.setScale(sf::Vector2f(array[15], array[15]));
+	}
+}
+
+bool Bullet_Attack1::update(float& deltaTime, float& groundY){
+	if (i<3){i++;}
+	if (i >= 3){
+		i = 1;
+		update_image();
+	}
+	reflect_ground(groundY);
+	if (!deleting){
+		position += shoot_dir * deltaTime * max_speed;
+		setPosition(position);
+		return true;
+	}
+}
+
+void Bullet_Attack1::deletion(){
+	deleting = true;
+	bullet.setTexture(deleting_pic);
+	bullet.setTextureRect(sf::IntRect(array[8]*array[10],array[9]*array[11],array[10],array[11]));
+	bullet.setScale(sf::Vector2f(array[15], array[15]));
+	posx = array[8];
+	posy = array[9];
+}
