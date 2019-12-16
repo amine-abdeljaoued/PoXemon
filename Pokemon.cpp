@@ -1,6 +1,6 @@
 #include "Pokemon.h"
 
-Pokemon::Pokemon(float xstart, float ystart, float h, float v, float hp, std::string path, float pokemon_rarity, std::string pname)
+Pokemon::Pokemon(float xstart, float ystart, float h, float v, float hp, std::string path, float pokemon_rarity, std::string pname, int ptype)
 {
 	rarity = pokemon_rarity; //1 == common, 2 == rare, 3 == epic, 4 == legendary
 	name = pname;
@@ -8,15 +8,17 @@ Pokemon::Pokemon(float xstart, float ystart, float h, float v, float hp, std::st
 	health.setPosition(xstart+50, ystart-250);
 	health.name = name;
 	health.level = level;
-
+	type = ptype;
 	velocityX = 0.0f;
 	velocityY = 0.0f;
 	jumpHeight = h;
 	speed = v;
 	canJump = true;
 	shooting = false;
+	special_attack_1 = false;
 	x = xstart;
 	y = ystart;
+	bullets.type = ptype;
 
 	sprite.setPosition(sf::Vector2f(x, y));
 
