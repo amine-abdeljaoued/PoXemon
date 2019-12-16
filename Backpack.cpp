@@ -3,7 +3,6 @@
 #include<string>
 #include<cmath>
 
-
 Backpack::Backpack(){
     dict_pokeball["Normalball"] = 3;
     dict_pokeball["Superball"] = 3;
@@ -42,17 +41,12 @@ Backpack::Backpack(){
 
     }
 
-    void Backpack::set_opponent(Opponent* opponent) {
-        this->opponent = opponent;
-    }
 
     void Backpack::Pokeball_shoot(float& deltaTime, sf::RenderWindow& window, sf::Clock &clock2, sf::Time & elapsed2){
         
-        //std::cout<< opponent->health.health<<std::endl;
-        float health_opponent = opponent->health.health;
         
         //if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Left)&&(dict_pokeball["Normalball"]>0)&&new_Normalball.in_air ==false&&new_Superball.in_air ==false&&new_Masterball.in_air ==false){
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left)&&(dict_pokeball["Normalball"]>0)&&new_Normalball.in_air ==false){
             
                     //Get the mouse position:
                     sf::Vector2i mousepixel = sf::Mouse::getPosition(window);
@@ -82,7 +76,7 @@ Backpack::Backpack(){
             }
         }
             
-            if (sf::Mouse::isButtonPressed(sf::Mouse::Left)&&(dict_pokeball["Superball"]>0)&&new_Superball.in_air ==false&&new_Normalball.in_air ==false&&new_Masterball.in_air ==false){
+            if (sf::Mouse::isButtonPressed(sf::Mouse::Left)&&(dict_pokeball["Superball"]>0)&&new_Superball.in_air ==false){
                        
                                //Get the mouse position:
                                sf::Vector2i mousepixel = sf::Mouse::getPosition(window);
@@ -113,7 +107,7 @@ Backpack::Backpack(){
                 
             
         }
-                if (sf::Mouse::isButtonPressed(sf::Mouse::Left)&&(dict_pokeball["Masterball"]>0)&&new_Normalball.in_air ==false && new_Superball.in_air ==false && new_Masterball.in_air ==false){
+                if (sf::Mouse::isButtonPressed(sf::Mouse::Left)&&(dict_pokeball["Masterball"]>0)&&new_Masterball.in_air ==false){
                            
                                    //Get the mouse position:
                                    sf::Vector2i mousepixel = sf::Mouse::getPosition(window);
@@ -148,7 +142,7 @@ Backpack::Backpack(){
         
         //Continuation of the one shot as time goes by
         if (new_Normalball.in_air) {
-                bool still_on_screen = new_Normalball.update(deltaTime, window,new_Normalball.proba, clock2, elapsed2,health_opponent);
+                bool still_on_screen = new_Normalball.update(deltaTime, window,new_Normalball.proba, clock2, elapsed2);
             if(new_Normalball.waiting == false){
                 new_Normalball.ball.setOrigin(100, 100);//I suppose (100,100) is close to the center of the sprite before rescaling
 //                const sf::Vector2f vector= new_Normalball.ball.getOrigin();
@@ -168,7 +162,7 @@ Backpack::Backpack(){
         }
         //Continuation of the one shot as time goes by
         if (new_Superball.in_air) {
-                bool still_on_screen = new_Superball.update(deltaTime, window,new_Superball.proba, clock2, elapsed2,health_opponent);
+                bool still_on_screen = new_Superball.update(deltaTime, window,new_Superball.proba, clock2, elapsed2);
                     if(new_Superball.waiting == false){
                         new_Superball.ball.setOrigin(100, 100);//I suppose (100,100) is close to the center of the sprite before rescaling
             //          const sf::Vector2f vector= new_Superball.ball.getOrigin();
@@ -186,7 +180,7 @@ Backpack::Backpack(){
         }
         //Continuation of the one shot as time goes by
         if (new_Masterball.in_air) {
-                bool still_on_screen = new_Masterball.update(deltaTime, window,new_Masterball.proba, clock2, elapsed2,health_opponent);
+                bool still_on_screen = new_Masterball.update(deltaTime, window,new_Masterball.proba, clock2, elapsed2);
                     if(new_Masterball.waiting == false){
                         new_Masterball.ball.setOrigin(310, 310);//I suppose (310,310) is close to the center of the sprite before rescaling
             //          const sf::Vector2f vector= new_Masterball.ball.getOrigin();
