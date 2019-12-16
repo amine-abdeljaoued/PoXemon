@@ -38,7 +38,7 @@ int main()
     Map map1(window);
     
     //the intro by Julien
-    //if (startgame()==1) window.close();
+    /* if (startgame()==1) window.close(); */
     
     while (window.isOpen())
     {
