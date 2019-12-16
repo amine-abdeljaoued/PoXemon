@@ -9,7 +9,7 @@ int menu(std::string picture) {
     
     // Create the main window
     sf::VideoMode desktop = sf::VideoMode().getDesktopMode();
-    sf::RenderWindow menu(desktop, "Pokemen");
+    sf::RenderWindow menu(desktop, "PoXemon");
 
     // Set the Icon
     sf::Image icon;
@@ -82,6 +82,82 @@ int menu(std::string picture) {
     return 0;
 }
 
+int loadgame(std::string picture) {
+    
+    // Create the main window
+    sf::VideoMode desktop = sf::VideoMode().getDesktopMode();
+    sf::RenderWindow menu(desktop, "PoXemon");
+
+    // Set the Icon
+    sf::Image icon;
+    if (!icon.loadFromFile(resourcePath() + "icon.png")) {
+        return EXIT_FAILURE;
+    }
+    menu.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
+
+    // Load a sprite to display
+    sf::Texture texture;
+    if (!texture.loadFromFile(resourcePath() + picture)) {
+        return EXIT_FAILURE;
+    }
+    sf::Sprite background;
+    sf::Vector2u TextureSize;
+    sf::Vector2u WindowSize;
+    TextureSize = texture.getSize();
+    WindowSize = menu.getSize();
+
+    float ScaleX = (float) WindowSize.x / TextureSize.x;
+    float ScaleY = (float) WindowSize.y / TextureSize.y;
+    
+    background.setTexture(texture);
+    background.setScale(ScaleX, ScaleY);      //Set scale.
+    
+    // Create a graphical text to display
+    sf::Font font;
+    if (!font.loadFromFile(resourcePath() + "sansation.ttf")) {
+        return EXIT_FAILURE;
+    }
+    sf::Text title("hvghgvvjvh", font, 70);
+    title.setStyle(sf::Text::Bold);
+    title.setFillColor(sf::Color::Black);
+    title.setPosition(WindowSize.x*(0.455), WindowSize.y*(0.65));
+    
+    // Create an explanation
+    sf::Text expl("Click start game or press enter to go forward", font, 40);
+    expl.setStyle(sf::Text::Bold);
+    expl.setFillColor(sf::Color::Black);
+    expl.setPosition(WindowSize.x*(0.70), WindowSize.y*(0.90));
+
+    // Start the game loop
+    while (menu.isOpen())
+    {
+        // Process events
+        sf::Event event;
+        while (menu.pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed) return 10;
+            // Advance button:
+            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter) menu.close();
+            
+            // Click start button:
+            if (event.type == sf::Event::MouseButtonPressed)
+            {
+                float spot_x = title.getPosition().x;
+                float spot_y = title.getPosition().y;
+                float end_x = title.getPosition().x + WindowSize.x*(0.10);
+                float end_y = title.getPosition().y + WindowSize.y*(0.05);
+                
+                if ( (event.mouseButton.button == sf::Mouse::Left) && (event.mouseButton.x > (spot_x-20)) && (event.mouseButton.x < (end_x+20)) && (event.mouseButton.y > (spot_y-20)) && (event.mouseButton.y < (end_y+20)) ) menu.close();
+                }
+            }
+            menu.clear();
+            menu.draw(background);
+            menu.draw(title);
+            menu.draw(expl);
+            menu.display();
+        }
+    return 0;
+}
 
 int intro(std::string picture, bool side, int which) {
     
@@ -810,8 +886,8 @@ int startgame(){
     sf::Event event;
     int closed=0;
     closed = menu("main_menu.jpg");
+    if (closed<10)closed = loadgame("main_menu.png");
     if (closed<10)closed = intro("professor1.png",1,0);
-    std::cout<<closed<<std::endl;
     if (closed<10)closed = intro("professor4.png",1,1);
     if (closed<10)closed = intro("professor3.png",0,2);
     if (closed<10)closed = intro("professor5.png",0,3);

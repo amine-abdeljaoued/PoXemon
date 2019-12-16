@@ -20,8 +20,8 @@ Map::Map(sf::RenderWindow &window, string &map_name)
     //Defining all the maps
     background1_1.load("Sprites/tileset1.png", sf::Vector2u(16, 16), level, 34, 33);
     background1_2.load("Sprites/tileset2.png", sf::Vector2u(16, 16), level2, 34, 33);
-   /*  background2_1.load("Sprites/tileset1.png", sf::Vector2u(16, 16), level3, 34, 33));
-    background1_1.load("Sprites/tileset2.png", sf::Vector2u(16, 16), level4, 34, 33)); */
+    background2_1.load("Sprites/tileset1.png", sf::Vector2u(16, 16), level3, 34, 33);
+//    background1_1.load("Sprites/tileset2.png", sf::Vector2u(16, 16), level4, 34, 33));
     
     
     alpha = 255;
@@ -231,8 +231,7 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
 void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Clock& clock, sf::Event &event, string &map_name){
     
     
-    
-    fillTree(window);
+    if (map_name == "first") fillTree(window);
     
     /* if(map_name == "first")
     {
@@ -253,10 +252,11 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
         window.draw(background1_1); 
         window.draw(background1_2); //Both backgrounds associated to each tileset will have the same background
     }
-    /* if(map_name== "second"){
+    
+    if(map_name== "second"){
         window.draw(background2_1); 
-        window.draw(background2_2); //Both backgrounds associated to each tileset will have the same background
-    } */
+//        window.draw(background2_2);
+    }
     
     movingFlower(window, 176, 176);
     
