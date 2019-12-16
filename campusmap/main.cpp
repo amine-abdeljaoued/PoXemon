@@ -35,10 +35,9 @@ int main()
     float playerMovementSpeed = 2;
     int sheetRect = 32;
     int sizeAnim = 4;
-    std::string map_name = "first";
     
     Trainer Arthur(playerMovementSpeed, sheetRect, sizeAnim);
-    Map map1(window, map_name);
+    Map map1(window);
     
     //the intro by Julien
     //if (startgame()==1) window.close();
@@ -48,9 +47,8 @@ int main()
         sf::Event event;
         window.pollEvent(event);
         if (event.type == sf::Event::Closed) window.close();
-        window.clear(sf::Color(112,200,160));
-        sf::Time elapsed1 = clock.getElapsedTime();
-        map1.draw(window,view, Arthur, clock, event, map_name);
+        window.clear(); //sf::Color(112,200,160)
+        map1.draw(window,view, Arthur, clock, event);
         window.setView(view);
         window.display();
     }

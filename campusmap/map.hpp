@@ -16,13 +16,13 @@ using namespace std;
 class Map 
 {
     public:
-        Map(sf::RenderWindow &window, string &map_name);
+        Map(sf::RenderWindow &window);
         ~Map();
-        void draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Clock& clock, sf::Event &event, string &map_name);
+        void draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Clock& clock, sf::Event &event);
         void initialisation(sf::RenderWindow &window, Trainer &trainer);
         void end(sf::RenderWindow &window, Trainer &trainer);
         static sf::FloatRect getViewBounds(const sf::View &view);
-        void trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Event &event, sf::Clock& clock, string &map_name, sf::View &view);
+        void trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Event &event, sf::Clock& clock, sf::View &view);
         void fillTree(sf::RenderWindow &window);
         void movingFlower(sf::RenderWindow &window, int x, int y);
         void openDoorS(sf::RenderWindow &window, Trainer &trainer);
@@ -43,5 +43,7 @@ class Map
         sf::Texture texture_1; //tileset1
         sf::Texture texture_2; //tileset2
         sf::Texture texture_3; //tileset3
+        sf::Texture pokeInterior;
+        sf::Sprite pokeBuilding;
         //dictionnary of map names and the collision map associated to it, initiaised in the constructor.
 };  

@@ -240,15 +240,15 @@ void Trainer::fishing(sf::RenderWindow &window, sf::View &view){
         c = 1;
         d = 8;
     }
-    if (facingDirection == "Up"){
+    else if (facingDirection == "Up"){
         y = 1;
     }
-    if (facingDirection == "Left"){
+    else if (facingDirection == "Left"){
         y = 2;
         a = -1;
         b = -8;
     }
-    if (facingDirection == "Right"){
+    else {
         y = 3;
         a = 1;
         b = 8;

@@ -15,7 +15,7 @@ using namespace std;
 
 
 
-Map::Map(sf::RenderWindow &window, string &map_name)
+Map::Map(sf::RenderWindow &window)
 {
     //Defining all the maps
     background1_1.load("Sprites/tileset1.png", sf::Vector2u(16, 16), level, 34, 33);
@@ -28,8 +28,9 @@ Map::Map(sf::RenderWindow &window, string &map_name)
     state = "start";
     collision_.insert(pair<string, const int*>("first", collision));
     collision_.insert(pair<string, const int*>("second", collision2));
+    collision_.insert(pair<string, const int*>("pokeShop", poke));
     
-    this->map_name= map_name;    
+    map_name= "first";
     vector<string> dialogue1;
     dialogue1.push_back("Welcome on our campus!");
     dialogue1.push_back("Start by exploring"); /*
@@ -40,7 +41,8 @@ Map::Map(sf::RenderWindow &window, string &map_name)
     texture_1.loadFromFile("Sprites/tileset1.png");
     texture_2.loadFromFile("Sprites/tileset2.png");
     texture_3.loadFromFile("Sprites/tileset3.png");
-    
+    pokeInterior.loadFromFile("Sprites/PokeInterior.png");
+    pokeBuilding.setTexture(pokeInterior);
     animationCounter = 0;
     animationDoor = 0;
 }
@@ -83,7 +85,7 @@ void Map::end(sf::RenderWindow &window, Trainer &trainer){
 }
 
 
-void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Event &event, sf::Clock& clock, string &map_name, sf::View &view){
+void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Event &event, sf::Clock& clock, sf::View &view){
     
     sf::Vector2f position = trainer.spritePlayer.getPosition();
     int x = position.x + 16;
@@ -114,6 +116,21 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
                 trainer.counterWalk = 0;
                 trainer.state = "Fishing";
             }
+        }
+    }
+    
+    //Entering Poke Center
+    if (collision_[map_name][(int) x/16 +(((int) y/16 -1)*34)]==11 && trainer.facingDirection=="Up" && trainer.state == "Stop" && event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::Up){
+        trainer.state = "Entering";
+        if (alpha < 250 && state == "end"){
+            end(window, trainer);
+        }
+        else{
+            map_name = "pokeShop";
+            clock.restart();
+            state = "start";
+            initialisation(window, trainer);
+            trainer.counterWalk = 0;
         }
     }
     
@@ -241,7 +258,9 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
     }
 }
 
-void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Clock& clock, sf::Event &event, string &map_name){
+void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Clock& clock, sf::Event &event){
+        
+    
     
     
     if (map_name == "first") fillTree(window);
@@ -260,6 +279,7 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
            }
        } */
     
+    
     sf::Vector2f pos =trainer.getPos();
     if(map_name== "first"){
         window.draw(background1_1); 
@@ -271,9 +291,15 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
 //        window.draw(background2_2);
     }
     
-    movingFlower(window, 176, 176);
+    if (map_name == "pokeShop"){
+        pokeBuilding.setTextureRect(sf::IntRect(307,250,176,128));
+        pokeBuilding.setPosition(128, 64);
+        window.draw(pokeBuilding);
+    }
     
+    movingFlower(window, 176, 176);
     openDoorS(window, trainer);
+
     
     for (auto const& np : npcs) 
     {
@@ -310,7 +336,7 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
         npcs[0]->speak(window, view, trainer);
     }
     
-    this->trainerDisplacement(window, trainer,event,clock,map_name, view);
+    this->trainerDisplacement(window, trainer,event,clock,view);
 
 }
         
@@ -378,12 +404,14 @@ void Map::openDoorS(sf::RenderWindow &window, Trainer &trainer){
         (sprite).setTextureRect(sf::IntRect(23 + 17 * animationDoor, 232, 16, 16));
         sprite.setPosition(192,160);
         
-        std::cout << animationDoor << std::endl;
         if (animClock.getElapsedTime().asMilliseconds() > 400){
-            animationDoor++;
-            if (animationDoor == 3){
-                animationDoor = 0;
+            if (animationDoor < 2){
+                animationDoor++;
+            }
+            else{
                 trainer.state = "Stop";
+                map_name = "second";
+                end(window, trainer);
             }
         }
         window.draw(sprite);
