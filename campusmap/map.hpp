@@ -28,8 +28,8 @@ class Map
     private:
         TileMap background1_1;
         TileMap background1_2;
-        /* TileMap background2_1;
-        TileMap background2_2; */
+        TileMap background2_1;
+        //TileMap background2_2;
         vector<Npc*> npcs;
         map<string, const int*> collision_;
         string map_name;
