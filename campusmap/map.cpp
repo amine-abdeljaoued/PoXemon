@@ -35,8 +35,12 @@ Map::Map(sf::RenderWindow &window)
     dialogue1.push_back("Welcome on our campus!");
     dialogue1.push_back("Start by exploring"); /*
     string dialogue1 [2] = {"Welcome on our campus!","Start by exploring"}; */
-    Npc* toto = new  Npc("Sprites/NPC2.png",70,50,0.5f,200,212,dialogue1);
-    npcs.push_back(toto) ;
+    vector<Npc*> npcs_map1;
+    
+    Npc* toto = new  Npc("Sprites/NPC2.png",70,50,0.5f,200,212,dialogue1);    
+    npcs_map1.push_back(toto) ;
+
+    npcs.insert(pair< string, vector<Npc*> >("first", npcs_map1));
     
     texture_1.loadFromFile("Sprites/tileset1.png");
     texture_2.loadFromFile("Sprites/tileset2.png");
@@ -49,10 +53,15 @@ Map::Map(sf::RenderWindow &window)
 
 Map::~Map()
 {
-    
-    for (vector<Npc*>::iterator it = npcs.begin(); it != npcs.end(); it++)
+    //TO DO: delete all the subvectors from npcs!
+    for (map<string, vector<Npc*> >::iterator it = npcs.begin(); it != npcs.end(); it++)
     {
-        delete *it;
+        vector<Npc*> k = it->second;
+        for( vector<Npc*>::iterator it1 = k.begin(); it1 != k.end(); it1++)
+        {
+            delete *it1;
+        }
+            
     }
 }
 
@@ -137,7 +146,7 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
     if ((collision_[map_name][(int) x/16 +(((int) y/16 +1)*34)]==8 && trainer.facingDirection=="Down") || (collision_[map_name][(int) x/16 +(((int) y/16 -1)*34)]==8 && trainer.facingDirection=="Up") || (collision_[map_name][(int) x/16 -1+((int) y/16 *34)]==8 && trainer.facingDirection=="Left") || (collision_[map_name][(int) x/16 +1+((int) y/16 *34)]==8 && trainer.facingDirection=="Right")){
         if ((event.type == sf::Event::KeyPressed)&&((event.key.code == sf::Keyboard::D))){
             trainer.state = "Speaking";
-            npcs[0]->speakCounter ++ ;
+            npcs["first"][0]->speakCounter ++ ;
         }
     }
     
@@ -301,7 +310,7 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
     openDoorS(window, trainer);
 
     
-    for (auto const& np : npcs) 
+    for (auto const& np : npcs[map_name]) 
     {
         sf::Vector2f pos2 = (*np).getPos(); //Here we study the respective positions of the character and the npcs 
                                             //to check in which order we draw them
@@ -316,7 +325,7 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
         
     }
     
-    if(npcs.size() == 0){
+    if(npcs[map_name].size() == 0){
         trainer.draw(window, event, view);
     }
     
@@ -333,7 +342,7 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
    
     
     if (trainer.state == "Speaking"){
-        npcs[0]->speak(window, view, trainer);
+        npcs[map_name][0]->speak(window, view, trainer);
     }
     
     this->trainerDisplacement(window, trainer,event,clock,view);
