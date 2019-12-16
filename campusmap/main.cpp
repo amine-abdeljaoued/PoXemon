@@ -12,9 +12,9 @@
 #include "trainer.hpp"
 #include "npc.hpp"
 #include "map.hpp"
-#include "test.h"
-#include "Backpack_content.h"
-#include "Button.h"
+#include "test.hpp"
+#include "Backpack_content.hpp"
+#include "Button.hpp"
 #include "intro.hpp"
 #include "const.hpp"
 

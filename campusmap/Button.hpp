@@ -2,8 +2,8 @@
 #include <SFML/Window.hpp>
 #include <SFML/OpenGL.hpp>
 #include <iostream>
-#include "test.h"
-#include "Backpack_content.h"
+#include "test.hpp"
+#include "Backpack_content.hpp"
 
 class Button {
     

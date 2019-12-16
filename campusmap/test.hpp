@@ -1,6 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "Backpack_content.h"
+#include "Backpack_content.hpp"
 
 class Test
 {

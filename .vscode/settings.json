@@ -40,6 +40,11 @@
         "xtr1common": "cpp",
         "algorithm": "cpp",
         "random": "cpp",
-        "vector": "cpp"
+        "vector": "cpp",
+        "fstream": "cpp",
+        "iterator": "cpp",
+        "map": "cpp",
+        "sstream": "cpp",
+        "xtree": "cpp"
     }
 }

@@ -1,6 +1,6 @@
-#include "test.h"
-#include "Backpack_content.h"
-#include "ResourcePath.hpp"
+#include "test.hpp"
+#include "Backpack_content.hpp"
+/* #include "ResourcePath.hpp" */
 #include <SFML/Graphics.hpp>
 #include <sstream>
 #include <string>
@@ -15,8 +15,8 @@ std::string toString(T arg){
 
 Test::Test(float width, float height) {
     
-    if (!font_menu.loadFromFile(resourcePath() + "sansation.ttf")) {
-        return EXIT_FAILURE;
+    if (!font_menu.loadFromFile(/* resourcePath() + */ "sansation.ttf")) {
+        std::cout <<"Error"<<std::endl;
     }
    
     menu[0].setFillColor(sf::Color::White);
