@@ -24,6 +24,7 @@ public:
 	float jumpHeight;       // how high this pokemon can jump
 	bool canJump;           // If you're on the ground, you can jump
 	bool shooting;          // If you're shooting, we want to draw the pokeball
+	bool special_attack_1;
 	Healthbar health;		// Health between 1 and 100
 	Artillery bullets; 		// This is where all bullets are stored
 							// If we want bullets to depend on Pokemon, bullets must have a constructor
@@ -35,6 +36,12 @@ public:
 
 	void death_disappear(float& deltaTime); //scale down and make the pokemon 'implode'
 	
+	int type; /* We know which type a pokemon is by its identifier type
+							10 - earth
+							20 - water
+							30 - air
+							40 - fire
+							(use multiples of 10 to avoid confusion with backpack) */
 protected:
 	sf::Texture pic;
 };

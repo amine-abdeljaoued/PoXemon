@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <cmath>
+//#include "Pokemon.h"
 
 
 //remarks / stuff to change
@@ -19,7 +20,7 @@ public:
     float velocityY;
     float x;
     float y;
-    
+
     sf::Sprite ball;
     
     float gravity = 981.0f ;//This will make the parabolic trajectory
@@ -36,9 +37,10 @@ public:
     void dissapear();
     
     void setPosition(float& xpos, float& ypos);
-    bool update(float deltaTime,sf::RenderWindow& window,float proba, sf::Clock &clock2, sf::Time &elapsed2);
-    bool catched(float proba, sf::Clock& clock, sf::Time& elapsed);
+    bool update(float deltaTime,sf::RenderWindow& window,float proba, sf::Clock &clock2, sf::Time &elapsed2,float opphealth);
+    bool catched(float proba, sf::Clock& clock, sf::Time& elapsed,float opphealth);
     bool waiting = false;
+
     
     Pokeball();
 private:
@@ -48,7 +50,6 @@ private:
 class Normalball: public Pokeball{
 public:
     float proba;
-	float proba_max;
     Normalball();
 private:
     sf::Texture pic1;
@@ -57,7 +58,6 @@ private:
 class Superball: public Pokeball{
 public:
     float proba;
-	float proba_max;
     Superball();
 private:
     sf::Texture pic2;
@@ -66,9 +66,7 @@ private:
 class Masterball: public Pokeball{
 public:
     float proba;
-	float proba_max;
     Masterball();
 private:
     sf::Texture pic3;
 };
-
