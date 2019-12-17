@@ -6,6 +6,7 @@ Pokemon::Pokemon(float xstart, float ystart, float h, float v, Backpack_Pokemon 
 	//rarity = pokemon_rarity; //1 == common, 2 == rare, 3 == epic, 4 == legendary
 	index = backpack_pokemon.index;
 	name = backpack_pokemon.name;
+	type = backpack_pokemon.type;
 	health.setHealth(backpack_pokemon.health); 		
 	health.setPosition(xstart+50, ystart-250);
 	health.name = name;
@@ -17,8 +18,10 @@ Pokemon::Pokemon(float xstart, float ystart, float h, float v, Backpack_Pokemon 
 	speed = v;
 	canJump = true;
 	shooting = false;
+	special_attack_1 = false;
 	x = xstart;
 	y = ystart;
+	bullets.type = type;
 
 	sprite.setPosition(sf::Vector2f(x, y));
 

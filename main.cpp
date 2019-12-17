@@ -36,9 +36,9 @@ int main ()
 	std::string name1 = "jistolwer";
 	std::string name2 = "auron";
 	std::string name3 = "husabus";
-	Backpack_Pokemon poke1(name1, 1, 0, 100);
-	Backpack_Pokemon poke2(name2, 1, 1, 100);
-	Backpack_Pokemon poke3(name3, 1, 2, 100);
+	Backpack_Pokemon poke1(name1, 1, 0, 100, 10);//not the actual types though
+	Backpack_Pokemon poke2(name2, 1, 1, 100, 20);
+	Backpack_Pokemon poke3(name3, 1, 2, 100, 30);
 	bag.backpack_pokemons[0] = &poke1;
 	bag.backpack_pokemons[1] = &poke2;
 	bag.backpack_pokemons[2] = &poke3;
@@ -47,7 +47,9 @@ int main ()
 
 
 	std::string name_opp = "donryle";
-	Backpack_Pokemon poke_opp(name_opp, 1, 1, 100); 
+	Backpack_Pokemon poke_opp(name_opp, 1, 1, 100, 40); 
+
+
 
 
 
@@ -62,6 +64,7 @@ int main ()
 	Player eevee(10.f, groundY, 200.f, 500.f, poke1);//by default, we take the first pokemon of the backpack
 	//do we want to be able to choose our pokemon at the beginning of the fight ?
 	Opponent opponent1(1000.f,groundY,200.f, 800.f, poke_opp);
+	bag.set_opponent(&opponent1);
 	eevee.set_enemy(&opponent1);
 	opponent1.set_enemy(&eevee);
 	int state = 1;
@@ -268,8 +271,6 @@ int main ()
 					//gained xp
 					//go back to map
 		}
-
-		//std::cout << counter++ << std::endl;
 		
 		window.display();
     }

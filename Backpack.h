@@ -1,8 +1,10 @@
 #pragma once
 #include "Pokemon.h"
+#include "Opponent.h"
 #include "Pokeball.h"
 #include "Pokemon_Button.h"
 #include "Backpack_Pokemon.cpp"
+
 
 //We carry this backpack throughout the game
 //->we need to talk with the other teams for that
@@ -26,8 +28,11 @@ class Backpack
         void Pokeball_shoot(float& deltaTime, sf::RenderWindow& window, sf::Clock &clock2, sf::Time & elapsed2);
         
         void Pokeball_throw(Pokeball Poke,float& deltaTime, sf::RenderWindow& window);
-        
+
+  
         void draw (sf::RenderTarget &target) const;
+		Opponent* opponent;
+		void set_opponent(Opponent* opponent);
         
         bool masternow;
         bool supernow;

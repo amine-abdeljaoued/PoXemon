@@ -100,7 +100,7 @@ void draw1(sf::RenderWindow& window, sf::RectangleShape& shape1, sf::RectangleSh
                 window.draw(text3);
                 window.draw(bg);
                 window.draw(sprite);
-            }
+}
 
 int update_state1(sf::RenderWindow& window, sf::RectangleShape& start_button, sf::RectangleShape& info_button, sf::Sprite& star){
     // Know where the mouse is
