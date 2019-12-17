@@ -1,4 +1,4 @@
-CXX = g++
+CXX = g++ 
 LDLIBS = -lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system
 
 trainer.o: trainer.cpp trainer.hpp

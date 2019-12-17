@@ -53,7 +53,7 @@ Map::Map(sf::RenderWindow &window)
 
 Map::~Map()
 {
-    //TO DO: delete all the subvectors from npcs!
+    //Delete all the Npcs from each vector of our map npc
     for (map<string, vector<Npc*> >::iterator it = npcs.begin(); it != npcs.end(); it++)
     {
         vector<Npc*> k = it->second;
