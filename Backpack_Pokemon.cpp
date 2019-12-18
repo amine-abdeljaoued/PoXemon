@@ -18,4 +18,5 @@ public:
 	int level;
 	int type;
 	Pokemon_Button button;
+
 };

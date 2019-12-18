@@ -40,6 +40,7 @@ class Backpack
 
 		
 		Backpack_Pokemon* backpack_pokemons[3]; //maybe more ?
+		bool alive_pokemons();//false iff all pokemons are dead
 
     
 		void change_pokemons() {//to be completed
