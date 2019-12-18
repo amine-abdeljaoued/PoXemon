@@ -41,6 +41,7 @@ void Npc::draw(sf::RenderWindow &window) const {
 
 void Npc::speak(sf::RenderWindow &window, sf::View &view, Trainer &trainer)  {
     
+    /* cout << "Testoo" <<endl; */
     if(trainer.facingDirection == "Down"){
         (spriteNpc).setTextureRect(sf::IntRect(0,3*sheetRectY,sheetRectX,sheetRectY));
         this->draw(window);
@@ -63,7 +64,7 @@ void Npc::speak(sf::RenderWindow &window, sf::View &view, Trainer &trainer)  {
     
     
     if (!font.loadFromFile(/* resourcePath() + */ "Fonts/sansation.ttf")) {
-        cout << "Error in loading font";
+        cout << "Error in loading font" <<endl;
     }
 
     if (speakCounter == discussion.size()){
