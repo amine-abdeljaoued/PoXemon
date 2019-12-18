@@ -33,7 +33,8 @@ Trainer::Trainer( float Speed, int sheetRect, int sizeAnim)
 void Trainer::draw(sf::RenderWindow &window, sf::Event &event, sf::View &view){
     window.draw(spritePlayer);
     displacement(event,view);
-    fishing(window, view);
+    fishing(window, view); //To put in map after condition of state fishing
+                           //because there's a problem of order of drawing with Npc
 }
 
 void Trainer::setSpeed(sf::Event &event){

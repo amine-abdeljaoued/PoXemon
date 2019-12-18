@@ -17,7 +17,7 @@ class Npc {
         sf::Vector2f getPos();
         int speakCounter;
 
-    private:
+    protected:
         sf::Texture textureNpc;
         sf::Sprite spriteNpc;
         vector<string> discussion;
@@ -28,3 +28,11 @@ class Npc {
         int sheetRectX;
         int sheetRectY;
 };
+
+/* class Npc_Seller: public Npc {
+    public:
+        /* Npc_Seller(): Npc() {} */    //we add specificities of subclass
+        
+        
+        
+//}

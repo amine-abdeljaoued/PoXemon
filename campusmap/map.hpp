@@ -50,5 +50,5 @@ class Map
     
         //Places of Spawn of the Trainer
         int initialX;
-    int initialY;
+        int initialY;
 };  
