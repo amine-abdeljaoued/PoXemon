@@ -256,9 +256,18 @@ void Trainer::fishing(sf::RenderWindow &window, sf::View &view){
     
     if (state == "Fishing"){
         
-        
         text.setFont(font);
-        text.setString("Fishing...");
+        
+        random_device rd;
+        mt19937 gen(rd());
+        uniform_real_distribution<> dis(0.0, 1.0);
+        float probagenerated = dis(gen);
+        if (probagenerated<0.005) text.setString("A wild Pokemon was caught!");
+        else if (text.getString() != "A wild Pokemon was caught!")
+            text.setString("Fishing...");
+        
+        
+        
         text.setCharacterSize(15);
         text.setFillColor(sf::Color::Black);
         /* sf::Vector2f viewSize = view.getSize();
@@ -284,6 +293,8 @@ void Trainer::fishing(sf::RenderWindow &window, sf::View &view){
         window.draw(bubble);
         window.draw(text);
         
+        
+        
         if (counterWalk < 4){
             (spritePlayer).setTextureRect(sf::IntRect(512 + counterWalk * (sheetRect+2),2+y*(sheetRect+2),sheetRect,sheetRect));
             if (counterWalk == 0){
@@ -308,6 +319,7 @@ void Trainer::fishing(sf::RenderWindow &window, sf::View &view){
             state = "Stop";
             (spritePlayer).setTextureRect(sf::IntRect(2,2+ y*(sheetRect+2),sheetRect,sheetRect));
             (spritePlayer).move(a,c);
+            text.setString("");
         }
 
     }

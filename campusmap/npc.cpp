@@ -20,12 +20,12 @@ sf::FloatRect Npc::getViewBounds(const sf::View &view)
 }
 
 
-Npc::Npc(string pathName, int sheetRectX,int sheetRectY, float scale , int posX, int posY, vector<string> discu) {
+Npc::Npc(string pathName, int sheetPosX, int sheetPosY, int sheetRectX,int sheetRectY, float scale, int posX, int posY, vector<string> discu){
     if (!textureNpc.loadFromFile(/* resourcePath() + */ pathName)) {
         cout << "Error loading sprite";
     }
     (spriteNpc).setTexture(textureNpc);
-    spriteNpc.setTextureRect(sf::IntRect(0,0,sheetRectX,sheetRectY));
+    spriteNpc.setTextureRect(sf::IntRect(sheetPosX,sheetPosY,sheetRectX,sheetRectY));
     spriteNpc.setScale(sf::Vector2f(scale, scale));
     spriteNpc.setPosition(posX, posY);
     discussion = discu;
@@ -90,7 +90,6 @@ void Npc::speak(sf::RenderWindow &window, sf::View &view, Trainer &trainer)  {
         text.setPosition(int(viewBounds.left) + 35, int(viewBounds.top + viewBounds.height - 40) );
         /* bubble.setPosition(int(viewBounds.left), int(viewBounds.top + viewBounds.height - 50)); */
 
-        text.setStyle(sf::Text::Bold);
         
         window.draw(bubble);
         window.draw(text);

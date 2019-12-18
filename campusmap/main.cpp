@@ -20,7 +20,7 @@
 int main()
 {
     //Initializing the window
-    sf::RenderWindow window(sf::VideoMode().getDesktopMode(), "PoXemon");
+    sf::RenderWindow window(sf::VideoMode(544, 544), "PoXemon");
     sf::View view(sf::Vector2f(272, 272), sf::Vector2f(544, 544));
     view.zoom(0.5f);
     window.setPosition(sf::Vector2i(0, 0));
@@ -42,6 +42,7 @@ int main()
     
     while (window.isOpen())
     {
+        
         sf::Event event;
         window.pollEvent(event);
         if ((event.type == sf::Event::KeyPressed)&&((event.key.code == sf::Keyboard::P))) if(openbackpck()==1) window.close();
