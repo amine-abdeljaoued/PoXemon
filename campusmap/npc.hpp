@@ -31,7 +31,7 @@ class Npc {
 
 /* class Npc_Seller: public Npc {
     public:
-        /* Npc_Seller(): Npc() {} */    //we add specificities of subclass
+         Npc_Seller(): Npc() {} */    //we add specificities of subclass
         
         
         
