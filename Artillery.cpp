@@ -1,5 +1,6 @@
 #include "Artillery.h"
 #include <random>
+#include <list>
 
 Artillery::Artillery(){
     max_available_bullets = 20;
@@ -80,15 +81,17 @@ void Artillery::new_shot_opp(float& x, float& y, const sf::FloatRect& bounds, sf
     }
 }
 
-int Artillery::update(float& deltaTime, sf::Clock& clock, sf::Time& elapsed, const sf::Sprite& opponent_sprite, float& groundY){
+int Artillery::update(sf::RenderWindow& window, float& deltaTime, sf::Clock& clock, sf::Time& elapsed, const sf::Sprite& opponent_sprite, float& groundY){
 	int res = 0;
+
+	std::list<int> to_delete;//indices of the bullets to delete
+	//we will erase bullets after the loop (since otherwise we would modify the vector bullets)
 
     for (int  i = 0; i < bullets.size(); i++) {
         
         //Check if the bullets are offscreen
-        if ((*(bullets[i])).offscreen()){
-            //delete bullets[i];
-            bullets.erase(bullets.begin() + i);
+        if ((*(bullets[i])).offscreen(window)){
+			to_delete.push_back(i);
         }
 		// Collisions with the opponenent
         // PROBLEM HERE: with special attack 1 bullets sometimes this doesn't work .... 
@@ -103,10 +106,16 @@ int Artillery::update(float& deltaTime, sf::Clock& clock, sf::Time& elapsed, con
         (*(bullets[i])).update(deltaTime, groundY);
         // Bullet completed its deleting process
         if ((*(bullets[i])).deleted){
-            delete bullets[i];
-			bullets.erase(bullets.begin() + i);
+			to_delete.push_back(i);
         }
     }
+
+	//delete offscreen or collided bullets
+	for (auto it = to_delete.cbegin(); it != to_delete.cend(); it++) {
+		bullets.erase(bullets.begin() + *it);
+		//delete bullets[*it];
+	}
+
 
 	//regenerate bullets every 1 second
     if (elapsed.asSeconds() > 1.0f && available_bullets < max_available_bullets) {

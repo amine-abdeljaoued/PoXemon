@@ -18,7 +18,7 @@ public:
     void new_shot_special_attack1(float& x, float& y, const sf::FloatRect& bounds, sf::RenderTarget& window, const sf::Vector2i& mouse);
     // new_shot_opp is for the opponent
     void new_shot_opp(float& x, float& y, const sf::FloatRect& bounds, sf::RenderTarget& window, float& xshoot, float& yshoot);
-    int update(float& deltaTime, sf::Clock& clock, sf::Time& elapsed, const sf::Sprite & opponent_sprite, float& groundY);
+    int update(sf::RenderWindow& window, float& deltaTime, sf::Clock& clock, sf::Time& elapsed, const sf::Sprite & opponent_sprite, float& groundY);
 
 	std::vector<Bullet*> bullets;
 	int type; // same type as its pokemon
