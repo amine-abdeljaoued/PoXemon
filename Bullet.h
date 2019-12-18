@@ -23,7 +23,7 @@ public:
 	void setPosition(sf::Vector2f& pos);
 	void set_shoot_dir(const sf::Vector2f& mouse_position, const sf::Vector2f& initial_position);
 	virtual bool update(float& deltaTime, float& groundY);
-	bool offscreen();
+	bool offscreen(sf::RenderWindow & window);
 	virtual void deletion();
 	void reflect_ground(float& groundY);
 

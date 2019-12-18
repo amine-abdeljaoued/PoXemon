@@ -34,7 +34,7 @@ int main ()
 
 	//----------------------------------------------------------------------------
 	//char game_mode = 'w'; //we play against a wild pokemon
-	char game_mode = 'ahgffae'; //we play against a trainer
+	char game_mode = 't'; //we play against a trainer
 
 	Backpack bag;
 	std::string name1 = "jistolwer";
@@ -171,7 +171,7 @@ int main ()
 
 		else if (state==2){ //fight
 			
-			std::cout << (*popponent).health.health << std::endl;
+			//std::cout << (*popponent).health.health << std::endl;
 			(*pplayer).update(deltaTime, window, clock_regenerate_bullets, elapsed, groundY);
 			(*popponent).update(deltaTime, window, clock_regenerate_bullets, elapsed, groundY);
 
@@ -250,8 +250,8 @@ int main ()
 			fall((*popponent), groundY, deltaTime);
 
 			//bullets that were shot before the end continue their movement
-			(*pplayer).bullets.update(deltaTime, clock, elapsed, (*popponent).sprite, groundY);
-			(*popponent).bullets.update(deltaTime, clock, elapsed, (*popponent).sprite, groundY);
+			(*pplayer).bullets.update(window, deltaTime, clock, elapsed, (*popponent).sprite, groundY);
+			(*popponent).bullets.update(window, deltaTime, clock, elapsed, (*popponent).sprite, groundY);
 
 			//draw stuff
 			window.clear(sf::Color::Blue);
@@ -290,8 +290,8 @@ int main ()
 			(*popponent).death_disappear(deltaTime);
 			fall((*pplayer), groundY, deltaTime);
 			fall((*popponent), groundY, deltaTime);
-			(*pplayer).bullets.update(deltaTime, clock, elapsed, (*popponent).sprite, groundY);
-			(*popponent).bullets.update(deltaTime, clock, elapsed, (*popponent).sprite, groundY);
+			(*pplayer).bullets.update(window, deltaTime, clock, elapsed, (*popponent).sprite, groundY);
+			(*popponent).bullets.update(window, deltaTime, clock, elapsed, (*popponent).sprite, groundY);
 
 			window.clear(sf::Color::Blue);
 			window.draw(background);
@@ -340,8 +340,8 @@ int main ()
 			fall((*pplayer), groundY, deltaTime);
 			fall((*popponent), groundY, deltaTime);
 			//bullets that were shot before the end continue their movement
-			(*pplayer).bullets.update(deltaTime, clock, elapsed, (*popponent).sprite, groundY);
-			(*popponent).bullets.update(deltaTime, clock, elapsed, (*popponent).sprite, groundY);
+			(*pplayer).bullets.update(window, deltaTime, clock, elapsed, (*popponent).sprite, groundY);
+			(*popponent).bullets.update(window, deltaTime, clock, elapsed, (*popponent).sprite, groundY);
 			//draw stuff
 			window.clear(sf::Color::Blue);
 			window.draw(background);
@@ -364,8 +364,8 @@ int main ()
 		fall((*pplayer), groundY, deltaTime);
 		fall((*popponent), groundY, deltaTime);
 		//bullets that were shot before the end continue their movement
-		(*pplayer).bullets.update(deltaTime, clock, elapsed, (*popponent).sprite, groundY);
-		(*popponent).bullets.update(deltaTime, clock, elapsed, (*popponent).sprite, groundY);
+		(*pplayer).bullets.update(window, deltaTime, clock, elapsed, (*popponent).sprite, groundY);
+		(*popponent).bullets.update(window, deltaTime, clock, elapsed, (*popponent).sprite, groundY);
 		//draw stuff
 		window.clear(sf::Color::Blue);
 		window.draw(background);
