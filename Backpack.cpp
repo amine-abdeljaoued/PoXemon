@@ -242,3 +242,12 @@ Backpack::Backpack(){
 //        }
 //    }
 //}
+
+
+
+	bool Backpack::alive_pokemons() {
+		for (int i = 0; i < 3; i++) {
+			if (backpack_pokemons[i]->health > 0) return true;
+		}
+		return false;
+	}

@@ -60,17 +60,22 @@ Pokemon_Button::Pokemon_Button(std::string& name, int& lvl, int& h, int& i) {
 		healthbar.setFillColor(sf::Color(255, health * 2.55 * 2, 0));
 	}
     // Both bars and the heart must move together
+
+	bar.setOrigin(bar.getLocalBounds().width / 2, bar.getLocalBounds().height / 2);
+	name_text.setOrigin(name_text.getLocalBounds().width / 2, name_text.getLocalBounds().height / 2);
+	level_text.setOrigin(level_text.getLocalBounds().width / 2, level_text.getLocalBounds().height / 2);
+	sprite.setOrigin(sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2);
 }
 
 void Pokemon_Button::setHealth(int& a) {
 	health = a;
 	update();
-	
 }
 
 void Pokemon_Button::update() {
 	//update the healthbar
 	healthbar.setSize(sf::Vector2f(health * healthwidth / 100, healthheight));
+
 	if (health > 50) {
 		healthbar.setFillColor(sf::Color((100 - health) * 2.55 * 2, 255, 0));
 	}
@@ -85,16 +90,14 @@ void Pokemon_Button::update() {
 		heart.setColor(sf::Color(50,50,50));
 		outline.setFillColor(sf::Color(50, 50, 50));
 	}
+
 }
 
 
 
 void Pokemon_Button::setPosition(float x, float y) {
+
 	
-	bar.setOrigin(bar.getLocalBounds().width/2, bar.getLocalBounds().height/2);
-	name_text.setOrigin(name_text.getLocalBounds().width / 2, name_text.getLocalBounds().height / 2);
-	level_text.setOrigin(level_text.getLocalBounds().width / 2, level_text.getLocalBounds().height / 2);
-	sprite.setOrigin(sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2);
 
 	// Background
 	bar.setPosition(x, y);

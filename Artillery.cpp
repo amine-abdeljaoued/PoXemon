@@ -9,14 +9,15 @@ Artillery::Artillery(){
 
 Artillery::~Artillery(){
     for (unsigned i = 0; i < bullets.size(); i++) {
-        delete bullets[i];
+        //delete bullets[i];
+		//this is causing some exceptions so i remove it for now
     }
 }
 
-void Artillery::draw(sf::RenderTarget& target) const {
+void Artillery::draw(sf::RenderTarget& target)  {
     for (unsigned i = 0; i < bullets.size(); i++) {
         target.draw((*bullets[i]).bullet);
-	}
+	} 
 }
 
 void Artillery::new_shot(float& x, float& y, const sf::FloatRect& bounds, sf::RenderTarget& window, const sf::Vector2i& mouse){ 
@@ -86,7 +87,7 @@ int Artillery::update(float& deltaTime, sf::Clock& clock, sf::Time& elapsed, con
         
         //Check if the bullets are offscreen
         if ((*(bullets[i])).offscreen()){
-            delete bullets[i];
+            //delete bullets[i];
             bullets.erase(bullets.begin() + i);
         }
 		// Collisions with the opponenent
