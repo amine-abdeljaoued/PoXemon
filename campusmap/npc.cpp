@@ -32,6 +32,10 @@ Npc::Npc(string pathName, int sheetPosX, int sheetPosY, int sheetRectX,int sheet
     speakCounter = -1;
     this->sheetRectX = sheetRectX;
     this->sheetRectY = sheetRectY;
+    if (!font.loadFromFile(/* resourcePath() + */ "Fonts/sansation.ttf")) {
+        cout << "Error in loading font" <<endl;
+    }
+    text.setFont(font);
 }
 
 
@@ -61,11 +65,7 @@ void Npc::speak(sf::RenderWindow &window, sf::View &view, Trainer &trainer)  {
         (spriteNpc).setTextureRect(sf::IntRect(0,2*sheetRectY,sheetRectX,sheetRectY));
         this->draw(window);
     }
-    
-    
-    if (!font.loadFromFile(/* resourcePath() + */ "Fonts/sansation.ttf")) {
-        cout << "Error in loading font" <<endl;
-    }
+      
 
     if (speakCounter == discussion.size()){
         trainer.state = "Stop";
@@ -73,7 +73,7 @@ void Npc::speak(sf::RenderWindow &window, sf::View &view, Trainer &trainer)  {
     }
     
     else{
-        text.setFont(font);
+        
         text.setString(discussion[speakCounter]);
         text.setCharacterSize(15);
         text.setFillColor(sf::Color::Black);
