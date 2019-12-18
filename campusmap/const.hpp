@@ -232,7 +232,7 @@ const int poke[] = {
 // 1 = herbe haute donc on peut trouver des pokemon
 // 2 = passage a Underground
 // 3 = batiment ou shop
-// First Map
+// 4 =First Map
 // 5 = escalier
 // 6 = on peut juste pas aller
 // 7 = eau donc on peut y aller avec des pokemons eau
@@ -240,6 +240,7 @@ const int poke[] = {
 // 9 = Second Npc
 // 10 = Door of a Poke Center
 // 11 = Door of a Poke Shop
+// 
 
 // etc...
 

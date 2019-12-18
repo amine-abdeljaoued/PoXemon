@@ -43,18 +43,22 @@ void Npc::speak(sf::RenderWindow &window, sf::View &view, Trainer &trainer)  {
     
     if(trainer.facingDirection == "Down"){
         (spriteNpc).setTextureRect(sf::IntRect(0,3*sheetRectY,sheetRectX,sheetRectY));
+        this->draw(window);
     }
     
     if(trainer.facingDirection == "Up"){
         (spriteNpc).setTextureRect(sf::IntRect(0,0,sheetRectX,sheetRectY));
+        this->draw(window);
     }
     
     if(trainer.facingDirection == "Right"){
         (spriteNpc).setTextureRect(sf::IntRect(0,sheetRectY,sheetRectX,sheetRectY));
+        this->draw(window);
     }
     
     if(trainer.facingDirection == "Left"){
         (spriteNpc).setTextureRect(sf::IntRect(0,2*sheetRectY,sheetRectX,sheetRectY));
+        this->draw(window);
     }
     
     

@@ -15,13 +15,13 @@ std::string toString(T arg){
 
 Background::Background(float width, float height, Backpack backpack) {
     
-    if (!texture_background.loadFromFile(/* resourcePath() + */ "screen_menu.jpg")) {
+    if (!texture_background.loadFromFile(/* resourcePath() + */ "Sprites.screen_menu.jpg")) {
         std::cout<<"error"<<std::endl;
     }
-    if (!texture_backpack.loadFromFile(/* resourcePath() + */ "Pt_bag.png")) {
+    if (!texture_backpack.loadFromFile(/* resourcePath() + */ "Sprites/Pt_bag.png")) {
         std::cout<<"error"<<std::endl;
     }
-    if (!font.loadFromFile(/* resourcePath() + */ "sansation.ttf")) {
+    if (!font.loadFromFile(/* resourcePath() + */ "Fonts/sansation.ttf")) {
         std::cout<<"error"<<std::endl;
     }
     
