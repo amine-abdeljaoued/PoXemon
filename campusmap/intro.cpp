@@ -85,22 +85,22 @@ int menu(std::string picture) {
 }
 
 int loadgame(std::string picture) {
-    
+        
     // Create the main window
     sf::VideoMode desktop = sf::VideoMode().getDesktopMode();
     sf::RenderWindow menu(desktop, "PoXemon");
 
     // Set the Icon
     sf::Image icon;
-    if (!icon.loadFromFile(/* resourcePath() + */ "icon.png")) {
-        return EXIT_FAILURE;
+    if (!icon.loadFromFile("Sprites/icon.png")) {
+        std::cout << "Error" << std::endl;
     }
     menu.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
     // Load a sprite to display
     sf::Texture texture;
     if (!texture.loadFromFile(/* resourcePath() + */ picture)) {
-        return EXIT_FAILURE;
+        std::cout << "Error" << std::endl;
     }
     sf::Sprite background;
     sf::Vector2u TextureSize;
@@ -116,16 +116,20 @@ int loadgame(std::string picture) {
     
     // Create a graphical text to display
     sf::Font font;
-    if (!font.loadFromFile(/* resourcePath() +  */"Fonts/sansation.ttf")) {
-        return EXIT_FAILURE;
+    if (!font.loadFromFile(/* resourcePath() + */ "Fonts/sansation.ttf")) {
+        std::cout << "Error" << std::endl;
     }
-    sf::Text title("hvghgvvjvh", font, 70);
+    sf::Text title("New Game", font, 70);
     title.setStyle(sf::Text::Bold);
     title.setFillColor(sf::Color::Black);
-    title.setPosition(WindowSize.x*(0.455), WindowSize.y*(0.65));
+    title.setPosition(WindowSize.x*(0.3), WindowSize.y*(0.65));
+    sf::Text title2("Load Game", font, 70);
+    title2.setStyle(sf::Text::Bold);
+    title2.setFillColor(sf::Color::Black);
+    title2.setPosition(WindowSize.x*(0.6), WindowSize.y*(0.65));
     
     // Create an explanation
-    sf::Text expl("Click start game or press x to go forward", font, 40);
+    sf::Text expl("Click on your choice", font, 40);
     expl.setStyle(sf::Text::Bold);
     expl.setFillColor(sf::Color::Black);
     expl.setPosition(WindowSize.x*(0.70), WindowSize.y*(0.90));
@@ -139,7 +143,7 @@ int loadgame(std::string picture) {
         {
             if (event.type == sf::Event::Closed) return 10;
             // Advance button:
-            if ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::X)) menu.close();
+//            if ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::X)) menu.close();
             
             // Click start button:
             if (event.type == sf::Event::MouseButtonPressed)
@@ -150,11 +154,19 @@ int loadgame(std::string picture) {
                 float end_y = title.getPosition().y + WindowSize.y*(0.05);
                 
                 if ( (event.mouseButton.button == sf::Mouse::Left) && (event.mouseButton.x > (spot_x-20)) && (event.mouseButton.x < (end_x+20)) && (event.mouseButton.y > (spot_y-20)) && (event.mouseButton.y < (end_y+20)) ) menu.close();
+                
+                float spot2_x = title2.getPosition().x;
+                float spot2_y = title2.getPosition().y;
+                float end2_x = title2.getPosition().x + WindowSize.x*(0.10);
+                float end2_y = title2.getPosition().y + WindowSize.y*(0.05);
+                
+                if ( (event.mouseButton.button == sf::Mouse::Left) && (event.mouseButton.x > (spot2_x-20)) && (event.mouseButton.x < (end2_x+20)) && (event.mouseButton.y > (spot2_y-20)) && (event.mouseButton.y < (end2_y+20)) ) return 9;
                 }
             }
             menu.clear();
             menu.draw(background);
             menu.draw(title);
+            menu.draw(title2);
             menu.draw(expl);
             menu.display();
         }
@@ -888,8 +900,9 @@ int startgame(){
     sf::Event event;
     int closed=0;
     closed = menu("Sprites/main_menu.jpg");
+    if (closed<10) closed = loadgame("Sprites/main_menu.jpg");
+    if (closed==9) return 0;
     if (closed<10)closed = intro("Sprites/professor1.png",1,0);
-    std::cout<<closed<<std::endl;
     if (closed<10)closed = intro("Sprites/professor4.png",1,1);
     if (closed<10)closed = intro("Sprites/professor3.png",0,2);
     if (closed<10)closed = intro("Sprites/professor5.png",0,3);
@@ -904,10 +917,13 @@ int startgame(){
     if (closed<10)closed = intro("Sprites/professor2.png",0,12);
     if (closed<10)closed = choice("Sprites/professor0.png",1,13);
     if (closed<10){
-        if(choice("Sprites/professor0.png",1,14)==1) intro("Sprites/professor7.png",0,15);
+        if(choice("Sprites/professor0.png",1,14)==1) {
+            intro("Sprites/professor7.png",0,15);
+            return 1;
+        }
         else{
-            intro("Sprites/professor4.png",0,16);
-            intro("Sprites/professor1.png",1,17);
+            if (closed<10)closed = intro("Sprites/professor4.png",0,16);
+            if (closed<10)closed = intro("Sprites/professor1.png",1,17);
             int a = choose("Sprites/professor0.png",1);
             if(a==1) intro("Sprites/professor5.png",0,18);
             else if(a==2) intro("Sprites/professor5.png",0,19);

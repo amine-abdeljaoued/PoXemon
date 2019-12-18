@@ -1,4 +1,3 @@
-#include "npc.hpp"
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <unistd.h>
@@ -7,6 +6,7 @@
 #include <string>
 #include <deque>
 #include <vector>
+#include "npc.hpp"
 using namespace std;
 
 sf::FloatRect Npc::getViewBounds(const sf::View &view)
