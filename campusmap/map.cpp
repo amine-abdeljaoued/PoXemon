@@ -337,24 +337,40 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
     openDoorS(window, trainer);
 
     
+    if(npcs[map_name].size() == 0){
+        trainer.draw(window, event, view);
+    }
+
     for (auto const& np : npcs[map_name]) 
     {
         sf::Vector2f pos2 = (*np).getPos(); //Here we study the respective positions of the character and the npcs 
                                             //to check in which order we draw them
-        if(pos.y == pos2.y - 1){
+        if(pos.y < pos2.y ){
             trainer.draw(window, event, view);
+            
+            if (trainer.state == "Speaking")
+            {
+            np->speak(window, view, trainer);
+            }
+            else {
             (*np).draw(window);
+            }
+            
         }
         else{
+            
+            if (trainer.state == "Speaking")
+            {
+            np->speak(window, view, trainer);
+            }
+            else {
             (*np).draw(window);
+            }
             trainer.draw(window, event, view);
         }
         
     }
     
-    if(npcs[map_name].size() == 0){
-        trainer.draw(window, event, view);
-    }
     
     if (alpha > 0 && state == "start"){
         initialisation(window, trainer);
@@ -368,9 +384,7 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
 
    
     
-    if (trainer.state == "Speaking"){
-        npcs[map_name][0]->speak(window, view, trainer);
-    }
+    
     
     this->trainerDisplacement(window, trainer,event,clock,view);
 
