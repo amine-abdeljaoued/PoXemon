@@ -11,7 +11,7 @@ using namespace std;
 
 class Npc {
     public:
-        Npc(string pathName, int sheetRectX,int sheetRectY, float scale, int posX, int posY, vector<string> discu);
+        Npc(string pathName, int sheetPosX, int sheetPosY, int sheetRectX,int sheetRectY, float scale, int posX, int posY, vector<string> discu);
         void draw(sf::RenderWindow &window) const;
         void speak(sf::RenderWindow &window, sf::View &view, Trainer &trainer);
         sf::Vector2f getPos();

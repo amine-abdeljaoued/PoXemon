@@ -47,4 +47,8 @@ class Map
         sf::Texture pokeInterior;
         sf::Sprite pokeBuilding;
         //dictionnary of map names and the collision map associated to it, initiaised in the constructor.
+    
+        //Places of Spawn of the Trainer
+        int initialX;
+    int initialY;
 };  
