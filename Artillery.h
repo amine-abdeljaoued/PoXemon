@@ -13,14 +13,14 @@ public:
     Artillery();
     ~Artillery();
     bool was_released; // this is used to shoot only one bullet per click
-    void draw(sf::RenderTarget& target) const;
+    void draw(sf::RenderTarget& target) ;
     // new_shot is for the player
     void new_click(float& x, float& y, const sf::FloatRect& bounds, sf::RenderTarget& window, const sf::Vector2i& mouse);
     void new_shot(float& x, float& y, const sf::FloatRect& bounds, sf::RenderTarget& window, const sf::Vector2i& mouse);
     void new_shot_special_attack1(float& x, float& y, const sf::FloatRect& bounds, sf::RenderTarget& window, const sf::Vector2i& mouse);
     // new_shot_opp is for the opponent
     void new_shot_opp(float& x, float& y, const sf::FloatRect& bounds, sf::RenderTarget& window, float& xshoot, float& yshoot);
-    int update(float& deltaTime, sf::Clock& clock, sf::Time& elapsed, sf::Time& attack1, 
+    int update(sf::RenderWindow& window, float& deltaTime, sf::Clock& clock, sf::Time& elapsed, sf::Time& attack1, 
                 sf::Time& attack2, sf::Time& attack3, sf::Clock& clock1, sf::Clock& clock2, sf::Clock& clock3, 
                 const sf::Sprite & opponent_sprite, float& groundY);
     void initialise();

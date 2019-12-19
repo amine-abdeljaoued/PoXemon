@@ -22,6 +22,9 @@ opponent.o: Opponent.cpp Opponent.h Pokemon.h
 
 player.o: Player.cpp Player.h Pokemon.h 
 	$(CXX) -c -02 Player.cpp
+
+pokemon_Button.o: Pokemon_Button.cpp Pokemon_Button.h
+	$(CXX) -c -02 Pokemon_Button.cpp
 	
 bullet.o: Bullet.cpp Bullet.h 
 	$(CXX) -c -O2 Bullet.cpp
@@ -38,12 +41,12 @@ artillery.o: Artillery.cpp Artillery.h
 backpack.o: Backpack.cpp Backpack.h 
 	$(CXX) -c -O2 Backpack.cpp
 
-main.o: main.cpp Pokemon.h Pokeball.h Bullet.h Health.h Artillery.h Backpack.h Opponent.h Bullet_bar.h Collision.h functions_state1.cpp Special_Attacks_bar.h
+main.o: main.cpp Pokemon.h Pokeball.h Bullet.h Health.h Artillery.h Backpack.h Opponent.h Bullet_bar.h Collision.h functions_state1.cpp Special_Attacks_bar.h Pokemon_Button.h
 	$(CXX) -c -O2 main.cpp
 
 
-game:  Opponent.o Pokeball.o main.o Pokemon.o Bullet.o Health.o Artillery.o Backpack.o Bullet_bar.o Player.o Collision.o Special_attacks_bar.o
-	$(CXX) main.o  Opponent.o Pokeball.o Pokemon.o Bullet.o Health.o Artillery.o Backpack.o Bullet_bar.o Player.o Collision.o Special_attacks_bar.o   -o game $(LDLIBS)  
+game:  Opponent.o Pokemon_Button.o Pokeball.o main.o Pokemon.o Bullet.o Health.o Artillery.o Backpack.o Bullet_bar.o Player.o Collision.o Special_attacks_bar.o
+	$(CXX) main.o  Opponent.o Pokemon_Button.o Pokeball.o Pokemon.o Bullet.o Health.o Artillery.o Backpack.o Bullet_bar.o Player.o Collision.o Special_attacks_bar.o   -o game $(LDLIBS)  
 
 
 clean:

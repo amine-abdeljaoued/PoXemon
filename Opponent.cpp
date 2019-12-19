@@ -25,8 +25,23 @@ void Opponent::update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clo
 			direction *= -1;
 		}
 
+		//jumps to avoid bullets 
+		if (!(enemy->bullets.bullets.empty())) {
+			//get the position of the bullet that was shot first (that is still on screen and hasn't collided with the opponent)
+			float bx = (enemy->bullets.bullets[0])->position.x;
+			float by = (enemy->bullets.bullets[0])->position.y;
+			if (abs(x - bx) <= 200 && abs(y-by)<=30){//check if the bullet is close 
+				if (canJump) {
+					//to do: find a way not to make it always jump (otherwise its too hard to win)
+					std::cout << "esquive !" << std::endl;
+					canJump = false;
+					velocityY = -sqrt(2.0f * 981.0f * jumpHeight);//jump
+				}
+			}
+		}
+
 		//random jumps
-		if (rand() < 0.002 * ((double)RAND_MAX + 1.0) && canJump) { // probability of jumping of 0.002 at each update (if we are not already jumping)
+		if (rand() < 0.0005 * ((double)RAND_MAX + 1.0) && canJump) { // probability of jumping of 0.0005 at each update (if we are not already jumping)
 			canJump = false;       
 			velocityY = -sqrt(2.0f * 981.0f * jumpHeight);
 		}
@@ -50,7 +65,7 @@ void Opponent::update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clo
 		float delta = vp + 981.0f*time;
 
 		bullets.new_shot_opp(x, y, sprite.getGlobalBounds(), window, xp, yp);
-		int i = bullets.update(deltaTime, clock, elapsed, time1, time2, time3, clock1, clock2, clock3, (*enemy).sprite, groundY);
+		int i = bullets.update(window, deltaTime, clock, elapsed, time1, time2, time3, clock1, clock2, clock3, (*enemy).sprite, groundY);
 		if (i != 0) {
 			(*enemy).health.decrease(i);
 			//std::cout<<(*enemy).health.health << std::endl;

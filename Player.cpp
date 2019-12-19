@@ -1,11 +1,14 @@
 #include "Player.h"
 
 void Player::draw(sf::RenderTarget& target) {
+	std::cout<<"drawing"<<std::endl;
 	target.draw(sprite);
 	health.draw(target);
 	bullets.draw(target);
-	bullets.bulletbar.draw(target);
-	bullets.attacksbar.draw(target);
+	if (health.health > 0) {
+		bullets.bulletbar.draw(target);
+		bullets.attacksbar.draw(target);
+	}
 }
 
 
@@ -13,7 +16,6 @@ void Player::update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clock
 				sf::Time& elapsed, sf::Time& attack1, sf::Time& attack2, sf::Time& attack3, 
 				sf::Clock& clock1, sf::Clock& clock2, sf::Clock& clock3, float& groundY) {   // Movement is dependant on time not on frame rate
 									// This means that we can have smooth movement over multiple frames, instead of static movement per each frame
-
 		velocityX = 0.0f;
 		//Left and right movement
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
@@ -40,29 +42,29 @@ void Player::update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clock
 		}
 
 
-		int i = bullets.update(deltaTime, clock, elapsed, attack1, attack2, attack3, clock1, clock2, clock3, (*enemy).sprite, groundY);
-		if (i!=0) (*enemy).health.decrease(i);
-		
+		int i = bullets.update(window, deltaTime, clock, elapsed, attack1, attack2, attack3, clock1, clock2, clock3, (*enemy).sprite, groundY);
+		if(i!=0){(*enemy).health.decrease(i);}
+
 		collision_opponent();
 		health.update();
 
 		velocityY += 981.0f * deltaTime;
-		move(deltaTime);
-	}
+		move(deltaTime);	
+}
 
 void Player::move(float& deltaTime) {
-		x += velocityX * deltaTime;
-		y += velocityY * deltaTime;
-		float groundY = 300.0f; //Cannot go below this height
-		if (y >= groundY) {
-			y = groundY;
-			velocityY = 0.0f;
-			canJump = true;
-		}
-
-		update_sprite_orientation();
-		sprite.setPosition(x, y);
+	x += velocityX * deltaTime;
+	y += velocityY * deltaTime;
+	float groundY = 300.0f; //Cannot go below this height
+	if (y >= groundY) {
+		y = groundY;
+		velocityY = 0.0f;
+		canJump = true;
 	}
+
+	update_sprite_orientation();
+	sprite.setPosition(x, y);
+}
 
 
 void Player::collision_opponent() {

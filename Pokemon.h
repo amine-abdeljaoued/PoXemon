@@ -3,13 +3,14 @@
 #include "Artillery.h"
 #include "Pokeball.h"
 #include "Health.h"
+#include "Backpack_Pokemon.cpp"
 #include <SFML/Graphics.hpp>
 #include <string>
 
 
-
 class Pokemon {
 public:
+	int index;//index in the backpack
 	float rarity;
 	int level = 1; 			// must be implemented by pokemon team!!
 	std::string name;
@@ -30,17 +31,17 @@ public:
 	Pokemon* enemy;
 
 	Pokemon()=default;
-	Pokemon(float xstart, float ystart, float h, float v, float hp, std::string path, float pokemon_rarity, std::string pname, int ptype);
+	Pokemon(float xstart, float ystart, float h, float v, Backpack_Pokemon backpack_pokemon);
 	void set_enemy(Pokemon* enemy);
 
 	void death_disappear(float& deltaTime); //scale down and make the pokemon 'implode'
 	
-protected:
-	sf::Texture pic;
-	int type;				/* We know which type a pokemon is by its identifier type
+	int type; /* We know which type a pokemon is by its identifier type
 							10 - earth
 							20 - water
 							30 - air
 							40 - fire
 							(use multiples of 10 to avoid confusion with backpack) */
+protected:
+	sf::Texture pic;
 };
