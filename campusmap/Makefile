@@ -31,12 +31,15 @@ openbackpack.o: openbackpack.cpp openbackpack.hpp
 Background.o: Background.cpp Background.hpp
 	$(CXX) -c  Background.cpp
 
-main.o: main.cpp tilemap.hpp npc.hpp map.hpp trainer.hpp const.hpp intro.hpp Backpack_content.h Button.h test.h openbackpack.hpp Background.hpp
+shop.o: shop.cpp shop.hpp
+	$(CXX) -c  shop.cpp
+
+main.o: main.cpp tilemap.hpp npc.hpp map.hpp trainer.hpp const.hpp intro.hpp Backpack_content.h Button.h test.h openbackpack.hpp Background.hpp shop.hpp
 	$(CXX) -c  main.cpp
 	
 
-game: main.o map.o tilemap.o trainer.o npc.o test.o Button.o Backpack_content.o intro.o openbackpack.o Background.o
-	$(CXX) main.o map.o trainer.o tilemap.o npc.o test.o Button.o Backpack_content.o intro.o openbackpack.o Background.o -o game $(LDLIBS)  
+game: main.o map.o tilemap.o trainer.o npc.o test.o Button.o Backpack_content.o intro.o openbackpack.o Background.o shop.o
+	$(CXX) main.o map.o trainer.o tilemap.o npc.o test.o Button.o Backpack_content.o intro.o openbackpack.o Background.o shop.o -o game $(LDLIBS)  
 
 
 clean:
