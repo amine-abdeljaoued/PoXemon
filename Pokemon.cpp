@@ -19,6 +19,8 @@ Pokemon::Pokemon(float xstart, float ystart, float h, float v, float hp, std::st
 	x = xstart;
 	y = ystart;
 	bullets.type = ptype;
+	bullets.attacksbar.type = ptype;
+	bullets.initialise();
 
 	sprite.setPosition(sf::Vector2f(x, y));
 

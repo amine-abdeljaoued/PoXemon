@@ -5,6 +5,7 @@ Artillery::Artillery(){
     max_available_bullets = 20;
     available_bullets = max_available_bullets;  // STart with all bullets available
     was_released = true;                        // Start being able to shoot
+    attack_type = 0;                            // Start with standard attack
 }
 
 Artillery::~Artillery(){
@@ -13,10 +14,24 @@ Artillery::~Artillery(){
     }
 }
 
+void Artillery::initialise(){
+    attacksbar.initialise();
+    std::cout<<attack_type<<" "<<type<<std::endl;
+}
+
 void Artillery::draw(sf::RenderTarget& target) const {
     for (unsigned i = 0; i < bullets.size(); i++) {
         target.draw((*bullets[i]).bullet);
 	}
+}
+
+void Artillery::new_click(float& x, float& y, const sf::FloatRect& bounds, sf::RenderTarget& window, const sf::Vector2i& mouse){
+    if (attack_type == 0){
+        new_shot(x,y,bounds, window, mouse);
+    }
+    else if (attack_type == 1){
+        new_shot_special_attack1(x,y,bounds, window, mouse);
+    }
 }
 
 void Artillery::new_shot(float& x, float& y, const sf::FloatRect& bounds, sf::RenderTarget& window, const sf::Vector2i& mouse){ 
@@ -79,11 +94,25 @@ void Artillery::new_shot_opp(float& x, float& y, const sf::FloatRect& bounds, sf
     }
 }
 
-int Artillery::update(float& deltaTime, sf::Clock& clock, sf::Time& elapsed, const sf::Sprite& opponent_sprite, float& groundY){
+int Artillery::update(float& deltaTime, sf::Clock& clock, sf::Time& elapsed, sf::Time& attack1, 
+                sf::Time& attack2, sf::Time& attack3, sf::Clock& clock1, sf::Clock& clock2, sf::Clock& clock3, 
+                const sf::Sprite & opponent_sprite, float& groundY){
 	int res = 0;
+    // update which type of attack we are in: other atttacks to be implemented
+    // Press 1 and can access SA1
+    if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))&&(attacksbar.attack1_available)){
+        attack_type = 1;
+        attacksbar.attack1_available = false;
+        attacksbar.shooting1 = true;
+        clock1.restart();
+    }
+    // If we're not shooting in any of the special attacks we must be in normal attack
+    if ((!attacksbar.shooting1)&&(attacksbar.shooting2)&&(attacksbar.shooting3)){
+        attack_type = 0;
+    }
 
+    // update state of bullets
     for (int  i = 0; i < bullets.size(); i++) {
-        
         //Check if the bullets are offscreen
         if ((*(bullets[i])).offscreen()){
             delete bullets[i];
@@ -106,8 +135,10 @@ int Artillery::update(float& deltaTime, sf::Clock& clock, sf::Time& elapsed, con
 			bullets.erase(bullets.begin() + i);
         }
     }
+    // Update the special attacks bar
+    attacksbar.update(attack1, attack2, attack3, clock1, clock2, clock3);
 
-	//regenerate bullets every 1 second
+	// Regenerate bullets every 1 second
     if (elapsed.asSeconds() > 1.0f && available_bullets < max_available_bullets) {
 			available_bullets += 1;
 			bulletbar.update(1);

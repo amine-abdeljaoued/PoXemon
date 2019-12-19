@@ -10,7 +10,9 @@ public:
 		sprite.setScale(sf::Vector2f(-0.5f, 0.5f));//it has to face towards the right (intially, the images are all 'facing towards the left')
 	};
 	
-    void update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clock, sf::Time& elapsed, float& groundY);
+    void update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clock, 
+				sf::Time& elapsed, sf::Time& attack1, sf::Time& attack2, sf::Time& attack3, 
+				sf::Clock& clock1, sf::Clock& clock2, sf::Clock& clock3, float& groundY);
     void move(float& deltaTime);
     void draw(sf::RenderTarget& target);
 
