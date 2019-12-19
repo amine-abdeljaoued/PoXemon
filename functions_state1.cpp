@@ -103,9 +103,11 @@ void draw1(sf::RenderWindow& window, sf::RectangleShape& shape1, sf::RectangleSh
             }
 
 int update_state1(sf::RenderWindow& window, sf::RectangleShape& start_button, sf::RectangleShape& info_button, sf::Sprite& star){
+    // Want to rotate the star: need it to have its origin at its centre
+    // star.rotate(30);
+
     // Know where the mouse is
     // Buttons go red when hovering
-
     if ((sf::Event::MouseMoved)||(sf::Event::MouseButtonPressed)){
         sf::Vector2i mousepixel = sf::Mouse::getPosition(window);
         sf::Vector2f mouse_pos = window.mapPixelToCoords(mousepixel);
@@ -129,8 +131,4 @@ int update_state1(sf::RenderWindow& window, sf::RectangleShape& start_button, sf
         }
         return 1;
     }
-
-
-
-    // star.rotate(1.0f);
 }

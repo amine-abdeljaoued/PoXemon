@@ -1,14 +1,17 @@
 #include "Player.h"
 
-void Player::draw(sf::RenderTarget& target) {//const ?
+void Player::draw(sf::RenderTarget& target) {
 	target.draw(sprite);
 	health.draw(target);
 	bullets.draw(target);
 	bullets.bulletbar.draw(target);
+	bullets.attacksbar.draw(target);
 }
 
 
-void Player::update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clock, sf::Time& elapsed, float& groundY) {   // Movement is dependant on time not on frame rate
+void Player::update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clock, 
+				sf::Time& elapsed, sf::Time& attack1, sf::Time& attack2, sf::Time& attack3, 
+				sf::Clock& clock1, sf::Clock& clock2, sf::Clock& clock3, float& groundY) {   // Movement is dependant on time not on frame rate
 									// This means that we can have smooth movement over multiple frames, instead of static movement per each frame
 
 		velocityX = 0.0f;
@@ -30,14 +33,14 @@ void Player::update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clock
 		}
 		//Bullets: shooting
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-			bullets.new_shot_special_attack1(x,y,sprite.getGlobalBounds(), window, sf::Mouse::getPosition(window));
+			bullets.new_click(x,y,sprite.getGlobalBounds(), window, sf::Mouse::getPosition(window));
 		}
 		if (! sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 			bullets.was_released = true;
 		}
 
 
-		int i = bullets.update(deltaTime, clock, elapsed, (*enemy).sprite, groundY);
+		int i = bullets.update(deltaTime, clock, elapsed, attack1, attack2, attack3, clock1, clock2, clock3, (*enemy).sprite, groundY);
 		if (i!=0) (*enemy).health.decrease(i);
 		
 		collision_opponent();

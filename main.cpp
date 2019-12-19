@@ -60,13 +60,25 @@ int main ()
 
     // Objects for state 2: (also used for states 5 and 6)
     float deltaTime = 0.0f;
-
     sf::Clock clock;
-    sf::Clock clock_regenerate_bullets;
+    sf::Clock clock_regenerate_bullets;	
     sf::Time elapsed;
-    
     sf::Clock clock2;
     sf::Time elapsed2;
+	// For the player
+	sf::Clock attack_1_clock;
+	sf::Clock attack_2_clock;
+	sf::Clock attack_3_clock;
+	sf::Time attack_1_time;
+	sf::Time attack_2_time;
+	sf::Time attack_3_time;
+	// For the opponent
+	sf::Clock attack_1_clock_opp;
+	sf::Clock attack_2_clock_opp;
+	sf::Clock attack_3_clock_opp;
+	sf::Time attack_1_time_opp;
+	sf::Time attack_2_time_opp;
+	sf::Time attack_3_time_opp;
     
     static int counter=0;
     int i = 0;
@@ -81,12 +93,12 @@ int main ()
     // run the program as long as the window is open
     while (window.isOpen())
     {
-        
         deltaTime = clock.restart().asSeconds();
         elapsed = clock_regenerate_bullets.getElapsedTime();
         elapsed2 = clock2.getElapsedTime();
-
-        
+		attack_1_time = attack_1_clock.getElapsedTime();
+		attack_2_time = attack_2_clock.getElapsedTime();
+		attack_3_time = attack_3_clock.getElapsedTime();
 
 		sf::Event event;
 		while (window.pollEvent(event))
@@ -111,19 +123,21 @@ int main ()
 
          else if (state==2){
             // clear the window with black color - need to clear before drawing anything (overlap)
-            eevee.update(deltaTime, window, clock_regenerate_bullets, elapsed, groundY);
-            opponent1.update(deltaTime, window, clock_regenerate_bullets, elapsed, groundY);
+            eevee.update(deltaTime, window, clock, elapsed, attack_1_time, 
+							attack_2_time, attack_3_time, attack_1_clock, attack_2_clock, attack_3_clock, groundY);
+            opponent1.update(deltaTime, window, clock, elapsed, attack_1_time_opp, 
+							attack_2_time_opp, attack_3_time_opp, attack_1_clock_opp, attack_2_clock_opp, attack_3_clock_opp, groundY);
 
             if (eevee.health.health <= 0) state = 5;
             if (opponent1.health.health <= 0) state = 6;
 
-            bag.Pokeball_shoot(deltaTime, window, clock2, elapsed2);
-            window.clear(sf::Color::Blue);
-            window.draw(background);
-            bag.draw(window);
-            eevee.draw(window);
-            opponent1.draw(window);
-        }
+			bag.Pokeball_shoot(deltaTime, window, clock2, elapsed2);
+			window.clear(sf::Color::Blue);
+			window.draw(background);
+			bag.draw(window);
+			opponent1.draw(window);
+			eevee.draw(window);
+		}
 
 		else if (state == 5) {
 			//would be nice to have some animation to show that we are dead
@@ -134,8 +148,11 @@ int main ()
 
 			//bullets that were shot before the end continue their movement
 			//small detail to be changed : the player's bullet bar should not be updated anymore
-			eevee.bullets.update(deltaTime, clock, elapsed, opponent1.sprite, groundY);
-			opponent1.bullets.update(deltaTime, clock, elapsed, opponent1.sprite, groundY);
+			eevee.bullets.update(deltaTime, clock, elapsed, attack_1_time, attack_2_time, attack_3_time, attack_1_clock, 
+								attack_2_clock, attack_3_clock, opponent1.sprite, groundY);
+			opponent1.bullets.update(deltaTime, clock, elapsed, attack_1_time_opp, 
+							attack_2_time_opp, attack_3_time_opp, attack_1_clock_opp, attack_2_clock_opp, attack_3_clock_opp,
+							opponent1.sprite, groundY);
 
 			window.clear(sf::Color::Blue);
 			window.draw(background);
@@ -164,8 +181,11 @@ int main ()
 			opponent1.death_disappear(deltaTime);
 			fall(eevee, groundY, deltaTime);
 			fall(opponent1, groundY, deltaTime);
-			eevee.bullets.update(deltaTime, clock, elapsed, opponent1.sprite, groundY);
-			opponent1.bullets.update(deltaTime, clock, elapsed, opponent1.sprite, groundY);
+			eevee.bullets.update(deltaTime, clock, elapsed, attack_1_time, attack_2_time, attack_3_time, attack_1_clock, 
+								attack_2_clock, attack_3_clock, opponent1.sprite, groundY);
+			opponent1.bullets.update(deltaTime, clock, elapsed, attack_1_time_opp, 
+							attack_2_time_opp, attack_3_time_opp, attack_1_clock_opp, attack_2_clock_opp, attack_3_clock_opp,
+							opponent1.sprite, groundY);
 
 			window.clear(sf::Color::Blue);
 			window.draw(background);

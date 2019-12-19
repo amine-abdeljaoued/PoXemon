@@ -20,7 +20,8 @@ public:
 		time_change_dir = 0.3 + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (2 - 0.3))); //random float between 0.3 and 2
     };
 
-    void update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clock, sf::Time& elapsed, float& groundY);
+    void update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clock, sf::Time& elapsed, sf::Time& time1, 
+				sf::Time& time2, sf::Time& time3, sf::Clock& clock1, sf::Clock& clock2, sf::Clock& clock3, float& groundY);
     void draw(sf::RenderTarget& target);
     void move(float& deltaTime);
 

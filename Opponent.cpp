@@ -9,7 +9,8 @@ void Opponent::draw(sf::RenderTarget& target) {
 	//unhandeled exception here !
 }
 
-void Opponent::update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clock, sf::Time& elapsed, float& groundY){
+void Opponent::update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clock, sf::Time& elapsed, sf::Time& time1, 
+					sf::Time& time2, sf::Time& time3, sf::Clock& clock1, sf::Clock& clock2, sf::Clock& clock3, float& groundY){
 	//Movement
     	velocityX = 0.0f;
 		velocityX = direction * speed;
@@ -49,7 +50,7 @@ void Opponent::update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clo
 		float delta = vp + 981.0f*time;
 
 		bullets.new_shot_opp(x, y, sprite.getGlobalBounds(), window, xp, yp);
-		int i = bullets.update(deltaTime, clock, elapsed, (*enemy).sprite, groundY);
+		int i = bullets.update(deltaTime, clock, elapsed, time1, time2, time3, clock1, clock2, clock3, (*enemy).sprite, groundY);
 		if (i != 0) {
 			(*enemy).health.decrease(i);
 			//std::cout<<(*enemy).health.health << std::endl;
