@@ -21,13 +21,13 @@ void Artillery::initialise(){
     std::cout<<attack_type<<" "<<type<<std::endl;
 }
 
-void Artillery::draw(sf::RenderTarget& target)  {
+void Artillery::draw(sf::RenderWindow& target)  {
     for (unsigned i = 0; i < bullets.size(); i++) {
         target.draw((*bullets[i]).bullet);
 	} 
 }
 
-void Artillery::new_click(float& x, float& y, const sf::FloatRect& bounds, sf::RenderTarget& window, const sf::Vector2i& mouse){
+void Artillery::new_click(float& x, float& y, const sf::FloatRect& bounds, sf::RenderWindow& window, const sf::Vector2i& mouse){
     if (attack_type == 0){
         new_shot(x,y,bounds, window, mouse);
     }
@@ -36,7 +36,7 @@ void Artillery::new_click(float& x, float& y, const sf::FloatRect& bounds, sf::R
     }
 }
 
-void Artillery::new_shot(float& x, float& y, const sf::FloatRect& bounds, sf::RenderTarget& window, const sf::Vector2i& mouse){ 
+void Artillery::new_shot(float& x, float& y, const sf::FloatRect& bounds, sf::RenderWindow& window, const sf::Vector2i& mouse){ 
     // takes bounds of sprite to know from where to shoot
     // takes our window
     // takes the clicked mouse position
@@ -62,7 +62,7 @@ void Artillery::new_shot(float& x, float& y, const sf::FloatRect& bounds, sf::Re
     was_released = false;
 }
 
-void Artillery::new_shot_special_attack1(float& x, float& y, const sf::FloatRect& bounds, sf::RenderTarget& window, const sf::Vector2i& mouse){ 
+void Artillery::new_shot_special_attack1(float& x, float& y, const sf::FloatRect& bounds, sf::RenderWindow& window, const sf::Vector2i& mouse){ 
     if (was_released && available_bullets > 0) {
         Bullet_Attack1* new_bullet = new Bullet_Attack1(type); // MUST BE GENERALISED TO TYPE
         sf::Vector2f initial_pos(x, y);
@@ -79,7 +79,7 @@ void Artillery::new_shot_special_attack1(float& x, float& y, const sf::FloatRect
     was_released = false;
 }
 
-void Artillery::new_shot_opp(float& x, float& y, const sf::FloatRect& bounds, sf::RenderTarget& window, float& xshoot, float& yshoot){
+void Artillery::new_shot_opp(float& x, float& y, const sf::FloatRect& bounds, sf::RenderWindow& window, float& xshoot, float& yshoot){
     if (was_released && available_bullets > 0) {
         if (rand() < 0.08 * ((double)RAND_MAX + 1.0)) { // probability of shooting of 8% at each update -- can change depending on level?
             Bullet* new_bullet = new Bullet;

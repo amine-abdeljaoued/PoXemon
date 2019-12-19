@@ -56,7 +56,7 @@ void BulletBar::update(int additional_bullet) {
 	//bullet_sprite.setTextureRect(empty_rect);
 }
 
-void BulletBar::draw(sf::RenderTarget& target){
+void BulletBar::draw(sf::RenderWindow& target){
 	target.draw(bullet_sprite);
 	target.draw(nb_text);
 }

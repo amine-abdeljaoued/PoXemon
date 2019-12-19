@@ -14,7 +14,7 @@ public:
 				sf::Time& elapsed, sf::Time& attack1, sf::Time& attack2, sf::Time& attack3, 
 				sf::Clock& clock1, sf::Clock& clock2, sf::Clock& clock3, float& groundY);
     void move(float& deltaTime);
-    void draw(sf::RenderTarget& target);
+    void draw(sf::RenderWindow& target);
 
 	bool was_left;//true when the player is at the left of the opponent
 	void update_sprite_orientation();//make the pokemons face each other

@@ -214,7 +214,7 @@ Backpack::Backpack(){
 //}
     
     
-    void Backpack::draw (sf::RenderTarget &target) const {
+    void Backpack::draw (sf::RenderWindow &target) const {
         
         if(new_Normalball.in_air){
             target.draw(new_Normalball.ball);
