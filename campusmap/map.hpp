@@ -9,6 +9,8 @@
 #include "tilemap.hpp"
 #include "npc.hpp"
 #include "trainer.hpp"
+#include "shop.hpp"
+
 using namespace std;
 
 //This is our class for our map
@@ -48,7 +50,7 @@ class Map
         sf::Texture texture_3; //tileset3
         sf::Texture pokeInterior;
         sf::Sprite pokeBuilding;
-        //dictionnary of map names and the collision map associated to it, initiaised in the constructor.
+        Shop shop;
     
         //Places of Spawn of the Trainer
         int initialX;
