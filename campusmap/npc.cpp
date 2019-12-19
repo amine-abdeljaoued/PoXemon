@@ -20,7 +20,7 @@ sf::FloatRect Npc::getViewBounds(const sf::View &view)
 }
 
 
-Npc::Npc(string pathName, int sheetPosX, int sheetPosY, int sheetRectX,int sheetRectY, float scale, int posX, int posY, vector<string> discu){
+Npc::Npc(string pathName, int sheetPosX, int sheetPosY, int sheetRectX,int sheetRectY, float scale, int posX, int posY, vector<string> discu, bool fixed){
     if (!textureNpc.loadFromFile(/* resourcePath() + */ pathName)) {
         cout << "Error loading sprite";
     }
@@ -36,6 +36,7 @@ Npc::Npc(string pathName, int sheetPosX, int sheetPosY, int sheetRectX,int sheet
         cout << "Error in loading font" <<endl;
     }
     text.setFont(font);
+    this->fixed = fixed;
 }
 
 
@@ -45,24 +46,30 @@ void Npc::draw(sf::RenderWindow &window) const {
 
 void Npc::speak(sf::RenderWindow &window, sf::View &view, Trainer &trainer)  {
     
-    /* cout << "Testoo" <<endl; */
-    if(trainer.facingDirection == "Down"){
+    if(fixed==false)
+    {
+        if(trainer.facingDirection == "Down"){
         (spriteNpc).setTextureRect(sf::IntRect(0,3*sheetRectY,sheetRectX,sheetRectY));
         this->draw(window);
+        }
+    
+        if(trainer.facingDirection == "Up"){
+            (spriteNpc).setTextureRect(sf::IntRect(0,0,sheetRectX,sheetRectY));
+            this->draw(window);
+        }
+    
+        if(trainer.facingDirection == "Right"){
+            (spriteNpc).setTextureRect(sf::IntRect(0,sheetRectY,sheetRectX,sheetRectY));
+            this->draw(window);
+        }
+    
+        if(trainer.facingDirection == "Left"){
+            (spriteNpc).setTextureRect(sf::IntRect(0,2*sheetRectY,sheetRectX,sheetRectY));
+            this->draw(window);
+        }
     }
     
-    if(trainer.facingDirection == "Up"){
-        (spriteNpc).setTextureRect(sf::IntRect(0,0,sheetRectX,sheetRectY));
-        this->draw(window);
-    }
-    
-    if(trainer.facingDirection == "Right"){
-        (spriteNpc).setTextureRect(sf::IntRect(0,sheetRectY,sheetRectX,sheetRectY));
-        this->draw(window);
-    }
-    
-    if(trainer.facingDirection == "Left"){
-        (spriteNpc).setTextureRect(sf::IntRect(0,2*sheetRectY,sheetRectX,sheetRectY));
+    else{
         this->draw(window);
     }
       

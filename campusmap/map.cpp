@@ -44,15 +44,16 @@ Map::Map(sf::RenderWindow &window)
     vector<string> dialogue1;
     dialogue1.push_back("Welcome on our campus!");
     dialogue1.push_back("Start by exploring");
-    Npc* toto = new  Npc("Sprites/NPC2.png",0,0,70,50,0.5f,200,212,dialogue1);
+    Npc* toto = new  Npc("Sprites/NPC2.png",0,0,70,50,0.5f,200,212,dialogue1, false);
     npcs_map1.push_back(toto) ;
     npcs.insert(pair< string, vector<Npc*> >("first", npcs_map1));
     
     vector<Npc*> npcs_pokeShop;
+
     vector<string> dialogue2;
     dialogue2.push_back("Welcome to our store!");
     dialogue2.push_back("What would you like to buy?");
-    Npc* seller = new  Npc("Sprites/PokeInterior.png",516,548,11,18,1.2f,145,103,dialogue2);
+    Npc* seller = new  Npc("Sprites/PokeInterior.png",516,548,11,18,1.2f,145,103,dialogue2, true);
     npcs_pokeShop.push_back(seller) ;
     npcs.insert(pair< string, vector<Npc*> >("pokeShop", npcs_pokeShop));
     
@@ -364,7 +365,6 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
             
             if (trainer.state == "Speaking")
             {
-            /* cout << "AM I speaking?" <<endl; */
             np->speak(window, view, trainer);
             }
             else {
@@ -376,7 +376,6 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
             
             if (trainer.state == "Speaking")
             {
-            /* cout << "AM I speaking?" <<endl; */
             np->speak(window, view, trainer);
             }
             else {
