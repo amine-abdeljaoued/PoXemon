@@ -81,7 +81,7 @@ void Healthbar::update(){
     }
 }
 
-void Healthbar::draw(sf::RenderTarget& target) const {
+void Healthbar::draw(sf::RenderWindow& target) const {
     // Object drawn last is on top
     target.draw(bar);
     target.draw(outline);

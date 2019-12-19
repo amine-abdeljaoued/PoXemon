@@ -42,6 +42,6 @@ public:
 							30 - air
 							40 - fire
 							(use multiples of 10 to avoid confusion with backpack) */
-protected:
+//protected:
 	sf::Texture pic;
 };

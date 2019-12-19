@@ -145,7 +145,7 @@ void Pokemon_Button::update_mouse(sf::Vector2f& mouse_pos, int& clicked_button) 
 	}
 }
 
-void Pokemon_Button::draw(sf::RenderTarget& target) {
+void Pokemon_Button::draw(sf::RenderWindow& target) {
 
 	// Object drawn last is on top
 	bar.setTexture(bar_pic);

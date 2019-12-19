@@ -14,7 +14,7 @@ public:
 	int boxsize; // size of the boxes which have a picture of each special attack - they are square
 
 	Special_Attacks_Bar(); // will need to initialise it with the type of the pokemon, and update it as the pokemon's level increases
-	void draw(sf::RenderTarget& target);
+	void draw(sf::RenderWindow& target);
 	void setPosition(float x, float y);     // the components must be moved together
 	void update(sf::Time& time1, sf::Time& time2, sf::Time& time3, sf::Clock& clock1, sf::Clock& clock2, sf::Clock& clock3);
 	void initialise();

@@ -1,6 +1,6 @@
 #include "Player.h"
 
-void Player::draw(sf::RenderTarget& target) {
+void Player::draw(sf::RenderWindow& target) {
 	target.draw(sprite);
 	health.draw(target);
 	bullets.draw(target);

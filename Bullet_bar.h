@@ -9,7 +9,7 @@ class BulletBar {
 
 public:
 	BulletBar();
-	void draw(sf::RenderTarget& target);
+	void draw(sf::RenderWindow& target);
 	void setPosition(float x, float y);     // the two components of the health bar must be moved together
 	int available_bullets; // maybe its not very good to have it both here and in artillery
 

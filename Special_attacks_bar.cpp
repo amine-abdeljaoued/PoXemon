@@ -124,7 +124,7 @@ void Special_Attacks_Bar::update(sf::Time& time1, sf::Time& time2, sf::Time& tim
 	}
 }
 
-void Special_Attacks_Bar::draw(sf::RenderTarget& target){
+void Special_Attacks_Bar::draw(sf::RenderWindow& target){
 	// Special Attack 1
 	target.draw(base_rect);
 	target.draw(timer_rect);

@@ -2,7 +2,7 @@
 #include <iostream>
 #include <random>
 
-void Opponent::draw(sf::RenderTarget& target) {
+void Opponent::draw(sf::RenderWindow& target) {
 	target.draw(sprite);
 	health.draw(target);
 	bullets.draw(target);
