@@ -1,7 +1,7 @@
 #include <iostream>
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
-#include "ResourcePath.hpp"
+/* #include "ResourcePath.hpp" */
 #include "Backpack_content.h"
 
 class Background {

@@ -1,6 +1,6 @@
 #include "test.h"
 #include "Backpack_content.h"
-#include "ResourcePath.hpp"
+/* #include "ResourcePath.hpp" */
 #include <SFML/Graphics.hpp>
 #include <sstream>
 #include <string>
