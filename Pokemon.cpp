@@ -1,14 +1,17 @@
 #include "Pokemon.h"
 
-Pokemon::Pokemon(float xstart, float ystart, float h, float v, float hp, std::string path, float pokemon_rarity, std::string pname, int ptype)
+//should be initialized with a backpack pokemon
+Pokemon::Pokemon(float xstart, float ystart, float h, float v, Backpack_Pokemon backpack_pokemon)
 {
-	rarity = pokemon_rarity; //1 == common, 2 == rare, 3 == epic, 4 == legendary
-	name = pname;
-	health.setHealth(hp); 		
+	//rarity = pokemon_rarity; //1 == common, 2 == rare, 3 == epic, 4 == legendary
+	index = backpack_pokemon.index;
+	name = backpack_pokemon.name;
+	type = backpack_pokemon.type;
+	health.setHealth(backpack_pokemon.health); 		
 	health.setPosition(xstart+50, ystart-250);
 	health.name = name;
-	health.level = level;
-	type = ptype;
+	health.level = backpack_pokemon.level;
+
 	velocityX = 0.0f;
 	velocityY = 0.0f;
 	jumpHeight = h;
@@ -18,13 +21,14 @@ Pokemon::Pokemon(float xstart, float ystart, float h, float v, float hp, std::st
 	special_attack_1 = false;
 	x = xstart;
 	y = ystart;
-	bullets.type = ptype;
-	bullets.attacksbar.type = ptype;
+	bullets.type = backpack_pokemon.type;
+	bullets.attacksbar.type = backpack_pokemon.type;
 	bullets.initialise();
 
 	sprite.setPosition(sf::Vector2f(x, y));
 
-	if (!pic.loadFromFile(path)){ std::cout << "could not load" << std::endl;} //path = Images/eevee.png
+	std::string path = "Images/Pokemon_Images/" + name + ".png";
+	if (!pic.loadFromFile(path)){ std::cout << "could not load pokemon image" << std::endl;} //path = Images/eevee.png
 	pic.loadFromFile(path);
 	sprite.setTexture(pic);
 	//set the x origin at the middle
@@ -62,4 +66,6 @@ void Pokemon::death_disappear(float& deltaTime) {//to improve
 	//now a little animation of 'implosion' ?
 
 }
+
+
 

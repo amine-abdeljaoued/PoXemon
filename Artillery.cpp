@@ -1,5 +1,6 @@
 #include "Artillery.h"
 #include <random>
+#include <list>
 
 Artillery::Artillery(){
     max_available_bullets = 20;
@@ -10,7 +11,8 @@ Artillery::Artillery(){
 
 Artillery::~Artillery(){
     for (unsigned i = 0; i < bullets.size(); i++) {
-        delete bullets[i];
+        //delete bullets[i];
+		//this is causing some exceptions so i remove it for now
     }
 }
 
@@ -19,10 +21,10 @@ void Artillery::initialise(){
     std::cout<<attack_type<<" "<<type<<std::endl;
 }
 
-void Artillery::draw(sf::RenderTarget& target) const {
+void Artillery::draw(sf::RenderTarget& target)  {
     for (unsigned i = 0; i < bullets.size(); i++) {
         target.draw((*bullets[i]).bullet);
-	}
+	} 
 }
 
 void Artillery::new_click(float& x, float& y, const sf::FloatRect& bounds, sf::RenderTarget& window, const sf::Vector2i& mouse){
@@ -94,7 +96,7 @@ void Artillery::new_shot_opp(float& x, float& y, const sf::FloatRect& bounds, sf
     }
 }
 
-int Artillery::update(float& deltaTime, sf::Clock& clock, sf::Time& elapsed, sf::Time& attack1, 
+int Artillery::update(sf::RenderWindow& window, float& deltaTime, sf::Clock& clock, sf::Time& elapsed, sf::Time& attack1, 
                 sf::Time& attack2, sf::Time& attack3, sf::Clock& clock1, sf::Clock& clock2, sf::Clock& clock3, 
                 const sf::Sprite & opponent_sprite, float& groundY){
 	int res = 0;
@@ -111,12 +113,13 @@ int Artillery::update(float& deltaTime, sf::Clock& clock, sf::Time& elapsed, sf:
         attack_type = 0;
     }
 
-    // update state of bullets
+	std::list<int> to_delete;//indices of the bullets to delete
+	//we will erase bullets after the loop (since otherwise we would modify the vector bullets)
+
     for (int  i = 0; i < bullets.size(); i++) {
         //Check if the bullets are offscreen
-        if ((*(bullets[i])).offscreen()){
-            delete bullets[i];
-            bullets.erase(bullets.begin() + i);
+        if ((*(bullets[i])).offscreen(window)){
+			to_delete.push_back(i);
         }
 		// Collisions with the opponenent
         // PROBLEM HERE: with special attack 1 bullets sometimes this doesn't work .... 
@@ -131,14 +134,20 @@ int Artillery::update(float& deltaTime, sf::Clock& clock, sf::Time& elapsed, sf:
         (*(bullets[i])).update(deltaTime, groundY);
         // Bullet completed its deleting process
         if ((*(bullets[i])).deleted){
-            delete bullets[i];
-			bullets.erase(bullets.begin() + i);
+			to_delete.push_back(i);
         }
     }
     // Update the special attacks bar
     attacksbar.update(attack1, attack2, attack3, clock1, clock2, clock3);
 
-	// Regenerate bullets every 1 second
+	//delete offscreen or collided bullets
+	for (auto it = to_delete.cbegin(); it != to_delete.cend(); it++) {
+		bullets.erase(bullets.begin() + *it);
+		//delete bullets[*it];
+	}
+
+
+	//regenerate bullets every 1 second
     if (elapsed.asSeconds() > 1.0f && available_bullets < max_available_bullets) {
 			available_bullets += 1;
 			bulletbar.update(1);

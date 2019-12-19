@@ -23,7 +23,7 @@ public:
 	void setPosition(sf::Vector2f& pos);
 	void set_shoot_dir(const sf::Vector2f& mouse_position, const sf::Vector2f& initial_position);
 	virtual bool update(float& deltaTime, float& groundY);
-	bool offscreen();
+	bool offscreen(sf::RenderWindow & window);
 	virtual void deletion();
 	void reflect_ground(float& groundY);
 
@@ -60,6 +60,7 @@ class Bullet_Attack1: public Bullet{
 public:
 	int i; 	// This keeps track of for how many frames our image has shown
 				// We only want to change image every two frames (otherwise too fast)
+
     Bullet_Attack1(int ptype): Bullet() {
 		type = ptype;	// the type of bullets we attack with is the 'class'/type of the pokemon
 		posx = 0;
