@@ -75,36 +75,43 @@ void Npc::speak(sf::RenderWindow &window, sf::View &view, Trainer &trainer)  {
       
 
     if (speakCounter == discussion.size()){
-        trainer.state = "Stop";
-        speakCounter = -1;
+        if (trainer.state != "Shopping"){
+            trainer.state = "Stop";
+            speakCounter = -1;
+            
+        }
+        else speakCounter = 0;
     }
     
-    else{
-        
-        text.setString(discussion[speakCounter]);
-        text.setCharacterSize(15);
-        text.setFillColor(sf::Color::Black);
-        /* sf::Vector2f viewSize = view.getSize();
-        bubble.setSize(sf::Vector2f(viewSize.x, viewSize.y/4)); */
+     else{
+           
+           if (discussion[speakCounter] == "Shopping"){
+               trainer.state = "Shopping";
+           }
+           
+           else{
+               text.setString(discussion[speakCounter]);
+               text.setCharacterSize(15);
+               text.setFillColor(sf::Color::Black);
+               /* sf::Vector2f viewSize = view.getSize();
+               bubble.setSize(sf::Vector2f(viewSize.x, viewSize.y/4)); */
 
-        sf::FloatRect viewBounds = getViewBounds(view);
-        bubble.setPointCount(8);
-        bubble.setPoint(0, sf::Vector2f(float(viewBounds.left + 30), float(viewBounds.top + viewBounds.height - 60)));
-        bubble.setPoint(1, sf::Vector2f(float(viewBounds.left + viewBounds.height - 30), float(viewBounds.top + viewBounds.height - 60)));
-        bubble.setPoint(2, sf::Vector2f(float(viewBounds.left + viewBounds.height - 10), float(viewBounds.top + viewBounds.height - 45)));
-        bubble.setPoint(3, sf::Vector2f(float(viewBounds.left + viewBounds.height - 10), float(viewBounds.top + viewBounds.height - 25)));
-        bubble.setPoint(4, sf::Vector2f(float(viewBounds.left + viewBounds.height - 30), float(viewBounds.top + viewBounds.height - 10)));
-        bubble.setPoint(5, sf::Vector2f(float(viewBounds.left + 30), float(viewBounds.top + viewBounds.height - 10)));
-        bubble.setPoint(6, sf::Vector2f(float(viewBounds.left + 10), float(viewBounds.top + viewBounds.height - 25)));
-        bubble.setPoint(7, sf::Vector2f(float(viewBounds.left + 10), float(viewBounds.top + viewBounds.height - 45)));
-        bubble.setOutlineColor(sf::Color::Black);
-        bubble.setOutlineThickness(2.f);
-        text.setPosition(int(viewBounds.left) + 35, int(viewBounds.top + viewBounds.height - 40) );
-        /* bubble.setPosition(int(viewBounds.left), int(viewBounds.top + viewBounds.height - 50)); */
-
-        
-        window.draw(bubble);
-        window.draw(text);
+               sf::FloatRect viewBounds = getViewBounds(view);
+               bubble.setPointCount(8);
+               bubble.setPoint(0, sf::Vector2f(float(viewBounds.left + 30), float(viewBounds.top + viewBounds.height - 60)));
+               bubble.setPoint(1, sf::Vector2f(float(viewBounds.left + viewBounds.height - 30), float(viewBounds.top + viewBounds.height - 60)));
+               bubble.setPoint(2, sf::Vector2f(float(viewBounds.left + viewBounds.height - 10), float(viewBounds.top + viewBounds.height - 45)));
+               bubble.setPoint(3, sf::Vector2f(float(viewBounds.left + viewBounds.height - 10), float(viewBounds.top + viewBounds.height - 25)));
+               bubble.setPoint(4, sf::Vector2f(float(viewBounds.left + viewBounds.height - 30), float(viewBounds.top + viewBounds.height - 10)));
+               bubble.setPoint(5, sf::Vector2f(float(viewBounds.left + 30), float(viewBounds.top + viewBounds.height - 10)));
+               bubble.setPoint(6, sf::Vector2f(float(viewBounds.left + 10), float(viewBounds.top + viewBounds.height - 25)));
+               bubble.setPoint(7, sf::Vector2f(float(viewBounds.left + 10), float(viewBounds.top + viewBounds.height - 45)));
+               bubble.setOutlineColor(sf::Color::Black);
+               bubble.setOutlineThickness(2.f);
+               text.setPosition(int(viewBounds.left) + 35, int(viewBounds.top + viewBounds.height - 40) );
+               window.draw(bubble);
+               window.draw(text);
+        }
     }
 }
 
