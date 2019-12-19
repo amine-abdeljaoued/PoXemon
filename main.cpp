@@ -160,10 +160,6 @@ int main ()
 		attack_1_time = attack_1_clock.getElapsedTime();
 		attack_2_time = attack_2_clock.getElapsedTime();
 		attack_3_time = attack_3_clock.getElapsedTime();
-		
-		deltaTime = clock.restart().asSeconds();
-		elapsed = clock_regenerate_bullets.getElapsedTime();
-        elapsed2 = clock2.getElapsedTime();
 
 		sf::Event event;
 		while (window.pollEvent(event))
