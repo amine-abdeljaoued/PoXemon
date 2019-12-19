@@ -1,7 +1,7 @@
  #include <SFML/Audio.hpp>
  #include <SFML/Graphics.hpp>
  #include <SFML/OpenGL.hpp>
- #include "ResourcePath.hpp"
+/*  #include "ResourcePath.hpp" */
  #include <SFML/Window.hpp>
  #include <unistd.h>
  #include <stdio.h>
@@ -22,7 +22,7 @@
  {
      
      //the intro by Julien
-     if (startgame()==1) return 0;
+     /* if (startgame()==1) return 0; */
      
      //Initializing the window
      sf::RenderWindow window(sf::VideoMode(sf::VideoMode::getDesktopMode().height, sf::VideoMode::getDesktopMode().height), "PoXemon");
