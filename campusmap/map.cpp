@@ -22,6 +22,8 @@ Map::Map(sf::RenderWindow &window)
     background1_2.load("Sprites/tileset2.png", sf::Vector2u(16, 16), level2, 34, 33);
     background2_1.load("Sprites/tileset1.png", sf::Vector2u(16, 16), level3, 34, 33);
 //    background1_1.load("Sprites/tileset2.png", sf::Vector2u(16, 16), level4, 34, 33));
+    background3_1.load("Sprites/tileset1.png", sf::Vector2u(16, 16), level4, 34, 33);
+    background3_2.load("Sprites/tileset2.png", sf::Vector2u(16, 16), level4_2, 34, 33);
     
     
     alpha = 255;
@@ -30,6 +32,7 @@ Map::Map(sf::RenderWindow &window)
     //Creation of the collision maps
     collision_.insert(pair<string, const int*>("first", collision));
     collision_.insert(pair<string, const int*>("second", collision2));
+    collision_.insert(pair<string, const int*>("third", collision3));
     collision_.insert(pair<string, const int*>("pokeShop", poke));
     
     map_name= "first";
@@ -111,7 +114,7 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
     sf::Vector2f position = trainer.spritePlayer.getPosition();
     int x = position.x + 16;
     int y = position.y + 16;
-    
+    std::cout<<collision_[map_name][(int) x/16 +( (int)y/16 *34)]<<std::endl;
     
     //Switching map
     
@@ -134,6 +137,19 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
         }
         else{
             map_name = "second";
+            clock.restart();
+            state = "start";
+            initialisation(window, trainer);
+            trainer.counterWalk = 0;
+        }
+    }
+    
+    if (collision_[map_name][(int) x/16 +( (int)y/16 *34)]==-1){
+        if (alpha < 250 && state == "end"){
+            end(window, trainer);
+        }
+        else{
+            map_name = "third";
             clock.restart();
             state = "start";
             initialisation(window, trainer);
@@ -319,6 +335,11 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
         window.draw(background2_1); 
 //        window.draw(background2_2);
     }
+    
+        if(map_name== "third"){
+            window.draw(background3_1);
+            window.draw(background3_2);
+        }
     
     if (map_name == "pokeShop"){
         pokeBuilding.setTextureRect(sf::IntRect(307,250,176,128));
