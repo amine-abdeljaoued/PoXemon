@@ -2,8 +2,10 @@
 #include <iostream>
 /* #include "ResourcePath.hpp" */
 #include <SFML/Audio.hpp>
+#include <fstream>
 #include <SFML/Graphics.hpp>
 #include <string>
+#include <ctime>
 
 //This is the menu that appears at the beggining of the game
 
@@ -85,6 +87,7 @@ int menu(std::string picture) {
 }
 
 int loadgame(std::string picture) {
+
         
     // Create the main window
     sf::VideoMode desktop = sf::VideoMode().getDesktopMode();
@@ -132,13 +135,34 @@ int loadgame(std::string picture) {
     sf::Text expl("Click on your choice", font, 40);
     expl.setStyle(sf::Text::Bold);
     expl.setFillColor(sf::Color::Black);
-    expl.setPosition(WindowSize.x*(0.70), WindowSize.y*(0.90));
-
+    expl.setPosition(WindowSize.x*(0.80), WindowSize.y*(0.90));
+    
+    sf::Text expl2("Paste the load file path then press load game", font, 40);
+    expl2.setStyle(sf::Text::Bold);
+    expl2.setFillColor(sf::Color::Black);
+    expl2.setPosition(WindowSize.x*(0.38), WindowSize.y*(0.85));
+    
+    sf::Text gamepath("", font, 40);
+    gamepath.setStyle(sf::Text::Bold);
+    gamepath.setFillColor(sf::Color::Black);
+    gamepath.setPosition(WindowSize.x*(0.42), WindowSize.y*(0.76));
+    
+    sf::RectangleShape choice1(sf::Vector2f(700.f, 100.f));
+    choice1.setOutlineThickness(10.f);
+    choice1.setOutlineColor(sf::Color(1, 1, 1));
+    choice1.setPosition(WindowSize.x*(0.4), WindowSize.y*(0.75));
+    
+    sf::String playerInput;
+    sf::Text playerText;
+    
     // Start the game loop
     while (menu.isOpen())
     {
         // Process events
         sf::Event event;
+
+        
+        
         while (menu.pollEvent(event))
         {
             if (event.type == sf::Event::Closed) return 10;
@@ -153,14 +177,35 @@ int loadgame(std::string picture) {
                 float end_x = title.getPosition().x + WindowSize.x*(0.10);
                 float end_y = title.getPosition().y + WindowSize.y*(0.05);
                 
-                if ( (event.mouseButton.button == sf::Mouse::Left) && (event.mouseButton.x > (spot_x-20)) && (event.mouseButton.x < (end_x+20)) && (event.mouseButton.y > (spot_y-20)) && (event.mouseButton.y < (end_y+20)) ) menu.close();
+                if ( (event.mouseButton.button == sf::Mouse::Left) && (event.mouseButton.x > (spot_x-20)) && (event.mouseButton.x < (end_x+20)) && (event.mouseButton.y > (spot_y-20)) && (event.mouseButton.y < (end_y+20)) ) {
+                    time_t now = time(0);
+                    char* dt = ctime(&now);
+                    
+                    std::ofstream myfile;
+                    myfile.open ("save.txt");
+                    myfile << "New game created on the "<< dt << std::endl;
+                    myfile.close();
+                    menu.close();
+                }
                 
                 float spot2_x = title2.getPosition().x;
                 float spot2_y = title2.getPosition().y;
                 float end2_x = title2.getPosition().x + WindowSize.x*(0.10);
                 float end2_y = title2.getPosition().y + WindowSize.y*(0.05);
                 
-                if ( (event.mouseButton.button == sf::Mouse::Left) && (event.mouseButton.x > (spot2_x-20)) && (event.mouseButton.x < (end2_x+20)) && (event.mouseButton.y > (spot2_y-20)) && (event.mouseButton.y < (end2_y+20)) ) return 9;
+                if ( (event.mouseButton.button == sf::Mouse::Left) && (event.mouseButton.x > (spot2_x-20)) && (event.mouseButton.x < (end2_x+20)) && (event.mouseButton.y > (spot2_y-20)) && (event.mouseButton.y < (end2_y+20)) ) {
+    
+                        std::ifstream    inFile(gamepath.getString());
+                        std::ofstream    outFile("save.txt");
+
+                        outFile << inFile.rdbuf();
+                    return 9;
+                    }
+                }
+            if (event.type == sf::Event::TextEntered){
+                playerInput +=event.text.unicode;
+                if (event.text.unicode == '\b' && playerInput.getSize()>1 ) playerInput.erase(playerInput.getSize() - 2, 2);
+                gamepath.setString(playerInput);
                 }
             }
             menu.clear();
@@ -168,6 +213,9 @@ int loadgame(std::string picture) {
             menu.draw(title);
             menu.draw(title2);
             menu.draw(expl);
+            menu.draw(expl2);
+            menu.draw(choice1);
+            menu.draw(gamepath);
             menu.display();
         }
     return 0;
@@ -665,12 +713,34 @@ bool choice(std::string prof, bool side, int which) {
             if (event.type == sf::Event::Closed) return 10;
             // Click button 1:
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Left) {
+                if (which==13){
+                    std::fstream myfile;
+                    std::string line, someString;
+                    myfile.open("save.txt");
+                    while (!myfile.eof())
+                    {
+                        std::getline(myfile,line); // Check getline() doc, you can retrieve a line before/after a given string etc.
+                        myfile << "boy" << std::endl;
+                    }
+                    myfile.close();
+                }
                     choice.close();
                     return 0;
                 }
                 
             // Click button 2:
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Right) {
+                if (which==13){
+                    std::fstream myfile;
+                    std::string line, someString;
+                    myfile.open("save.txt");
+                    while (!myfile.eof())
+                    {
+                        std::getline(myfile,line); // Check getline() doc, you can retrieve a line before/after a given string etc.
+                        myfile << "girl" << std::endl;
+                    }
+                    myfile.close();
+                }
                     choice.close();
                     return 1;
                 }
@@ -861,18 +931,45 @@ int choose(std::string prof, bool side) {
             if (event.type == sf::Event::Closed) return 10;
             // Click button 1:
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Left) {
+                    std::fstream myfile;
+                    std::string line, someString;
+                    myfile.open("save.txt");
+                    while (!myfile.eof())
+                    {
+                        std::getline(myfile,line); // Check getline() doc, you can retrieve a line before/after a given string etc.
+                        myfile << "raporoy" << std::endl;
+                    }
+                    myfile.close();
                     choose.close();
                     return 1;
                 }
             
             // Click button 2:
             if (event.type == sf::Event::KeyPressed  && event.key.code == sf::Keyboard::Down) {
+                    std::fstream myfile;
+                    std::string line, someString;
+                    myfile.open("save.txt");
+                    while (!myfile.eof())
+                    {
+                        std::getline(myfile,line); // Check getline() doc, you can retrieve a line before/after a given string etc.
+                        myfile << "wapefet" << std::endl;
+                    }
+                    myfile.close();
                     choose.close();
                     return 2;
                 }
                 
             // Click button 3:
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Right){
+                    std::fstream myfile;
+                    std::string line, someString;
+                    myfile.open("save.txt");
+                    while (!myfile.eof())
+                    {
+                        std::getline(myfile,line); // Check getline() doc, you can retrieve a line before/after a given string etc.
+                        myfile << "gangstakabra" << std::endl;
+                    }
+                    myfile.close();
                     choose.close();
                     return 3;
                 }
@@ -918,16 +1015,16 @@ int startgame(){
     if (closed<10)closed = choice("Sprites/professor0.png",1,13);
     if (closed<10){
         if(choice("Sprites/professor0.png",1,14)==1) {
-            intro("Sprites/professor7.png",0,15);
+            if(closed<10)closed=intro("Sprites/professor7.png",0,15);
             return 1;
         }
         else{
-            if (closed<10)closed = intro("Sprites/professor4.png",0,16);
-            if (closed<10)closed = intro("Sprites/professor1.png",1,17);
-            int a = choose("Sprites/professor0.png",1);
-            if(a==1) intro("Sprites/professor5.png",0,18);
-            else if(a==2) intro("Sprites/professor5.png",0,19);
-            else if(a==3) intro("Sprites/professor5.png",0,20);
+          if (closed<10)closed = intro("Sprites/professor4.png",0,16);
+          if (closed<10)closed = intro("Sprites/professor1.png",1,17);
+          if (closed<10) closed= choose("Sprites/professor0.png",1);
+          if(closed==1) closed = intro("Sprites/professor5.png",0,18);
+          else if(closed==2) closed = intro("Sprites/professor5.png",0,19);
+          else if(closed==3) closed = intro("Sprites/professor5.png",0,20);
         }
     }
     if (closed<10) return 0;
