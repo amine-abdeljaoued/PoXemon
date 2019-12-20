@@ -31,6 +31,7 @@ class Shop
         int money;
         sf::Texture money_texture;
         sf::Texture button_texture;
+        bool arrow;
 };
 
 
