@@ -16,6 +16,7 @@
  #include "intro.hpp"
  #include "const.hpp"
  #include "openbackpack.hpp"
+ #include "shop.hpp"
  
  
  int main()
