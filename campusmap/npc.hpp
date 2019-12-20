@@ -30,10 +30,10 @@ class Npc {
         bool fixed;
 };
 
-/* class Npc_Seller: public Npc {
+/*  class Pannel: public Npc {
     public:
-         Npc_Seller(): Npc() {} */    //we add specificities of subclass
+         Npc_Seller(): Npc() {}     //we add specificities of subclass
         
         
         
-//}
+} */
