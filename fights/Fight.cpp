@@ -39,8 +39,9 @@ void Fight::initialise(char& mode, Backpack& pbag, Backpack& popponent_bag, Play
 
     // for state 1
     state = 1;
+	opp = (*popponent).sprite;
     intro_text.setString("You are about to fight " + (*popponent).name);
-    sf::Sprite opp = (*popponent).sprite;
+    
     functions1.initialise_buttons(start_button, info_button, window, font, start_text, info_text, intro_text, opp, star, star_texture);
 
     // states 2,5,6
@@ -52,11 +53,6 @@ void Fight::initialise(char& mode, Backpack& pbag, Backpack& popponent_bag, Play
 }
 
 int Fight::update(sf::RenderWindow& window){
-    std::cout<<state<<std::endl;
-    (*pplayer).sprite.setTexture((*pplayer).pic);
-    (*popponent).sprite.setTexture((*popponent).pic);
-    // std::cout<<(*pplayer).sprite.getTexture<<std::endl;
-    // MUST BE MADE NEATER
     deltaTime = clock.restart().asSeconds();
     elapsed = clock_regenerate_bullets.getElapsedTime();
     elapsed2 = clock2.getElapsedTime();
@@ -64,219 +60,210 @@ int Fight::update(sf::RenderWindow& window){
 	attack_2_time = attack_2_clock.getElapsedTime();
 	attack_3_time = attack_3_clock.getElapsedTime();
 
-		if (state==1){
-            
-			// Initial game menu - functions used here are in "functions.cpp"
-			i++;
-			//std::cout<<i<<std::endl;
-			state = functions1.update_state1(window, start_button, info_button, star);
-			window.clear(sf::Color::Blue);
-			window.draw(background);
-			functions1.draw1(window, start_button, info_button, start_text, info_text, intro_text, opp, star);
-			//in this state, we should be able to choose our pokemon
-			//we will use pokemon buttons
-		}
+	if (state==1){ // Initial game menu 
+		state = functions1.update_state1(window, start_button, info_button, star);
+		window.clear();
+		window.draw(background);
+		functions1.draw1(window, start_button, info_button, start_text, info_text, intro_text, opp, star);
+		// in this state, we should be able to choose our pokemon
+		// we will use pokemon buttons
+		// then initite countdown
+	}
 
-		else if (state==2){ //fight
-			
-			//std::cout << (*popponent).health.health << std::endl;
-			(*pplayer).update(deltaTime, window, clock, elapsed, attack_1_time, 
-							attack_2_time, attack_3_time, attack_1_clock, attack_2_clock, attack_3_clock, groundY);
-			(*popponent).update(deltaTime, window, clock, elapsed, attack_1_time_opp, 
-							attack_2_time_opp, attack_3_time_opp, attack_1_clock_opp, attack_2_clock_opp, attack_3_clock_opp, groundY);
+	else if (state==2){ //fight
+		(*pplayer).update(deltaTime, window, clock, elapsed, attack_1_time, 
+						attack_2_time, attack_3_time, attack_1_clock, attack_2_clock, attack_3_clock, groundY);
+		(*popponent).update(deltaTime, window, clock, elapsed, attack_1_time_opp, 
+						attack_2_time_opp, attack_3_time_opp, attack_1_clock_opp, attack_2_clock_opp, attack_3_clock_opp, groundY);
 
-			//player dies
-			if ((*pplayer).health.health <= 0) {
-                std::cout<<(*pplayer).index<<std::endl;
-                std::cout<<bag.masternow<<std::endl;
-                //std::cout<<bag.backpack_pokemons[0] -> name<<std::endl;
+		//player dies
+		if ((*pplayer).health.health <= 0) {
 
-				(bag).backpack_pokemons[(*pplayer).index]->health = 0; //set health of the corresponding backpack pokemon to 0
+			(bag).backpack_pokemons[(*pplayer).index]->health = 0; //set health of the corresponding backpack pokemon to 0
 
-				if (!(bag).alive_pokemons()) { // no more alive pokemons
-					if (game_mode == 't') { //lost the duel
-                        std::cout<<"hi"<<std::endl;
-						functions56.initialize_state7(false, wonlost, font, window);
-						won = false;
-						state = 7;
-					}
-					else {//lost against a wild pokemon
-						functions56.initialize_state_8((*pplayer), font, text_fainted, window);
-						won = false;
-						state = 8;
-					}
+			if (!(bag).alive_pokemons()) { // no more alive pokemons
+				if (game_mode == 't') { //lost the duel
+					functions56.initialize_state7(false, wonlost, font, window);
+					won = false;
+					state = 7;
 				}
-
-				else {
-					functions56.initialize_state_5_6(game_mode, (*pplayer), font, text_fainted, choose_pokemon, leave_fight, window, poke_buttons, running_sprite);
-					state = 5;
-				}
-			}
-
-			//opponent dies
-			if ((*popponent).health.health <= 0) {
-				(opponent_bag).backpack_pokemons[(*popponent).index]->health = 0;
-				(bag).backpack_pokemons[(*pplayer).index]->health = (*pplayer).health.health;//update health of our pokemon in the backpack
-
-				if (game_mode == 't') { //if we are playing against a trainer
-
-					if (! (opponent_bag).alive_pokemons()) { //all of the trainer's pokemons are dead -> we won the duel
-						std::cout << "you won !!!" << std::endl;
-						functions56.initialize_state7(true, wonlost, font, window);
-						won = true;
-						state = 7;
-					}
-
-					else { //the trainer still has pokemons -> he takes the next one
-						functions56.initialize_state_5_6(game_mode, (*pplayer), font, text_fainted, choose_pokemon, leave_fight, window, poke_buttons, running_sprite);
-						//initialize_next_opp(); // create a text + image : you are about to fight 'next opponent'
-						state = 6;
-					}
-
-				}
-				else // (game_mode == 'w')
-				{
-					won = true;
-					functions56.initialize_state_8((*popponent), font, text_fainted, window);
+				else {//lost against a wild pokemon
+					functions56.initialize_state_8((*pplayer), font, text_fainted, window);
+					won = false;
 					state = 8;
+				}
+			}
 
-					//text element : 'opponent fainted'
-					//text element : you won the fight against
-					//gained xp...
-					//go back to map
+			else {
+				functions56.initialize_state_5_6(game_mode, (*pplayer), font, text_fainted, choose_pokemon, leave_fight, window, poke_buttons, running_sprite);
+				state = 5;
+			}
+		}
+
+		//opponent dies
+		if ((*popponent).health.health <= 0) {
+			(opponent_bag).backpack_pokemons[(*popponent).index]->health = 0;
+			(bag).backpack_pokemons[(*pplayer).index]->health = (*pplayer).health.health;//update health of our pokemon in the backpack
+
+			if (game_mode == 't') { //if we are playing against a trainer
+
+				if (! (opponent_bag).alive_pokemons()) { //all of the trainer's pokemons are dead -> we won the duel
+					std::cout << "you won !!!" << std::endl;
+					functions56.initialize_state7(true, wonlost, font, window);
+					won = true;
+					state = 7;
+				}
+
+				else { //the trainer still has pokemons -> he takes the next one
+					functions56.initialize_state_5_6(game_mode, (*pplayer), font, text_fainted, choose_pokemon, leave_fight, window, poke_buttons, running_sprite);
+					//initialize_next_opp(); // create a text + image : you are about to fight 'next opponent'
+					state = 6;
 				}
 
 			}
+			else // (game_mode == 'w')
+			{
+				won = true;
+				functions56.initialize_state_8((*popponent), font, text_fainted, window);
+				state = 8;
 
-			(bag).Pokeball_shoot(deltaTime, window, clock2, elapsed2);
-			window.clear(sf::Color::Blue);
-			window.draw(background);
-			(bag).draw(window);
-			(*pplayer).draw(window);
-			(*popponent).draw(window);
-		}
-
-		else if (state == 5) {//player dies
-
-			(*pplayer).death_disappear(deltaTime);
-			//make gravity work 
-			functions56.fall((*pplayer), groundY, deltaTime);
-			functions56.fall((*popponent), groundY, deltaTime);
-
-			//bullets that were shot before the end continue their movement
-			(*pplayer).bullets.update(window, deltaTime, clock, elapsed, attack_1_time, attack_2_time, attack_3_time, attack_1_clock, 
-								attack_2_clock, attack_3_clock, (*popponent).sprite, groundY);
-			(*popponent).bullets.update(window, deltaTime, clock, elapsed, attack_1_time_opp, 
-							attack_2_time_opp, attack_3_time_opp, attack_1_clock_opp, attack_2_clock_opp, attack_3_clock_opp,
-							(*popponent).sprite, groundY);
-
-			//draw stuff
-			window.clear(sf::Color::Blue);
-			window.draw(background);
-			(*pplayer).draw(window);
-			(*popponent).draw(window);
-
-			//draw the menu
-			//maybe we should wait a few seconds before drawing this
-			functions56.update_state_5_6(game_mode, window, poke_buttons, clicked_button, running_sprite);//check for clicked buttons
-			functions56.draw_state_5_6(game_mode, font, text_fainted, choose_pokemon, leave_fight, window, poke_buttons, running_sprite);
-
-			if (clicked_button >= 0) {//we clicked on a pokemon button
-				delete pplayer;
-				Player* pplayer = new Player(10.f, groundY, 200.f, 500.f, *(bag.backpack_pokemons[clicked_button]));//reinitialize player with the chosen pokemon
-				(*popponent).x = 1000.f;//reset opponent's position
-				(bag).set_opponent(popponent);
-				//dont forget to reset enemies
-				(*pplayer).set_enemy(popponent);
-				(*popponent).set_enemy(pplayer);
-
-				state = 2;//go back to fight
-				clicked_button = -2;//set it unclicked
+				//text element : 'opponent fainted'
+				//text element : you won the fight against
+				//gained xp...
+				//go back to map
 			}
 
-			if (clicked_button == -1) {//we clicked on the run button
-				delete pplayer;
-				delete popponent;
-				//black screen
-				//go back to where we were on the map
-			}
 		}
 
-		else if (state == 6) { //(game mode 'w') opponent dies and trainer still has pokemons
+		(bag).Pokeball_shoot(deltaTime, window, clock2, elapsed2);
+		window.clear(sf::Color::Blue);
+		window.draw(background);
+		(bag).draw(window);
+		(*pplayer).draw(window);
+		(*popponent).draw(window);
+	}
 
-			(*popponent).death_disappear(deltaTime);
-			functions56.fall((*pplayer), groundY, deltaTime);
-			functions56.fall((*popponent), groundY, deltaTime);
-			(*pplayer).bullets.update(window, deltaTime, clock, elapsed, attack_1_time, attack_2_time, attack_3_time, attack_1_clock, 
-								attack_2_clock, attack_3_clock, (*popponent).sprite, groundY);
-			(*popponent).bullets.update(window, deltaTime, clock, elapsed, attack_1_time_opp, 
-							attack_2_time_opp, attack_3_time_opp, attack_1_clock_opp, attack_2_clock_opp, attack_3_clock_opp,
-							(*popponent).sprite, groundY);
+	else if (state == 5) {//player dies
 
-			window.clear(sf::Color::Blue);
-			window.draw(background);
-			(*pplayer).draw(window);
-			(*popponent).draw(window);
+		(*pplayer).death_disappear(deltaTime);
+		//make gravity work 
+		functions56.fall((*pplayer), groundY, deltaTime);
+		functions56.fall((*popponent), groundY, deltaTime);
 
-			int index = (*popponent).index;
-			//you are about to fight + 'opponent'
-			//have an image, text etc...
+		//bullets that were shot before the end continue their movement
+		(*pplayer).bullets.update(window, deltaTime, clock, elapsed, attack_1_time, attack_2_time, attack_3_time, attack_1_clock, 
+							attack_2_clock, attack_3_clock, (*popponent).sprite, groundY);
+		(*popponent).bullets.update(window, deltaTime, clock, elapsed, attack_1_time_opp, 
+						attack_2_time_opp, attack_3_time_opp, attack_1_clock_opp, attack_2_clock_opp, attack_3_clock_opp,
+						(*popponent).sprite, groundY);
 
+		//draw stuff
+		window.clear(sf::Color::Blue);
+		window.draw(background);
+		(*pplayer).draw(window);
+		(*popponent).draw(window);
+
+		//draw the menu
+		//maybe we should wait a few seconds before drawing this
+		functions56.update_state_5_6(game_mode, window, poke_buttons, clicked_button, running_sprite);//check for clicked buttons
+		functions56.draw_state_5_6(game_mode, font, text_fainted, choose_pokemon, leave_fight, window, poke_buttons, running_sprite);
+
+		if (clicked_button >= 0) {//we clicked on a pokemon button
+			delete pplayer;
+			Player* pplayer = new Player(10.f, groundY, 200.f, 500.f, *(bag.backpack_pokemons[clicked_button]));//reinitialize player with the chosen pokemon
+			(*popponent).x = 1000.f;//reset opponent's position
+			(bag).set_opponent(popponent);
+			//dont forget to reset enemies
+			(*pplayer).set_enemy(popponent);
+			(*popponent).set_enemy(pplayer);
+
+			state = 2;//go back to fight
+			clicked_button = -2;//set it unclicked
+		}
+
+		if (clicked_button == -1) {//we clicked on the run button
+			delete pplayer;
+			delete popponent;
+			//black screen
+			//go back to where we were on the map
+		}
+	}
+
+	else if (state == 6) { //(game mode 'w') opponent dies and trainer still has pokemons
+
+		(*popponent).death_disappear(deltaTime);
+		functions56.fall((*pplayer), groundY, deltaTime);
+		functions56.fall((*popponent), groundY, deltaTime);
+		(*pplayer).bullets.update(window, deltaTime, clock, elapsed, attack_1_time, attack_2_time, attack_3_time, attack_1_clock, 
+							attack_2_clock, attack_3_clock, (*popponent).sprite, groundY);
+		(*popponent).bullets.update(window, deltaTime, clock, elapsed, attack_1_time_opp, 
+						attack_2_time_opp, attack_3_time_opp, attack_1_clock_opp, attack_2_clock_opp, attack_3_clock_opp,
+						(*popponent).sprite, groundY);
+
+		window.clear(sf::Color::Blue);
+		window.draw(background);
+		(*pplayer).draw(window);
+		(*popponent).draw(window);
+
+		int index = (*popponent).index;
+		//you are about to fight + 'opponent'
+		//have an image, text etc...
+
+		
+		functions56.update_state_5_6(game_mode, window, poke_buttons, clicked_button, running_sprite);//check for clicked buttons
+		functions56.draw_state_5_6(game_mode, font, text_fainted, choose_pokemon, leave_fight, window, poke_buttons, running_sprite);
+
+		if (clicked_button >= 0) {//we clicked on a pokemon button
+			delete pplayer;//maybe it would be better not to delete it if we chose the same ?
+			Player* pplayer = new Player(10.f, groundY, 200.f, 500.f, *(bag.backpack_pokemons[clicked_button]));//reinitialize player with the chosen pokemon
 			
-			functions56.update_state_5_6(game_mode, window, poke_buttons, clicked_button, running_sprite);//check for clicked buttons
-			functions56.draw_state_5_6(game_mode, font, text_fainted, choose_pokemon, leave_fight, window, poke_buttons, running_sprite);
+			delete popponent;
+			Opponent* popponent = new Opponent(1000.f, groundY, 200.f, 500.f, *(opponent_bag.backpack_pokemons[index+1]));//reinitialize opponent with the next one in the trainer's bag //change it randomly ?
 
-			if (clicked_button >= 0) {//we clicked on a pokemon button
-				delete pplayer;//maybe it would be better not to delete it if we chose the same ?
-				Player* pplayer = new Player(10.f, groundY, 200.f, 500.f, *(bag.backpack_pokemons[clicked_button]));//reinitialize player with the chosen pokemon
-				
-				delete popponent;
-				Opponent* popponent = new Opponent(1000.f, groundY, 200.f, 500.f, *(opponent_bag.backpack_pokemons[index+1]));//reinitialize opponent with the next one in the trainer's bag //change it randomly ?
+			(bag).set_opponent(popponent);
+			//dont forget to reset enemies
+			(*pplayer).set_enemy(popponent);
+			(*popponent).set_enemy(pplayer);
 
-				(bag).set_opponent(popponent);
-				//dont forget to reset enemies
-				(*pplayer).set_enemy(popponent);
-				(*popponent).set_enemy(pplayer);
-
-				state = 2;//go back to fight
-				clicked_button = -2;//set it unclicked
-			}
-
+			state = 2;//go back to fight
+			clicked_button = -2;//set it unclicked
 		}
 
-		else if (state == 7) { //end of the duel against a trainer
+	}
 
-		// won == true: no more alive opponent pokemons -> we won the duel
-		// won == false: no more alive player pokemons -> we lost the duel
+	else if (state == 7) { //end of the duel against a trainer
 
-			if (won) {
-				(*popponent).death_disappear(deltaTime);
-			}
-			else {
-				(*pplayer).death_disappear(deltaTime);
-			}
+	// won == true: no more alive opponent pokemons -> we won the duel
+	// won == false: no more alive player pokemons -> we lost the duel
 
-			//make gravity work 
-			functions56.fall((*pplayer), groundY, deltaTime);
-			functions56.fall((*popponent), groundY, deltaTime);
-			//bullets that were shot before the end continue their movement
-			(*pplayer).bullets.update(window, deltaTime, clock, elapsed, attack_1_time, attack_2_time, attack_3_time, attack_1_clock, 
-								attack_2_clock, attack_3_clock, (*popponent).sprite, groundY);
-			(*popponent).bullets.update(window, deltaTime, clock, elapsed, attack_1_time_opp, 
-							attack_2_time_opp, attack_3_time_opp, attack_1_clock_opp, attack_2_clock_opp, attack_3_clock_opp,
-							(*popponent).sprite, groundY);
-			//draw stuff
-			window.clear(sf::Color::Blue);
-			window.draw(background);
-			(*pplayer).draw(window);
-			(*popponent).draw(window);
-
-
-			window.draw(wonlost);
-            return 0;
+		if (won) {
+			(*popponent).death_disappear(deltaTime);
+		}
+		else {
+			(*pplayer).death_disappear(deltaTime);
 		}
 
-		else if (state == 8) { //end of the fight against a wild pokemon
+		//make gravity work 
+		functions56.fall((*pplayer), groundY, deltaTime);
+		functions56.fall((*popponent), groundY, deltaTime);
+		//bullets that were shot before the end continue their movement
+		(*pplayer).bullets.update(window, deltaTime, clock, elapsed, attack_1_time, attack_2_time, attack_3_time, attack_1_clock, 
+							attack_2_clock, attack_3_clock, (*popponent).sprite, groundY);
+		(*popponent).bullets.update(window, deltaTime, clock, elapsed, attack_1_time_opp, 
+						attack_2_time_opp, attack_3_time_opp, attack_1_clock_opp, attack_2_clock_opp, attack_3_clock_opp,
+						(*popponent).sprite, groundY);
+		//draw stuff
+		window.clear(sf::Color::Blue);
+		window.draw(background);
+		(*pplayer).draw(window);
+		(*popponent).draw(window);
+
+
+		window.draw(wonlost);
+		return 0;
+	}
+
+	else if (state == 8) { //end of the fight against a wild pokemon
 
 		if (won) {
 			(*popponent).death_disappear(deltaTime);
@@ -301,8 +288,8 @@ int Fight::update(sf::RenderWindow& window){
 
 		window.draw(text_fainted);
 		//to be completed
-        return 0;
+		return 0;
 
-		} //wild opponent fainted
+	} //wild opponent fainted
     return 1;
 }
