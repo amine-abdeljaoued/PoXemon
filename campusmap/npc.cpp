@@ -20,7 +20,29 @@ sf::FloatRect Npc::getViewBounds(const sf::View &view)
 }
 
 
-Npc::Npc(string pathName, int sheetPosX, int sheetPosY, int sheetRectX,int sheetRectY, float scale, int posX, int posY, vector<string> discu, bool fixed){
+Npc::Npc(int posX, int posY, vector<string> discu) 
+{
+    if (!textureNpc.loadFromFile("Sprites/tileset1.png")) {
+        cout << "Error loading sprite";
+    }
+    (spriteNpc).setTexture(textureNpc);
+    spriteNpc.setTextureRect(sf::IntRect(392,52,16,16));
+    spriteNpc.setScale(sf::Vector2f(1.1f, 1.1f));
+    spriteNpc.setPosition(posX, posY);
+    fixed = true;
+    seller = false;
+    discussion = discu;
+    speakCounter = -1;
+    if (!font.loadFromFile("Fonts/sansation.ttf")) {
+        cout << "Error in loading font" <<endl;
+    }
+    text.setFont(font);
+    sheetRectX = 0;
+    sheetRectY = 0;
+}
+
+
+Npc::Npc(string pathName, int sheetPosX, int sheetPosY, int sheetRectX,int sheetRectY, float scale, int posX, int posY, vector<string> discu, bool fixed, bool seller){
     if (!textureNpc.loadFromFile(/* resourcePath() + */ pathName)) {
         cout << "Error loading sprite";
     }
@@ -37,6 +59,7 @@ Npc::Npc(string pathName, int sheetPosX, int sheetPosY, int sheetRectX,int sheet
     }
     text.setFont(font);
     this->fixed = fixed;
+    this->seller = seller; 
 }
 
 
@@ -91,7 +114,7 @@ void Npc::speak(sf::RenderWindow &window, sf::View &view, Trainer &trainer)  {
            
            else{
                text.setString(discussion[speakCounter]);
-               text.setCharacterSize(15);
+               text.setCharacterSize(12);
                text.setFillColor(sf::Color::Black);
                /* sf::Vector2f viewSize = view.getSize();
                bubble.setSize(sf::Vector2f(viewSize.x, viewSize.y/4)); */
@@ -108,7 +131,7 @@ void Npc::speak(sf::RenderWindow &window, sf::View &view, Trainer &trainer)  {
                bubble.setPoint(7, sf::Vector2f(float(viewBounds.left + 10), float(viewBounds.top + viewBounds.height - 45)));
                bubble.setOutlineColor(sf::Color::Black);
                bubble.setOutlineThickness(2.f);
-               text.setPosition(int(viewBounds.left) + 35, int(viewBounds.top + viewBounds.height - 40) );
+               text.setPosition(int(viewBounds.left) + 25, int(viewBounds.top + viewBounds.height - 40) );
                window.draw(bubble);
                window.draw(text);
         }
