@@ -9,6 +9,7 @@ std::string toString(T arg){
 
 Shop::Shop(){
     Selecteditem = 0;
+    arrow = true;
     
     //All the items that can be purchased
     item_list = {"Normalball","Superball", "Masterball", "Incubator", "Starpowder", "SmallHealthPotion", "BigHealthPotion"};
@@ -51,24 +52,31 @@ sf::FloatRect Shop::getViewBounds(const sf::View &view)
 }
 
 void Shop::Moveup(sf::Event &event) {
-    if (event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::Up){
+    if (event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::Up&&arrow == true){
         if (Selecteditem - 1 >= 0) {
             item[Selecteditem].setFillColor(sf::Color::Black);
             Selecteditem--;
             item[Selecteditem].setFillColor(sf::Color::Red);
         }
+        arrow = false;
+    }
+    else if (event.type == sf::Event::KeyReleased&&event.key.code == sf::Keyboard::Up){
+        arrow = true;
     }
 }
 
 void Shop::Movedown(sf::Event &event) {
-    if (event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::Down){
+    if (event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::Down&&arrow == true){
         if (Selecteditem + 1 <= 6) {
             item[Selecteditem].setFillColor(sf::Color::Black);
             Selecteditem++;
             item[Selecteditem].setFillColor(sf::Color::Red);
         }
+        arrow = false;
     }
-    
+    else if (event.type == sf::Event::KeyReleased&&event.key.code == sf::Keyboard::Down){
+        arrow = true;
+    }
 }
 
 void Shop::draw_shop(sf::RenderWindow &window, sf::View &view, sf::Event &event){

@@ -32,6 +32,7 @@ class Trainer {
         sf::Text text;
         sf::FloatRect getViewBounds(const sf::View &view);
         sf::ConvexShape bubble;
+        bool fish;
     
     private:
         

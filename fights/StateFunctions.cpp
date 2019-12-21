@@ -14,15 +14,19 @@ void StateFunctions1::initialise_background(sf::RenderWindow& window, std::strin
 		WindowSize = window.getSize();      //Get size of window.
 
 		float ScaleX = (float) WindowSize.x / TextureSize.x;
-		float ScaleY = (float) WindowSize.y / TextureSize.y;     //Calculate scale.
+		float ScaleY = (float) WindowSize.y / TextureSize.y; //Calculate scale.
 
 		background.setTexture(texture);
-		background.setScale(ScaleX, ScaleY);      //Set scale.  
+		background.setScale(ScaleX, ScaleY);	//Set scale.  
   	}
 }
 
 void StateFunctions1::initialise_buttons(sf::RectangleShape& start_button, sf::RectangleShape& info_button, sf::RenderWindow& window, sf::Font& font, sf::Text& start_text,
                             sf::Text& info_text, sf::Text& intro_text, sf::Sprite& opp, sf::Sprite& star, sf::Texture& star_texture){
+	// Window size
+	float x = window.getSize().x;
+	float y = window.getSize().y;
+
     // Rectangles
     start_button.setFillColor(sf::Color::White);
     info_button.setFillColor(sf::Color::White);
@@ -30,14 +34,14 @@ void StateFunctions1::initialise_buttons(sf::RectangleShape& start_button, sf::R
     info_button.setOutlineThickness(4);
     start_button.setOutlineColor(sf::Color::Black);
     info_button.setOutlineColor(sf::Color::Black);
-    start_button.setSize(sf::Vector2f(225,100));
-    info_button.setSize(sf::Vector2f(225,100));
+    start_button.setSize(sf::Vector2f(x/5,y/5));
+    info_button.setSize(sf::Vector2f(x/5,y/5));
 
     //Sprites
     if (!star_texture.loadFromFile("Images/12star.png")){ std::cout << "could not load" << std::endl;}
     star_texture.loadFromFile("Images/12star.png");
     star.setTexture(star_texture);
-    star.setScale(sf::Vector2f(0.75, 0.75));
+    star.setScale(sf::Vector2f(0.75, 0.75)); // How to make it relate to window size???
     opp.setScale(sf::Vector2f(1,1));
     opp.setOrigin(0,0);
 
@@ -53,81 +57,77 @@ void StateFunctions1::initialise_buttons(sf::RectangleShape& start_button, sf::R
     intro_text.setCharacterSize(60);
     start_text.setFillColor(sf::Color::Black);
     info_text.setFillColor(sf::Color::Black);
-    intro_text.setFillColor(sf::Color::Black);
-    intro_text.setOrigin(intro_text.getGlobalBounds().width/2, intro_text.getGlobalBounds().height); 
+    intro_text.setFillColor(sf::Color::Black); 
     start_text.setString(start);
     info_text.setString(info);
 
-    // Setting the position:
-    // First three variables are just ones that work nicely - but changing them is easy and will change the rest
-    // Alignment is very dodgy
-    int xoffset = 150;
-    int yoffset = 75;
-    int global_yoffset = 30;
-    float x = window.getSize().x /2;
-    float y = window.getSize().y /2;
+	// Setting origin at centre
+	opp.setPosition(0,0); // we have to compensation for the initial position of the sprite
+	intro_text.setOrigin(intro_text.getGlobalBounds().width/2, intro_text.getGlobalBounds().height/2);
+	info_text.setOrigin(info_text.getGlobalBounds().width/2, info_text.getGlobalBounds().height/2);
+	start_text.setOrigin(start_text.getGlobalBounds().width/2, start_text.getGlobalBounds().height/2);
+	start_button.setOrigin(start_button.getGlobalBounds().width/2, start_button.getGlobalBounds().height/2);
+	info_button.setOrigin(info_button.getGlobalBounds().width/2, info_button.getGlobalBounds().height/2);
+	star.setOrigin(star.getLocalBounds().width/2, star.getLocalBounds().height/2);
+	opp.setOrigin(opp.getLocalBounds().width/2, opp.getLocalBounds().height/2);
 
-    intro_text.setPosition(x,y-3*yoffset);
-    start_button.setPosition(x-xoffset, y-yoffset+global_yoffset);
-    info_button.setPosition(x-xoffset, y+yoffset+global_yoffset);
-    start_text.setPosition(x-xoffset, y-yoffset+global_yoffset);
-    info_text.setPosition(info_button.getPosition().x, info_button.getPosition().y);
-    star.setPosition(x+xoffset,y+global_yoffset);
-    opp.setPosition(x+xoffset,y+global_yoffset);
+	// setting the position
+	float xoffset = 3*x/25;
+	float yoffset1 = y/15;
+	float yoffset2 = y/5;
+	float yoffset3 = y/15;
 
-    // move is to get alignment
-    start_button.move(-start_button.getGlobalBounds().width/2, -start_button.getGlobalBounds().height/2);
-    start_text.move(-start_text.getGlobalBounds().width/2, -start_text.getGlobalBounds().height/2);
-    info_text.move(-info_text.getGlobalBounds().width/2, -info_text.getGlobalBounds().height/2);
-    info_button.move(-info_button.getGlobalBounds().width/2, -info_button.getGlobalBounds().height/2);
-    star.move(-star.getGlobalBounds().width/2, -star.getGlobalBounds().height/2);
-    opp.move(-opp.getGlobalBounds().width/2, -opp.getGlobalBounds().height/2);
-
-    
-    /* star.move(-star.getGlobalBounds().width/2, -star.getGlobalBounds().height/2);
-    opp.move(-opp.getGlobalBounds().width/2, -opp.getGlobalBounds().height/2); */
-
+	intro_text.move(x/2, y/7);
+	start_text.move(x/2 - xoffset, y/2 - yoffset1);
+	start_button.move(x/2 - xoffset, y/2 - yoffset1);
+	info_text.move(x/2 - xoffset, y/2 + yoffset2);
+	info_button.move(x/2 - xoffset, y/2 + yoffset2);
+	star.move(x/2 + xoffset, y/2 + yoffset3);
+	opp.move(x/2 + xoffset, y/2 + yoffset3);
 }
 
 void StateFunctions1::draw1(sf::RenderWindow& window, sf::RectangleShape& shape1, sf::RectangleShape& shape2, sf::Text& text1, sf::Text& text2,
-            sf::Text& text3, sf::Sprite& sprite, sf::Sprite& bg ){
-                window.draw(shape1);
-                window.draw(shape2);
-                window.draw(text1);
-                window.draw(text2);
-                window.draw(text3);
-                window.draw(bg);
-                window.draw(sprite);
+    		sf::Text& text3, sf::Sprite& sprite, sf::Sprite& bg ){
+	window.draw(shape1);
+	window.draw(shape2);
+	window.draw(text1);
+	window.draw(text2);
+	window.draw(text3);
+	window.draw(bg);
+	window.draw(sprite);
 }
 
 int StateFunctions1::update_state1(sf::RenderWindow& window, sf::RectangleShape& start_button, sf::RectangleShape& info_button, sf::Sprite& star){
-    // Want to rotate the star: need it to have its origin at its centre
-    // star.rotate(30);
-
-    // Know where the mouse is
+    //Rotate star
+    star.rotate(2); 
     // Buttons go red when hovering
     if ((sf::Event::MouseMoved)||(sf::Event::MouseButtonPressed)){
         sf::Vector2i mousepixel = sf::Mouse::getPosition(window);
         sf::Vector2f mouse_pos = window.mapPixelToCoords(mousepixel);
+
         if (start_button.getGlobalBounds().contains(mouse_pos)){
             start_button.setFillColor(sf::Color(255,99,99)); //reddish
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-                return 2;
+                return 2; 
+				// should change to choose pokemon
+				// then to countdown
+				// when the countdown is done we return 2
             }
         }
         else {
             start_button.setFillColor(sf::Color::White);
         }
-        if (info_button.getGlobalBounds().contains(mouse_pos)){
-            info_button.setFillColor(sf::Color(255,99,99));
-            if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-                return 2;
-            }
-        }
-        else {
-            info_button.setFillColor(sf::Color::White);
-        }
-        return 1;
+		if (info_button.getGlobalBounds().contains(mouse_pos)){
+			info_button.setFillColor(sf::Color(255,99,99));
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+				return 2;
+				// different state entirely...
+			}
+		}
+		else {
+			info_button.setFillColor(sf::Color::White);
+		}
+		return 1;
     }
 }
 
@@ -136,10 +136,7 @@ int StateFunctions1::update_state1(sf::RenderWindow& window, sf::RectangleShape&
 #pragma once
 #include "Player.h"
 
-/* template <typename T>
-//will be used for either player or opponent
-
- */void StateFunctions56::fall(Pokemon& eevee, float& groundY, float& deltaTime) {//make player fall if it is still in the air
+void StateFunctions56::fall(Pokemon& eevee, float& groundY, float& deltaTime) {//make player fall if it is still in the air
 	if (eevee.y < groundY) {
 
 		eevee.velocityY += 981.0f * deltaTime;
