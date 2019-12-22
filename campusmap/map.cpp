@@ -23,6 +23,8 @@ Map::Map(sf::RenderWindow &window)
     background2_1.load("Sprites/tileset1.png", sf::Vector2u(16, 16), level3, 34, 33);
     background3_1.load("Sprites/tileset1.png", sf::Vector2u(16, 16), level4, 34, 33);
     background3_2.load("Sprites/tileset2.png", sf::Vector2u(16, 16), level4_2, 34, 33);
+    background4_1.load("Sprites/tileset1.png", sf::Vector2u(16, 16), level5, 34, 33);
+    background4_1.load("Sprites/tileset2.png", sf::Vector2u(16, 16), level5_2, 34, 33);
     
     
     alpha = 255;
@@ -33,6 +35,7 @@ Map::Map(sf::RenderWindow &window)
     collision_.insert(pair<string, const int*>("second", collision2));
     collision_.insert(pair<string, const int*>("third", collision3));
     collision_.insert(pair<string, const int*>("pokeShop", poke));
+    collision_.insert(pair<string, const int*>("forth", collision4));
     
     map_name= "first"; //Beggining of the game
     
@@ -100,7 +103,7 @@ Map::Map(sf::RenderWindow &window)
     animationDoor = 0;
     
     //Spawning position
-    map_list = {"first","second","third","pokeShop"};
+    map_list = {"first","second","third","pokeShop","forth"};
     //first map
     spawn_dict.insert(pair< string, vector<vector<int> >>("first",{{264, 256},{488, 464},{184, 160}}));
     //underground
@@ -109,6 +112,8 @@ Map::Map(sf::RenderWindow &window)
     spawn_dict.insert(pair< string, vector<vector<int> >>("third",{{168, 464}}));
     //pokeShop
     spawn_dict.insert(pair< string, vector<vector<int> >>("pokeShop",{{184, 160}}));
+    //demi-lune
+    spawn_dict.insert(pair< string, vector<vector<int> >>("forth",{{184, 160}}));
 }
 
 Map::~Map()
@@ -421,6 +426,11 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
         pokeBuilding.setTextureRect(sf::IntRect(307,250,176,128));
         pokeBuilding.setPosition(128, 64);
         window.draw(pokeBuilding);
+    }
+    
+    if(map_name== "forth"){
+        window.draw(background4_1);
+        window.draw(background4_2);
     }
     
     //movingFlower(window, 176, 176);
