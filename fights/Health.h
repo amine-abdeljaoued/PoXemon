@@ -9,6 +9,7 @@ public:
     void setHealth(int a);          // Sets health and calls update
 	void decrease(int i);
     void draw(sf::RenderWindow& target) const;
+    void draw(sf::RenderWindow& target, sf::Shader* shader) const;
     void setPosition(float x, float y);     // the three components of the health bar must be moved together
     void update();                  // When health changes, this function is called to update the bar visually
 

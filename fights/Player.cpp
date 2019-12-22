@@ -10,6 +10,15 @@ void Player::draw(sf::RenderWindow& target) {
 	}
 }
 
+void Player::draw(sf::RenderWindow& target, sf::Shader* shader){
+	target.draw(sprite, shader);
+	health.draw(target, shader);
+	bullets.draw(target, shader);
+	if (health.health > 0) {
+		bullets.bulletbar.draw(target, shader);
+		bullets.attacksbar.draw(target, shader);
+	}
+}
 
 void Player::update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clock, 
 				sf::Time& elapsed, sf::Time& attack1, sf::Time& attack2, sf::Time& attack3, 

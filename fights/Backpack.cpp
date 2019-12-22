@@ -214,22 +214,40 @@ Backpack::Backpack(){
 //}
     
     
-    void Backpack::draw (sf::RenderWindow &target) const {
-        
-        if(new_Normalball.in_air){
-            target.draw(new_Normalball.ball);
-        }
-        if(new_Superball.in_air){
-                   target.draw(new_Superball.ball);
-               }
-        if(new_Masterball.in_air){
-                   target.draw(new_Masterball.ball);
-               }
-        
-        target.draw(clickbox);
-        target.draw(normalball);
-        target.draw(superball);
-        target.draw(masterball);
+void Backpack::draw(sf::RenderWindow &target) const {
+    
+    if(new_Normalball.in_air){
+        target.draw(new_Normalball.ball);
+    }
+    if(new_Superball.in_air){
+                target.draw(new_Superball.ball);
+            }
+    if(new_Masterball.in_air){
+                target.draw(new_Masterball.ball);
+            }
+    
+    target.draw(clickbox);
+    target.draw(normalball);
+    target.draw(superball);
+    target.draw(masterball);
+}
+
+void Backpack::draw(sf::RenderWindow &target, sf::Shader* shader) const {
+    
+    if(new_Normalball.in_air){
+        target.draw(new_Normalball.ball, shader);
+    }
+    if(new_Superball.in_air){
+                target.draw(new_Superball.ball, shader);
+            }
+    if(new_Masterball.in_air){
+                target.draw(new_Masterball.ball, shader);
+            }
+    
+    target.draw(clickbox, shader);
+    target.draw(normalball, shader);
+    target.draw(superball, shader);
+    target.draw(masterball, shader);
 }
 
 //function that updates the backpack containt

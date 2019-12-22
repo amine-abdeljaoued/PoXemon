@@ -97,7 +97,16 @@ void StateFunctions1::draw1(sf::RenderWindow& window, sf::RectangleShape& shape1
 	window.draw(sprite);
 }
 
-int StateFunctions1::update_state1(sf::RenderWindow& window, sf::RectangleShape& start_button, sf::RectangleShape& info_button, sf::Sprite& star){
+void StateFunctions1::draw_blurry_background(sf::RenderWindow& window, sf::Sprite& background, sf::RectangleShape box, Backpack& bag, Player& player, 
+			Opponent& opponent, sf::Shader* shader){
+	window.draw(background, shader); // draw objects of the fight with a blur
+	bag.draw(window, shader);
+	player.draw(window, shader);
+	opponent.draw(window, shader);
+	window.draw(box);
+}
+
+int StateFunctions1::update_state1(sf::RenderWindow& window, sf::RectangleShape& start_button, sf::RectangleShape& info_button, sf::Sprite& star, sf::Clock& clock){
     //Rotate star
     star.rotate(2); 
     // Buttons go red when hovering
@@ -108,7 +117,8 @@ int StateFunctions1::update_state1(sf::RenderWindow& window, sf::RectangleShape&
         if (start_button.getGlobalBounds().contains(mouse_pos)){
             start_button.setFillColor(sf::Color(255,99,99)); //reddish
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-                return 2; 
+				clock.restart();
+                return 10; 
 				// should change to choose pokemon
 				// then to countdown
 				// when the countdown is done we return 2
@@ -120,7 +130,8 @@ int StateFunctions1::update_state1(sf::RenderWindow& window, sf::RectangleShape&
 		if (info_button.getGlobalBounds().contains(mouse_pos)){
 			info_button.setFillColor(sf::Color(255,99,99));
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-				return 2;
+				clock.restart();
+				return 10;
 				// different state entirely...
 			}
 		}
@@ -129,6 +140,70 @@ int StateFunctions1::update_state1(sf::RenderWindow& window, sf::RectangleShape&
 		}
 		return 1;
     }
+}
+
+void StateFunctions1::initialise_countdown(sf::RenderTarget& window){
+	text.setString("3");
+    text.setCharacterSize(max_char_size);
+    font.loadFromFile("upheavtt.ttf");
+    text.setFont(font);
+    text.setFillColor(sf::Color::Black);
+    text.setOrigin(text.getGlobalBounds().width/2, text.getGlobalBounds().height);
+    text.move(window.getSize().x/2 , 2*window.getSize().y/5);
+    bool draw_count = true;
+}
+
+void StateFunctions1::shrink_text(sf::Text& text, float deltatime){
+	float add_font_size = 5 * deltatime * max_char_size / 2 ; // must be in proportion to how long its on the screen for
+                                                                // i.e. we're on screen for 4/10 = 2/5 of a second
+    int font_size = (int)text.getCharacterSize() - (int)add_font_size ;
+    text.setCharacterSize(font_size);
+}
+
+int StateFunctions1::countdown(sf::RenderWindow& window, float deltatime, sf::Time time){
+	 /*  Idea: 
+            Number shows large for 0.5s
+            Number shrinks for 0.4s
+            Not shown for 0.1s (smoother looking)
+            After 4s enter game mode
+        */
+        if ((0.5 < time.asSeconds())&&(time.asSeconds() <= 0.9)){
+            shrink_text(text, deltatime);
+        }
+        else if ((0.9 < time.asSeconds())&&(time.asSeconds() <= 1)){
+            draw_count = false;
+        }
+        else if ((time.asSeconds()>1)&&(time.asSeconds()<=1.5)){
+            draw_count = true;
+            text.setCharacterSize(max_char_size);
+            text.setString("2");
+        }
+        else if ((time.asSeconds()>1.5) && (time.asSeconds()<1.9)){
+            shrink_text(text, deltatime);
+        }
+        else if ((1.9 < time.asSeconds())&&(time.asSeconds() <= 2)){
+            draw_count = false;
+        }
+        else if ((time.asSeconds()>2)&&(time.asSeconds()<=2.5)){
+            draw_count = true;
+            text.setCharacterSize(max_char_size);
+            text.setString("1");
+        }
+        else if ((time.asSeconds()>2.5)&&(time.asSeconds()<=2.9)){
+            shrink_text(text, deltatime);
+        }
+        else if ((2.9 < time.asSeconds())&&(time.asSeconds() <= 3)){
+            draw_count = false;
+        }
+        else if ((time.asSeconds()>3)&&(time.asSeconds()<=4)){
+            draw_count = true;
+            text.setCharacterSize(max_char_size);
+            text.setString("Go!");
+        }
+        else if (time.asSeconds()>4){
+            return 2;
+        }
+		return 10;
 }
 
 //------------------------------------------------------------------------------------------------------------

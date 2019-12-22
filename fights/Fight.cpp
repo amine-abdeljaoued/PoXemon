@@ -5,6 +5,7 @@ Fight::Fight(){
     if (!font.loadFromFile("upheavtt.ttf")) { std::cout << "could not load font" << std::endl; }
 	else {font.loadFromFile("upheavtt.ttf");}
 }
+
 Fight::Fight(sf::RenderWindow& window){
     if (!font.loadFromFile("upheavtt.ttf")) { std::cout << "could not load font" << std::endl; }
 	else {font.loadFromFile("upheavtt.ttf");}
@@ -19,6 +20,12 @@ Fight::Fight(sf::RenderWindow& window){
 	running_sprite.setScale(2, 2);
 	running_sprite.setOrigin(running_sprite.getLocalBounds().width / 2, running_sprite.getLocalBounds().height / 2);
     running_sprite.setPosition(window.getSize().x *2/ 3, window.getSize().y / 2);
+
+	// shader + box for blur effect
+	box.setSize(sf::Vector2f(window.getSize().x, window.getSize().y));
+    box.setFillColor(sf::Color(0,0,0,64));
+    if(!shader.loadFromFile("Blur2.frag", sf::Shader::Fragment)){std::cout<<"no shader"<<std::endl;}
+    shader.setUniform("offsetFactor", sf::Vector2f(0,0.007));
 }
 
 void Fight::initialise(char& mode, Backpack& pbag, Backpack& popponent_bag, Player* player, Opponent* opponent, sf::RenderWindow& window){
@@ -43,6 +50,7 @@ void Fight::initialise(char& mode, Backpack& pbag, Backpack& popponent_bag, Play
     intro_text.setString("You are about to fight " + (*popponent).name);
     
     functions1.initialise_buttons(start_button, info_button, window, font, start_text, info_text, intro_text, opp, star, star_texture);
+	functions1.initialise_countdown(window);
 
     // states 2,5,6
     deltaTime = 0.0f;
@@ -61,16 +69,21 @@ int Fight::update(sf::RenderWindow& window){
 	attack_3_time = attack_3_clock.getElapsedTime();
 
 	if (state==1){ // Initial game menu 
-		state = functions1.update_state1(window, start_button, info_button, star);
+		state = functions1.update_state1(window, start_button, info_button, star, clock_regenerate_bullets);
 		window.clear();
 		window.draw(background);
 		functions1.draw1(window, start_button, info_button, start_text, info_text, intro_text, opp, star);
-		// in this state, we should be able to choose our pokemon
-		// we will use pokemon buttons
-		// then initite countdown
+		// we should be able to choose our pokemon...
 	}
 
-	else if (state==2){ //fight
+	else if (state==10){ // countdown
+		state = functions1.countdown(window, deltaTime, elapsed);
+		window.clear(sf::Color::White);
+		functions1.draw_blurry_background(window, background, box, bag, *pplayer, *popponent, &shader);
+		window.draw(functions1.text);
+	}
+
+	else if (state==2){ // fight
 		(*pplayer).update(deltaTime, window, clock, elapsed, attack_1_time, 
 						attack_2_time, attack_3_time, attack_1_clock, attack_2_clock, attack_3_clock, groundY);
 		(*popponent).update(deltaTime, window, clock, elapsed, attack_1_time_opp, 
@@ -159,9 +172,7 @@ int Fight::update(sf::RenderWindow& window){
 
 		//draw stuff
 		window.clear(sf::Color::Blue);
-		window.draw(background);
-		(*pplayer).draw(window);
-		(*popponent).draw(window);
+		functions1.draw_blurry_background(window, background, box, bag, *pplayer, *popponent, &shader);
 
 		//draw the menu
 		//maybe we should wait a few seconds before drawing this
@@ -201,9 +212,7 @@ int Fight::update(sf::RenderWindow& window){
 						(*popponent).sprite, groundY);
 
 		window.clear(sf::Color::Blue);
-		window.draw(background);
-		(*pplayer).draw(window);
-		(*popponent).draw(window);
+		functions1.draw_blurry_background(window, background, box, bag, *pplayer, *popponent, &shader);
 
 		int index = (*popponent).index;
 		//you are about to fight + 'opponent'
@@ -254,9 +263,7 @@ int Fight::update(sf::RenderWindow& window){
 						(*popponent).sprite, groundY);
 		//draw stuff
 		window.clear(sf::Color::Blue);
-		window.draw(background);
-		(*pplayer).draw(window);
-		(*popponent).draw(window);
+		functions1.draw_blurry_background(window, background, box, bag, *pplayer, *popponent, &shader);
 
 
 		window.draw(wonlost);
@@ -282,9 +289,7 @@ int Fight::update(sf::RenderWindow& window){
 						(*popponent).sprite, groundY);
 		//draw stuff
 		window.clear(sf::Color::Blue);
-		window.draw(background);
-		(*pplayer).draw(window);
-		(*popponent).draw(window);
+		functions1.draw_blurry_background(window, background, box, bag, *pplayer, *popponent, &shader);
 
 		window.draw(text_fainted);
 		//to be completed
