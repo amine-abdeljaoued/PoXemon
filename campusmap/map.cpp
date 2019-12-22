@@ -24,7 +24,7 @@ Map::Map(sf::RenderWindow &window)
     background3_1.load("Sprites/tileset1.png", sf::Vector2u(16, 16), level4, 34, 33);
     background3_2.load("Sprites/tileset2.png", sf::Vector2u(16, 16), level4_2, 34, 33);
     background4_1.load("Sprites/tileset1.png", sf::Vector2u(16, 16), level5, 34, 33);
-    background4_1.load("Sprites/tileset2.png", sf::Vector2u(16, 16), level5_2, 34, 33);
+    background4_2.load("Sprites/tileset2.png", sf::Vector2u(16, 16), level5_2, 34, 33);
     
     
     alpha = 255;
@@ -403,7 +403,7 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
     
     
     
-    if (map_name == "first") fillTree(window);
+    if (map_name == "first" || map_name == "forth") fillTree(window);
      
     
     sf::Vector2f pos =trainer.getPos();
