@@ -35,6 +35,8 @@ public:
                     // 5 = we died -> choose another or quit
                     // 6 = opponent died
                     // 7 = no more pokemons -> go to hospital/shop
+                    // 9 = clicked start -> choose pokemon to play with
+                    // 10 = countdown
 
     char game_mode; // 'w' : wild pokemon
                     // 't' : trainer
@@ -47,6 +49,9 @@ public:
     // Updating the window
     int update(sf::RenderWindow& window);
 
+    // Used for blurring
+    sf::Shader shader;
+    sf::RectangleShape box;
 
     // Visuals for always
     sf::Font font;

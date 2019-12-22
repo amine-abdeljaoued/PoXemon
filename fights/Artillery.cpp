@@ -27,6 +27,12 @@ void Artillery::draw(sf::RenderWindow& target)  {
 	} 
 }
 
+void Artillery::draw(sf::RenderWindow& target, sf::Shader* shader) {
+    for (unsigned i = 0; i < bullets.size(); i++) {
+        target.draw((*bullets[i]).bullet, shader);
+	} 
+}
+
 void Artillery::new_click(float& x, float& y, const sf::FloatRect& bounds, sf::RenderWindow& window, const sf::Vector2i& mouse){
     if (attack_type == 0){
         new_shot(x,y,bounds, window, mouse);

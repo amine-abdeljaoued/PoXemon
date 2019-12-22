@@ -36,6 +36,7 @@ class Backpack
         void Pokeball_shoot(float& deltaTime, sf::RenderWindow& window, sf::Clock &clock2, sf::Time & elapsed2);
         void Pokeball_throw(Pokeball Poke,float& deltaTime, sf::RenderWindow& window);
         void draw (sf::RenderWindow &target) const;
+        void draw (sf::RenderWindow &target, sf::Shader* shader) const;
 
         // Opponent
 		Opponent* opponent;

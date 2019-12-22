@@ -89,6 +89,13 @@ void Healthbar::draw(sf::RenderWindow& target) const {
     target.draw(heart);
     target.draw(name_text);
     target.draw(level_text);
-
-    
 } 
+
+void Healthbar::draw(sf::RenderWindow& target, sf::Shader* shader) const {
+    target.draw(bar, shader);
+    target.draw(outline);
+    target.draw(healthbar);
+    target.draw(heart, shader);
+    target.draw(name_text);
+    target.draw(level_text);
+}
