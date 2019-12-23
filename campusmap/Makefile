@@ -28,13 +28,13 @@ test.o: test.cpp test.h
 openbackpack.o: openbackpack.cpp openbackpack.hpp
 	$(CXX) -c  openbackpack.cpp
 
-Background.o: Background.cpp Background.hpp
+Background.o: Background.cpp Background.h
 	$(CXX) -c  Background.cpp
 
 shop.o: shop.cpp shop.hpp
 	$(CXX) -c  shop.cpp
 
-main.o: main.cpp tilemap.hpp npc.hpp map.hpp trainer.hpp const.hpp intro.hpp Backpack_content.h Button.h test.h openbackpack.hpp Background.hpp shop.hpp
+main.o: main.cpp tilemap.hpp npc.hpp map.hpp trainer.hpp const.hpp intro.hpp Backpack_content.h Button.h test.h openbackpack.hpp Background.h shop.hpp
 	$(CXX) -c  main.cpp
 	
 
