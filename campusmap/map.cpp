@@ -629,26 +629,15 @@ void Map::openDoorS(sf::RenderWindow &window, Trainer &trainer){
         window.draw(background4_2);
     }
     
-
     openDoorS(window, trainer);
 
-    vector<Npc*> draw_before;
-    vector<Npc*> draw_after;
-    for (auto const& np : npcs[map_name]) 
-    {
+    for (auto const& np : npcs[map_name]) {
         sf::Vector2f pos2 = (*np).getPos();
-        if(pos.y>=pos2.y){ 
-            draw_before.push_back(np);
-        }
-        else{
-            draw_after.push_back(np);
-        }
-    }
-    for (auto const& np : draw_before){
-        sf::Vector2f pos2 = (*np).getPos();
-        if (trainer.state == "Speaking"){
+         if(pos.y >= pos2.y)
+         {
+              if (trainer.state == "Speaking"){
                 if((*np).seller==true){
-                    if((int(pos.y - pos2.y) <= 32) && (int(pos.x - pos2.x) <= 32) ){
+                    if((abs(pos.y - pos2.y) <= 16) && (abs(pos.x - pos2.x) <= 16) ){
                         (*np).speak(window, view, trainer);
                     }
                     else{
@@ -656,7 +645,7 @@ void Map::openDoorS(sf::RenderWindow &window, Trainer &trainer){
                     }
                 }
                 else{
-                    if((int(pos.y - pos2.y) <= 16) && (int(pos.x - pos2.x) <= 16) ){
+                    if((abs(pos.y - pos2.y) <= 16) && (abs(pos.x - pos2.x) <= 16) ){
                         (*np).speak(window, view, trainer);
                     }
                     else{
@@ -668,15 +657,16 @@ void Map::openDoorS(sf::RenderWindow &window, Trainer &trainer){
             else {
             (*np).draw(window);
             }
+         }
     }
-
     trainer.draw(window, event, view);
-
-    for (auto const& np : draw_after){
+    for (auto const& np : npcs[map_name]) {
         sf::Vector2f pos2 = (*np).getPos();
-        if (trainer.state == "Speaking"){
+         if(pos.y < pos2.y)
+         {
+              if (trainer.state == "Speaking"){
                 if((*np).seller==true){
-                    if((int(pos.y - pos2.y) <= 32) && (int(pos.x - pos2.x) <= 32) ){
+                    if((abs(pos.y - pos2.y) <= 16) && (abs(pos.x - pos2.x) <= 16) ){
                         (*np).speak(window, view, trainer);
                     }
                     else{
@@ -684,7 +674,7 @@ void Map::openDoorS(sf::RenderWindow &window, Trainer &trainer){
                     }
                 }
                 else{
-                    if((int(pos.y - pos2.y) <= 16) && (int(pos.x - pos2.x) <= 16) ){
+                    if((abs(pos.y - pos2.y) <= 16) && (abs(pos.x - pos2.x) <= 16) ){
                         (*np).speak(window, view, trainer);
                     }
                     else{
@@ -696,11 +686,9 @@ void Map::openDoorS(sf::RenderWindow &window, Trainer &trainer){
             else {
             (*np).draw(window);
             }
+         }
     }
-
-
-
-
+   
     if (alpha > 0 && state == "start"){
         initialisation(window, trainer, view);
     }
