@@ -231,7 +231,7 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
 
     //Entering Speaking mode with different npcs
 
-    if ((collision_[map_name][(int) x/16 +(((int) y/16 +1)*34)]==8 && trainer.facingDirection=="Down") || (collision_[map_name][(int) x/16 +(((int) y/16 -1)*34)]==8 && trainer.facingDirection=="Up") || (collision_[map_name][(int) x/16 -1+((int) y/16 *34)]==8 && trainer.facingDirection=="Left") || (collision_[map_name][(int) x/16 +1+((int) y/16 *34)]==8 && trainer.facingDirection=="Right")){
+    if (/* (collision_[map_name][(int) x/16 +(((int) y/16 +1)*34)]==8 && trainer.facingDirection=="Down") || */ (collision_[map_name][(int) x/16 +(((int) y/16 -1)*34)]==8 && trainer.facingDirection=="Up") || (collision_[map_name][(int) x/16 -1+((int) y/16 *34)]==8 && trainer.facingDirection=="Left") || (collision_[map_name][(int) x/16 +1+((int) y/16 *34)]==8 && trainer.facingDirection=="Right")){
         if ((event.type == sf::Event::KeyPressed)&&((event.key.code == sf::Keyboard::D))){
             if(trainer.state != "Shopping"){
                 trainer.state = "Speaking";
@@ -405,7 +405,8 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
     
     if (map_name == "first" || map_name == "forth") fillTree(window);
      
-    
+    /* trainer.displacement(event, view); */
+      
     sf::Vector2f pos =trainer.getPos();
     if(map_name== "first"){
         window.draw(background1_1); 
@@ -436,68 +437,23 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
     //movingFlower(window, 176, 176);
     openDoorS(window, trainer);
 
-    
-    if(npcs[map_name].size() == 0){
-        trainer.draw(window, event, view);
-    }
-
+    vector<Npc*> draw_before;
+    vector<Npc*> draw_after;
     for (auto const& np : npcs[map_name]) 
     {
-        sf::Vector2f pos2 = (*np).getPos(); //Here we study the respective positions of the character and the npcs 
-                                            //to check in which order we draw them
-        if(pos.y < pos2.y ){
-            trainer.draw(window, event, view);
-            
-            /* if (trainer.state == "Speaking")
-            {
-                if((*np).seller ==true){
-                    if((int(pos.y - pos2.y) <= 32) && (int(pos.x - pos2.x) <= 32) ){
-                        (*np).speak(window, view, trainer);
-                    }
-                }
-                else{
-                    if((int(pos.y - pos2.y) <= 16) && (int(pos.x - pos2.x) <= 16) ){
-                        (*np).speak(window, view, trainer);
-                    }
-                }
-            } */
-            if (trainer.state == "Speaking"){
-                if((*np).seller==true){
-                    if((int(pos.y - pos2.y) <= 32) && (int(pos.x - pos2.x) <= 32) ){
-                        (*np).speak(window, view, trainer);
-                    }
-                    else{
-                        (*np).draw(window);
-                    }
-                }
-                else{
-                    if((int(pos.y - pos2.y) <= 16) && (int(pos.x - pos2.x) <= 16) ){
-                        (*np).speak(window, view, trainer);
-                    }
-                    else{
-                        (*np).draw(window);
-                    }
-                }
-                
-            }
-            else {
-            (*np).draw(window);
-            }
-            
+        sf::Vector2f pos2 = (*np).getPos();
+        if(pos.y>=pos2.y){ //draw before
+            draw_before.push_back(np);
         }
         else{
-            
-            
-            /* if ((trainer.state == "Speaking") && (int(pos.y - pos2.y) <= 32) && (int(pos.x - pos2.x) <= 16))
-            {
-            np->speak(window, view, trainer);
-            }
-            else {
-            (*np).draw(window);
-            } */
-            if (trainer.state == "Speaking"){
+            draw_after.push_back(np);
+        }
+    }
+    for (auto const& np : draw_before){
+        sf::Vector2f pos_before = (*np).getPos();
+        if (trainer.state == "Speaking"){
                 if((*np).seller==true){
-                    if((int(pos.y - pos2.y) <= 32) && (int(pos.x - pos2.x) <= 32) ){
+                    if((abs(pos.y - pos_before.y) <= 32) && (abs(pos.x - pos_before.x) <= 32) ){
                         (*np).speak(window, view, trainer);
                     }
                     else{
@@ -505,7 +461,7 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
                     }
                 }
                 else{
-                    if((int(pos.y - pos2.y) <= 16) && (int(pos.x - pos2.x) <= 16) ){
+                    if((abs(pos.y - pos_before.y) <= 16) && (abs(pos.x - pos_before.x) <= 16) ){
                         (*np).speak(window, view, trainer);
                     }
                     else{
@@ -513,17 +469,42 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
                     }
                 }
                 
-
             }
             else {
             (*np).draw(window);
             }
-            trainer.draw(window, event, view);
-
-        }
-        
     }
-    
+
+    trainer.draw(window, event, view);
+    //Then we draw the next npcs
+    for (auto const& np : draw_after){
+        sf::Vector2f pos_after = (*np).getPos();
+        if (trainer.state == "Speaking"){
+                if((*np).seller==true){
+                    if((abs(pos.y - pos_after.y) <= 32) && (abs(pos.x - pos_after.x) <= 32) ){
+                        (*np).speak(window, view, trainer);
+                    }
+                    else{
+                        (*np).draw(window);
+                    }
+                }
+                else{
+                    if((abs(pos.y - pos_after.y) <= 16) && (abs(pos.x - pos_after.x) <= 16) ){
+                        (*np).speak(window, view, trainer);
+                    }
+                    else{
+                        (*np).draw(window);
+                    }
+                }
+                
+            }
+            else {
+            (*np).draw(window);
+            }
+    }
+
+
+
 
     if (alpha > 0 && state == "start"){
         initialisation(window, trainer, view);
@@ -628,18 +609,19 @@ void Map::openDoorS(sf::RenderWindow &window, Trainer &trainer){
     
     
     
-    if (map_name == "first") fillTree(window);
+    if (map_name == "first" || map_name == "forth") fillTree(window);
      
-    
+
+      
     sf::Vector2f pos =trainer.getPos();
     if(map_name== "first"){
         window.draw(background1_1); 
-        window.draw(background1_2); //Both backgrounds associated to each tileset will have the same background
+        window.draw(background1_2); 
     }
     
     if(map_name== "second"){
         window.draw(background2_1); 
-//        window.draw(background2_2);
+
     }
     
         if(map_name== "third"){
@@ -653,48 +635,85 @@ void Map::openDoorS(sf::RenderWindow &window, Trainer &trainer){
         window.draw(pokeBuilding);
     }
     
-    //movingFlower(window, 176, 176);
+    if(map_name== "forth"){
+        window.draw(background4_1);
+        window.draw(background4_2);
+    }
+    
+
     openDoorS(window, trainer);
 
-    
-    if(npcs[map_name].size() == 0){
-        trainer.draw(window, event, view);
-    }
-
+    vector<Npc*> draw_before;
+    vector<Npc*> draw_after;
     for (auto const& np : npcs[map_name]) 
     {
-        sf::Vector2f pos2 = (*np).getPos(); //Here we study the respective positions of the character and the npcs 
-                                            //to check in which order we draw them
-        if(pos.y < pos2.y ){
-            trainer.draw(window, event, view);
-
-            if (trainer.state == "Speaking"){
-                    (*np).speak(window, view, trainer);
-                }
-            else{
-                    (*np).draw(window);
-                }
-                
-            
+        sf::Vector2f pos2 = (*np).getPos();
+        if(pos.y>=pos2.y){ 
+            draw_before.push_back(np);
         }
         else{
-            if (trainer.state == "Speaking")
-                {
-                    (*np).speak(window, view, trainer);
-                }
-            else{
-                    (*np).draw(window);
-                }
-         
-            trainer.draw(window, event, view);
-
+            draw_after.push_back(np);
         }
-        
     }
-    
+    for (auto const& np : draw_before){
+        sf::Vector2f pos2 = (*np).getPos();
+        if (trainer.state == "Speaking"){
+                if((*np).seller==true){
+                    if((int(pos.y - pos2.y) <= 32) && (int(pos.x - pos2.x) <= 32) ){
+                        (*np).speak(window, view, trainer);
+                    }
+                    else{
+                        (*np).draw(window);
+                    }
+                }
+                else{
+                    if((int(pos.y - pos2.y) <= 16) && (int(pos.x - pos2.x) <= 16) ){
+                        (*np).speak(window, view, trainer);
+                    }
+                    else{
+                        (*np).draw(window);
+                    }
+                }
+                
+            }
+            else {
+            (*np).draw(window);
+            }
+    }
+
+    trainer.draw(window, event, view);
+
+    for (auto const& np : draw_after){
+        sf::Vector2f pos2 = (*np).getPos();
+        if (trainer.state == "Speaking"){
+                if((*np).seller==true){
+                    if((int(pos.y - pos2.y) <= 32) && (int(pos.x - pos2.x) <= 32) ){
+                        (*np).speak(window, view, trainer);
+                    }
+                    else{
+                        (*np).draw(window);
+                    }
+                }
+                else{
+                    if((int(pos.y - pos2.y) <= 16) && (int(pos.x - pos2.x) <= 16) ){
+                        (*np).speak(window, view, trainer);
+                    }
+                    else{
+                        (*np).draw(window);
+                    }
+                }
+                
+            }
+            else {
+            (*np).draw(window);
+            }
+    }
+
+
+
 
     if (alpha > 0 && state == "start"){
-        initialisation(window, trainer);
+        initialisation(window, trainer, view);
     }
     else{
         if (trainer.state == "Blocked"){
