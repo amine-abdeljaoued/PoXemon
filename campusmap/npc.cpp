@@ -116,6 +116,7 @@ void Npc::speak(sf::RenderWindow &window, sf::View &view, Trainer &trainer)  {
                text.setString(discussion[speakCounter]);
                text.setCharacterSize(12);
                text.setFillColor(sf::Color::Black);
+               text.setStyle(sf::Text::Bold);
                /* sf::Vector2f viewSize = view.getSize();
                bubble.setSize(sf::Vector2f(viewSize.x, viewSize.y/4)); */
 
