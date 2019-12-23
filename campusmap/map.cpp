@@ -45,8 +45,8 @@ Map::Map(sf::RenderWindow &window)
     vector<Npc*> npcs_map1;
     
     vector<string> disp;
-    disp.push_back("Hello, you can catch water pokemons by fishing");
-    disp.push_back("Just press x near the lake and wait...");
+    disp.push_back("Hello, here you can catch water pokemons");
+    disp.push_back("Press x near the lake to fish");
     Npc* pannel1 = new Npc(288,188,disp);
     npcs_map1.push_back(pannel1);
     
@@ -231,7 +231,7 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
 
     //Entering Speaking mode with different npcs
 
-    if (/* (collision_[map_name][(int) x/16 +(((int) y/16 +1)*34)]==8 && trainer.facingDirection=="Down") || */ (collision_[map_name][(int) x/16 +(((int) y/16 -1)*34)]==8 && trainer.facingDirection=="Up") || (collision_[map_name][(int) x/16 -1+((int) y/16 *34)]==8 && trainer.facingDirection=="Left") || (collision_[map_name][(int) x/16 +1+((int) y/16 *34)]==8 && trainer.facingDirection=="Right")){
+    if ( /* (collision_[map_name][(int) x/16 +(((int) y/16 +1)*34)]==8 && trainer.facingDirection=="Down") || */ (collision_[map_name][(int) x/16 +(((int) y/16 -1)*34)]==8 && trainer.facingDirection=="Up") || (collision_[map_name][(int) x/16 -1+((int) y/16 *34)]==8 && trainer.facingDirection=="Left") || (collision_[map_name][(int) x/16 +1+((int) y/16 *34)]==8 && trainer.facingDirection=="Right")){
         if ((event.type == sf::Event::KeyPressed)&&((event.key.code == sf::Keyboard::D))){
             if(trainer.state != "Shopping"){
                 trainer.state = "Speaking";
@@ -434,26 +434,16 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
         window.draw(background4_2);
     }
     
-    //movingFlower(window, 176, 176);
+    /* movingFlower(window, 176, 176); */
     openDoorS(window, trainer);
 
-    vector<Npc*> draw_before;
-    vector<Npc*> draw_after;
-    for (auto const& np : npcs[map_name]) 
-    {
+    for (auto const& np : npcs[map_name]) {
         sf::Vector2f pos2 = (*np).getPos();
-        if(pos.y>=pos2.y){ //draw before
-            draw_before.push_back(np);
-        }
-        else{
-            draw_after.push_back(np);
-        }
-    }
-    for (auto const& np : draw_before){
-        sf::Vector2f pos_before = (*np).getPos();
-        if (trainer.state == "Speaking"){
+         if(pos.y >= pos2.y)
+         {
+              if (trainer.state == "Speaking"){
                 if((*np).seller==true){
-                    if((abs(pos.y - pos_before.y) <= 32) && (abs(pos.x - pos_before.x) <= 32) ){
+                    if((abs(pos.y - pos2.y) <= 16) && (abs(pos.x - pos2.x) <= 16) ){
                         (*np).speak(window, view, trainer);
                     }
                     else{
@@ -461,7 +451,7 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
                     }
                 }
                 else{
-                    if((abs(pos.y - pos_before.y) <= 16) && (abs(pos.x - pos_before.x) <= 16) ){
+                    if((abs(pos.y - pos2.y) <= 16) && (abs(pos.x - pos2.x) <= 16) ){
                         (*np).speak(window, view, trainer);
                     }
                     else{
@@ -473,15 +463,16 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
             else {
             (*np).draw(window);
             }
+         }
     }
-
     trainer.draw(window, event, view);
-    //Then we draw the next npcs
-    for (auto const& np : draw_after){
-        sf::Vector2f pos_after = (*np).getPos();
-        if (trainer.state == "Speaking"){
+    for (auto const& np : npcs[map_name]) {
+        sf::Vector2f pos2 = (*np).getPos();
+         if(pos.y < pos2.y)
+         {
+              if (trainer.state == "Speaking"){
                 if((*np).seller==true){
-                    if((abs(pos.y - pos_after.y) <= 32) && (abs(pos.x - pos_after.x) <= 32) ){
+                    if((abs(pos.y - pos2.y) <= 16) && (abs(pos.x - pos2.x) <= 16) ){
                         (*np).speak(window, view, trainer);
                     }
                     else{
@@ -489,7 +480,7 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
                     }
                 }
                 else{
-                    if((abs(pos.y - pos_after.y) <= 16) && (abs(pos.x - pos_after.x) <= 16) ){
+                    if((abs(pos.y - pos2.y) <= 16) && (abs(pos.x - pos2.x) <= 16) ){
                         (*np).speak(window, view, trainer);
                     }
                     else{
@@ -501,11 +492,9 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
             else {
             (*np).draw(window);
             }
+         }
     }
-
-
-
-
+   
     if (alpha > 0 && state == "start"){
         initialisation(window, trainer, view);
     }
