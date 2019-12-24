@@ -11,11 +11,13 @@ using namespace std;
 
 class Npc {
     public:
-        Npc(string pathName, int sheetPosX, int sheetPosY, int sheetRectX,int sheetRectY, float scale, int posX, int posY, vector<string> discu, bool fixed);
+        Npc(int posX, int posY, vector<string> discu);  //Constructors for pannels
+        Npc(string pathName, int sheetPosX, int sheetPosY, int sheetRectX,int sheetRectY, float scale, int posX, int posY, vector<string> discu, bool fixed, bool seller);       
         void draw(sf::RenderWindow &window) const;
         void speak(sf::RenderWindow &window, sf::View &view, Trainer &trainer);
         sf::Vector2f getPos();
         int speakCounter;
+        bool seller;
 
     protected:
         sf::Texture textureNpc;
@@ -28,12 +30,6 @@ class Npc {
         int sheetRectX;
         int sheetRectY;
         bool fixed;
+        
 };
 
-/*  class Pannel: public Npc {
-    public:
-         Npc_Seller(): Npc() {}     //we add specificities of subclass
-        
-        
-        
-} */

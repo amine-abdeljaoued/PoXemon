@@ -21,7 +21,7 @@ class Map
         Map(sf::RenderWindow &window);
         ~Map();
         void draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Clock& clock, sf::Event &event);
-        void initialisation(sf::RenderWindow &window, Trainer &trainer);
+        void initialisation(sf::RenderWindow &window, Trainer &trainer, sf::View &view);
         void end(sf::RenderWindow &window, Trainer &trainer);
         static sf::FloatRect getViewBounds(const sf::View &view);
         void trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Event &event, sf::Clock& clock, sf::View &view);
@@ -36,6 +36,8 @@ class Map
         //TileMap background2_2;
         TileMap background3_1;
         TileMap background3_2;
+        TileMap background4_1;
+        TileMap background4_2;
         map<string, vector<Npc*> > npcs; //Map mapping each map_name to its associated vector of npcs
         
         map<string, const int*> collision_;
@@ -55,4 +57,8 @@ class Map
         //Places of Spawn of the Trainer
         int initialX;
         int initialY;
+    
+        map<string,vector<vector<int>>> spawn_dict;
+        int door = 0; //which spwaning position
+        vector<string> map_list;
 };  
