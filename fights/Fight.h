@@ -8,8 +8,6 @@
 #include "Backpack.h"
 #include "Player.h"
 #include "Opponent.h"
-/* #include "StateFunctions.h" */
-
 #include "Pokemon_Button.h"
 #include "StateFunctions.h"
 
@@ -58,16 +56,6 @@ public:
     sf::Texture BackgroundTexture;
 	sf::Sprite background;
 
-    // State 1
-    sf::RectangleShape start_button;
-	sf::RectangleShape info_button;
-	sf::Text start_text;
-	sf::Text info_text;
-	sf::Text intro_text;
-    sf::Sprite opp;
-	sf::Sprite star;
-	sf::Texture star_texture;
-
     // States 2,5,6
     float deltaTime;
     sf::Clock clock;
@@ -75,14 +63,16 @@ public:
     sf::Time elapsed;
     sf::Clock clock2;
     sf::Time elapsed2;
-	    // For the player
+	
+    // For the player
 	sf::Clock attack_1_clock;
 	sf::Clock attack_2_clock;
 	sf::Clock attack_3_clock;
 	sf::Time attack_1_time;
 	sf::Time attack_2_time;
 	sf::Time attack_3_time;
-	    // For the opponent
+	
+    // For the opponent
 	sf::Clock attack_1_clock_opp;
 	sf::Clock attack_2_clock_opp;
 	sf::Clock attack_3_clock_opp;

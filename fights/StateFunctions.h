@@ -9,20 +9,33 @@
 
 class StateFunctions1 {
 public:
-    // objects used for countdown
+    // all
+    void initialise(Opponent& opponent, Player& player, sf::RenderWindow& window, sf::Font& font);
+
+    // menu
+    sf::RectangleShape start_button;
+	sf::RectangleShape info_button;
+	sf::Text start_text;
+	sf::Text info_text;
+	sf::Text intro_text;
+    sf::Sprite opp;
+	sf::Sprite star;
+	sf::Texture star_texture;
+
+    void initialise_background(sf::RenderWindow& window, std::string path, sf::Sprite& background, sf::Texture& texture);
+    void initialise_buttons(sf::RenderWindow& window, sf::Font& font);
+    void draw1(sf::RenderWindow& window);
+    int update_state1(sf::RenderWindow& window, sf::Clock& clock);
+
+    // Countdown
     sf::Text text; 
     sf::Font font;
     bool draw_count;
-    int max_char_size = 150; // how big our countdown is
+    int max_char_size = 150; // how big our fountsize of the countdown is
 
-    void initialise_background(sf::RenderWindow& window, std::string path, sf::Sprite& background, sf::Texture& texture);
-    void initialise_buttons(sf::RectangleShape& start_button, sf::RectangleShape& info_button, sf::RenderWindow& window, sf::Font& font, sf::Text& start_text,
-                            sf::Text& info_text, sf::Text& intro_text, sf::Sprite& opp, sf::Sprite& star, sf::Texture& star_texture);
     void initialise_countdown(sf::RenderTarget& window); 
-    void draw1(sf::RenderWindow& window, sf::RectangleShape& shape1, sf::RectangleShape& shape2, sf::Text& text1, sf::Text& text2,
-            sf::Text& text3, sf::Sprite& sprite, sf::Sprite& bg );
-    void draw_blurry_background(sf::RenderWindow& window, sf::Sprite& background, sf::RectangleShape box, Backpack& bag, Player& player, Opponent& opponent, sf::Shader*shader);
-    int update_state1(sf::RenderWindow& window, sf::RectangleShape& start_button, sf::RectangleShape& info_button, sf::Sprite& star, sf::Clock& clock);
+    void draw_blurry_background(sf::RenderWindow& window, sf::Sprite& background, sf::RectangleShape box, Backpack& bag, Player& player, 
+            Opponent& opponent, sf::Shader*shader);
     int countdown(sf::RenderWindow& window, float deltatime, sf::Time time); // shows the countdown
     void shrink_text(sf::Text& text, float deltatime); 
 };

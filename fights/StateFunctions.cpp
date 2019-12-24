@@ -1,6 +1,15 @@
 
 #include "StateFunctions.h"
 
+void StateFunctions1::initialise(Opponent& opponent, Player& player, sf::RenderWindow& window, sf::Font& font){
+	opp = opponent.sprite;
+    intro_text.setString("You are about to fight " + opponent.name);
+    initialise_buttons(window, font);
+	initialise_countdown(window);
+	opponent.health.update();
+	player.health.update();
+}
+
 void StateFunctions1::initialise_background(sf::RenderWindow& window, std::string path, sf::Sprite& background, sf::Texture& texture){
 	// Function that sets up our background to be the same size as the window
 	// Need to initialise the sprite and texture of the background before though
@@ -21,8 +30,7 @@ void StateFunctions1::initialise_background(sf::RenderWindow& window, std::strin
   	}
 }
 
-void StateFunctions1::initialise_buttons(sf::RectangleShape& start_button, sf::RectangleShape& info_button, sf::RenderWindow& window, sf::Font& font, sf::Text& start_text,
-                            sf::Text& info_text, sf::Text& intro_text, sf::Sprite& opp, sf::Sprite& star, sf::Texture& star_texture){
+void StateFunctions1::initialise_buttons(sf::RenderWindow& window, sf::Font& font){
 	// Window size
 	float x = window.getSize().x;
 	float y = window.getSize().y;
@@ -86,15 +94,14 @@ void StateFunctions1::initialise_buttons(sf::RectangleShape& start_button, sf::R
 	opp.move(x/2 + xoffset, y/2 + yoffset3);
 }
 
-void StateFunctions1::draw1(sf::RenderWindow& window, sf::RectangleShape& shape1, sf::RectangleShape& shape2, sf::Text& text1, sf::Text& text2,
-    		sf::Text& text3, sf::Sprite& sprite, sf::Sprite& bg ){
-	window.draw(shape1);
-	window.draw(shape2);
-	window.draw(text1);
-	window.draw(text2);
-	window.draw(text3);
-	window.draw(bg);
-	window.draw(sprite);
+void StateFunctions1::draw1(sf::RenderWindow& window){
+	window.draw(start_button);
+	window.draw(info_button);
+	window.draw(start_text);
+	window.draw(info_text);
+	window.draw(intro_text);
+	window.draw(star);
+	window.draw(opp);
 }
 
 void StateFunctions1::draw_blurry_background(sf::RenderWindow& window, sf::Sprite& background, sf::RectangleShape box, Backpack& bag, Player& player, 
@@ -106,7 +113,7 @@ void StateFunctions1::draw_blurry_background(sf::RenderWindow& window, sf::Sprit
 	window.draw(box);
 }
 
-int StateFunctions1::update_state1(sf::RenderWindow& window, sf::RectangleShape& start_button, sf::RectangleShape& info_button, sf::Sprite& star, sf::Clock& clock){
+int StateFunctions1::update_state1(sf::RenderWindow& window, sf::Clock& clock){
     //Rotate star
     star.rotate(2); 
     // Buttons go red when hovering
@@ -132,7 +139,7 @@ int StateFunctions1::update_state1(sf::RenderWindow& window, sf::RectangleShape&
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
 				clock.restart();
 				return 10;
-				// different state entirely...
+				// should go to "how to play"
 			}
 		}
 		else {
@@ -162,48 +169,48 @@ void StateFunctions1::shrink_text(sf::Text& text, float deltatime){
 
 int StateFunctions1::countdown(sf::RenderWindow& window, float deltatime, sf::Time time){
 	 /*  Idea: 
-            Number shows large for 0.5s
-            Number shrinks for 0.4s
-            Not shown for 0.1s (smoother looking)
-            After 4s enter game mode
-        */
-        if ((0.5 < time.asSeconds())&&(time.asSeconds() <= 0.9)){
-            shrink_text(text, deltatime);
-        }
-        else if ((0.9 < time.asSeconds())&&(time.asSeconds() <= 1)){
-            draw_count = false;
-        }
-        else if ((time.asSeconds()>1)&&(time.asSeconds()<=1.5)){
-            draw_count = true;
-            text.setCharacterSize(max_char_size);
-            text.setString("2");
-        }
-        else if ((time.asSeconds()>1.5) && (time.asSeconds()<1.9)){
-            shrink_text(text, deltatime);
-        }
-        else if ((1.9 < time.asSeconds())&&(time.asSeconds() <= 2)){
-            draw_count = false;
-        }
-        else if ((time.asSeconds()>2)&&(time.asSeconds()<=2.5)){
-            draw_count = true;
-            text.setCharacterSize(max_char_size);
-            text.setString("1");
-        }
-        else if ((time.asSeconds()>2.5)&&(time.asSeconds()<=2.9)){
-            shrink_text(text, deltatime);
-        }
-        else if ((2.9 < time.asSeconds())&&(time.asSeconds() <= 3)){
-            draw_count = false;
-        }
-        else if ((time.asSeconds()>3)&&(time.asSeconds()<=4)){
-            draw_count = true;
-            text.setCharacterSize(max_char_size);
-            text.setString("Go!");
-        }
-        else if (time.asSeconds()>4){
-            return 2;
-        }
-		return 10;
+		Number shows large for 0.5s
+		Number shrinks for 0.4s
+		Not shown for 0.1s (smoother looking)
+		After 4s enter game mode
+	*/
+	if ((0.5 < time.asSeconds())&&(time.asSeconds() <= 0.9)){
+		shrink_text(text, deltatime);
+	}
+	else if ((0.9 < time.asSeconds())&&(time.asSeconds() <= 1)){
+		draw_count = false;
+	}
+	else if ((time.asSeconds()>1)&&(time.asSeconds()<=1.5)){
+		draw_count = true;
+		text.setCharacterSize(max_char_size);
+		text.setString("2");
+	}
+	else if ((time.asSeconds()>1.5) && (time.asSeconds()<1.9)){
+		shrink_text(text, deltatime);
+	}
+	else if ((1.9 < time.asSeconds())&&(time.asSeconds() <= 2)){
+		draw_count = false;
+	}
+	else if ((time.asSeconds()>2)&&(time.asSeconds()<=2.5)){
+		draw_count = true;
+		text.setCharacterSize(max_char_size);
+		text.setString("1");
+	}
+	else if ((time.asSeconds()>2.5)&&(time.asSeconds()<=2.9)){
+		shrink_text(text, deltatime);
+	}
+	else if ((2.9 < time.asSeconds())&&(time.asSeconds() <= 3)){
+		draw_count = false;
+	}
+	else if ((time.asSeconds()>3)&&(time.asSeconds()<=4)){
+		draw_count = true;
+		text.setCharacterSize(max_char_size);
+		text.setString("Go!");
+	}
+	else if (time.asSeconds()>4){
+		return 2;
+	}
+	return 10;
 }
 
 //------------------------------------------------------------------------------------------------------------
@@ -338,9 +345,6 @@ void StateFunctions56::initialize_state7(bool won, sf::Text& lost_fight, sf::Fon
 	lost_fight.setOrigin(lost_fight.getGlobalBounds().width/2, lost_fight.getGlobalBounds().height );
 	lost_fight.setPosition(window.getSize().x /2, window.getSize().y / 2);
 }
-
-
-
 
 void StateFunctions56::initialize_state_8(Pokemon& poke, sf::Font& font, sf::Text& text_fainted, sf::RenderWindow& window) {
 	
