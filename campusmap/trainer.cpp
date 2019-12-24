@@ -20,7 +20,7 @@ Trainer::Trainer( float Speed, int sheetRect, int sizeAnim)
 
     (spritePlayer).setTextureRect(sf::IntRect(2,2,sheetRect,sheetRect));
     //spritePlayer.setScale(sf::Vector2f(0.50f, 0.50f));
-    spritePlayer.setPosition(264, 272);
+    //spritePlayer.setPosition(264, 272);
 
     playerMovementSpeed = Speed;
     this->sheetRect = sheetRect;
@@ -28,6 +28,8 @@ Trainer::Trainer( float Speed, int sheetRect, int sizeAnim)
     speedSprite = 0;
 
     font.loadFromFile("Fonts/sansation.ttf");
+    
+    fish = true;
 }
 
 void Trainer::draw(sf::RenderWindow &window, sf::Event &event, sf::View &view){

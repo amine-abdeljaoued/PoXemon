@@ -42,10 +42,9 @@
      
      Trainer Arthur(playerMovementSpeed, sheetRect, sizeAnim);
      Map map1(window);
-          
+        
      while (window.isOpen())
      {
-         
          sf::Event event;
          window.pollEvent(event);
          if ((event.type == sf::Event::KeyPressed)&&((event.key.code == sf::Keyboard::P))) if(openbackpck()==1) window.close();
