@@ -46,11 +46,7 @@ void Fight::initialise(char& mode, Backpack& pbag, Backpack& popponent_bag, Play
 
     // for state 1
     state = 1;
-	opp = (*popponent).sprite;
-    intro_text.setString("You are about to fight " + (*popponent).name);
-    
-    functions1.initialise_buttons(start_button, info_button, window, font, start_text, info_text, intro_text, opp, star, star_texture);
-	functions1.initialise_countdown(window);
+	functions1.initialise(*popponent, *player, window, font);
 
     // states 2,5,6
     deltaTime = 0.0f;
@@ -69,16 +65,16 @@ int Fight::update(sf::RenderWindow& window){
 	attack_3_time = attack_3_clock.getElapsedTime();
 
 	if (state==1){ // Initial game menu 
-		state = functions1.update_state1(window, start_button, info_button, star, clock_regenerate_bullets);
+		state = functions1.update_state1(window, clock_regenerate_bullets);
 		window.clear();
 		window.draw(background);
-		functions1.draw1(window, start_button, info_button, start_text, info_text, intro_text, opp, star);
+		functions1.draw1(window);
 		// we should be able to choose our pokemon...
 	}
 
 	else if (state==10){ // countdown
 		state = functions1.countdown(window, deltaTime, elapsed);
-		window.clear(sf::Color::White);
+		window.clear();
 		functions1.draw_blurry_background(window, background, box, bag, *pplayer, *popponent, &shader);
 		window.draw(functions1.text);
 	}
