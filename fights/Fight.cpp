@@ -21,9 +21,7 @@ Fight::Fight(sf::RenderWindow& window){
 	running_sprite.setOrigin(running_sprite.getLocalBounds().width / 2, running_sprite.getLocalBounds().height / 2);
     running_sprite.setPosition(window.getSize().x *2/ 3, window.getSize().y / 2);
 
-	// shader + box for blur effect
-	box.setSize(sf::Vector2f(window.getSize().x, window.getSize().y));
-    box.setFillColor(sf::Color(0,0,0,64));
+	// shader for blur effect
     if(!shader.loadFromFile("Blur2.frag", sf::Shader::Fragment)){std::cout<<"no shader"<<std::endl;}
     shader.setUniform("offsetFactor", sf::Vector2f(0,0.003));
 }
@@ -75,7 +73,7 @@ int Fight::update(sf::RenderWindow& window){
 	else if (state==10){ // countdown
 		state = functions1.countdown(window, deltaTime, elapsed);
 		window.clear();
-		functions1.draw_blurry_background(window, background, box, bag, *pplayer, *popponent, &shader);
+		functions1.draw_blurry_background(window, background, bag, *pplayer, *popponent, &shader);
 		window.draw(functions1.text);
 	}
 
@@ -168,7 +166,7 @@ int Fight::update(sf::RenderWindow& window){
 
 		//draw stuff
 		window.clear(sf::Color::Blue);
-		functions1.draw_blurry_background(window, background, box, bag, *pplayer, *popponent, &shader);
+		functions1.draw_blurry_background(window, background, bag, *pplayer, *popponent, &shader);
 
 		//draw the menu
 		//maybe we should wait a few seconds before drawing this
@@ -208,7 +206,7 @@ int Fight::update(sf::RenderWindow& window){
 						(*popponent).sprite, groundY);
 
 		window.clear(sf::Color::Blue);
-		functions1.draw_blurry_background(window, background, box, bag, *pplayer, *popponent, &shader);
+		functions1.draw_blurry_background(window, background, bag, *pplayer, *popponent, &shader);
 
 		int index = (*popponent).index;
 		//you are about to fight + 'opponent'
@@ -259,7 +257,7 @@ int Fight::update(sf::RenderWindow& window){
 						(*popponent).sprite, groundY);
 		//draw stuff
 		window.clear(sf::Color::Blue);
-		functions1.draw_blurry_background(window, background, box, bag, *pplayer, *popponent, &shader);
+		functions1.draw_blurry_background(window, background, bag, *pplayer, *popponent, &shader);
 
 
 		window.draw(wonlost);
@@ -285,7 +283,7 @@ int Fight::update(sf::RenderWindow& window){
 						(*popponent).sprite, groundY);
 		//draw stuff
 		window.clear(sf::Color::Blue);
-		functions1.draw_blurry_background(window, background, box, bag, *pplayer, *popponent, &shader);
+		functions1.draw_blurry_background(window, background, bag, *pplayer, *popponent, &shader);
 
 		window.draw(text_fainted);
 		//to be completed

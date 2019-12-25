@@ -34,7 +34,7 @@ public:
     int max_char_size = 150; // how big our fountsize of the countdown is
     
     void initialise_countdown(sf::RenderTarget& window); 
-    void draw_blurry_background(sf::RenderWindow& window, sf::Sprite& background, sf::RectangleShape box, Backpack& bag, Player& player, 
+    void draw_blurry_background(sf::RenderWindow& window, sf::Sprite& background, Backpack& bag, Player& player, 
             Opponent& opponent, sf::Shader*shader);
     int countdown(sf::RenderWindow& window, float deltatime, sf::Time time); // shows the countdown
     void shrink_text(sf::Text& text, float deltatime); 

@@ -49,7 +49,6 @@ public:
 
     // Used for blurring
     sf::Shader shader;
-    sf::RectangleShape box;
 
     // Visuals for always
     sf::Font font;
