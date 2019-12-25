@@ -38,13 +38,11 @@ Backpack::Backpack(){
     masterball.setPosition(120,150);
     
     new_Superball.ball.setPosition(150,150);
-    
+}
 
-    }
-
-    void Backpack::set_opponent(Opponent* opponent) {
-        this->opponent = opponent;
-    }
+void Backpack::set_opponent(Opponent* opponent) {
+    this->opponent = opponent;
+}
 
     void Backpack::Pokeball_shoot(float& deltaTime, sf::RenderWindow& window, sf::Clock &clock2, sf::Time & elapsed2){
         
@@ -220,11 +218,11 @@ void Backpack::draw(sf::RenderWindow &target) const {
         target.draw(new_Normalball.ball);
     }
     if(new_Superball.in_air){
-                target.draw(new_Superball.ball);
-            }
+        target.draw(new_Superball.ball);
+    }
     if(new_Masterball.in_air){
-                target.draw(new_Masterball.ball);
-            }
+        target.draw(new_Masterball.ball);
+    }
     
     target.draw(clickbox);
     target.draw(normalball);
@@ -232,22 +230,22 @@ void Backpack::draw(sf::RenderWindow &target) const {
     target.draw(masterball);
 }
 
-void Backpack::draw(sf::RenderWindow &target, sf::Shader* shader) const {
+void Backpack::draw(sf::RenderTexture& texture) const {
     
     if(new_Normalball.in_air){
-        target.draw(new_Normalball.ball, shader);
+        texture.draw(new_Normalball.ball);
     }
     if(new_Superball.in_air){
-                target.draw(new_Superball.ball, shader);
-            }
+        texture.draw(new_Superball.ball);
+    }
     if(new_Masterball.in_air){
-                target.draw(new_Masterball.ball, shader);
-            }
-    
-    target.draw(clickbox, shader);
-    target.draw(normalball, shader);
-    target.draw(superball, shader);
-    target.draw(masterball, shader);
+        texture.draw(new_Masterball.ball);
+    }
+
+    texture.draw(clickbox);
+    texture.draw(normalball);
+    texture.draw(superball);
+    texture.draw(masterball);
 }
 
 //function that updates the backpack containt

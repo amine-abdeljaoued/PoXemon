@@ -25,7 +25,7 @@ Fight::Fight(sf::RenderWindow& window){
 	box.setSize(sf::Vector2f(window.getSize().x, window.getSize().y));
     box.setFillColor(sf::Color(0,0,0,64));
     if(!shader.loadFromFile("Blur2.frag", sf::Shader::Fragment)){std::cout<<"no shader"<<std::endl;}
-    shader.setUniform("offsetFactor", sf::Vector2f(0,0.007));
+    shader.setUniform("offsetFactor", sf::Vector2f(0,0.003));
 }
 
 void Fight::initialise(char& mode, Backpack& pbag, Backpack& popponent_bag, Player* player, Opponent* opponent, sf::RenderWindow& window){

@@ -9,10 +9,10 @@ void Opponent::draw(sf::RenderWindow& target) {
 	//unhandeled exception here !
 }
 
-void Opponent::draw(sf::RenderWindow& target, sf::Shader* shader){
-	target.draw(sprite, shader);
-	health.draw(target, shader);
-	bullets.draw(target, shader);
+void Opponent::draw(sf::RenderTexture& texture){
+	texture.draw(sprite);
+	health.draw(texture);
+	bullets.draw(texture);
 }
 
 void Opponent::update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clock, sf::Time& elapsed, sf::Time& time1, 
