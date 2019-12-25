@@ -17,7 +17,7 @@ public:
 	void draw(sf::RenderWindow& target);
 	void draw(sf::RenderTexture& texture);
 	void setPosition(float x, float y);     // the components must be moved together
-	void update(sf::Time& time1, sf::Time& time2, sf::Time& time3, sf::Clock& clock1, sf::Clock& clock2, sf::Clock& clock3);
+	void update1(sf::Clock& clock1);
 	void initialise();
 	void initial_state();
 
