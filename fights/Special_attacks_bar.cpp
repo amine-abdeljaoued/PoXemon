@@ -3,8 +3,8 @@
 
 Special_Attacks_Bar::Special_Attacks_Bar() {
 	attack1_available = true;
-	attack1_time = 5; // We initialise how long these take - arbitrary
-	regeneration1_time = 12;
+	attack1_time = 3; // We initialise how long these take - arbitrary
+	regeneration1_time = 3;
 	shooting1 = false;
 	shooting2 = false;
 	shooting3 = false;
@@ -86,17 +86,16 @@ void Special_Attacks_Bar::initial_state(){
 	attack1_available = true;
 }
 
-void Special_Attacks_Bar::update(sf::Time& time1, sf::Time& time2, sf::Time& time3, sf::Clock& clock1, sf::Clock& clock2, sf::Clock& clock3) {
-	//std::cout<<time1.asSeconds()<<std::endl;
-	// std::cout<<regenerating1<< " < R, S >" << shooting1 << std::endl;
-	if ((regenerating1)&&(time1.asSeconds()>= regeneration1_time)){ // we have regenerated
-		// std::cout<<"Regenerating"<<std::endl;
+void Special_Attacks_Bar::update1(sf::Clock& clock1) {
+
+	sf::Time time = clock1.getElapsedTime();
+
+	if ((regenerating1)&&(time.asSeconds()>= regeneration1_time)){ // we have regenerated
 		regenerating1 = false;
 		initial_state();
 	}
-	else if ((regenerating1)&&(time1.asSeconds() < regeneration1_time)){
-		// std::cout<<"Finished Regenerating"<<std::endl;
-		float height = boxsize * time1.asSeconds() /regenerating1;
+	else if ((regenerating1)&&(time.asSeconds() < regeneration1_time)){
+		float height = boxsize * time.asSeconds() /regenerating1;
 		timer_rect.setSize(sf::Vector2f(boxsize,height));
 		timer_rect.setFillColor(sf::Color(171, 227, 255));
 		attack_1_sprite.setTexture(attack_1_texture_bw);
@@ -104,9 +103,8 @@ void Special_Attacks_Bar::update(sf::Time& time1, sf::Time& time2, sf::Time& tim
 		// blue bar must grow
 		// sprite b&w
 	}
-	else if ((shooting1)&&(time1.asSeconds() < attack1_time)){
-		// std::cout<<"Shooting and my time is ok"<<std::endl;
-		float height = boxsize - (boxsize * time1.asSeconds() /regenerating1);
+	else if ((shooting1)&&(time.asSeconds() < attack1_time)){
+		float height = boxsize - (boxsize * time.asSeconds() /regenerating1);
 		timer_rect.setSize(sf::Vector2f(boxsize,height));
 		timer_rect.setFillColor(sf::Color(219, 88, 88));
 		attack_1_sprite.setTexture(attack_1_texture_bw);
@@ -114,9 +112,8 @@ void Special_Attacks_Bar::update(sf::Time& time1, sf::Time& time2, sf::Time& tim
 		// sprite in color
 		// red bar must decrease (function of 1-time1) : reddish : (230, 87, 87)
 	}
-	else if ((shooting1)&&(time1.asSeconds() >= attack1_time)){
+	else if ((shooting1)&&(time.asSeconds() >= attack1_time)){
 		// we cannot shoot and must change to regeneration
-		// std::cout<<"Shooting and my time is run out"<<std::endl;
 		shooting1 = false;
 		regenerating1 = true;
 		clock1.restart();

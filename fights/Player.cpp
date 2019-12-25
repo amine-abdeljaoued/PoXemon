@@ -24,6 +24,7 @@ void Player::update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clock
 				sf::Time& elapsed, sf::Time& attack1, sf::Time& attack2, sf::Time& attack3, 
 				sf::Clock& clock1, sf::Clock& clock2, sf::Clock& clock3, float& groundY) {   // Movement is dependant on time not on frame rate
 									// This means that we can have smooth movement over multiple frames, instead of static movement per each frame
+	std::cout<<"Player"<<std::endl;
 	velocityX = 0.0f;
 	//Left and right movement
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
@@ -48,6 +49,12 @@ void Player::update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clock
 	if (! sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 		bullets.was_released = true;
 	}
+	if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))&&(bullets.attacksbar.attack1_available)){
+        bullets.attack_type = 1;
+        bullets.attacksbar.attack1_available = false;
+        bullets.attacksbar.shooting1 = true;
+        clock1.restart();
+    }
 
 	std::cout<<deltaTime<<std::endl;
 	int i = bullets.update(window, deltaTime, clock, elapsed, attack1, attack2, attack3, clock1, clock2, clock3, (*enemy).sprite, groundY);

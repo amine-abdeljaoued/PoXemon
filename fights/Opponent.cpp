@@ -17,6 +17,7 @@ void Opponent::draw(sf::RenderTexture& texture){
 
 void Opponent::update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clock, sf::Time& elapsed, sf::Time& time1, 
 					sf::Time& time2, sf::Time& time3, sf::Clock& clock1, sf::Clock& clock2, sf::Clock& clock3, float& groundY){
+	std::cout<<"Opp"<<std::endl;
 	//Movement
     	velocityX = 0.0f;
 		velocityX = direction * speed;

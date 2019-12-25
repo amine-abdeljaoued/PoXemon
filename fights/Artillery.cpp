@@ -106,22 +106,13 @@ int Artillery::update(sf::RenderWindow& window, float& deltaTime, sf::Clock& clo
                 sf::Time& attack2, sf::Time& attack3, sf::Clock& clock1, sf::Clock& clock2, sf::Clock& clock3, 
                 const sf::Sprite & opponent_sprite, float& groundY){
 	int res = 0;
-    // update which type of attack we are in: other atttacks to be implemented
-    // Press 1 and can access SA1
-    if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))&&(attacksbar.attack1_available)){
-        attack_type = 1;
-        attacksbar.attack1_available = false;
-        attacksbar.shooting1 = true;
-        clock1.restart();
-    }
     // If we're not shooting in any of the special attacks we must be in normal attack
-    if ((!attacksbar.shooting1)&&(attacksbar.shooting2)&&(attacksbar.shooting3)){
+    if ((!attacksbar.shooting1)&&(!attacksbar.shooting2)&&(!attacksbar.shooting3)){
         attack_type = 0;
     }
 
 	std::list<int> to_delete;//indices of the bullets to delete
 	//we will erase bullets after the loop (since otherwise we would modify the vector bullets)
-
     for (int  i = 0; i < bullets.size(); i++) {
         //Check if the bullets are offscreen
         if ((*(bullets[i])).offscreen(window)){
@@ -144,7 +135,7 @@ int Artillery::update(sf::RenderWindow& window, float& deltaTime, sf::Clock& clo
         }
     }
     // Update the special attacks bar
-    attacksbar.update(attack1, attack2, attack3, clock1, clock2, clock3);
+    attacksbar.update1(clock1);
 
 	//delete offscreen or collided bullets
 	for (auto it = to_delete.cbegin(); it != to_delete.cend(); it++) {
