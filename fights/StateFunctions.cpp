@@ -104,7 +104,7 @@ void StateFunctions1::draw1(sf::RenderWindow& window){
 	window.draw(opp);
 }
 
-void StateFunctions1::draw_blurry_background(sf::RenderWindow& window, sf::Sprite& background, sf::RectangleShape box, Backpack& bag, Player& player, 
+void StateFunctions1::draw_blurry_background(sf::RenderWindow& window, sf::Sprite& background, Backpack& bag, Player& player, 
 			Opponent& opponent, sf::Shader* shader){
 	// we create a new texture with all the objects on the screen
 	sf::RenderTexture texture;
@@ -114,7 +114,6 @@ void StateFunctions1::draw_blurry_background(sf::RenderWindow& window, sf::Sprit
     bag.draw(texture);
     player.draw(texture);
 	opponent.draw(texture);
-	texture.draw(box);
     texture.display();
 
 	// turn the texture into a sprite which we draw with the shader

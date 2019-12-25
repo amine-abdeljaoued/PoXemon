@@ -51,11 +51,11 @@ void Special_Attacks_Bar::initialise(){
 	
 	// Set up rectangles
 	boxsize = 90; // NB CHANGE ACCORDING TO WINDOW SIZE
-    base_rect.setFillColor(sf::Color(191,191,191)); // grey
+    base_rect.setFillColor(sf::Color(192,192,192)); 
     base_rect.setOutlineThickness(5);
     base_rect.setOutlineColor(sf::Color::Black);
     base_rect.setSize(sf::Vector2f(boxsize,boxsize));
-    timer_rect.setFillColor(sf::Color(171, 227, 255)); // blueish: you can use this reddish: (230, 87, 87)
+    timer_rect.setFillColor(sf::Color(114, 228, 110)); // green: available
     timer_rect.setSize(sf::Vector2f(boxsize,boxsize));
 
 	// Change origins
@@ -66,11 +66,12 @@ void Special_Attacks_Bar::initialise(){
 	xpos = 100;
 	ypos = 550;
 	setPosition(xpos, ypos);//might change it 
+
 }
 
 void Special_Attacks_Bar::setPosition(float x, float y) {
-	base_rect.setPosition(x, y);
-	timer_rect.setPosition(x, y);
+	base_rect.move(x, y);
+	timer_rect.move(x, y);
 	attack_1_sprite.setPosition(x + base_rect.getGlobalBounds().width / 2, y + base_rect.getGlobalBounds().height / 2);
 	
 	// Set the key to be centered at the top right of the base rectangle
@@ -79,45 +80,47 @@ void Special_Attacks_Bar::setPosition(float x, float y) {
 }
 
 void Special_Attacks_Bar::initial_state(){
-	base_rect.setFillColor(sf::Color(191,191,191)); 	// grey
+	base_rect.setFillColor(sf::Color(192,192,192)); // grey
     base_rect.setSize(sf::Vector2f(boxsize,boxsize));
-    timer_rect.setFillColor(sf::Color(171, 227, 255)); 	// blueis
+    timer_rect.setFillColor(sf::Color(114, 228, 110)); 	// green
     timer_rect.setSize(sf::Vector2f(boxsize,boxsize));
+	attack_1_sprite.setTexture(attack_1_texture);
 	attack1_available = true;
 }
 
 void Special_Attacks_Bar::update1(sf::Clock& clock1) {
-
+	/* The idea:
+	We want the timer bar to grow upwards as we use time, and shrink downwards as its regenerating
+	To do this we make the timer bar do the opposite
+	Because movement relates to top corner
+	So shrinking timer bar reveals more of the base rect
+	*/
 	sf::Time time = clock1.getElapsedTime();
-
-	if ((regenerating1)&&(time.asSeconds()>= regeneration1_time)){ // we have regenerated
-		regenerating1 = false;
-		initial_state();
-	}
-	else if ((regenerating1)&&(time.asSeconds() < regeneration1_time)){
-		float height = boxsize * time.asSeconds() /regenerating1;
+	if ((shooting1)&&(time.asSeconds() < attack1_time)){ 
+		// in shooting mode, time to shoot decreases, decreasing red bar, colored sprite
+		float height = boxsize * time.asSeconds() / attack1_time;
 		timer_rect.setSize(sf::Vector2f(boxsize,height));
-		timer_rect.setFillColor(sf::Color(171, 227, 255));
-		attack_1_sprite.setTexture(attack_1_texture_bw);
-		// we are regenerating
-		// blue bar must grow
-		// sprite b&w
+		base_rect.setFillColor(sf::Color(219, 88, 88)); // red
+		timer_rect.setFillColor(sf::Color(192,192,192)); // grey
 	}
-	else if ((shooting1)&&(time.asSeconds() < attack1_time)){
-		float height = boxsize - (boxsize * time.asSeconds() /regenerating1);
-		timer_rect.setSize(sf::Vector2f(boxsize,height));
-		timer_rect.setFillColor(sf::Color(219, 88, 88));
-		attack_1_sprite.setTexture(attack_1_texture_bw);
-		// we are attacking
-		// sprite in color
-		// red bar must decrease (function of 1-time1) : reddish : (230, 87, 87)
-	}
-	else if ((shooting1)&&(time.asSeconds() >= attack1_time)){
+	else if ((shooting1)&&(time.asSeconds() >= attack1_time)){ 
 		// we cannot shoot and must change to regeneration
 		shooting1 = false;
 		regenerating1 = true;
 		clock1.restart();
-		// set picture to b&w
+		attack_1_sprite.setTexture(attack_1_texture_bw);
+	}
+	else if ((regenerating1)&&(time.asSeconds() < regeneration1_time)){ 
+		// regenerating SA1, blue bar grows, sprite b&w
+		float height = boxsize - (boxsize * time.asSeconds() /regeneration1_time);
+		timer_rect.setSize(sf::Vector2f(boxsize,height));
+		base_rect.setFillColor(sf::Color(114, 228, 110)); // green
+		timer_rect.setFillColor(sf::Color(192,192,192)); // grey
+	
+	}
+	else if ((regenerating1)&&(time.asSeconds()>= regeneration1_time)){ // we have regenerated, now available again
+		regenerating1 = false;
+		initial_state();
 	}
 }
 
