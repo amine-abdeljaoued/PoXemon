@@ -132,9 +132,9 @@ void Special_Attacks_Bar::draw(sf::RenderWindow& target){
 	target.draw(key1);
 }
 
-void Special_Attacks_Bar::draw(sf::RenderWindow& target, sf::Shader* shader){
-	target.draw(base_rect);
-	target.draw(timer_rect);
-	target.draw(attack_1_sprite, shader);
-	target.draw(key1, shader);
+void Special_Attacks_Bar::draw(sf::RenderTexture& texture){
+	texture.draw(base_rect);
+	texture.draw(timer_rect);
+	texture.draw(attack_1_sprite);
+	texture.draw(key1);
 }

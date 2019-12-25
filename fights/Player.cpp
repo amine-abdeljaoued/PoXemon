@@ -10,13 +10,13 @@ void Player::draw(sf::RenderWindow& target) {
 	}
 }
 
-void Player::draw(sf::RenderWindow& target, sf::Shader* shader){
-	target.draw(sprite, shader);
-	health.draw(target, shader);
-	bullets.draw(target, shader);
+void Player::draw(sf::RenderTexture& texture){
+	texture.draw(sprite);
+	health.draw(texture);
+	bullets.draw(texture);
 	if (health.health > 0) {
-		bullets.bulletbar.draw(target, shader);
-		bullets.attacksbar.draw(target, shader);
+		bullets.bulletbar.draw(texture);
+		bullets.attacksbar.draw(texture);
 	}
 }
 

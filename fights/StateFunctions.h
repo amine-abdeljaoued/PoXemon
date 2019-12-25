@@ -32,7 +32,7 @@ public:
     sf::Font font;
     bool draw_count;
     int max_char_size = 150; // how big our fountsize of the countdown is
-
+    
     void initialise_countdown(sf::RenderTarget& window); 
     void draw_blurry_background(sf::RenderWindow& window, sf::Sprite& background, sf::RectangleShape box, Backpack& bag, Player& player, 
             Opponent& opponent, sf::Shader*shader);

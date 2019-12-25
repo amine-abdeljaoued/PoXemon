@@ -14,7 +14,7 @@ public:
     ~Artillery();
     bool was_released; // this is used to shoot only one bullet per click
     void draw(sf::RenderWindow& target) ;
-    void draw(sf::RenderWindow& target, sf::Shader* shader) ;
+    void draw(sf::RenderTexture& texture) ;
     // new_shot is for the player
     void new_click(float& x, float& y, const sf::FloatRect& bounds, sf::RenderWindow& window, const sf::Vector2i& mouse);
     void new_shot(float& x, float& y, const sf::FloatRect& bounds, sf::RenderWindow& window, const sf::Vector2i& mouse);

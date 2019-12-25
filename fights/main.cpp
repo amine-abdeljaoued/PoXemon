@@ -43,7 +43,7 @@ int main ()
 	opponent_bag.backpack_pokemons[2] = &opoke3;
 
 	Player* player = new Player(10.f, groundY, 200.f, 500.f, poke1);//by default, we take the first pokemon of the backpack
-																	//do we want to be able to choose our pokemon at the beginning of the fight?
+																			//do we want to be able to choose our pokemon at the beginning of the fight?
 	Opponent* opponent = new Opponent(1000.f, groundY, 200.f, 800.f, opoke1);
 
 	//ACTUAL MAIN: now for the fights...

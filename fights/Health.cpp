@@ -37,6 +37,7 @@ Healthbar::Healthbar(){
     healthbar.setSize(sf::Vector2f(120,15));
     setPosition(50,50);                     // Both bars and the heart must move together
     update();
+
 }
 
 int Healthbar::getHealth(){
@@ -91,11 +92,11 @@ void Healthbar::draw(sf::RenderWindow& target) const {
     target.draw(level_text);
 } 
 
-void Healthbar::draw(sf::RenderWindow& target, sf::Shader* shader) const {
-    target.draw(bar, shader);
-    target.draw(outline);
-    target.draw(healthbar);
-    target.draw(heart, shader);
-    target.draw(name_text);
-    target.draw(level_text);
+void Healthbar::draw(sf::RenderTexture& texture) const {
+    texture.draw(bar);
+    texture.draw(outline);
+    texture.draw(healthbar);
+    texture.draw(name_text);
+    texture.draw(level_text);
+    texture.draw(heart);
 }

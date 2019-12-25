@@ -106,11 +106,20 @@ void StateFunctions1::draw1(sf::RenderWindow& window){
 
 void StateFunctions1::draw_blurry_background(sf::RenderWindow& window, sf::Sprite& background, sf::RectangleShape box, Backpack& bag, Player& player, 
 			Opponent& opponent, sf::Shader* shader){
-	window.draw(background, shader); // draw objects of the fight with a blur
-	bag.draw(window, shader);
-	player.draw(window, shader);
-	opponent.draw(window, shader);
-	window.draw(box);
+	// we create a new texture with all the objects on the screen
+	sf::RenderTexture texture;
+    texture.create(window.getSize().x, window.getSize().y);
+    texture.clear();
+    texture.draw(background);
+    bag.draw(texture);
+    player.draw(texture);
+	opponent.draw(texture);
+	texture.draw(box);
+    texture.display();
+
+	// turn the texture into a sprite which we draw with the shader
+    sf::Sprite sprite(texture.getTexture());
+    window.draw(sprite, shader);
 }
 
 int StateFunctions1::update_state1(sf::RenderWindow& window, sf::Clock& clock){
@@ -206,6 +215,9 @@ int StateFunctions1::countdown(sf::RenderWindow& window, float deltatime, sf::Ti
 		draw_count = true;
 		text.setCharacterSize(max_char_size);
 		text.setString("Go!");
+		text.setPosition(0,0);	// centres the 'go' (different size to the numbers)
+		text.setOrigin(text.getLocalBounds().width/2, text.getLocalBounds().height);
+    	text.move(window.getSize().x/2 , 2*window.getSize().y/5);
 	}
 	else if (time.asSeconds()>4){
 		return 2;

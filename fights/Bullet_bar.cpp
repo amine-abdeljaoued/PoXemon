@@ -61,7 +61,7 @@ void BulletBar::draw(sf::RenderWindow& target){
 	target.draw(nb_text);
 }
 
-void BulletBar::draw(sf::RenderWindow& target, sf::Shader* shader){
-	target.draw(bullet_sprite, shader);
-	target.draw(nb_text, shader);
+void BulletBar::draw(sf::RenderTexture& texture){
+	texture.draw(bullet_sprite);
+	texture.draw(nb_text);
 }

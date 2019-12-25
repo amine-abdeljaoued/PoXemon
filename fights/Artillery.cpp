@@ -27,9 +27,9 @@ void Artillery::draw(sf::RenderWindow& target)  {
 	} 
 }
 
-void Artillery::draw(sf::RenderWindow& target, sf::Shader* shader) {
+void Artillery::draw(sf::RenderTexture& texture) {
     for (unsigned i = 0; i < bullets.size(); i++) {
-        target.draw((*bullets[i]).bullet, shader);
+        texture.draw((*bullets[i]).bullet);
 	} 
 }
 

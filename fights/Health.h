@@ -9,7 +9,7 @@ public:
     void setHealth(int a);          // Sets health and calls update
 	void decrease(int i);
     void draw(sf::RenderWindow& target) const;
-    void draw(sf::RenderWindow& target, sf::Shader* shader) const;
+    void draw(sf::RenderTexture& texture) const;
     void setPosition(float x, float y);     // the three components of the health bar must be moved together
     void update();                  // When health changes, this function is called to update the bar visually
 
@@ -28,12 +28,15 @@ public:
     sf::Sprite bar;          
     sf::Texture bar_pic;
 
-    //Text
+    // Text
     int level;
     std::string name;
     sf::Font font;
 	sf::Text name_text;
     sf::Text level_text;
 
-    
+    // For the shaders
+    // sf::RenderTexture rendertexture;
+    // void setupForShader(sf::RenderWindow& target);
+
 };
