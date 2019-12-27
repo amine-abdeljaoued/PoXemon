@@ -33,6 +33,7 @@ public:
                     // 5 = we died -> choose another or quit
                     // 6 = opponent died
                     // 7 = no more pokemons -> go to hospital/shop
+                    // 8 = how to play menu
                     // 9 = clicked start -> choose pokemon to play with
                     // 10 = countdown
 
