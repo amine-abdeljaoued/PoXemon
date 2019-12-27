@@ -46,7 +46,7 @@ void StateFunctions1::initialise_buttons(sf::RenderWindow& window, sf::Font& fon
     info_button.setSize(sf::Vector2f(x/5,y/5));
 
     //Sprites
-    if (!star_texture.loadFromFile("Images/12star.png")){ std::cout << "could not load" << std::endl;}
+    if (!star_texture.loadFromFile("Images/12star.png")){ std::cout << "star could not load" << std::endl;}
     star_texture.loadFromFile("Images/12star.png");
     star.setTexture(star_texture);
     star.setScale(sf::Vector2f(0.75, 0.75)); // How to make it relate to window size???
@@ -226,9 +226,6 @@ int StateFunctions1::countdown(sf::RenderWindow& window, float deltatime, sf::Ti
 
 //------------------------------------------------------------------------------------------------------------
 
-#pragma once
-#include "Player.h"
-
 void StateFunctions56::fall(Pokemon& eevee, float& groundY, float& deltaTime) {//make player fall if it is still in the air
 	if (eevee.y < groundY) {
 
@@ -255,7 +252,7 @@ void StateFunctions56::initialize_state_5_6(char game_mode, Pokemon poke, sf::Fo
 	}else{
 		text_fainted.setString(poke.enemy->name + " fainted!");
 	}
-
+	std::cout<<"strings set"<<std::endl;
 	//text elements
 	choose_pokemon.setFont(font);
 	text_fainted.setFont(font);
@@ -272,7 +269,7 @@ void StateFunctions56::initialize_state_5_6(char game_mode, Pokemon poke, sf::Fo
 		leave_fight.setCharacterSize(30);
 		leave_fight.setOrigin(leave_fight.getGlobalBounds().width / 2, leave_fight.getGlobalBounds().height / 2);
 	}
-	
+	std::cout<<"text elements setup"<<std::endl;
 	//set their positions.
 	int placement = 3;
 	if (game_mode == 't') placement = 2;
@@ -280,15 +277,15 @@ void StateFunctions56::initialize_state_5_6(char game_mode, Pokemon poke, sf::Fo
 	choose_pokemon.setPosition(target.getSize().x / placement, target.getSize().y /4);
 	text_fainted.setPosition(target.getSize().x / 2, target.getSize().y / 9);
 	leave_fight.setPosition(target.getSize().x *2/3, target.getSize().y / 4);
-
+	std::cout<<"positions set"<<std::endl;
 	//set position of the buttons
 	buttons[0]->setPosition(target.getSize().x / placement, target.getSize().y * 7/16 );
 	buttons[1]->setPosition(target.getSize().x / placement, target.getSize().y * 9/16 );
 	buttons[2]->setPosition(target.getSize().x / placement, target.getSize().y * 11/16 );
-
+	std::cout<<"buttons set"<<std::endl;
 	//update life of the pokemon on its button
 	buttons[poke.index]->setHealth(poke.health.health);
-
+	std::cout<<"life on button set"<<std::endl;
 }
 
 void const StateFunctions56::draw_state_5_6(char game_mode,  sf::Font& font, sf::Text& text_fainted, sf::Text choose_pokemon, sf::Text leave_fight, sf::RenderWindow& target, Pokemon_Button* buttons[], sf::Sprite& running_sprite) {

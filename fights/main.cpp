@@ -51,7 +51,6 @@ int main ()
 	Fight fight(window);
 	char mode = 't'; // this is decided before
 	fight.initialise(mode, bag, opponent_bag, player, opponent, window);
-	std::cout<<fight.bag.backpack_pokemons[0]-> health<<std::endl;
 
 // ------------------------------------------------------------------------------------------------
 	// run the program as long as the window is open
