@@ -5,6 +5,7 @@ void StateFunctions1::initialise(Opponent& opponent, Player& player, sf::RenderW
 	opp = opponent.sprite;
     intro_text.setString("You are about to fight " + opponent.name);
     initialise_buttons(window, font);
+	initialise_howto(window);
 	initialise_countdown(window);
 	opponent.health.update();
 	player.health.update();
@@ -28,6 +29,30 @@ void StateFunctions1::initialise_background(sf::RenderWindow& window, std::strin
 		background.setTexture(texture);
 		background.setScale(ScaleX, ScaleY);	//Set scale.  
   	}
+}
+
+void StateFunctions1::initialise_howto(sf::RenderWindow& window){
+
+	if(!how_texture.loadFromFile("Images/howto.png")){std::cout<<"how to didn't load"<<std::endl;}
+	if(!quit_texture.loadFromFile("Images/quit.png")){std::cout<<"quit button didn't load"<<std::endl;}
+
+	sf::Vector2u TextureSize = how_texture.getSize(); 	//Get size of texture.
+	sf::Vector2u TextureSize1 = quit_texture.getSize(); 
+	sf::Vector2u WindowSize = window.getSize();      //Get size of window.
+
+	float ScaleY = (float) WindowSize.y / TextureSize.y; //Calculate scale.
+	float Scale2 = (float) WindowSize.y / TextureSize1.y;
+
+	how_to.setTexture(how_texture);
+	quit.setTexture(quit_texture);
+	how_to.setScale(5*ScaleY/6, 5*ScaleY/6);	//Set scale.
+	quit.setScale(Scale2/10, Scale2/10);
+
+	how_to.setOrigin(how_to.getLocalBounds().width/2, how_to.getLocalBounds().height/2);
+	quit.setOrigin(quit.getLocalBounds().width/2, quit.getLocalBounds().height/2);
+	how_to.move(window.getSize().x/2, window.getSize().y/2);
+	quit.move(window.getSize().x/2 + how_to.getGlobalBounds().width/2,
+			window.getSize().y/2 - how_to.getGlobalBounds().height/2 + quit.getGlobalBounds().height/5);
 }
 
 void StateFunctions1::initialise_buttons(sf::RenderWindow& window, sf::Font& font){
@@ -121,6 +146,11 @@ void StateFunctions1::draw_blurry_background(sf::RenderWindow& window, sf::Sprit
     window.draw(sprite, shader);
 }
 
+void StateFunctions1::draw_how_to(sf::RenderWindow& window){
+	window.draw(how_to);
+	window.draw(quit);
+}
+
 int StateFunctions1::update_state1(sf::RenderWindow& window, sf::Clock& clock){
     //Rotate star
     star.rotate(2); 
@@ -146,7 +176,7 @@ int StateFunctions1::update_state1(sf::RenderWindow& window, sf::Clock& clock){
 			info_button.setFillColor(sf::Color(255,99,99));
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
 				clock.restart();
-				return 10;
+				return 8;
 				// should go to "how to play"
 			}
 		}
@@ -155,6 +185,18 @@ int StateFunctions1::update_state1(sf::RenderWindow& window, sf::Clock& clock){
 		}
 		return 1;
     }
+}
+
+int StateFunctions1::howtoplay(sf::RenderWindow& window, float& deltaTime){
+
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+		sf::Vector2i mousepixel = sf::Mouse::getPosition(window);
+		sf::Vector2f mouse_pos = window.mapPixelToCoords(mousepixel);
+		if (quit.getGlobalBounds().contains(mouse_pos)){
+			return 1; 
+			}
+	}
+	return 8;
 }
 
 void StateFunctions1::initialise_countdown(sf::RenderTarget& window){

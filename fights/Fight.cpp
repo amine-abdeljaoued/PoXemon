@@ -67,6 +67,12 @@ int Fight::update(sf::RenderWindow& window){
 		// we should be able to choose our pokemon...
 	}
 
+	else if (state==8){ // how to menu
+		state = functions1.howtoplay(window, deltaTime);
+		window.draw(background, &shader);
+		functions1.draw_how_to(window);
+	}
+
 	else if (state==10){ // countdown
 		state = functions1.countdown(window, deltaTime, elapsed);
 		window.clear();

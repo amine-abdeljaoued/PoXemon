@@ -27,6 +27,16 @@ public:
     void draw1(sf::RenderWindow& window);
     int update_state1(sf::RenderWindow& window, sf::Clock& clock);
 
+    // How to play
+    sf::Texture how_texture;
+    sf::Texture quit_texture;
+    sf::Sprite how_to;
+    sf::Sprite quit;
+
+    void initialise_howto(sf::RenderWindow& window);
+    int howtoplay(sf::RenderWindow& window, float& deltaTime);
+    void draw_how_to(sf::RenderWindow& window);
+
     // Countdown
     sf::Text text; 
     sf::Font font;
