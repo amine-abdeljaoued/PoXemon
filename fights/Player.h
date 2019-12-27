@@ -11,8 +11,7 @@ public:
 	};
 	
     void update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clock, 
-				sf::Time& elapsed, sf::Time& attack1, sf::Time& attack2, sf::Time& attack3, 
-				sf::Clock& clock1, sf::Clock& clock2, sf::Clock& clock3, float& groundY);
+				sf::Time& elapsed, sf::Clock& clock1, sf::Clock& clock2, sf::Clock& clock3, float& groundY);
     void move(float& deltaTime);
     void draw(sf::RenderWindow& target);
 	void draw(sf::RenderTexture& texture);

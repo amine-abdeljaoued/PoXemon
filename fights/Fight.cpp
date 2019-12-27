@@ -23,7 +23,7 @@ Fight::Fight(sf::RenderWindow& window){
 
 	// shader for blur effect
     if(!shader.loadFromFile("Blur2.frag", sf::Shader::Fragment)){std::cout<<"no shader"<<std::endl;}
-    shader.setUniform("offsetFactor", sf::Vector2f(0,0.003));
+    shader.setUniform("offsetFactor", sf::Vector2f(0,0.001));
 }
 
 void Fight::initialise(char& mode, Backpack& pbag, Backpack& popponent_bag, Player* player, Opponent* opponent, sf::RenderWindow& window){
@@ -58,9 +58,6 @@ int Fight::update(sf::RenderWindow& window){
     deltaTime = clock.restart().asSeconds();
     elapsed = clock_regenerate_bullets.getElapsedTime();
     elapsed2 = clock2.getElapsedTime();
-	attack_1_time = attack_1_clock.getElapsedTime();
-	attack_2_time = attack_2_clock.getElapsedTime();
-	attack_3_time = attack_3_clock.getElapsedTime();
 
 	if (state==1){ // Initial game menu 
 		state = functions1.update_state1(window, clock_regenerate_bullets);
@@ -78,19 +75,27 @@ int Fight::update(sf::RenderWindow& window){
 	}
 
 	else if (state==2){ // fight
-		(*pplayer).update(deltaTime, window, clock, elapsed, attack_1_time, 
-						attack_2_time, attack_3_time, attack_1_clock, attack_2_clock, attack_3_clock, groundY);
-		(*popponent).update(deltaTime, window, clock, elapsed, attack_1_time_opp, 
-						attack_2_time_opp, attack_3_time_opp, attack_1_clock_opp, attack_2_clock_opp, attack_3_clock_opp, groundY);
-
+		(*pplayer).update(deltaTime, window, clock_regenerate_bullets, elapsed, attack_1_clock, attack_2_clock, attack_3_clock, groundY);
+		(*popponent).update(deltaTime, window, clock_regenerate_bullets, elapsed,
+							attack_1_clock_opp, attack_2_clock_opp, attack_3_clock_opp, groundY);
+		std::cout<<"Fight: state 2: updated okemons"<<std::endl;
+		(bag).Pokeball_shoot(deltaTime, window, clock2, elapsed2);
+		window.clear(sf::Color::Blue);
+		window.draw(background);
+		(bag).draw(window);
+		(*pplayer).draw(window);
+		(*popponent).draw(window);
+		std::cout<<"drew everything"<<std::endl;
 		//player dies
 		if ((*pplayer).health.health <= 0) {
-
+			std::cout<<"Fight: state 2: player died"<<std::endl;
 			(bag).backpack_pokemons[(*pplayer).index]->health = 0; //set health of the corresponding backpack pokemon to 0
 
 			if (!(bag).alive_pokemons()) { // no more alive pokemons
 				if (game_mode == 't') { //lost the duel
+					std::cout<<"Fight: state 2: player died: trainer, no more pokemons"<<std::endl;
 					functions56.initialize_state7(false, wonlost, font, window);
+					std::cout<<".... initiased 7"<<std::endl;
 					won = false;
 					state = 7;
 				}
@@ -102,18 +107,23 @@ int Fight::update(sf::RenderWindow& window){
 			}
 
 			else {
+				std::cout<<"more pokemons"<<std::endl;
+				std::cout<<"Player healh: "<<(*(pplayer)).health.health <<std::endl;
+				std::cout<<"Opp healh: "<<(*(popponent)).health.health <<std::endl;
 				functions56.initialize_state_5_6(game_mode, (*pplayer), font, text_fainted, choose_pokemon, leave_fight, window, poke_buttons, running_sprite);
+				std::cout<<"initialised 56"<<std::endl;
 				state = 5;
 			}
 		}
 
 		//opponent dies
 		if ((*popponent).health.health <= 0) {
+			std::cout<<"Fight: state 2: opp died"<<std::endl;
 			(opponent_bag).backpack_pokemons[(*popponent).index]->health = 0;
 			(bag).backpack_pokemons[(*pplayer).index]->health = (*pplayer).health.health;//update health of our pokemon in the backpack
 
 			if (game_mode == 't') { //if we are playing against a trainer
-
+				std::cout<<"Fight: state 2: opp died: trainer mode"<<std::endl;
 				if (! (opponent_bag).alive_pokemons()) { //all of the trainer's pokemons are dead -> we won the duel
 					std::cout << "you won !!!" << std::endl;
 					functions56.initialize_state7(true, wonlost, font, window);
@@ -122,8 +132,10 @@ int Fight::update(sf::RenderWindow& window){
 				}
 
 				else { //the trainer still has pokemons -> he takes the next one
+					std::cout<<"Fight: state 2: opp died: trainer mode: trainer has some pokemons left"<<std::endl;
 					functions56.initialize_state_5_6(game_mode, (*pplayer), font, text_fainted, choose_pokemon, leave_fight, window, poke_buttons, running_sprite);
 					//initialize_next_opp(); // create a text + image : you are about to fight 'next opponent'
+					std::cout<<"Fight: state 2: opp died: trainer mode:....: initialised 5/6"<<std::endl;
 					state = 6;
 				}
 
@@ -141,13 +153,6 @@ int Fight::update(sf::RenderWindow& window){
 			}
 
 		}
-
-		(bag).Pokeball_shoot(deltaTime, window, clock2, elapsed2);
-		window.clear(sf::Color::Blue);
-		window.draw(background);
-		(bag).draw(window);
-		(*pplayer).draw(window);
-		(*popponent).draw(window);
 	}
 
 	else if (state == 5) {//player dies
@@ -158,11 +163,10 @@ int Fight::update(sf::RenderWindow& window){
 		functions56.fall((*popponent), groundY, deltaTime);
 
 		//bullets that were shot before the end continue their movement
-		(*pplayer).bullets.update(window, deltaTime, clock, elapsed, attack_1_time, attack_2_time, attack_3_time, attack_1_clock, 
+		(*pplayer).bullets.update(window, deltaTime, clock_regenerate_bullets, elapsed, attack_1_clock, 
 							attack_2_clock, attack_3_clock, (*popponent).sprite, groundY);
-		(*popponent).bullets.update(window, deltaTime, clock, elapsed, attack_1_time_opp, 
-						attack_2_time_opp, attack_3_time_opp, attack_1_clock_opp, attack_2_clock_opp, attack_3_clock_opp,
-						(*popponent).sprite, groundY);
+		(*popponent).bullets.update(window, deltaTime, clock_regenerate_bullets, elapsed, attack_1_clock_opp, 
+							attack_2_clock_opp, attack_3_clock_opp, (*popponent).sprite, groundY);
 
 		//draw stuff
 		window.clear(sf::Color::Blue);
@@ -199,11 +203,10 @@ int Fight::update(sf::RenderWindow& window){
 		(*popponent).death_disappear(deltaTime);
 		functions56.fall((*pplayer), groundY, deltaTime);
 		functions56.fall((*popponent), groundY, deltaTime);
-		(*pplayer).bullets.update(window, deltaTime, clock, elapsed, attack_1_time, attack_2_time, attack_3_time, attack_1_clock, 
+		(*pplayer).bullets.update(window, deltaTime, clock_regenerate_bullets, elapsed, attack_1_clock, 
 							attack_2_clock, attack_3_clock, (*popponent).sprite, groundY);
-		(*popponent).bullets.update(window, deltaTime, clock, elapsed, attack_1_time_opp, 
-						attack_2_time_opp, attack_3_time_opp, attack_1_clock_opp, attack_2_clock_opp, attack_3_clock_opp,
-						(*popponent).sprite, groundY);
+		(*popponent).bullets.update(window, deltaTime, clock_regenerate_bullets, elapsed, 
+							attack_1_clock_opp, attack_2_clock_opp, attack_3_clock_opp, (*popponent).sprite, groundY);
 
 		window.clear(sf::Color::Blue);
 		functions1.draw_blurry_background(window, background, bag, *pplayer, *popponent, &shader);
@@ -250,11 +253,10 @@ int Fight::update(sf::RenderWindow& window){
 		functions56.fall((*pplayer), groundY, deltaTime);
 		functions56.fall((*popponent), groundY, deltaTime);
 		//bullets that were shot before the end continue their movement
-		(*pplayer).bullets.update(window, deltaTime, clock, elapsed, attack_1_time, attack_2_time, attack_3_time, attack_1_clock, 
+		(*pplayer).bullets.update(window, deltaTime, clock_regenerate_bullets, elapsed, attack_1_clock, 
 							attack_2_clock, attack_3_clock, (*popponent).sprite, groundY);
-		(*popponent).bullets.update(window, deltaTime, clock, elapsed, attack_1_time_opp, 
-						attack_2_time_opp, attack_3_time_opp, attack_1_clock_opp, attack_2_clock_opp, attack_3_clock_opp,
-						(*popponent).sprite, groundY);
+		(*popponent).bullets.update(window, deltaTime, clock_regenerate_bullets, elapsed, attack_1_clock_opp, 
+							attack_2_clock_opp, attack_3_clock_opp,(*popponent).sprite, groundY);
 		//draw stuff
 		window.clear(sf::Color::Blue);
 		functions1.draw_blurry_background(window, background, bag, *pplayer, *popponent, &shader);
@@ -276,11 +278,10 @@ int Fight::update(sf::RenderWindow& window){
 		functions56.fall((*pplayer), groundY, deltaTime);
 		functions56.fall((*popponent), groundY, deltaTime);
 		//bullets that were shot before the end continue their movement
-		(*pplayer).bullets.update(window, deltaTime, clock, elapsed, attack_1_time, attack_2_time, attack_3_time, attack_1_clock, 
+		(*pplayer).bullets.update(window, deltaTime, clock_regenerate_bullets, elapsed, attack_1_clock, 
 							attack_2_clock, attack_3_clock, (*popponent).sprite, groundY);
-		(*popponent).bullets.update(window, deltaTime, clock, elapsed, attack_1_time_opp, 
-						attack_2_time_opp, attack_3_time_opp, attack_1_clock_opp, attack_2_clock_opp, attack_3_clock_opp,
-						(*popponent).sprite, groundY);
+		(*popponent).bullets.update(window, deltaTime, clock_regenerate_bullets, elapsed, attack_1_clock_opp, 
+							attack_2_clock_opp, attack_3_clock_opp, (*popponent).sprite, groundY);
 		//draw stuff
 		window.clear(sf::Color::Blue);
 		functions1.draw_blurry_background(window, background, bag, *pplayer, *popponent, &shader);

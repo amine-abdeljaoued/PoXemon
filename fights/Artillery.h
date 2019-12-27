@@ -21,8 +21,7 @@ public:
     void new_shot_special_attack1(float& x, float& y, const sf::FloatRect& bounds, sf::RenderWindow& window, const sf::Vector2i& mouse);
     // new_shot_opp is for the opponent
     void new_shot_opp(float& x, float& y, const sf::FloatRect& bounds, sf::RenderWindow& window, float& xshoot, float& yshoot);
-    int update(sf::RenderWindow& window, float& deltaTime, sf::Clock& clock, sf::Time& elapsed, sf::Time& attack1, 
-                sf::Time& attack2, sf::Time& attack3, sf::Clock& clock1, sf::Clock& clock2, sf::Clock& clock3, 
+    int update(sf::RenderWindow& window, float& deltaTime, sf::Clock& clock, sf::Time& elapsed, sf::Clock& clock1, sf::Clock& clock2, sf::Clock& clock3, 
                 const sf::Sprite & opponent_sprite, float& groundY);
     void initialise();
 

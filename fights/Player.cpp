@@ -21,10 +21,10 @@ void Player::draw(sf::RenderTexture& texture){
 }
 
 void Player::update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clock, 
-				sf::Time& elapsed, sf::Time& attack1, sf::Time& attack2, sf::Time& attack3, 
-				sf::Clock& clock1, sf::Clock& clock2, sf::Clock& clock3, float& groundY) {   // Movement is dependant on time not on frame rate
+				sf::Time& elapsed, sf::Clock& clock1, sf::Clock& clock2, sf::Clock& clock3, float& groundY) {   
+									// Movement is dependant on time not on frame rate
 									// This means that we can have smooth movement over multiple frames, instead of static movement per each frame
-	std::cout<<"Player"<<std::endl;
+	std::cout<<"player"<<std::endl;
 	velocityX = 0.0f;
 	//Left and right movement
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
@@ -56,8 +56,7 @@ void Player::update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clock
         clock1.restart();
     }
 
-	std::cout<<deltaTime<<std::endl;
-	int i = bullets.update(window, deltaTime, clock, elapsed, attack1, attack2, attack3, clock1, clock2, clock3, (*enemy).sprite, groundY);
+	int i = bullets.update(window, deltaTime, clock, elapsed, clock1, clock2, clock3, (*enemy).sprite, groundY);
 	if(i!=0){(*enemy).health.decrease(i);}
 
 	collision_opponent();
