@@ -142,7 +142,7 @@ void Npc::speak(sf::RenderWindow &window, sf::View &view, Trainer &trainer){
     }
 }
 
-void Npc::speakScenario(sf::RenderWindow &window, sf::View &view, Trainer &trainer, map<string,string> &scenario){
+void Npc::speakScenario(sf::RenderWindow &window, sf::View &view, Trainer &trainer, map<string,vector<string>> &scenario){
     
     if(fixed==false)
     {
@@ -171,29 +171,35 @@ void Npc::speakScenario(sf::RenderWindow &window, sf::View &view, Trainer &train
         this->draw(window);
     }
       
+    if (scenario[name][0] == "Shopping"){
+        trainer.state = "Shopping";
+        scenario.erase("seller");
+    }
     
-    text.setString(scenario[name]);
-    text.setCharacterSize(12);
-    text.setFillColor(sf::Color::Black);
-    text.setStyle(sf::Text::Bold);
-           /* sf::Vector2f viewSize = view.getSize();
-           bubble.setSize(sf::Vector2f(viewSize.x, viewSize.y/4)); */
+    else{
+        text.setString(scenario[name][0]);
+        text.setCharacterSize(12);
+        text.setFillColor(sf::Color::Black);
+        text.setStyle(sf::Text::Bold);
+               /* sf::Vector2f viewSize = view.getSize();
+               bubble.setSize(sf::Vector2f(viewSize.x, viewSize.y/4)); */
 
-    sf::FloatRect viewBounds = getViewBounds(view);
-    bubble.setPointCount(8);
-    bubble.setPoint(0, sf::Vector2f(float(viewBounds.left + 30), float(viewBounds.top + viewBounds.height - 60)));
-    bubble.setPoint(1, sf::Vector2f(float(viewBounds.left + viewBounds.height - 30), float(viewBounds.top + viewBounds.height - 60)));
-    bubble.setPoint(2, sf::Vector2f(float(viewBounds.left + viewBounds.height - 10), float(viewBounds.top + viewBounds.height - 45)));
-    bubble.setPoint(3, sf::Vector2f(float(viewBounds.left + viewBounds.height - 10), float(viewBounds.top + viewBounds.height - 25)));
-    bubble.setPoint(4, sf::Vector2f(float(viewBounds.left + viewBounds.height - 30), float(viewBounds.top + viewBounds.height - 10)));
-    bubble.setPoint(5, sf::Vector2f(float(viewBounds.left + 30), float(viewBounds.top + viewBounds.height - 10)));
-    bubble.setPoint(6, sf::Vector2f(float(viewBounds.left + 10), float(viewBounds.top + viewBounds.height - 25)));
-    bubble.setPoint(7, sf::Vector2f(float(viewBounds.left + 10), float(viewBounds.top + viewBounds.height - 45)));
-    bubble.setOutlineColor(sf::Color::Black);
-    bubble.setOutlineThickness(2.f);
-    text.setPosition(int(viewBounds.left) + 25, int(viewBounds.top + viewBounds.height - 40) );
-    window.draw(bubble);
-    window.draw(text);
+        sf::FloatRect viewBounds = getViewBounds(view);
+        bubble.setPointCount(8);
+        bubble.setPoint(0, sf::Vector2f(float(viewBounds.left + 30), float(viewBounds.top + viewBounds.height - 60)));
+        bubble.setPoint(1, sf::Vector2f(float(viewBounds.left + viewBounds.height - 30), float(viewBounds.top + viewBounds.height - 60)));
+        bubble.setPoint(2, sf::Vector2f(float(viewBounds.left + viewBounds.height - 10), float(viewBounds.top + viewBounds.height - 45)));
+        bubble.setPoint(3, sf::Vector2f(float(viewBounds.left + viewBounds.height - 10), float(viewBounds.top + viewBounds.height - 25)));
+        bubble.setPoint(4, sf::Vector2f(float(viewBounds.left + viewBounds.height - 30), float(viewBounds.top + viewBounds.height - 10)));
+        bubble.setPoint(5, sf::Vector2f(float(viewBounds.left + 30), float(viewBounds.top + viewBounds.height - 10)));
+        bubble.setPoint(6, sf::Vector2f(float(viewBounds.left + 10), float(viewBounds.top + viewBounds.height - 25)));
+        bubble.setPoint(7, sf::Vector2f(float(viewBounds.left + 10), float(viewBounds.top + viewBounds.height - 45)));
+        bubble.setOutlineColor(sf::Color::Black);
+        bubble.setOutlineThickness(2.f);
+        text.setPosition(int(viewBounds.left) + 25, int(viewBounds.top + viewBounds.height - 40) );
+        window.draw(bubble);
+        window.draw(text);
+    }
     
 }
 
