@@ -15,16 +15,17 @@ class Npc {
         Npc(string name, string pathName, int sheetPosX, int sheetPosY, int sheetRectX,int sheetRectY, float scale, int posX, int posY, vector<string> discu, bool fixed, bool seller);
         void draw(sf::RenderWindow &window) const;
         void speak(sf::RenderWindow &window, sf::View &view, Trainer &trainer);
-        void speakScenario(sf::RenderWindow &window, sf::View &view, Trainer &trainer, map<string,string> &scenario);
+        void speakScenario(sf::RenderWindow &window, sf::View &view, Trainer &trainer, map<string,vector<string>> &scenario);
         sf::Vector2f getPos();
         int speakCounter;
         bool seller;
         string name;
+        vector<string> discussion;
 
     protected:
         sf::Texture textureNpc;
         sf::Sprite spriteNpc;
-        vector<string> discussion;
+        
         sf::Font font;
         sf::Text text;
         sf::ConvexShape bubble;

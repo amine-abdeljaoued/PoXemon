@@ -57,7 +57,7 @@ Map::Map(sf::RenderWindow &window)
     Npc* toto = new  Npc("toto", "Sprites/NPC2.png",0,0,60,50,0.5f,200,244,dialogue1, false, false); //Number 8 on collision map
     npcs_map1.push_back(toto);
     
-    Npc* bob = new  Npc("bob","Sprites/NPC2.png",0,0,60,50,0.5f,264,244,{"dialogue"}, false, false); //Number 8 on collision map
+    Npc* bob = new Npc("bob","Sprites/NPC2.png",0,0,60,50,0.5f,264,244,{"dialogue"}, false, false);
     npcs_map1.push_back(bob);
 
     npcs.insert(pair< string, vector<Npc*> >("first", npcs_map1));
@@ -121,8 +121,12 @@ Map::Map(sf::RenderWindow &window)
     spawn_dict.insert(pair< string, vector<vector<int> >>("forth",{{184, 160}}));
     
     //Scenario
-    scenario.insert(pair<string, string> ("bob", "Bjr"));
-    scenario.insert(pair<string, string> ("toto", "Oups"));
+    scenario.insert(pair<string, vector<string>> ("bob", {"Nice Day!","You should go to the shop to buy what you need."}));
+    scenario.insert(pair<string, vector<string>> ("seller", {"Welcome to my Shop", "My name is Ms. Linz.", "Here you can buy everything that you will need to pass the test.", "But be carefull, everything has a price!", "Shopping"}));
+
+
+    scenario.insert(pair<string, vector<string>> ("toto", {"Oups"}));
+     
 }
 
 Map::~Map()
@@ -179,7 +183,6 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
     sf::Vector2f position = trainer.spritePlayer.getPosition();
     int x = position.x + 16;
     int y = position.y + 16;
-    std::cout << collision_[map_name][(int) x/16 +( (int)y/16 *34)] << std::endl;
     //Switching map
     if (collision_[map_name][(int) x/16 +( (int)y/16 *34)] >= 100 && trainer.state == "Stop"){
         int n = collision_[map_name][(int) x/16 +( (int)y/16 *34)];
@@ -240,12 +243,19 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
 
     //Entering Speaking mode with different npcs
 
-    if ( /* (collision_[map_name][(int) x/16 +(((int) y/16 +1)*34)]==8 && trainer.facingDirection=="Down") || */ (collision_[map_name][(int) x/16 +(((int) y/16 -1)*34)]==8 && trainer.facingDirection=="Up") || (collision_[map_name][(int) x/16 -1+((int) y/16 *34)]==8 && trainer.facingDirection=="Left") || (collision_[map_name][(int) x/16 +1+((int) y/16 *34)]==8 && trainer.facingDirection=="Right")){
-        if ((event.type == sf::Event::KeyPressed)&&((event.key.code == sf::Keyboard::D))){
+    if ((event.type == sf::Event::KeyPressed)&&((event.key.code == sf::Keyboard::D))){
+        if (collision_[map_name][(int) x/16 +(((int) y/16 -1)*34)]>=60 && collision_[map_name][(int) x/16 +(((int) y/16 -1)*34)]<=69 && trainer.facingDirection=="Up"){
+            nNpc = collision_[map_name][(int) x/16 +(((int) y/16 -1)*34)] % 60;
             if(trainer.state != "Shopping"){
                 if(trainer.state == "SpeakingScenario"){
-                    scenario.erase(npcs["first"][1]->name);
-                    if (scenario.begin()->first == npcs["first"][1]->name){
+                    if(scenario[npcs[map_name][nNpc]->name].size() == 1){
+                        scenario.erase(npcs[map_name][nNpc]->name);
+                    }
+                    else{
+                        scenario[npcs[map_name][nNpc]->name].erase(scenario[npcs[map_name][nNpc]->name].begin());
+                    }
+                                        
+                    if (scenario.begin()->first == npcs[map_name][nNpc]->name){
                         trainer.state = "SpeakingScenario";
                     }
                     else{
@@ -253,23 +263,26 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
                         
                     }
                 }
-                else if (scenario.begin()->first == npcs["first"][1]->name){
+                else if (scenario.begin()->first == npcs[map_name][nNpc]->name){
                     trainer.state = "SpeakingScenario";
                 }
                 else{
                     trainer.state = "Speaking";
-                    npcs["first"][1]->speakCounter ++ ;
+                    npcs[map_name][nNpc]->speakCounter ++ ;
                 }
             }
         }
-    }
-    
-    if ( /* (collision_[map_name][(int) x/16 +(((int) y/16 +1)*34)]==8 && trainer.facingDirection=="Down") || */ (collision_[map_name][(int) x/16 +(((int) y/16 -1)*34)]==71 && trainer.facingDirection=="Up") || (collision_[map_name][(int) x/16 -1+((int) y/16 *34)]==71 && trainer.facingDirection=="Left") || (collision_[map_name][(int) x/16 +1+((int) y/16 *34)]==71 && trainer.facingDirection=="Right")){
-        if ((event.type == sf::Event::KeyPressed)&&((event.key.code == sf::Keyboard::D))){
+        else if (collision_[map_name][(int) x/16 -1+((int) y/16 *34)]>=60 && collision_[map_name][(int) x/16 -1+((int) y/16 *34)]<=69 && trainer.facingDirection=="Left"){
+            nNpc = collision_[map_name][(int) x/16 -1+((int) y/16 *34)] % 60;
             if(trainer.state != "Shopping"){
                 if(trainer.state == "SpeakingScenario"){
-                    scenario.erase(npcs["first"][2]->name);
-                    if (scenario.begin()->first == npcs["first"][2]->name){
+                   if(scenario[npcs[map_name][nNpc]->name].size() == 1){
+                        scenario.erase(npcs[map_name][nNpc]->name);
+                    }
+                    else{
+                        scenario[npcs[map_name][nNpc]->name].erase(scenario[npcs[map_name][nNpc]->name].begin());
+                    }
+                    if (scenario.begin()->first == npcs[map_name][nNpc]->name){
                         trainer.state = "SpeakingScenario";
                     }
                     else{
@@ -277,36 +290,26 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
                         
                     }
                 }
-                else if (scenario.begin()->first == npcs["first"][2]->name){
+                else if (scenario.begin()->first == npcs[map_name][nNpc]->name){
                     trainer.state = "SpeakingScenario";
                 }
                 else{
                     trainer.state = "Speaking";
-                    npcs["first"][2]->speakCounter ++ ;
+                    npcs[map_name][nNpc]->speakCounter ++ ;
                 }
             }
         }
-    }
-    
-
-    if ( collision_[map_name][(int) x/16 +(((int) y/16 -1)*34)]==25 && trainer.facingDirection=="Up" ){
-        if ((event.type == sf::Event::KeyPressed)&&((event.key.code == sf::Keyboard::D))){
-            if(trainer.state != "Shopping"){
-                trainer.state = "Speaking";
-                npcs["first"][0]->speakCounter ++ ;
-            }
-        }
-    }
-
-    
-    //The map second is the underground
-
-    if ( (collision_[map_name][(int) x/16 +(((int) y/16 -1)*34)]==9 && trainer.facingDirection=="Up") ){
-        if ((event.type == sf::Event::KeyPressed)&&((event.key.code == sf::Keyboard::D))){
+        else if (collision_[map_name][(int) x/16 +1+((int) y/16 *34)]>=60 && collision_[map_name][(int) x/16 +1+((int) y/16 *34)]<=69 && trainer.facingDirection=="Right"){
+            nNpc = collision_[map_name][(int) x/16 +1+((int) y/16 *34)] % 60;
             if(trainer.state != "Shopping"){
                 if(trainer.state == "SpeakingScenario"){
-                    scenario.erase(npcs["second"][1]->name);
-                    if (scenario.begin()->first == npcs["second"][1]->name){
+                   if(scenario[npcs[map_name][nNpc]->name].size() == 1){
+                        scenario.erase(npcs[map_name][nNpc]->name);
+                    }
+                    else{
+                        scenario[npcs[map_name][nNpc]->name].erase(scenario[npcs[map_name][nNpc]->name].begin());
+                    }
+                    if (scenario.begin()->first == npcs[map_name][nNpc]->name){
                         trainer.state = "SpeakingScenario";
                     }
                     else{
@@ -314,37 +317,17 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
                         
                     }
                 }
-                else if (scenario.begin()->first == npcs["second"][1]->name){
+                else if (scenario.begin()->first == npcs[map_name][nNpc]->name){
                     trainer.state = "SpeakingScenario";
                 }
                 else{
                     trainer.state = "Speaking";
-                    npcs["second"][1]->speakCounter ++ ;
+                    npcs[map_name][nNpc]->speakCounter ++ ;
                 }
             }
         }
     }
 
-    if ( collision_[map_name][(int) x/16 +(((int) y/16 -1)*34)]==26 && trainer.facingDirection=="Up" ){
-        if ((event.type == sf::Event::KeyPressed)&&((event.key.code == sf::Keyboard::D))){
-            if(trainer.state != "Shopping"){
-                trainer.state = "Speaking";
-                npcs["second"][0]->speakCounter ++ ;
-            }
-        }
-    }
-
-
-    if ( (collision_[map_name][(int) x/16 -1+((int) y/16 *34)]==10 && trainer.facingDirection=="Left") ){
-        if ((event.type == sf::Event::KeyPressed)&&((event.key.code == sf::Keyboard::D))){
-            if(trainer.state != "Shopping"){
-                trainer.state = "Speaking";
-                npcs["pokeShop"][0]->speakCounter ++ ;
-            }
-        }
-    }
-
-    
     //Walking
     if (trainer.state == "Walking"){
         if (collision_[map_name][(int) x/16 +( (int)y/16 *34)]==1){
