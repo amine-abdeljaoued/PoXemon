@@ -29,6 +29,7 @@ Map::Map(sf::RenderWindow &window)
     
     alpha = 255;
     state = "start";
+    door = 0;
     
     //Part 2: Creation of the collision maps
     collision_.insert(pair<string, const int*>("first", collision));
@@ -45,7 +46,7 @@ Map::Map(sf::RenderWindow &window)
     vector<Npc*> npcs_map1;
     
     vector<string> disp;
-    disp.push_back("Hello, here you can catch water pokemons");
+    disp.push_back("Here you can catch water pokemons");
     disp.push_back("Press x near the lake to fish");
     Npc* pannel1 = new Npc(288,188,disp);
     npcs_map1.push_back(pannel1);
@@ -53,8 +54,11 @@ Map::Map(sf::RenderWindow &window)
     vector<string> dialogue1;
     dialogue1.push_back("Welcome on our campus!");
     dialogue1.push_back("Start by exploring");
-    Npc* toto = new  Npc("Sprites/NPC2.png",0,0,60,50,0.5f,200,244,dialogue1, false, false); //Number 8 on collision map
+    Npc* toto = new  Npc("toto", "Sprites/NPC2.png",0,0,60,50,0.5f,200,244,dialogue1, false, false); //Number 8 on collision map
     npcs_map1.push_back(toto);
+    
+    Npc* bob = new  Npc("bob","Sprites/NPC2.png",0,0,60,50,0.5f,264,244,{"dialogue"}, false, false); //Number 8 on collision map
+    npcs_map1.push_back(bob);
 
     npcs.insert(pair< string, vector<Npc*> >("first", npcs_map1));
     
@@ -72,10 +76,11 @@ Map::Map(sf::RenderWindow &window)
     dialogue_under.push_back("Look at the nice fountain");
     dialogue_under.push_back("There is no exit here");
     dialogue_under.push_back("You just lost 2 minutes of your time");
-    Npc* digger = new Npc("Sprites/NPC1.png",15,30,42,60,0.4f,15,20,dialogue_under,true, false); //Number 9 on collision map
+    Npc* digger = new Npc("digger","Sprites/NPC1.png",15,30,42,60,0.4f,15,20,dialogue_under,true, false); //Number 9 on collision map
     npcs_underground.push_back(digger);
 
 
+    
  
 
     npcs.insert(pair<string, vector<Npc*> >("second", npcs_underground));
@@ -86,7 +91,7 @@ Map::Map(sf::RenderWindow &window)
     dialogue2.push_back("Welcome to our store!");
     dialogue2.push_back("What would you like to buy?");
     dialogue2.push_back("Shopping");
-    Npc* seller = new  Npc("Sprites/PokeInterior.png",516,548,11,18,1.2f,145,103,dialogue2, true, true); //Number 10 on collision map
+    Npc* seller = new  Npc("seller","Sprites/PokeInterior.png",516,548,11,18,1.2f,145,103,dialogue2, true, true); //Number 10 on collision map
     npcs_pokeShop.push_back(seller) ;
     npcs.insert(pair< string, vector<Npc*> >("pokeShop", npcs_pokeShop));
     
@@ -114,6 +119,10 @@ Map::Map(sf::RenderWindow &window)
     spawn_dict.insert(pair< string, vector<vector<int> >>("pokeShop",{{184, 160}}));
     //demi-lune
     spawn_dict.insert(pair< string, vector<vector<int> >>("forth",{{184, 160}}));
+    
+    //Scenario
+    scenario.insert(pair<string, string> ("bob", "Bjr"));
+    scenario.insert(pair<string, string> ("toto", "Oups"));
 }
 
 Map::~Map()
@@ -166,13 +175,13 @@ void Map::end(sf::RenderWindow &window, Trainer &trainer){
 
 
 void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Event &event, sf::Clock& clock, sf::View &view){
-    
+   
     sf::Vector2f position = trainer.spritePlayer.getPosition();
     int x = position.x + 16;
     int y = position.y + 16;
-    
+    std::cout << collision_[map_name][(int) x/16 +( (int)y/16 *34)] << std::endl;
     //Switching map
-    if (collision_[map_name][(int) x/16 +( (int)y/16 *34)] >= 100){
+    if (collision_[map_name][(int) x/16 +( (int)y/16 *34)] >= 100 && trainer.state == "Stop"){
         int n = collision_[map_name][(int) x/16 +( (int)y/16 *34)];
         if (alpha < 250 && state == "end"){
             end(window, trainer);
@@ -234,11 +243,51 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
     if ( /* (collision_[map_name][(int) x/16 +(((int) y/16 +1)*34)]==8 && trainer.facingDirection=="Down") || */ (collision_[map_name][(int) x/16 +(((int) y/16 -1)*34)]==8 && trainer.facingDirection=="Up") || (collision_[map_name][(int) x/16 -1+((int) y/16 *34)]==8 && trainer.facingDirection=="Left") || (collision_[map_name][(int) x/16 +1+((int) y/16 *34)]==8 && trainer.facingDirection=="Right")){
         if ((event.type == sf::Event::KeyPressed)&&((event.key.code == sf::Keyboard::D))){
             if(trainer.state != "Shopping"){
-                trainer.state = "Speaking";
-                npcs["first"][1]->speakCounter ++ ;
+                if(trainer.state == "SpeakingScenario"){
+                    scenario.erase(npcs["first"][1]->name);
+                    if (scenario.begin()->first == npcs["first"][1]->name){
+                        trainer.state = "SpeakingScenario";
+                    }
+                    else{
+                        trainer.state = "Stop";
+                        
+                    }
+                }
+                else if (scenario.begin()->first == npcs["first"][1]->name){
+                    trainer.state = "SpeakingScenario";
+                }
+                else{
+                    trainer.state = "Speaking";
+                    npcs["first"][1]->speakCounter ++ ;
+                }
             }
         }
     }
+    
+    if ( /* (collision_[map_name][(int) x/16 +(((int) y/16 +1)*34)]==8 && trainer.facingDirection=="Down") || */ (collision_[map_name][(int) x/16 +(((int) y/16 -1)*34)]==71 && trainer.facingDirection=="Up") || (collision_[map_name][(int) x/16 -1+((int) y/16 *34)]==71 && trainer.facingDirection=="Left") || (collision_[map_name][(int) x/16 +1+((int) y/16 *34)]==71 && trainer.facingDirection=="Right")){
+        if ((event.type == sf::Event::KeyPressed)&&((event.key.code == sf::Keyboard::D))){
+            if(trainer.state != "Shopping"){
+                if(trainer.state == "SpeakingScenario"){
+                    scenario.erase(npcs["first"][2]->name);
+                    if (scenario.begin()->first == npcs["first"][2]->name){
+                        trainer.state = "SpeakingScenario";
+                    }
+                    else{
+                        trainer.state = "Stop";
+                        
+                    }
+                }
+                else if (scenario.begin()->first == npcs["first"][2]->name){
+                    trainer.state = "SpeakingScenario";
+                }
+                else{
+                    trainer.state = "Speaking";
+                    npcs["first"][2]->speakCounter ++ ;
+                }
+            }
+        }
+    }
+    
 
     if ( collision_[map_name][(int) x/16 +(((int) y/16 -1)*34)]==25 && trainer.facingDirection=="Up" ){
         if ((event.type == sf::Event::KeyPressed)&&((event.key.code == sf::Keyboard::D))){
@@ -255,8 +304,23 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
     if ( (collision_[map_name][(int) x/16 +(((int) y/16 -1)*34)]==9 && trainer.facingDirection=="Up") ){
         if ((event.type == sf::Event::KeyPressed)&&((event.key.code == sf::Keyboard::D))){
             if(trainer.state != "Shopping"){
-                trainer.state = "Speaking";
-                npcs["second"][1]->speakCounter ++ ;
+                if(trainer.state == "SpeakingScenario"){
+                    scenario.erase(npcs["second"][1]->name);
+                    if (scenario.begin()->first == npcs["second"][1]->name){
+                        trainer.state = "SpeakingScenario";
+                    }
+                    else{
+                        trainer.state = "Stop";
+                        
+                    }
+                }
+                else if (scenario.begin()->first == npcs["second"][1]->name){
+                    trainer.state = "SpeakingScenario";
+                }
+                else{
+                    trainer.state = "Speaking";
+                    npcs["second"][1]->speakCounter ++ ;
+                }
             }
         }
     }
@@ -403,7 +467,7 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
     
     
     
-    if (map_name == "first" || map_name == "forth") fillTree(window);
+    if (map_name == "first" || map_name == "forth" || map_name == "third") fillTree(window);
      
     /* trainer.displacement(event, view); */
       
@@ -458,6 +522,25 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
                         (*np).draw(window);
                     }
                 }
+            }
+             
+            else if (trainer.state == "SpeakingScenario"){
+                if((*np).seller==true){
+                    if((abs(pos.y - pos2.y) <= 32) && (abs(pos.x - pos2.x) <= 32) ){
+                        (*np).speakScenario(window, view, trainer, scenario);
+                    }
+                    else{
+                        (*np).draw(window);
+                    }
+                }
+                else{
+                    if((abs(pos.y - pos2.y) <= 16) && (abs(pos.x - pos2.x) <= 16) ){
+                        (*np).speakScenario(window, view, trainer, scenario);
+                    }
+                    else{
+                        (*np).draw(window);
+                    }
+                }
                 
             }
             else {
@@ -487,7 +570,26 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
                         (*np).draw(window);
                     }
                 }
-                
+            }
+            
+            else if (trainer.state == "SpeakingScenario"){
+                if((*np).seller==true){
+                    if((abs(pos.y - pos2.y) <= 32) && (abs(pos.x - pos2.x) <= 32) ){
+                        (*np).speakScenario(window, view, trainer, scenario);
+                    }
+                    else{
+                        (*np).draw(window);
+                    }
+                }
+                else{
+                    if((abs(pos.y - pos2.y) <= 16) && (abs(pos.x - pos2.x) <= 16) ){
+                        (*np).speakScenario(window, view, trainer, scenario);
+                    }
+                    else{
+                        (*np).draw(window);
+                    }
+                }
+                 
             }
             else {
             (*np).draw(window);
@@ -504,10 +606,6 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
         }
         state = "end";
     }
-
-   
-    
-    
     
     this->trainerDisplacement(window, trainer,event,clock,view);
     shop.draw(window, view, event, trainer);
@@ -533,7 +631,7 @@ void Map::fillTree(sf::RenderWindow &window){
     for(int i = 0; i < 17; i++){
         for(int k = 0; k < 2; k++){
             sf::Sprite sprite;
-            (sprite).setTexture(texture_3);
+            (sprite).setTexture(texture_1);
             (sprite).setTextureRect(sf::IntRect(239 + k * 17, 324, 16, 16));
             sprite.setPosition(0 + k * 16 + i * 32, -16);
             window.draw(sprite);
@@ -544,7 +642,7 @@ void Map::fillTree(sf::RenderWindow &window){
     for(int i = 0; i < 17; i++){
         for(int k = 0; k < 2; k++){
             sf::Sprite sprite;
-            (sprite).setTexture(texture_3);
+            (sprite).setTexture(texture_1);
             (sprite).setTextureRect(sf::IntRect(239 + k * 17, 291, 16, 16));
             sprite.setPosition(0 + k * 16 + i * 32, 528);
             window.draw(sprite);
