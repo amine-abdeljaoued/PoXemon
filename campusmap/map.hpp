@@ -59,6 +59,7 @@ class Map
         int initialY;
     
         map<string,vector<vector<int>>> spawn_dict;
-        int door = 0; //which spwaning position
+        int door;//which spwaning position
         vector<string> map_list;
+        map<string, string> scenario;
 };  

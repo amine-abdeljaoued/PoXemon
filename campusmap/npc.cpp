@@ -20,7 +20,7 @@ sf::FloatRect Npc::getViewBounds(const sf::View &view)
 }
 
 
-Npc::Npc(int posX, int posY, vector<string> discu) 
+Npc::Npc(int posX, int posY, vector<string> discu)
 {
     if (!textureNpc.loadFromFile("Sprites/tileset1.png")) {
         cout << "Error loading sprite";
@@ -42,7 +42,10 @@ Npc::Npc(int posX, int posY, vector<string> discu)
 }
 
 
-Npc::Npc(string pathName, int sheetPosX, int sheetPosY, int sheetRectX,int sheetRectY, float scale, int posX, int posY, vector<string> discu, bool fixed, bool seller){
+Npc::Npc(string name, string pathName, int sheetPosX, int sheetPosY, int sheetRectX,int sheetRectY, float scale, int posX, int posY, vector<string> discu, bool fixed, bool seller){
+    
+    this->name = name;
+    
     if (!textureNpc.loadFromFile(/* resourcePath() + */ pathName)) {
         cout << "Error loading sprite";
     }
@@ -67,7 +70,7 @@ void Npc::draw(sf::RenderWindow &window) const {
     window.draw(spriteNpc);
 }
 
-void Npc::speak(sf::RenderWindow &window, sf::View &view, Trainer &trainer)  {
+void Npc::speak(sf::RenderWindow &window, sf::View &view, Trainer &trainer){
     
     if(fixed==false)
     {
@@ -96,7 +99,7 @@ void Npc::speak(sf::RenderWindow &window, sf::View &view, Trainer &trainer)  {
         this->draw(window);
     }
       
-
+    
     if (speakCounter == discussion.size()){
         if (trainer.state != "Shopping"){
             trainer.state = "Stop";
@@ -137,6 +140,61 @@ void Npc::speak(sf::RenderWindow &window, sf::View &view, Trainer &trainer)  {
                window.draw(text);
         }
     }
+}
+
+void Npc::speakScenario(sf::RenderWindow &window, sf::View &view, Trainer &trainer, map<string,string> &scenario){
+    
+    if(fixed==false)
+    {
+        if(trainer.facingDirection == "Down"){
+        (spriteNpc).setTextureRect(sf::IntRect(0,3*sheetRectY,sheetRectX,sheetRectY));
+        this->draw(window);
+        }
+    
+        if(trainer.facingDirection == "Up"){
+            (spriteNpc).setTextureRect(sf::IntRect(0,0,sheetRectX,sheetRectY));
+            this->draw(window);
+        }
+    
+        if(trainer.facingDirection == "Right"){
+            (spriteNpc).setTextureRect(sf::IntRect(0,sheetRectY,sheetRectX,sheetRectY));
+            this->draw(window);
+        }
+    
+        if(trainer.facingDirection == "Left"){
+            (spriteNpc).setTextureRect(sf::IntRect(0,2*sheetRectY,sheetRectX,sheetRectY));
+            this->draw(window);
+        }
+    }
+    
+    else{
+        this->draw(window);
+    }
+      
+    
+    text.setString(scenario[name]);
+    text.setCharacterSize(12);
+    text.setFillColor(sf::Color::Black);
+    text.setStyle(sf::Text::Bold);
+           /* sf::Vector2f viewSize = view.getSize();
+           bubble.setSize(sf::Vector2f(viewSize.x, viewSize.y/4)); */
+
+    sf::FloatRect viewBounds = getViewBounds(view);
+    bubble.setPointCount(8);
+    bubble.setPoint(0, sf::Vector2f(float(viewBounds.left + 30), float(viewBounds.top + viewBounds.height - 60)));
+    bubble.setPoint(1, sf::Vector2f(float(viewBounds.left + viewBounds.height - 30), float(viewBounds.top + viewBounds.height - 60)));
+    bubble.setPoint(2, sf::Vector2f(float(viewBounds.left + viewBounds.height - 10), float(viewBounds.top + viewBounds.height - 45)));
+    bubble.setPoint(3, sf::Vector2f(float(viewBounds.left + viewBounds.height - 10), float(viewBounds.top + viewBounds.height - 25)));
+    bubble.setPoint(4, sf::Vector2f(float(viewBounds.left + viewBounds.height - 30), float(viewBounds.top + viewBounds.height - 10)));
+    bubble.setPoint(5, sf::Vector2f(float(viewBounds.left + 30), float(viewBounds.top + viewBounds.height - 10)));
+    bubble.setPoint(6, sf::Vector2f(float(viewBounds.left + 10), float(viewBounds.top + viewBounds.height - 25)));
+    bubble.setPoint(7, sf::Vector2f(float(viewBounds.left + 10), float(viewBounds.top + viewBounds.height - 45)));
+    bubble.setOutlineColor(sf::Color::Black);
+    bubble.setOutlineThickness(2.f);
+    text.setPosition(int(viewBounds.left) + 25, int(viewBounds.top + viewBounds.height - 40) );
+    window.draw(bubble);
+    window.draw(text);
+    
 }
 
 sf::Vector2f Npc::getPos(){
