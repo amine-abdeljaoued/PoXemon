@@ -28,6 +28,7 @@ class Map
         void fillTree(sf::RenderWindow &window);
         void movingFlower(sf::RenderWindow &window, int x, int y);
         void openDoorS(sf::RenderWindow &window, Trainer &trainer);
+        void closeDoorS(sf::RenderWindow &window);
     
     private:
         TileMap background1_1;
@@ -62,6 +63,6 @@ class Map
         int door;//which spwaning position
         vector<string> map_list;
         map<string, vector<string>> scenario;
-        
+        bool enter;
         int nNpc;
 };  
