@@ -30,7 +30,6 @@ Npc::Npc(int posX, int posY, vector<string> discu)
     spriteNpc.setScale(sf::Vector2f(1.1f, 1.1f));
     spriteNpc.setPosition(posX, posY);
     fixed = true;
-    seller = false;
     discussion = discu;
     speakCounter = -1;
     if (!font.loadFromFile("Fonts/sansation.ttf")) {
@@ -42,7 +41,7 @@ Npc::Npc(int posX, int posY, vector<string> discu)
 }
 
 
-Npc::Npc(string name, string pathName, int sheetPosX, int sheetPosY, int sheetRectX,int sheetRectY, float scale, int posX, int posY, vector<string> discu, bool fixed, bool seller){
+Npc::Npc(string name, string pathName, int sheetPosX, int sheetPosY, int sheetRectX,int sheetRectY, float scale, int posX, int posY, vector<string> discu, bool fixed){
     
     this->name = name;
     
@@ -55,6 +54,8 @@ Npc::Npc(string name, string pathName, int sheetPosX, int sheetPosY, int sheetRe
     spriteNpc.setPosition(posX, posY);
     discussion = discu;
     speakCounter = -1;
+    this->sheetPosX = sheetPosX;
+    this->sheetPosY = sheetPosY;
     this->sheetRectX = sheetRectX;
     this->sheetRectY = sheetRectY;
     if (!font.loadFromFile(/* resourcePath() + */ "Fonts/sansation.ttf")) {
@@ -62,7 +63,6 @@ Npc::Npc(string name, string pathName, int sheetPosX, int sheetPosY, int sheetRe
     }
     text.setFont(font);
     this->fixed = fixed;
-    this->seller = seller; 
 }
 
 
@@ -72,31 +72,30 @@ void Npc::draw(sf::RenderWindow &window) const {
 
 void Npc::speak(sf::RenderWindow &window, sf::View &view, Trainer &trainer){
     
-    if(fixed==false)
-    {
-        if(trainer.facingDirection == "Down"){
-        (spriteNpc).setTextureRect(sf::IntRect(0,3*sheetRectY,sheetRectX,sheetRectY));
+    if (name == "seller"){
         this->draw(window);
-        }
-    
-        if(trainer.facingDirection == "Up"){
-            (spriteNpc).setTextureRect(sf::IntRect(0,0,sheetRectX,sheetRectY));
-            this->draw(window);
-        }
-    
-        if(trainer.facingDirection == "Right"){
-            (spriteNpc).setTextureRect(sf::IntRect(0,sheetRectY,sheetRectX,sheetRectY));
-            this->draw(window);
-        }
-    
-        if(trainer.facingDirection == "Left"){
-            (spriteNpc).setTextureRect(sf::IntRect(0,2*sheetRectY,sheetRectX,sheetRectY));
-            this->draw(window);
-        }
     }
     
     else{
-        this->draw(window);
+        if(trainer.facingDirection == "Down"){
+            (spriteNpc).setTextureRect(sf::IntRect(sheetPosX,sheetPosY+sheetRectY,sheetRectX,sheetRectY));
+            this->draw(window);
+            }
+        
+        if(trainer.facingDirection == "Up"){
+            (spriteNpc).setTextureRect(sf::IntRect(sheetPosX,sheetPosY,sheetRectX,sheetRectY));
+            this->draw(window);
+        }
+        
+        if(trainer.facingDirection == "Right"){
+            (spriteNpc).setTextureRect(sf::IntRect(sheetPosX,sheetPosY+2*sheetRectY,sheetRectX,sheetRectY));
+            this->draw(window);
+        }
+        
+        if(trainer.facingDirection == "Left"){
+            (spriteNpc).setTextureRect(sf::IntRect(sheetPosX + sheetRectX,sheetPosY+2*sheetRectY,-sheetRectX,sheetRectY));
+            this->draw(window);
+        }
     }
       
     
@@ -144,31 +143,30 @@ void Npc::speak(sf::RenderWindow &window, sf::View &view, Trainer &trainer){
 
 void Npc::speakScenario(sf::RenderWindow &window, sf::View &view, Trainer &trainer, map<string,vector<string>> &scenario){
     
-    if(fixed==false)
-    {
-        if(trainer.facingDirection == "Down"){
-        (spriteNpc).setTextureRect(sf::IntRect(0,3*sheetRectY,sheetRectX,sheetRectY));
+    if (name == "seller" || fixed == true){
         this->draw(window);
-        }
-    
-        if(trainer.facingDirection == "Up"){
-            (spriteNpc).setTextureRect(sf::IntRect(0,0,sheetRectX,sheetRectY));
-            this->draw(window);
-        }
-    
-        if(trainer.facingDirection == "Right"){
-            (spriteNpc).setTextureRect(sf::IntRect(0,sheetRectY,sheetRectX,sheetRectY));
-            this->draw(window);
-        }
-    
-        if(trainer.facingDirection == "Left"){
-            (spriteNpc).setTextureRect(sf::IntRect(0,2*sheetRectY,sheetRectX,sheetRectY));
-            this->draw(window);
-        }
     }
     
     else{
-        this->draw(window);
+        if(trainer.facingDirection == "Down"){
+            (spriteNpc).setTextureRect(sf::IntRect(sheetPosX,sheetPosY+sheetRectY,sheetRectX,sheetRectY));
+            this->draw(window);
+            }
+        
+        if(trainer.facingDirection == "Up"){
+            (spriteNpc).setTextureRect(sf::IntRect(sheetPosX,sheetPosY,sheetRectX,sheetRectY));
+            this->draw(window);
+        }
+        
+        if(trainer.facingDirection == "Right"){
+            (spriteNpc).setTextureRect(sf::IntRect(sheetPosX,sheetPosY+2*sheetRectY,sheetRectX,sheetRectY));
+            this->draw(window);
+        }
+        
+        if(trainer.facingDirection == "Left"){
+            (spriteNpc).setTextureRect(sf::IntRect(sheetPosX + sheetRectX,sheetPosY+2*sheetRectY,-sheetRectX,sheetRectY));
+            this->draw(window);
+        }
     }
       
     if (scenario[name][0] == "Shopping"){

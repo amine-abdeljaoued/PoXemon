@@ -12,7 +12,7 @@ using namespace std;
 class Npc {
     public:
         Npc(int posX, int posY, vector<string> discu);  //Constructors for pannels
-        Npc(string name, string pathName, int sheetPosX, int sheetPosY, int sheetRectX,int sheetRectY, float scale, int posX, int posY, vector<string> discu, bool fixed, bool seller);
+        Npc(string name, string pathName, int sheetPosX, int sheetPosY, int sheetRectX,int sheetRectY, float scale, int posX, int posY, vector<string> discu, bool fixed);
         void draw(sf::RenderWindow &window) const;
         void speak(sf::RenderWindow &window, sf::View &view, Trainer &trainer);
         void speakScenario(sf::RenderWindow &window, sf::View &view, Trainer &trainer, map<string,vector<string>> &scenario);
@@ -30,10 +30,11 @@ class Npc {
         sf::Text text;
         sf::ConvexShape bubble;
         sf::FloatRect getViewBounds(const sf::View &view);
+        int sheetPosX;
+        int sheetPosY;
         int sheetRectX;
         int sheetRectY;
         bool fixed;
-        
         
 };
 

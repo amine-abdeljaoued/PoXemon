@@ -43,7 +43,7 @@ void Trainer::setSpeed(sf::Event &event){
     if ((event.type == sf::Event::KeyPressed)&&((event.key.code == sf::Keyboard::LShift)||(event.key.code == sf::Keyboard::RShift)))
     {
         playerMovementSpeed = 4;
-        speedSprite = 170;
+        speedSprite = 340;
     }
     if ((event.type == sf::Event::KeyReleased)&&((event.key.code == sf::Keyboard::LShift)||(event.key.code == sf::Keyboard::RShift)))
     {

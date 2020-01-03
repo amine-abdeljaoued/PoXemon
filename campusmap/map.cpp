@@ -35,8 +35,9 @@ Map::Map(sf::RenderWindow &window)
     collision_.insert(pair<string, const int*>("first", collision));
     collision_.insert(pair<string, const int*>("second", collision2));
     collision_.insert(pair<string, const int*>("third", collision3));
-    collision_.insert(pair<string, const int*>("pokeShop", poke));
+    collision_.insert(pair<string, const int*>("pokeShop", pokeShopC));
     collision_.insert(pair<string, const int*>("forth", collision4));
+    collision_.insert(pair<string, const int*>("pokeCenter", pokeCenterC));
     
     map_name= "first"; //Beggining of the game
     
@@ -54,11 +55,11 @@ Map::Map(sf::RenderWindow &window)
     vector<string> dialogue1;
     dialogue1.push_back("Welcome on our campus!");
     dialogue1.push_back("Start by exploring");
-    Npc* toto = new  Npc("toto", "Sprites/NPC2.png",0,0,60,50,0.5f,200,244,dialogue1, false, false); //Number 8 on collision map
-    npcs_map1.push_back(toto);
+    npcs_map1.push_back(new  Npc("toto", "Sprites/NPC1.png",145,97,32,32,1.f,200,240,dialogue1, false));
     
-    Npc* bob = new Npc("bob","Sprites/NPC2.png",0,0,60,50,0.5f,264,244,{"dialogue"}, false, false);
-    npcs_map1.push_back(bob);
+    npcs_map1.push_back(new Npc("bob","Sprites/NPC1.png",113,97,32,32,1.f,264,240,{"dialogue"}, false));
+    
+    npcs_map1.push_back(new Npc("nerd","Sprites/NPC1.png",17,97,32,32,1.f,136,240,{"Hi"}, false));
 
     npcs.insert(pair< string, vector<Npc*> >("first", npcs_map1));
     
@@ -76,7 +77,7 @@ Map::Map(sf::RenderWindow &window)
     dialogue_under.push_back("Look at the nice fountain");
     dialogue_under.push_back("There is no exit here");
     dialogue_under.push_back("You just lost 2 minutes of your time");
-    Npc* digger = new Npc("digger","Sprites/NPC1.png",15,30,42,60,0.4f,15,20,dialogue_under,true, false); //Number 9 on collision map
+    Npc* digger = new Npc("digger","Sprites/NPC1.png",15,30,42,60,0.4f,15,20,dialogue_under,true); //Number 9 on collision map
     npcs_underground.push_back(digger);
 
 
@@ -91,7 +92,17 @@ Map::Map(sf::RenderWindow &window)
     dialogue2.push_back("Welcome to our store!");
     dialogue2.push_back("What would you like to buy?");
     dialogue2.push_back("Shopping");
-    Npc* seller = new  Npc("seller","Sprites/PokeInterior.png",516,548,11,18,1.2f,145,103,dialogue2, true, true); //Number 10 on collision map
+    Npc* seller = new  Npc("seller","Sprites/NPC1.png",497,1026,-32,32,1.f,136,96,dialogue2, true); //Number 10 on collision map
+    npcs_pokeShop.push_back(seller) ;
+    npcs.insert(pair< string, vector<Npc*> >("pokeShop", npcs_pokeShop));
+    
+    //For the PokeCenter
+    vector<Npc*> npcs_pokeCenter;
+    vector<string> dialogue3;
+    dialogue2.push_back("Welcome to our center!");
+    dialogue2.push_back("would you like us to heal our pokemon?");
+    dialogue2.push_back("Shopping");
+    Npc* healer = new  Npc("seller","Sprites/NPC1.png",497,1026,-32,32,1.f,136,96,dialogue2, true); //Number 10 on collision map
     npcs_pokeShop.push_back(seller) ;
     npcs.insert(pair< string, vector<Npc*> >("pokeShop", npcs_pokeShop));
     
@@ -115,10 +126,12 @@ Map::Map(sf::RenderWindow &window)
     spawn_dict.insert(pair< string, vector<vector<int> >>("second",{{488, 480}}));
     //Sport
     spawn_dict.insert(pair< string, vector<vector<int> >>("third",{{168, 464}}));
+    //demi-lune
+    spawn_dict.insert(pair< string, vector<vector<int> >>("forth",{{184, 176}}));
     //pokeShop
     spawn_dict.insert(pair< string, vector<vector<int> >>("pokeShop",{{184, 160}}));
-    //demi-lune
-    spawn_dict.insert(pair< string, vector<vector<int> >>("forth",{{184, 160}}));
+    //pokeCenter
+    spawn_dict.insert(pair< string, vector<vector<int> >>("pokeCenter",{{24, 32}}));
     
     //Scenario
     scenario.insert(pair<string, vector<string>> ("bob", {"Nice Day!","You should go to the shop to buy what you need."}));
@@ -180,6 +193,7 @@ void Map::end(sf::RenderWindow &window, Trainer &trainer){
 
 void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Event &event, sf::Clock& clock, sf::View &view){
    
+    
     sf::Vector2f position = trainer.spritePlayer.getPosition();
     int x = position.x + 16;
     int y = position.y + 16;
@@ -198,8 +212,8 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
             trainer.counterWalk = 0;
         }
     }
-    
-    //Entering Poke Center
+    cout << x << " " << y << endl;
+    //Entering Poke Shop
     if (collision_[map_name][(int) x/16 +(((int) y/16 -1)*34)]==51 && trainer.facingDirection=="Up" && trainer.state == "Stop" && event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::Up){
         trainer.state = "Entering";
         if (alpha < 255 && state == "end"){
@@ -207,6 +221,22 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
         }
         else{
             map_name = "pokeShop";
+            door = 0;
+            clock.restart();
+            state = "start";
+            initialisation(window, trainer, view);
+            trainer.counterWalk = 0;
+        }
+    }
+    
+    //Entering Poke Center
+    if (collision_[map_name][(int) x/16 +(((int) y/16 -1)*34)]==50 && trainer.facingDirection=="Up" && trainer.state == "Stop" && event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::Up){
+        trainer.state = "Entering";
+        if (alpha < 255 && state == "end"){
+            end(window, trainer);
+        }
+        else{
+            map_name = "pokeCenter";
             door = 0;
             clock.restart();
             state = "start";
@@ -337,13 +367,15 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
             float probagenerated = dis(gen);
             if (probagenerated<0.02) std::cout<<"POKEEEEMMMOONNN"<<std::endl;
             
-            sf::Sprite sprite;
-            (sprite).setTexture(texture_3);
-            (sprite).setTextureRect(sf::IntRect(197, 144, 16, 16));
-            int a = (int) x/16;
-            int b = (int) y/16;
-            sprite.setPosition(16 * a , 16 * b);
-            window.draw(sprite);
+            if (trainer.facingDirection == "Left" || trainer.facingDirection == "Right"){
+                sf::Sprite sprite;
+                (sprite).setTexture(texture_3);
+                (sprite).setTextureRect(sf::IntRect(197, 144, 16, 16));
+                int a = (int) x/16;
+                int b = (int) y/16;
+                sprite.setPosition(16 * a , 16 * b);
+                window.draw(sprite);
+            }
         }
     }
     
@@ -455,24 +487,30 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
     /* trainer.displacement(event, view); */
       
     sf::Vector2f pos =trainer.getPos();
-    if(map_name== "first"){
+    if (map_name== "first"){
         window.draw(background1_1); 
         window.draw(background1_2); //Both backgrounds associated to each tileset will have the same background
     }
     
-    if(map_name== "second"){
+    else if (map_name== "second"){
         window.draw(background2_1); 
 //        window.draw(background2_2);
     }
     
-        if(map_name== "third"){
+    else if (map_name== "third"){
             window.draw(background3_1);
             window.draw(background3_2);
-        }
+    }
     
-    if (map_name == "pokeShop"){
+    else if (map_name == "pokeShop"){
         pokeBuilding.setTextureRect(sf::IntRect(307,250,176,128));
         pokeBuilding.setPosition(128, 64);
+        window.draw(pokeBuilding);
+    }
+    
+    else if (map_name == "pokeCenter"){
+        pokeBuilding.setTextureRect(sf::IntRect(42,49,224,144));
+        pokeBuilding.setPosition(0, 0);
         window.draw(pokeBuilding);
     }
     
@@ -489,7 +527,7 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
          if(pos.y >= pos2.y)
          {
               if (trainer.state == "Speaking"){
-                if((*np).seller==true){
+                if((*np).name=="seller"){
                     if((abs(pos.y - pos2.y) <= 32) && (abs(pos.x - pos2.x) <= 32) ){
                         (*np).speak(window, view, trainer);
                     }
@@ -508,7 +546,7 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
             }
              
             else if (trainer.state == "SpeakingScenario"){
-                if((*np).seller==true){
+                if((*np).name=="seller"){
                     if((abs(pos.y - pos2.y) <= 32) && (abs(pos.x - pos2.x) <= 32) ){
                         (*np).speakScenario(window, view, trainer, scenario);
                     }
@@ -537,7 +575,7 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
          if(pos.y < pos2.y)
          {
               if (trainer.state == "Speaking"){
-                if((*np).seller==true){
+                if((*np).name=="seller"){
                     if((abs(pos.y - pos2.y) <= 32) && (abs(pos.x - pos2.x) <= 32) ){
                         (*np).speak(window, view, trainer);
                     }
@@ -556,7 +594,7 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
             }
             
             else if (trainer.state == "SpeakingScenario"){
-                if((*np).seller==true){
+                if((*np).name=="seller"){
                     if((abs(pos.y - pos2.y) <= 32) && (abs(pos.x - pos2.x) <= 32) ){
                         (*np).speakScenario(window, view, trainer, scenario);
                     }
