@@ -71,8 +71,7 @@ void Npc::draw(sf::RenderWindow &window) const {
 }
 
 void Npc::speak(sf::RenderWindow &window, sf::View &view, Trainer &trainer){
-    
-    if (name == "seller"){
+    if (fixed == true){
         this->draw(window);
     }
     
@@ -109,7 +108,6 @@ void Npc::speak(sf::RenderWindow &window, sf::View &view, Trainer &trainer){
     }
     
      else{
-           
            if (discussion[speakCounter] == "Shopping"){
                trainer.state = "Shopping";
            }
@@ -143,7 +141,7 @@ void Npc::speak(sf::RenderWindow &window, sf::View &view, Trainer &trainer){
 
 void Npc::speakScenario(sf::RenderWindow &window, sf::View &view, Trainer &trainer, map<string,vector<string>> &scenario){
     
-    if (name == "seller" || fixed == true){
+    if (fixed == true){
         this->draw(window);
     }
     
