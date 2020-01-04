@@ -101,8 +101,8 @@ Map::Map(sf::RenderWindow &window)
     vector<Npc*> npcs_pokeCenter;
     vector<string> dialogueC;
     dialogueC.push_back("Welcome to our center!");
-    dialogueC.push_back("We restore your tired Pokémon to full health");
-    dialogueC.push_back("Would you restore your Pokémon?");
+    dialogueC.push_back("We restore your tired Pokemon to full health");
+    dialogueC.push_back("Would you restore your Pokemon?");
     Npc* healer = new Npc("healer","Sprites/NPC1.png",433,962,32,32,1.f,105,16,dialogueC, true);
     npcs_pokeCenter.push_back(healer) ;
     npcs.insert(pair< string, vector<Npc*> >("pokeCenter", npcs_pokeCenter));
@@ -162,7 +162,7 @@ void Map::initialisation(sf::RenderWindow &window, Trainer &trainer, sf::View &v
     int x = position.x + 16;
     int y = position.y + 16;
     trainer.spritePlayer.setPosition(spawn_dict[map_name][door][0], spawn_dict[map_name][door][1]);
-    view.setCenter(spawn_dict[map_name][door][0], spawn_dict[map_name][door][1]);;
+    view.setCenter(spawn_dict[map_name][door][0] + 16, spawn_dict[map_name][door][1] + 16);;
     trainer.state = "Blocked";
     trainer.counterWalk = 0;
     sf::ConvexShape black;
@@ -229,25 +229,6 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
         trainer.state = "Stop";
         //else trainer.state = "Shopping";
     }
-    
-    //Fishing for François
-    if ((collision_[map_name][(int) x/16 + 1 +( (int)y/16 *34)]==6 &&trainer.facingDirection=="Right") || (collision_[map_name][(int) x/16 -1 +( (int)y/16 *34)]==6 &&trainer.facingDirection=="Left") || (collision_[map_name][(int) x/16  + (((int) y/16 -1) *34)]==6 &&trainer.facingDirection=="Up") || (collision_[map_name][(int) x/16 +(((int) y/16 +1) *34)]==6 &&trainer.facingDirection=="Down")){
-        if (event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::X&&trainer.fish==true){
-            if (trainer.state == "Fishing"){
-                trainer.state = "stopFishing";
-                trainer.counterWalk = 3;
-            }
-            else{
-                trainer.counterWalk = 0;
-                trainer.state = "Fishing";
-            }
-            trainer.fish =false;
-        }
-        if (event.type == sf::Event::KeyReleased&&event.key.code == sf::Keyboard::X){
-            trainer.fish = true;
-        }
-    }
-    
 
     //Entering Speaking mode with different npcs
     if ((event.type == sf::Event::KeyPressed)&&((event.key.code == sf::Keyboard::D))){
@@ -332,6 +313,24 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
                     npcs[map_name][nNpc]->speakCounter ++ ;
                 }
             }
+        }
+    }
+    
+    //Fishing for François
+    if ((collision_[map_name][(int) x/16 + 1 +( (int)y/16 *34)]==6 &&trainer.facingDirection=="Right") || (collision_[map_name][(int) x/16 -1 +( (int)y/16 *34)]==6 &&trainer.facingDirection=="Left") || (collision_[map_name][(int) x/16  + (((int) y/16 -1) *34)]==6 &&trainer.facingDirection=="Up") || (collision_[map_name][(int) x/16 +(((int) y/16 +1) *34)]==6 &&trainer.facingDirection=="Down")){
+        if (event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::X&&trainer.fish==true){
+            if (trainer.state == "Fishing"){
+                trainer.state = "stopFishing";
+                trainer.counterWalk = 3;
+            }
+            else{
+                trainer.counterWalk = 0;
+                trainer.state = "Fishing";
+            }
+            trainer.fish =false;
+        }
+        if (event.type == sf::Event::KeyReleased&&event.key.code == sf::Keyboard::X){
+            trainer.fish = true;
         }
     }
 
@@ -461,6 +460,7 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
     
     if (map_name == "first" || map_name == "fourth" || map_name == "third") fillTree(window);
      
+    if (map_name == "fourth") tunnel(window);
     /* trainer.displacement(event, view); */
       
     sf::Vector2f pos =trainer.getPos();
@@ -470,7 +470,7 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
     }
     
     else if (map_name== "second"){
-        window.draw(background2_1); 
+        window.draw(background2_1);
 //        window.draw(background2_2);
     }
     
@@ -496,7 +496,7 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
         window.draw(background4_2);
     }
     
-    openDoorS(window, trainer);
+    openDoorS(window);
     closeDoorS(window);
     /* movingFlower(window, 176, 176); */
 
@@ -666,7 +666,7 @@ void Map::movingFlower(sf::RenderWindow &window, int x, int y){
     window.draw(sprite);
 }
 
-void Map::openDoorS(sf::RenderWindow &window, Trainer &trainer){
+void Map::openDoorS(sf::RenderWindow &window){
     int a;
     int b;
     if (map_name == "first"){
@@ -706,4 +706,40 @@ void Map::closeDoorS(sf::RenderWindow &window){
         
     }
 }
+
+void Map::tunnel(sf::RenderWindow &window){
+    for(int i = 0; i < 8; i++){
+        for(int k = 0; k < 5; k++){
+            sf::Sprite sprite;
+            (sprite).setTexture(texture_2);
+            (sprite).setTextureRect(sf::IntRect(426, 18 + 17 * k, 16, 16));
+            sprite.setPosition(528 + i*16, 416 + 16 * k );
+            window.draw(sprite);
+        }
+    }
+    
+    //Top
+    for(int i = 0; i < 4; i++){
+        for(int k = 0; k < 2; k++){
+            sf::Sprite sprite;
+            (sprite).setTexture(texture_1);
+            (sprite).setTextureRect(sf::IntRect(239 + k * 17, 324, 16, 16));
+            sprite.setPosition(544 + k * 16 + i * 32, 400);
+            window.draw(sprite);
+        }
+    }
+    
+    //Bottom
+    for(int i = 0; i < 4; i++){
+        for(int k = 0; k < 2; k++){
+            sf::Sprite sprite;
+            (sprite).setTexture(texture_1);
+            (sprite).setTextureRect(sf::IntRect(239 + k * 17, 291, 16, 16));
+            sprite.setPosition(544 + k * 16 + i * 32, 496);
+            window.draw(sprite);
+        }
+    }
+}
+
+
 
