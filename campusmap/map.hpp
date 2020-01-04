@@ -66,4 +66,8 @@ class Map
         map<string, vector<string>> scenario;
         bool enter;
         int nNpc;
+    
+        //illusions
+        void illuCenter(sf::RenderWindow &window);
+        void illuShop(sf::RenderWindow &window);
 };  

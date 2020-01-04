@@ -595,7 +595,11 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
             }
          }
     }
-   
+    
+   //draw the walls above the door to create the illusion of "entering"
+    illuCenter(window);
+    illuShop(window);
+    
     if (alpha > 0 && state == "start"){
         initialisation(window, trainer, view);
     }
@@ -607,6 +611,7 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
     }
     this->trainerDisplacement(window, trainer,event,clock,view);
     shop.draw(window, view, event, trainer);
+    
 }
         
     
@@ -741,5 +746,28 @@ void Map::tunnel(sf::RenderWindow &window){
     }
 }
 
+void Map::illuCenter(sf::RenderWindow &window){
+    if (map_name == "fourth"){
+        for(int i = 0; i < 3; i++){
+            sf::Sprite sprite;
+            (sprite).setTexture(texture_2);
+            (sprite).setTextureRect(sf::IntRect(103 + 17 * i, 52, 16, 16));
+            sprite.setPosition(352 + i * 16, 384);
+            window.draw(sprite);
+        }
+    }
+}
+
+void Map::illuShop(sf::RenderWindow &window){
+    if (map_name == "first"){
+        for(int i = 0; i < 3; i++){
+            sf::Sprite sprite;
+            (sprite).setTexture(texture_2);
+            (sprite).setTextureRect(sf::IntRect(18 + 17 * i, 52, 16, 16));
+            sprite.setPosition(176 + i * 16, 144);
+            window.draw(sprite);
+        }
+    }
+}
 
 
