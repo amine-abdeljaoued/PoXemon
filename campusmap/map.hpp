@@ -27,8 +27,9 @@ class Map
         void trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Event &event, sf::Clock& clock, sf::View &view);
         void fillTree(sf::RenderWindow &window);
         void movingFlower(sf::RenderWindow &window, int x, int y);
-        void openDoorS(sf::RenderWindow &window, Trainer &trainer);
+        void openDoorS(sf::RenderWindow &window);
         void closeDoorS(sf::RenderWindow &window);
+        void tunnel(sf::RenderWindow &window);
     
     private:
         TileMap background1_1;
