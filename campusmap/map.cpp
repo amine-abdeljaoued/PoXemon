@@ -231,7 +231,7 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
     }
 
     //Entering Speaking mode with different npcs
-    if ((event.type == sf::Event::KeyPressed)&&((event.key.code == sf::Keyboard::D))){
+    if (event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::D&&trainer.state != "Walking"){
         if (collision_[map_name][(int) x/16 +(((int) y/16 -1)*34)]>=60 && collision_[map_name][(int) x/16 +(((int) y/16 -1)*34)]<=69 && trainer.facingDirection=="Up"){
             nNpc = collision_[map_name][(int) x/16 +(((int) y/16 -1)*34)] % 60;
             if(trainer.state != "Shopping"){
@@ -318,7 +318,7 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
     
     //Fishing for François
     if ((collision_[map_name][(int) x/16 + 1 +( (int)y/16 *34)]==6 &&trainer.facingDirection=="Right") || (collision_[map_name][(int) x/16 -1 +( (int)y/16 *34)]==6 &&trainer.facingDirection=="Left") || (collision_[map_name][(int) x/16  + (((int) y/16 -1) *34)]==6 &&trainer.facingDirection=="Up") || (collision_[map_name][(int) x/16 +(((int) y/16 +1) *34)]==6 &&trainer.facingDirection=="Down")){
-        if (event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::X&&trainer.fish==true){
+        if (event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::X&&trainer.fish==true&&trainer.state != "Walking"){
             if (trainer.state == "Fishing"){
                 trainer.state = "stopFishing";
                 trainer.counterWalk = 3;
@@ -708,7 +708,7 @@ void Map::closeDoorS(sf::RenderWindow &window){
 }
 
 void Map::tunnel(sf::RenderWindow &window){
-    for(int i = 0; i < 8; i++){
+    for(int i = 0; i < 9; i++){
         for(int k = 0; k < 5; k++){
             sf::Sprite sprite;
             (sprite).setTexture(texture_2);
