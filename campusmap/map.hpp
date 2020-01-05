@@ -70,4 +70,5 @@ class Map
         //illusions
         void illuCenter(sf::RenderWindow &window);
         void illuShop(sf::RenderWindow &window);
+        void illuTunnelR(sf::RenderWindow &window);
 };  

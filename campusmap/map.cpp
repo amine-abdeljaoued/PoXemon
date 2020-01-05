@@ -175,6 +175,19 @@ void Map::initialisation(sf::RenderWindow &window, Trainer &trainer, sf::View &v
     window.draw(black);
     alpha -= 5;
     
+//    if (alpha <= 50){
+//        sf::Sprite sprite;
+//        (sprite).setTexture(texture_3);
+//        (sprite).setTextureRect(sf::IntRect(23 + 17 * animationDoor, 232, 16, 16));
+//        sprite.setPosition(192,160);
+//
+//        if (animClock.getElapsedTime().asMilliseconds() > 400){
+//            animationDoor-=1;
+//        }
+//        window.draw(sprite);
+//
+//
+//    }
 }
 
 void Map::end(sf::RenderWindow &window, Trainer &trainer){
@@ -460,7 +473,7 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
     
     if (map_name == "first" || map_name == "fourth" || map_name == "third") fillTree(window);
      
-    if (map_name == "fourth") tunnel(window);
+    
     /* trainer.displacement(event, view); */
       
     sf::Vector2f pos =trainer.getPos();
@@ -547,7 +560,10 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
             }
          }
     }
+    
     trainer.draw(window, event, view);
+    
+    
     for (auto const& np : npcs[map_name]) {
         sf::Vector2f pos2 = (*np).getPos();
          if(pos.y < pos2.y)
@@ -599,6 +615,9 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
    //draw the walls above the door to create the illusion of "entering"
     illuCenter(window);
     illuShop(window);
+//    illuTunnelR(window);
+    
+    if (map_name == "fourth") tunnel(window);
     
     if (alpha > 0 && state == "start"){
         initialisation(window, trainer, view);
@@ -713,12 +732,20 @@ void Map::closeDoorS(sf::RenderWindow &window){
 }
 
 void Map::tunnel(sf::RenderWindow &window){
+    for(int i = 0; i < 4; i++){
+        sf::Sprite sprite;
+        (sprite).setTexture(texture_2);
+        (sprite).setTextureRect(sf::IntRect(409, 18 + 17 * i, 16, 16));
+        sprite.setPosition(528, 416 + 16 * i );
+        window.draw(sprite);
+    }
+    
     for(int i = 0; i < 9; i++){
         for(int k = 0; k < 5; k++){
             sf::Sprite sprite;
             (sprite).setTexture(texture_2);
             (sprite).setTextureRect(sf::IntRect(426, 18 + 17 * k, 16, 16));
-            sprite.setPosition(528 + i*16, 416 + 16 * k );
+            sprite.setPosition(544 + i*16, 416 + 16 * k );
             window.draw(sprite);
         }
     }
@@ -770,4 +797,15 @@ void Map::illuShop(sf::RenderWindow &window){
     }
 }
 
+void Map::illuTunnelR(sf::RenderWindow &window){
+    if (map_name == "fourth"){
+        for(int i = 0; i < 5; i++){
+            sf::Sprite sprite;
+            (sprite).setTexture(texture_2);
+            (sprite).setTextureRect(sf::IntRect(409, 18 + 17 * i, 16, 16));
+            sprite.setPosition(528, 416 + 16 * i );
+            window.draw(sprite);
+        }
+    }
+}
 
