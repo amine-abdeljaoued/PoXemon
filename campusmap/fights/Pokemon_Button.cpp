@@ -10,8 +10,8 @@ Pokemon_Button::Pokemon_Button(std::string& name, int& lvl, int& h, int& i) {
 	red_circle.setFillColor(sf::Color(255, 0, 0));*/
 	
 	//Text
-	if (!font.loadFromFile("upheavtt.ttf")) { std::cout << "could not  pokemon button font" << std::endl; }
-	font.loadFromFile("upheavtt.ttf");
+	if (!font.loadFromFile("fights/upheavtt.ttf")) { std::cout << "could not  pokemon button font" << std::endl; }
+	font.loadFromFile("fights/upheavtt.ttf");
 	name_text.setCharacterSize(35);
 	level_text.setCharacterSize(25);
 	name_text.setFillColor(sf::Color::Black);
@@ -20,22 +20,22 @@ Pokemon_Button::Pokemon_Button(std::string& name, int& lvl, int& h, int& i) {
 	level_text.setString("lvl: " + std::to_string(lvl));
 
 	//Background bar with name, level, etc...
-	if (!bar_pic.loadFromFile("Images/bar.png")) { std::cout << "could not load" << std::endl; }
-	bar_pic.loadFromFile("Images/bar.png");
+	if (!bar_pic.loadFromFile("fights/Images/bar.png")) { std::cout << "could not load" << std::endl; }
+	bar_pic.loadFromFile("fights/Images/bar.png");
 	bar.setTexture(bar_pic);
 	bar.setScale(sf::Vector2f(0.2, 0.2));
 
 	
 	//Little heart next to bar - numbers used just work, don't know how to make them nice
-	if (!heart_pic.loadFromFile("Images/heart.png")) { std::cout << "could not load" << std::endl; }
-	heart_pic.loadFromFile("Images/heart.png");
+	if (!heart_pic.loadFromFile("fights/Images/heart.png")) { std::cout << "could not load" << std::endl; }
+	heart_pic.loadFromFile("fights/Images/heart.png");
 	heart.setTexture(heart_pic);
 	heart.setScale(sf::Vector2f(0.55, 0.55));
 
 	//pokemon sprite
 	//initialize it using the name
-	if (!pokemon_pic.loadFromFile("Images/Pokemon_Images/"+name+".png")) { std::cout << "could not load" << std::endl; } //path = Images/eevee.png
-	pokemon_pic.loadFromFile("Images/Pokemon_Images/" + name + ".png");
+	if (!pokemon_pic.loadFromFile("fights/Images/Pokemon_Images/"+name+".png")) { std::cout << "could not load" << std::endl; } //path = Images/eevee.png
+	pokemon_pic.loadFromFile("fights/Images/Pokemon_Images/" + name + ".png");
 	sprite.setOrigin(sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2);
 	sprite.setTexture(pokemon_pic);
 	sprite.scale(0.3, 0.3);

@@ -2,7 +2,7 @@
 
 Healthbar::Healthbar(){
     //Text
-    if (!font.loadFromFile("upheavtt.ttf")) { std::cout << "could not load bullet_bar font" << std::endl; }
+    if (!font.loadFromFile("fights/upheavtt.ttf")) { std::cout << "could not load bullet_bar font" << std::endl; }
 	name_text.setFont(font);
     level_text.setFont(font);
 	name_text.setCharacterSize(35);
@@ -11,14 +11,14 @@ Healthbar::Healthbar(){
     level_text.setFillColor(sf::Color::Black);
 
     //Background bar with name, level, etc...
-    if (!bar_pic.loadFromFile("Images/bar.png")){ std::cout << "could not load" << std::endl;}
-    bar_pic.loadFromFile("Images/bar.png");
+    if (!bar_pic.loadFromFile("fights/Images/bar.png")){ std::cout << "could not load" << std::endl;}
+    bar_pic.loadFromFile("fights/Images/bar.png");
     bar.setTexture(bar_pic);
     bar.setScale(sf::Vector2f(0.2,0.2));
 
     //Little heart next to bar - numbers used just work, don't know how to make them nice
-    if (!heart_pic.loadFromFile("Images/heart.png")){ std::cout << "could not load" << std::endl;}
-    heart_pic.loadFromFile("Images/heart.png");
+    if (!heart_pic.loadFromFile("fights/Images/heart.png")){ std::cout << "could not load" << std::endl;}
+    heart_pic.loadFromFile("fights/Images/heart.png");
     heart.setTexture(heart_pic);
     heart.setScale(sf::Vector2f(0.55, 0.55));
 

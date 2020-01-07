@@ -27,7 +27,7 @@ Pokemon::Pokemon(float xstart, float ystart, float h, float v, Backpack_Pokemon 
 
 	sprite.setPosition(sf::Vector2f(x, y));
 
-	std::string path = "Images/Pokemon_Images/" + name + ".png";
+	std::string path = "fights/Images/Pokemon_Images/" + name + ".png";
 	if (!pic.loadFromFile(path)){ std::cout << "could not load pokemon image" << std::endl;} //path = Images/eevee.png
 	pic.loadFromFile(path);
 	sprite.setTexture(pic);

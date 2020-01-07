@@ -7,8 +7,8 @@ BulletBar::BulletBar() {
 
 	//load the picture
 	//to do : should be the same as the bullet our pokemon has
-	if (!bullet_pic.loadFromFile("Images/red_bullet.png")) { std::cout << "could not load" << std::endl; }
-	bullet_pic.loadFromFile("Images/red_bullet.png");
+	if (!bullet_pic.loadFromFile("fights/Images/red_bullet.png")) { std::cout << "could not load" << std::endl; }
+	bullet_pic.loadFromFile("fights/Images/red_bullet.png");
 	bullet_sprite.setTexture(bullet_pic);
 	bullet_sprite.setScale(sf::Vector2f(0.15, 0.15));
 
@@ -18,7 +18,7 @@ BulletBar::BulletBar() {
 	//initialize the text (string of numbers representing the available bullets)
 	//link for the font: https://www.dafont.com/fr/upheaval.font
 	//(We might change the font later)
-	if (!font.loadFromFile("upheavtt.ttf")) { std::cout << "could not load bullet_bar font" << std::endl; }
+	if (!font.loadFromFile("fights/upheavtt.ttf")) { std::cout << "could not load bullet_bar font" << std::endl; }
 	nb_text.setFont(font);
 	nb_text.setCharacterSize(20);
 	nb_text.setString(std::to_string(available_bullets));
