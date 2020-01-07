@@ -22,17 +22,17 @@ Backpack::Backpack(){
 //    clickbox.setSize(sf::Vector2f(100,40));
 //    clickbox.setPosition(50,100);
     
-    normaltext1.loadFromFile("Images/pokeball.png");
+    normaltext1.loadFromFile("fights/Images/pokeball.png");
     normalball.setTexture(normaltext1);
     normalball.setScale(sf::Vector2f(0.2f, 0.2f));
     normalball.setPosition(20,150);
     
-    normaltext2.loadFromFile("Images/superball.png");
+    normaltext2.loadFromFile("fights/Images/superball.png");
     superball.setTexture(normaltext2);
     superball.setScale(sf::Vector2f(0.2f, 0.2f));
     superball.setPosition(70,150);
 
-    normaltext3.loadFromFile("Images/masterball.png");
+    normaltext3.loadFromFile("fights/Images/masterball.png");
     masterball.setTexture(normaltext3);
     masterball.setScale(sf::Vector2f(0.055f, 0.055f));
     masterball.setPosition(120,150);

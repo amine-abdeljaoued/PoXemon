@@ -33,8 +33,8 @@ void StateFunctions1::initialise_background(sf::RenderWindow& window, std::strin
 
 void StateFunctions1::initialise_howto(sf::RenderWindow& window){
 
-	if(!how_texture.loadFromFile("Images/howto.png")){std::cout<<"how to didn't load"<<std::endl;}
-	if(!quit_texture.loadFromFile("Images/quit.png")){std::cout<<"quit button didn't load"<<std::endl;}
+	if(!how_texture.loadFromFile("fights/Images/howto.png")){std::cout<<"how to didn't load"<<std::endl;}
+	if(!quit_texture.loadFromFile("fights/Images/quit.png")){std::cout<<"quit button didn't load"<<std::endl;}
 
 	sf::Vector2u TextureSize = how_texture.getSize(); 	//Get size of texture.
 	sf::Vector2u TextureSize1 = quit_texture.getSize(); 
@@ -71,8 +71,8 @@ void StateFunctions1::initialise_buttons(sf::RenderWindow& window, sf::Font& fon
     info_button.setSize(sf::Vector2f(x/5,y/5));
 
     //Sprites
-    if (!star_texture.loadFromFile("Images/12star.png")){ std::cout << "star could not load" << std::endl;}
-    star_texture.loadFromFile("Images/12star.png");
+    if (!star_texture.loadFromFile("fights/Images/12star.png")){ std::cout << "star could not load" << std::endl;}
+    star_texture.loadFromFile("fights/Images/12star.png");
     star.setTexture(star_texture);
     star.setScale(sf::Vector2f(0.75, 0.75)); // How to make it relate to window size???
     opp.setScale(sf::Vector2f(1,1));
@@ -202,7 +202,7 @@ int StateFunctions1::howtoplay(sf::RenderWindow& window, float& deltaTime){
 void StateFunctions1::initialise_countdown(sf::RenderTarget& window){
 	text.setString("3");
     text.setCharacterSize(max_char_size);
-    font.loadFromFile("upheavtt.ttf");
+    font.loadFromFile("fights/upheavtt.ttf");
     text.setFont(font);
     text.setFillColor(sf::Color::Black);
     text.setOrigin(text.getGlobalBounds().width/2, text.getGlobalBounds().height);

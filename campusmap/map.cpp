@@ -354,7 +354,10 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
             mt19937 gen(rd());
             uniform_real_distribution<> dis(0.0, 1.0);
             float probagenerated = dis(gen);
-            if (probagenerated<0.02) std::cout<<"POKEEEEMMMOONNN"<<std::endl;
+            if (probagenerated<0.02) {
+                std::cout<<"POKEEEEMMMOONNN"<<std::endl;
+                trainer.state = "Fighting";
+            }
             
             if (trainer.facingDirection == "Left" || trainer.facingDirection == "Right"){
                 sf::Sprite sprite;

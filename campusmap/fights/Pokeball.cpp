@@ -4,7 +4,7 @@
 
 
     Pokeball::Pokeball() {   // Thing to add: should also initialise ball                                            image, with views for rotation
-        //pic.loadFromFile("Images/pokeball.png");
+        //pic.loadFromFile("fights/Images/pokeball.png");
         //ball.setTexture(pic);
         ball.setScale(sf::Vector2f(0.4f, 0.4f));
         in_air = false;
@@ -147,21 +147,21 @@ bool Pokeball::catched(float proba, sf::Clock& clock2, sf::Time& elapsed2,float 
     
 Normalball::Normalball() {  //derived class
         proba = 0.20;
-        pic1.loadFromFile("Images/pokeball.png");
+        pic1.loadFromFile("fights/Images/pokeball.png");
         ball.setTexture(pic1);
         ball.setScale(sf::Vector2f(0.25f, 0.25f));
 }
 
 Superball::Superball() {  //derived class
         proba = 0.30;
-        pic2.loadFromFile("Images/superball.png");
+        pic2.loadFromFile("fights/Images/superball.png");
         ball.setTexture(pic2);
         ball.setScale(sf::Vector2f(0.25f, 0.25f));
 }
 
 Masterball::Masterball() {  //derived class
         proba = 0.60;
-        pic3.loadFromFile("Images/masterball.png");
+        pic3.loadFromFile("fights/Images/masterball.png");
         ball.setTexture(pic3);
         ball.setScale(sf::Vector2f(0.07f, 0.07f));
 }

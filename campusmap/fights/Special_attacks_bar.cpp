@@ -15,31 +15,31 @@ Special_Attacks_Bar::Special_Attacks_Bar() {
 void Special_Attacks_Bar::initialise(){
 
     // Load images into our sprites
-	if (!key1_texture.loadFromFile("Images/Special_Attacks_Bar/key1.png")) { std::cout << "could not load key1" << std::endl; }
+	if (!key1_texture.loadFromFile("fights/Images/Special_Attacks_Bar/key1.png")) { std::cout << "could not load key1" << std::endl; }
 
 	if (type == 10){ // type earth
-		if (!attack_1_texture_bw.loadFromFile("Images/Special_Attacks_Bar/rock_bw.png")) { std::cout << "could not load rock bw" << std::endl;}; 
-		attack_1_texture_bw.loadFromFile("Images/Special_Attacks_Bar/rock_bw.png");
-		if (!attack_1_texture.loadFromFile("Images/Special_Attacks_Bar/rock.png")) { std::cout << "could not load rock" << std::endl;} 
-		attack_1_texture.loadFromFile("Images/Special_Attacks_Bar/rock.png");
+		if (!attack_1_texture_bw.loadFromFile("fights/Images/Special_Attacks_Bar/rock_bw.png")) { std::cout << "could not load rock bw" << std::endl;}; 
+		attack_1_texture_bw.loadFromFile("fights/Images/Special_Attacks_Bar/rock_bw.png");
+		if (!attack_1_texture.loadFromFile("fights/Images/Special_Attacks_Bar/rock.png")) { std::cout << "could not load rock" << std::endl;} 
+		attack_1_texture.loadFromFile("fights/Images/Special_Attacks_Bar/rock.png");
 	};
 	if (type == 20){ // type water
-		if (!attack_1_texture_bw.loadFromFile("Images/Special_Attacks_Bar/water_bw.png")) { std::cout << "could not load water bw" << std::endl;}; 
-		attack_1_texture_bw.loadFromFile("Images/Special_Attacks_Bar/water_bw.png");
-		if (!attack_1_texture.loadFromFile("Images/Special_Attacks_Bar/water.png")) { std::cout << "could not load water" << std::endl;}; 
-		attack_1_texture.loadFromFile("Images/Special_Attacks_Bar/water.png");
+		if (!attack_1_texture_bw.loadFromFile("fights/Images/Special_Attacks_Bar/water_bw.png")) { std::cout << "could not load water bw" << std::endl;}; 
+		attack_1_texture_bw.loadFromFile("fights/Images/Special_Attacks_Bar/water_bw.png");
+		if (!attack_1_texture.loadFromFile("fights/Images/Special_Attacks_Bar/water.png")) { std::cout << "could not load water" << std::endl;}; 
+		attack_1_texture.loadFromFile("fights/Images/Special_Attacks_Bar/water.png");
 	};
 	if (type == 30){ // type air
-		if (!attack_1_texture_bw.loadFromFile("Images/Special_Attacks_Bar/air_bw.png")) { std::cout << "could not load air bw" << std::endl;}; 
-		attack_1_texture_bw.loadFromFile("Images/Special_Attacks_Bar/air_bw.png");
-		if (!attack_1_texture.loadFromFile("Images/Special_Attacks_Bar/air.png")) { std::cout << "could not load air" << std::endl;}; 
-		attack_1_texture.loadFromFile("Images/Special_Attacks_Bar/air.png");
+		if (!attack_1_texture_bw.loadFromFile("fights/Images/Special_Attacks_Bar/air_bw.png")) { std::cout << "could not load air bw" << std::endl;}; 
+		attack_1_texture_bw.loadFromFile("fights/Images/Special_Attacks_Bar/air_bw.png");
+		if (!attack_1_texture.loadFromFile("fights/Images/Special_Attacks_Bar/air.png")) { std::cout << "could not load air" << std::endl;}; 
+		attack_1_texture.loadFromFile("fights/Images/Special_Attacks_Bar/air.png");
 	};
 	if (type == 40){ // type fire
-		if (!attack_1_texture_bw.loadFromFile("Images/Special_Attacks_Bar/fire_bw.png")) { std::cout << "could not load fire bw" << std::endl;}; 
-		attack_1_texture_bw.loadFromFile("Images/Special_Attacks_Bar/fire_bw.png");
-		if (!attack_1_texture.loadFromFile("Images/Special_Attacks_Bar/fire.png")) { std::cout << "could not load fire" << std::endl;}; 
-		attack_1_texture.loadFromFile("Images/Special_Attacks_Bar/fire.png");
+		if (!attack_1_texture_bw.loadFromFile("fights/Images/Special_Attacks_Bar/fire_bw.png")) { std::cout << "could not load fire bw" << std::endl;}; 
+		attack_1_texture_bw.loadFromFile("fights/Images/Special_Attacks_Bar/fire_bw.png");
+		if (!attack_1_texture.loadFromFile("fights/Images/Special_Attacks_Bar/fire.png")) { std::cout << "could not load fire" << std::endl;}; 
+		attack_1_texture.loadFromFile("fights/Images/Special_Attacks_Bar/fire.png");
 	};
 
     // Set textures

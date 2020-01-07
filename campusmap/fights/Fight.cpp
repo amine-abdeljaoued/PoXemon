@@ -2,33 +2,33 @@
 
 Fight::Fight(){
     state = 1;
-    if (!font.loadFromFile("upheavtt.ttf")) { std::cout << "could not load font" << std::endl; }
-	else {font.loadFromFile("upheavtt.ttf");}
+    if (!font.loadFromFile("fights/upheavtt.ttf")) { std::cout << "could not load font" << std::endl; }
+	else {font.loadFromFile("fights/upheavtt.ttf");}
 }
 
 Fight::Fight(sf::RenderWindow& window){
-    if (!font.loadFromFile("upheavtt.ttf")) { std::cout << "could not load font" << std::endl; }
-	else {font.loadFromFile("upheavtt.ttf");}
+    if (!font.loadFromFile("fights/upheavtt.ttf")) { std::cout << "could not load font" << std::endl; }
+	else {font.loadFromFile("fights/upheavtt.ttf");}
     state = 1;
 
     // States 5,6
     leave_fight.setString("Run");
 	choose_pokemon.setString("Choose your next pokemon");
-    if (!running.loadFromFile("Images/running_trainer.png"))std::cout << "could open running trainer" << std::endl;
-	running.loadFromFile("Images/running_trainer.png");
+    if (!running.loadFromFile("fights/Images/running_trainer.png"))std::cout << "could open running trainer" << std::endl;
+	running.loadFromFile("fights/Images/running_trainer.png");
 	running_sprite.setTexture(running);
 	running_sprite.setScale(2, 2);
 	running_sprite.setOrigin(running_sprite.getLocalBounds().width / 2, running_sprite.getLocalBounds().height / 2);
     running_sprite.setPosition(window.getSize().x *2/ 3, window.getSize().y / 2);
 
 	// shader for blur effect
-    if(!shader.loadFromFile("Blur2.frag", sf::Shader::Fragment)){std::cout<<"no shader"<<std::endl;}
+    if(!shader.loadFromFile("fights/Blur2.frag", sf::Shader::Fragment)){std::cout<<"no shader"<<std::endl;}
     shader.setUniform("offsetFactor", sf::Vector2f(0,0.001));
 }
 
 void Fight::initialise(char& mode, Backpack& pbag, Backpack& popponent_bag, Player* player, Opponent* opponent, sf::RenderWindow& window){
     // background - must change depending on where we are
-    functions1.initialise_background(window, "Images/grassbg.png", background, BackgroundTexture);
+    functions1.initialise_background(window, "fights/Images/grassbg.png", background, BackgroundTexture);
     // basic set up
     bag = pbag;
     opponent_bag = popponent_bag;

@@ -70,28 +70,28 @@ public:
 		// initialise our array of useful constants to the above ones and the texture
 		if(type == 10){	
 			for (int i=0; i<16; i++) {array[i] = earth[i];} 
-			if (!bpic.loadFromFile("Images/rocks1.png")) std::cout << "could not load attack 1 earth image" << std::endl; 
-			bpic.loadFromFile("Images/rocks1.png");
-			if (!deleting_pic.loadFromFile("Images/rock_explode.png")) std::cout << "could not load attack 1 earth explode image" << std::endl; 
-			deleting_pic.loadFromFile("Images/rock_explode.png");}
+			if (!bpic.loadFromFile("fights/Images/rocks1.png")) std::cout << "could not load attack 1 earth image" << std::endl; 
+			bpic.loadFromFile("fights/Images/rocks1.png");
+			if (!deleting_pic.loadFromFile("fights/Images/rock_explode.png")) std::cout << "could not load attack 1 earth explode image" << std::endl; 
+			deleting_pic.loadFromFile("fights/Images/rock_explode.png");}
 		if(type == 20){	
 			for (int i=0; i<16; i++) {array[i] = water[i];} 
-			if (!bpic.loadFromFile("Images/water.png")) std::cout << "could not load attack 1 water image" << std::endl; 
-			bpic.loadFromFile("Images/water.png");
-			if (!deleting_pic.loadFromFile("Images/water.png")) std::cout << "could not load attack 1 water explode image" << std::endl; 
-			deleting_pic.loadFromFile("Images/water.png");}
+			if (!bpic.loadFromFile("fights/Images/water.png")) std::cout << "could not load attack 1 water image" << std::endl; 
+			bpic.loadFromFile("fights/Images/water.png");
+			if (!deleting_pic.loadFromFile("fights/Images/water.png")) std::cout << "could not load attack 1 water explode image" << std::endl; 
+			deleting_pic.loadFromFile("fights/Images/water.png");}
 		if(type == 30){	
 			for (int i=0; i<16; i++) {array[i] = air[i];} 
-			if (!bpic.loadFromFile("Images/iceball.png")) std::cout << "could not load attack 1 ice image" << std::endl; 
-			bpic.loadFromFile("Images/iceball.png");
-			if (!deleting_pic.loadFromFile("Images/iceball.png")) std::cout << "could not load attack 1 ice explode image" << std::endl; 
-			deleting_pic.loadFromFile("Images/iceball.png");}
+			if (!bpic.loadFromFile("fights/Images/iceball.png")) std::cout << "could not load attack 1 ice image" << std::endl; 
+			bpic.loadFromFile("fights/Images/iceball.png");
+			if (!deleting_pic.loadFromFile("fights/Images/iceball.png")) std::cout << "could not load attack 1 ice explode image" << std::endl; 
+			deleting_pic.loadFromFile("fights/Images/iceball.png");}
 		if(type == 40){
 			for (int i=0; i<16; i++) {array[i] = fire[i];} 
-			if (!bpic.loadFromFile("Images/fireball.png")) std::cout << "could not load attack 1 fire image" << std::endl; 
-			bpic.loadFromFile("Images/fireball.png");
-			if (!deleting_pic.loadFromFile("Images/fireball_explode.png")) std::cout << "could not load attack 1 fire explode image" << std::endl; 
-			deleting_pic.loadFromFile("Images/fireball_explode.png");};
+			if (!bpic.loadFromFile("fights/Images/fireball.png")) std::cout << "could not load attack 1 fire image" << std::endl; 
+			bpic.loadFromFile("fights/Images/fireball.png");
+			if (!deleting_pic.loadFromFile("fights/Images/fireball_explode.png")) std::cout << "could not load attack 1 fire explode image" << std::endl; 
+			deleting_pic.loadFromFile("fights/Images/fireball_explode.png");};
 
 		//initialise image
 		bullet.setTexture(bpic);
