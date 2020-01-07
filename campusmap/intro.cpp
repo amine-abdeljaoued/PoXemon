@@ -8,7 +8,6 @@
 #include <ctime>
 
 //This is the menu that appears at the beggining of the game
-
 int menu(std::string picture) {
     
     // Create the main window
@@ -1029,4 +1028,5 @@ int startgame(){
     }
     if (closed<10) return 0;
     else return 1;
+
 }
