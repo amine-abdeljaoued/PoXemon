@@ -29,7 +29,7 @@ class Map
         void movingFlower(sf::RenderWindow &window, int x, int y);
         void openDoorS(sf::RenderWindow &window);
         void closeDoorS(sf::RenderWindow &window);
-        void tunnel(sf::RenderWindow &window);
+        void tunnel(sf::RenderWindow &window, int x, int y);
     
     private:
         TileMap background1_1;
@@ -40,6 +40,8 @@ class Map
         TileMap background3_2;
         TileMap background4_1;
         TileMap background4_2;
+        TileMap background7_1;
+        TileMap background7_2;
         map<string, vector<Npc*> > npcs; //Map mapping each map_name to its associated vector of npcs
         
         map<string, const int*> collision_;
@@ -71,4 +73,5 @@ class Map
         void illuCenter(sf::RenderWindow &window);
         void illuShop(sf::RenderWindow &window);
         void illuTunnelR(sf::RenderWindow &window);
+        void illuTunnelL(sf::RenderWindow &window);
 };  
