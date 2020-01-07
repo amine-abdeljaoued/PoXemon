@@ -122,16 +122,19 @@ Map::Map(sf::RenderWindow &window)
     animationCounter = 0;
     animationDoor = 0;
     
+    //for x multiple of 16, +8
+    //for y multiple of 16
+    
     //Spawning position
     map_list = {"first","second","third","fourth","pokeShop","pokeCenter","home"};
     //first map
-    spawn_dict.insert(pair< string, vector<vector<int> >>("first",{{264, 256},{488, 464},{184, 160}}));
+    spawn_dict.insert(pair< string, vector<vector<int> >>("first",{{264, 256},{488, 464},{8, 192}}));
     //underground
     spawn_dict.insert(pair< string, vector<vector<int> >>("second",{{488, 480}}));
     //Sport
     spawn_dict.insert(pair< string, vector<vector<int> >>("third",{{168, 464}}));
     //demi-lune
-    spawn_dict.insert(pair< string, vector<vector<int> >>("fourth",{{184, 176},{360,400},{504,448}})); //376 416
+    spawn_dict.insert(pair< string, vector<vector<int> >>("fourth",{{216, 32},{360,400},{504,448}})); //376 416
     //pokeShop
     spawn_dict.insert(pair< string, vector<vector<int> >>("pokeShop",{{184, 160}}));
     //pokeCenter
@@ -473,157 +476,7 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
     }
 }
 
-void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Clock& clock, sf::Event &event){
-        
-    
-    
-    
-    if (map_name == "first" || map_name == "fourth" || map_name == "third" || map_name == "home") fillTree(window);
-     
-    
-    /* trainer.displacement(event, view); */
-      
-    sf::Vector2f pos =trainer.getPos();
-    if (map_name== "first"){
-        window.draw(background1_1); 
-        window.draw(background1_2); //Both backgrounds associated to each tileset will have the same background
-    }
-    
-    else if (map_name== "second"){
-        window.draw(background2_1);
-//        window.draw(background2_2);
-    }
-    
-    else if (map_name== "third"){
-            window.draw(background3_1);
-            window.draw(background3_2);
-    }
-    
-    else if (map_name == "pokeShop"){
-        pokeBuilding.setTextureRect(sf::IntRect(307,250,176,128));
-        pokeBuilding.setPosition(128, 64);
-        window.draw(pokeBuilding);
-    }
-    
-    else if (map_name == "pokeCenter"){
-        pokeBuilding.setTextureRect(sf::IntRect(42,49,224,144));
-        pokeBuilding.setPosition(0, 0);
-        window.draw(pokeBuilding);
-    }
-    
-    else if(map_name== "fourth"){
-        window.draw(background4_1);
-        window.draw(background4_2);
-    }
-    
-    else if(map_name== "home"){
-        window.draw(background7_1);
-        window.draw(background7_2);
-    }
-    
-    openDoorS(window);
-    closeDoorS(window);
-    /* movingFlower(window, 176, 176); */
 
-    for (auto const& np : npcs[map_name]) {
-        sf::Vector2f pos2 = (*np).getPos();
-         if(pos.y >= pos2.y)
-         {
-              if (trainer.state == "Speaking"){
-                if((*np).name=="seller" || (*np).name=="healer"){
-                    if((abs(pos.y - pos2.y) <= 32) && (abs(pos.x - pos2.x) <= 32) ){
-                        (*np).speak(window, view, trainer);
-                    }
-                    else{
-                        (*np).draw(window);
-                    }
-                }
-                else{
-                    if((abs(pos.y - pos2.y) <= 16) && (abs(pos.x - pos2.x) <= 16) ){
-                        (*np).speak(window, view, trainer);
-                    }
-                    else{
-                        (*np).draw(window);
-                    }
-                }
-            }
-             
-            else if (trainer.state == "SpeakingScenario"){
-                if((*np).name=="seller" || (*np).name=="healer"){
-                    if((abs(pos.y - pos2.y) <= 32) && (abs(pos.x - pos2.x) <= 32) ){
-                        (*np).speakScenario(window, view, trainer, scenario);
-                    }
-                    else{
-                        (*np).draw(window);
-                    }
-                }
-                else{
-                    if((abs(pos.y - pos2.y) <= 16) && (abs(pos.x - pos2.x) <= 16) ){
-                        (*np).speakScenario(window, view, trainer, scenario);
-                    }
-                    else{
-                        (*np).draw(window);
-                    }
-                }
-                
-            }
-            else {
-            (*np).draw(window);
-            }
-         }
-    }
-    
-    trainer.draw(window, event, view);
-    
-    
-    for (auto const& np : npcs[map_name]) {
-        sf::Vector2f pos2 = (*np).getPos();
-         if(pos.y < pos2.y)
-         {
-              if (trainer.state == "Speaking"){
-                if((*np).name=="seller" || (*np).name=="healer"){
-                    if((abs(pos.y - pos2.y) <= 32) && (abs(pos.x - pos2.x) <= 32) ){
-                        (*np).speak(window, view, trainer);
-                    }
-                    else{
-                        (*np).draw(window);
-                    }
-                }
-                else{
-                    if((abs(pos.y - pos2.y) <= 16) && (abs(pos.x - pos2.x) <= 16) ){
-                        (*np).speak(window, view, trainer);
-                    }
-                    else{
-                        (*np).draw(window);
-                    }
-                }
-            }
-            
-            else if (trainer.state == "SpeakingScenario"){
-                if((*np).name=="seller" || (*np).name=="healer"){
-                    if((abs(pos.y - pos2.y) <= 32) && (abs(pos.x - pos2.x) <= 32) ){
-                        (*np).speakScenario(window, view, trainer, scenario);
-                    }
-                    else{
-                        (*np).draw(window);
-                    }
-                }
-                else{
-                    if((abs(pos.y - pos2.y) <= 16) && (abs(pos.x - pos2.x) <= 16) ){
-                        (*np).speakScenario(window, view, trainer, scenario);
-                    }
-                    else{
-                        (*np).draw(window);
-                    }
-                }
-                 
-            }
-            else {
-            (*np).draw(window);
-            }
-         }
-    }
-    
    //draw the walls above the door to create the illusion of "entering"
     illuCenter(window);
     illuShop(window);
