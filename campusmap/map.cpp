@@ -25,6 +25,9 @@ Map::Map(sf::RenderWindow &window)
     background3_2.load("Sprites/tileset2.png", sf::Vector2u(16, 16), level4_2, 34, 33);
     background4_1.load("Sprites/tileset1.png", sf::Vector2u(16, 16), level5, 34, 33);
     background4_2.load("Sprites/tileset2.png", sf::Vector2u(16, 16), level5_2, 34, 33);
+    background7_1.load("Sprites/tileset1.png", sf::Vector2u(16, 16), level7_1, 34, 33);
+    background7_2.load("Sprites/tileset2.png", sf::Vector2u(16, 16), level7_2, 34, 33);
+    background8.load("Sprites/tileset1.png", sf::Vector2u(16, 16), level8, 34, 33);
     
     
     alpha = 255;
@@ -39,6 +42,8 @@ Map::Map(sf::RenderWindow &window)
     collision_.insert(pair<string, const int*>("pokeShop", pokeShopC));
     collision_.insert(pair<string, const int*>("fourth", collision4));
     collision_.insert(pair<string, const int*>("pokeCenter", pokeCenterC));
+    collision_.insert(pair<string, const int*>("home", collision7));
+    collision_.insert(pair<string, const int*>("maze", collision8));
     
     map_name= "first"; //Beggining of the game
     
@@ -119,20 +124,27 @@ Map::Map(sf::RenderWindow &window)
     animationCounter = 0;
     animationDoor = 0;
     
+    //for x multiple of 16, +8
+    //for y multiple of 16
+    
     //Spawning position
-    map_list = {"first","second","third","fourth","pokeShop","pokeCenter"};
+    map_list = {"first","second","third","fourth","pokeShop","pokeCenter","home","maze"};
     //first map
-    spawn_dict.insert(pair< string, vector<vector<int> >>("first",{{264, 256},{488, 464},{184, 160}}));
+    spawn_dict.insert(pair< string, vector<vector<int> >>("first",{{264, 256},{488, 464},{8, 192}}));
     //underground
-    spawn_dict.insert(pair< string, vector<vector<int> >>("second",{{488, 480}}));
+    spawn_dict.insert(pair< string, vector<vector<int> >>("second",{{488, 480},{520,16}}));
     //Sport
-    spawn_dict.insert(pair< string, vector<vector<int> >>("third",{{168, 464}}));
+    spawn_dict.insert(pair< string, vector<vector<int> >>("third",{{472, 432}}));
     //demi-lune
-    spawn_dict.insert(pair< string, vector<vector<int> >>("fourth",{{184, 176},{360,400}}));
+    spawn_dict.insert(pair< string, vector<vector<int> >>("fourth",{{216, 32},{360,400},{504,448}})); //376 416
     //pokeShop
     spawn_dict.insert(pair< string, vector<vector<int> >>("pokeShop",{{184, 160}}));
     //pokeCenter
     spawn_dict.insert(pair< string, vector<vector<int> >>("pokeCenter",{{104,112}}));
+    //home
+    spawn_dict.insert(pair< string, vector<vector<int> >>("home",{{8,192},{472,128}}));
+    //maze
+    spawn_dict.insert(pair< string, vector<vector<int> >>("maze",{{8,192},{472,128}}));
     
     //Scenario
     scenario.insert(pair<string, vector<string>> ("bob", {"Nice Day!","You should go to the shop to buy what you need."}));
@@ -211,6 +223,8 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
     sf::Vector2f position = trainer.spritePlayer.getPosition();
     int x = position.x + 16;
     int y = position.y + 16;
+    
+//    cout << x << " " << y << endl;
     
     //Switching map
     if (collision_[map_name][(int) x/16 +( (int)y/16 *34)] >= 100 && trainer.state == "Stop"){
@@ -474,7 +488,7 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
     
     
     
-    if (map_name == "first" || map_name == "fourth" || map_name == "third") fillTree(window);
+    if (map_name == "first" || map_name == "fourth" || map_name == "third" || map_name == "home") fillTree(window);
      
     
     /* trainer.displacement(event, view); */
@@ -507,9 +521,17 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
         window.draw(pokeBuilding);
     }
     
-    if(map_name== "fourth"){
+    else if(map_name== "fourth"){
         window.draw(background4_1);
         window.draw(background4_2);
+    }
+    
+    else if(map_name== "home"){
+        window.draw(background7_1);
+        window.draw(background7_2);
+    }
+    else if (map_name== "maze"){
+        window.draw(background8);
     }
     
     openDoorS(window);
@@ -618,9 +640,14 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
    //draw the walls above the door to create the illusion of "entering"
     illuCenter(window);
     illuShop(window);
-//    illuTunnelR(window);
+    illuTunnelR(window);
+    illuTunnelL(window);
     
-    if (map_name == "fourth") tunnel(window);
+    
+    if (map_name == "fourth") tunnel(window, 544, 416);
+    if (map_name == "home") tunnel(window, -128, 160);
+    
+    
     
     if (alpha > 0 && state == "start"){
         initialisation(window, trainer, view);
@@ -734,21 +761,14 @@ void Map::closeDoorS(sf::RenderWindow &window){
     }
 }
 
-void Map::tunnel(sf::RenderWindow &window){
-    for(int i = 0; i < 4; i++){
-        sf::Sprite sprite;
-        (sprite).setTexture(texture_2);
-        (sprite).setTextureRect(sf::IntRect(409, 18 + 17 * i, 16, 16));
-        sprite.setPosition(528, 416 + 16 * i );
-        window.draw(sprite);
-    }
+void Map::tunnel(sf::RenderWindow &window, int x, int y){
     
-    for(int i = 0; i < 9; i++){
+    for(int i = 0; i < 8; i++){
         for(int k = 0; k < 5; k++){
             sf::Sprite sprite;
             (sprite).setTexture(texture_2);
             (sprite).setTextureRect(sf::IntRect(426, 18 + 17 * k, 16, 16));
-            sprite.setPosition(544 + i*16, 416 + 16 * k );
+            sprite.setPosition(x + i*16, y + 16 * k );
             window.draw(sprite);
         }
     }
@@ -759,7 +779,7 @@ void Map::tunnel(sf::RenderWindow &window){
             sf::Sprite sprite;
             (sprite).setTexture(texture_1);
             (sprite).setTextureRect(sf::IntRect(239 + k * 17, 324, 16, 16));
-            sprite.setPosition(544 + k * 16 + i * 32, 400);
+            sprite.setPosition(x + k * 16 + i * 32, y-16);
             window.draw(sprite);
         }
     }
@@ -770,7 +790,7 @@ void Map::tunnel(sf::RenderWindow &window){
             sf::Sprite sprite;
             (sprite).setTexture(texture_1);
             (sprite).setTextureRect(sf::IntRect(239 + k * 17, 291, 16, 16));
-            sprite.setPosition(544 + k * 16 + i * 32, 496);
+            sprite.setPosition(x + k * 16 + i * 32, y+80);
             window.draw(sprite);
         }
     }
@@ -807,6 +827,47 @@ void Map::illuTunnelR(sf::RenderWindow &window){
             (sprite).setTexture(texture_2);
             (sprite).setTextureRect(sf::IntRect(409, 18 + 17 * i, 16, 16));
             sprite.setPosition(528, 416 + 16 * i );
+            window.draw(sprite);
+            
+            sf::Sprite sprite2;
+            (sprite2).setTexture(texture_2);
+            (sprite2).setTextureRect(sf::IntRect(426, 18 + 17 * i, 16, 16));
+            sprite2.setPosition(544, 416 + 16 * i );
+            window.draw(sprite2);
+        }
+        
+        for(int k = 0; k<2; k++){
+            sf::Sprite sprite;
+            (sprite).setTexture(texture_2);
+            (sprite).setTextureRect(sf::IntRect(392, 35 + 17 * k, 16, 16));
+            sprite.setPosition(512, 432 + 16 * k );
+            window.draw(sprite);
+        }
+    }
+}
+
+
+void Map::illuTunnelL(sf::RenderWindow &window){
+    if (map_name == "home"){
+        for(int i = 0; i < 5; i++){
+            sf::Sprite sprite;
+            (sprite).setTexture(texture_2);
+            (sprite).setTextureRect(sf::IntRect(494, 18 + 17 * i, 16, 16));
+            sprite.setPosition(0, 160 + 16 * i );
+            window.draw(sprite);
+            
+            sf::Sprite sprite2;
+            (sprite2).setTexture(texture_2);
+            (sprite2).setTextureRect(sf::IntRect(426, 18 + 17 * i, 16, 16));
+            sprite2.setPosition(-16, 160 + 16 * i );
+            window.draw(sprite2);
+        }
+        
+        for(int k = 0; k<2; k++){
+            sf::Sprite sprite;
+            (sprite).setTexture(texture_2);
+            (sprite).setTextureRect(sf::IntRect(511, 35 + 17 * k, 16, 16));
+            sprite.setPosition(16, 176 + 16 * k );
             window.draw(sprite);
         }
     }
