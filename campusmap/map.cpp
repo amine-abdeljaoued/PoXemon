@@ -27,6 +27,7 @@ Map::Map(sf::RenderWindow &window)
     background4_2.load("Sprites/tileset2.png", sf::Vector2u(16, 16), level5_2, 34, 33);
     background7_1.load("Sprites/tileset1.png", sf::Vector2u(16, 16), level7_1, 34, 33);
     background7_2.load("Sprites/tileset2.png", sf::Vector2u(16, 16), level7_2, 34, 33);
+    background8.load("Sprites/tileset1.png", sf::Vector2u(16, 16), level8, 34, 33);
     
     
     alpha = 255;
@@ -42,6 +43,7 @@ Map::Map(sf::RenderWindow &window)
     collision_.insert(pair<string, const int*>("fourth", collision4));
     collision_.insert(pair<string, const int*>("pokeCenter", pokeCenterC));
     collision_.insert(pair<string, const int*>("home", collision7));
+    collision_.insert(pair<string, const int*>("maze", collision8));
     
     map_name= "first"; //Beggining of the game
     
@@ -126,21 +128,23 @@ Map::Map(sf::RenderWindow &window)
     //for y multiple of 16
     
     //Spawning position
-    map_list = {"first","second","third","fourth","pokeShop","pokeCenter","home"};
+    map_list = {"first","second","third","fourth","pokeShop","pokeCenter","home","maze"};
     //first map
     spawn_dict.insert(pair< string, vector<vector<int> >>("first",{{264, 256},{488, 464},{8, 192}}));
     //underground
-    spawn_dict.insert(pair< string, vector<vector<int> >>("second",{{488, 480}}));
+    spawn_dict.insert(pair< string, vector<vector<int> >>("second",{{488, 480},{520,16}}));
     //Sport
-    spawn_dict.insert(pair< string, vector<vector<int> >>("third",{{168, 464}}));
+    spawn_dict.insert(pair< string, vector<vector<int> >>("third",{{472, 432}}));
     //demi-lune
     spawn_dict.insert(pair< string, vector<vector<int> >>("fourth",{{216, 32},{360,400},{504,448}})); //376 416
     //pokeShop
     spawn_dict.insert(pair< string, vector<vector<int> >>("pokeShop",{{184, 160}}));
     //pokeCenter
     spawn_dict.insert(pair< string, vector<vector<int> >>("pokeCenter",{{104,112}}));
-    
-    spawn_dict.insert(pair< string, vector<vector<int> >>("home",{{8,192}}));
+    //home
+    spawn_dict.insert(pair< string, vector<vector<int> >>("home",{{8,192},{472,128}}));
+    //maze
+    spawn_dict.insert(pair< string, vector<vector<int> >>("maze",{{8,192},{472,128}}));
     
     //Scenario
     scenario.insert(pair<string, vector<string>> ("bob", {"Nice Day!","You should go to the shop to buy what you need."}));
@@ -220,7 +224,7 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
     int x = position.x + 16;
     int y = position.y + 16;
     
-    cout << x << " " << y << endl;
+//    cout << x << " " << y << endl;
     
     //Switching map
     if (collision_[map_name][(int) x/16 +( (int)y/16 *34)] >= 100 && trainer.state == "Stop"){
@@ -522,6 +526,9 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
     else if(map_name== "home"){
         window.draw(background7_1);
         window.draw(background7_2);
+    }
+    else if (map_name== "maze"){
+        window.draw(background8);
     }
     
     openDoorS(window);
