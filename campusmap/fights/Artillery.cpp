@@ -10,33 +10,28 @@ Artillery::Artillery(){
 }
 
 Artillery::~Artillery(){
-    std::cout<<"artillery destructor"<<std::endl;
     for (unsigned i = 0; i < bullets.size(); i++) {
         delete bullets[i];
     }
 }
 
 void Artillery::initialise(){
-    std::cout<<"artillery initialise (intialises attacksbar)"<<std::endl;
     attacksbar.initialise();
 }
 
-void Artillery::draw(sf::RenderWindow& target)  {
-    std::cout<<"artillery draw"<<std::endl;
+void Artillery::draw(sf::RenderWindow& target){
     for (unsigned i = 0; i < bullets.size(); i++) {
         target.draw((*bullets[i]).bullet);
 	} 
 }
 
 void Artillery::draw(sf::RenderTexture& texture) {
-    std::cout<<"artillery draw blur"<<std::endl;
     /* for (unsigned i = 0; i < bullets.size(); i++) {
         texture.draw((*bullets[i]).bullet);
 	} */
 } 
 
 void Artillery::new_click(float& x, float& y, const sf::FloatRect& bounds, sf::RenderWindow& window, const sf::Vector2i& mouse){
-    std::cout<<"artillery new click"<<std::endl;
     if (attack_type == 0){
         new_shot(x,y,bounds, window, mouse);
     }
@@ -46,7 +41,6 @@ void Artillery::new_click(float& x, float& y, const sf::FloatRect& bounds, sf::R
 }
 
 void Artillery::new_shot(float& x, float& y, const sf::FloatRect& bounds, sf::RenderWindow& window, const sf::Vector2i& mouse){ 
-    std::cout<<"artillery new shot"<<std::endl;
     // takes bounds of sprite to know from where to shoot
     // takes our window
     // takes the clicked mouse position
@@ -70,8 +64,7 @@ void Artillery::new_shot(float& x, float& y, const sf::FloatRect& bounds, sf::Re
     was_released = false;
 }
 
-void Artillery::new_shot_special_attack1(float& x, float& y, const sf::FloatRect& bounds, sf::RenderWindow& window, const sf::Vector2i& mouse){ 
-    std::cout<<"artillery new shot SA"<<std::endl;
+void Artillery::new_shot_special_attack1(float& x, float& y, const sf::FloatRect& bounds, sf::RenderWindow& window, const sf::Vector2i& mouse){
     if (was_released && available_bullets > 0) {
         Bullet_Attack1* new_bullet = new Bullet_Attack1(type); // MUST BE GENERALISED TO TYPE
         sf::Vector2f initial_pos(x, y);
@@ -89,7 +82,6 @@ void Artillery::new_shot_special_attack1(float& x, float& y, const sf::FloatRect
 }
 
 void Artillery::new_shot_opp(float& x, float& y, const sf::FloatRect& bounds, sf::RenderWindow& window, float& xshoot, float& yshoot){
-    std::cout<<"artillery new shot opp"<<std::endl;
     if (was_released && available_bullets > 0) {
         if (rand() < 0.08 * ((double)RAND_MAX + 1.0)) { // probability of shooting of 8% at each update -- can change depending on level?
             Bullet* new_bullet = new Bullet;
@@ -108,7 +100,6 @@ void Artillery::new_shot_opp(float& x, float& y, const sf::FloatRect& bounds, sf
 
 int Artillery::update(sf::RenderWindow& window, float& deltaTime, sf::Clock& clock, sf::Time& elapsed, sf::Clock& clock1, sf::Clock& clock2, sf::Clock& clock3, 
                 const sf::Sprite & opponent_sprite, float& groundY){
-    std::cout<<"artillery update"<<std::endl;
 	int res = 0;
     
     if ((!attacksbar.shooting1)&&(!attacksbar.shooting2)&&(!attacksbar.shooting3)){ // If we're not shooting in any of the special attacks we must be in normal attack
@@ -154,7 +145,6 @@ int Artillery::update(sf::RenderWindow& window, float& deltaTime, sf::Clock& clo
 			bulletbar.update(1);
 			clock.restart();
 	}
-    std::cout<<"artillery update ended"<<std::endl;
 	return res;
 }
 

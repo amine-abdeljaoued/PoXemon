@@ -96,12 +96,15 @@ using namespace std;
 
 
     bool start_fight = false;
-
+    
 
     //TO NOT GET ANNOYED WITH FIGHTS: 
     //JUST COMMENT LINE 359 of map.cpp
      while (window.isOpen())
      {
+         //For the fights team uncomment this line:
+         Arthur.state="Fighting";
+         
          sf::Event event;
          window.pollEvent(event);
         /*  if ((event.type == sf::Event::KeyPressed)&&((event.key.code == sf::Keyboard::P))) if(openbackpck()==1) window.close(); */
@@ -145,7 +148,9 @@ using namespace std;
          window.setView(view);
          window.display();
      }
- 
+     // to fix...
+     delete player;
+     delete opponent;
      return 0;
  }
  
