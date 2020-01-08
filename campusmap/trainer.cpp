@@ -37,6 +37,7 @@ void Trainer::draw(sf::RenderWindow &window, sf::Event &event, sf::View &view){
     displacement(event,view);
     fishing(window, view); //To put in map after condition of state fishing
                            //because there's a problem of order of drawing with Npc
+    rock(window, view);
 }
 
 void Trainer::setSpeed(sf::Event &event){
@@ -327,4 +328,47 @@ void Trainer::fishing(sf::RenderWindow &window, sf::View &view){
 
     }
     
+}
+
+
+//throw rock
+void Trainer::rock(sf::RenderWindow &window, sf::View &view){
+    if (state == "Throwing"){
+        cout << counterWalk << endl;
+        sf::FloatRect viewBounds = getViewBounds(view);
+        text.setFont(font);
+        text.setCharacterSize(15);
+        text.setFillColor(sf::Color::Black);
+        text.setStyle(sf::Text::Bold);
+        
+        bubble.setPointCount(8);
+        bubble.setPoint(0, sf::Vector2f(float(viewBounds.left + 30), float(viewBounds.top + viewBounds.height - 60)));
+        bubble.setPoint(1, sf::Vector2f(float(viewBounds.left + viewBounds.height - 30), float(viewBounds.top + viewBounds.height - 60)));
+        bubble.setPoint(2, sf::Vector2f(float(viewBounds.left + viewBounds.height - 10), float(viewBounds.top + viewBounds.height - 45)));
+        bubble.setPoint(3, sf::Vector2f(float(viewBounds.left + viewBounds.height - 10), float(viewBounds.top + viewBounds.height - 25)));
+        bubble.setPoint(4, sf::Vector2f(float(viewBounds.left + viewBounds.height - 30), float(viewBounds.top + viewBounds.height - 10)));
+        bubble.setPoint(5, sf::Vector2f(float(viewBounds.left + 30), float(viewBounds.top + viewBounds.height - 10)));
+        bubble.setPoint(6, sf::Vector2f(float(viewBounds.left + 10), float(viewBounds.top + viewBounds.height - 25)));
+        bubble.setPoint(7, sf::Vector2f(float(viewBounds.left + 10), float(viewBounds.top + viewBounds.height - 45)));
+        bubble.setOutlineColor(sf::Color::Black);
+        bubble.setOutlineThickness(2.f);
+        text.setPosition(int(viewBounds.left) + 35, int(viewBounds.top + viewBounds.height - 40) );
+        /* bubble.setPosition(int(viewBounds.left), int(viewBounds.top + viewBounds.height - 50)); */
+        
+        window.draw(bubble);
+        window.draw(text);
+        
+        sf::Sprite sprite;
+        sprite.setTexture(texturePlayer);
+        sprite.setTextureRect(sf::IntRect(2 + ((int) counterWalk/3) *82,322,80,80));
+        sprite.setPosition(viewBounds.left + 16,viewBounds.top + viewBounds.height/2 -5);
+        window.draw(sprite);
+        if (counterWalk < 12){
+            counterWalk ++;
+            text.setString("");
+        }
+        else{
+            text.setString("Oups, you broke his window...");
+        }
+    }
 }
