@@ -112,18 +112,6 @@ Map::Map(sf::RenderWindow &window)
     npcs_pokeCenter.push_back(healer) ;
     npcs.insert(pair< string, vector<Npc*> >("pokeCenter", npcs_pokeCenter));
     
-    //For Home
-    vector<Npc*> npcs_home;
-    vector<string> dialogueH;
-    dialogueH.push_back("Clement seems to be working...");
-    dialogueH.push_back("How unusual !");
-    dialogueH.push_back("Do you want to throw a rock");
-    dialogueH.push_back("on his window?");
-    dialogueH.push_back("Throwing");
-    dialogueH.push_back("Tu veux que je t'en mette une?");
-    npcs_home.push_back(new Npc("clemW","Sprites/NPC1.png",17,97,1,1,1.f,248,192,dialogueH, true)) ;
-    npcs.insert(pair< string, vector<Npc*> >("home", npcs_home));
-    
     //Part 4: Loading of the textures
     
     
@@ -146,7 +134,7 @@ Map::Map(sf::RenderWindow &window)
     //underground
     spawn_dict.insert(pair< string, vector<vector<int> >>("second",{{488, 480},{520,16}}));
     //Sport
-    spawn_dict.insert(pair< string, vector<vector<int> >>("third",{{472, 432}}));
+    spawn_dict.insert(pair< string, vector<vector<int> >>("third",{{472, 432},{440, 384}}));
     //demi-lune
     spawn_dict.insert(pair< string, vector<vector<int> >>("fourth",{{216, 32},{360,400},{504,448}})); //376 416
     //pokeShop
@@ -156,7 +144,7 @@ Map::Map(sf::RenderWindow &window)
     //home
     spawn_dict.insert(pair< string, vector<vector<int> >>("home",{{8,192},{472,128}}));
     //maze
-    spawn_dict.insert(pair< string, vector<vector<int> >>("maze",{{8,192},{472,128}}));
+    spawn_dict.insert(pair< string, vector<vector<int> >>("maze",{{248,16},{472,128}}));
     
     //Scenario
     scenario.insert(pair<string, vector<string>> ("bob", {"Nice Day!","You should go to the shop to buy what you need."}));
@@ -185,6 +173,7 @@ void Map::initialisation(sf::RenderWindow &window, Trainer &trainer, sf::View &v
     sf::Vector2f position = trainer.spritePlayer.getPosition();
     int x = position.x + 16;
     int y = position.y + 16;
+    std::cout<<trainer.state<<std::endl;
     trainer.spritePlayer.setPosition(spawn_dict[map_name][door][0], spawn_dict[map_name][door][1]);
     view.setCenter(spawn_dict[map_name][door][0] + 16, spawn_dict[map_name][door][1] + 16);;
     trainer.state = "Blocked";
@@ -382,7 +371,7 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
             float probagenerated = dis(gen);
             if (probagenerated<0.02) {
                 std::cout<<"POKEEEEMMMOONNN"<<std::endl;
-                //trainer.state = "Fighting";
+//                trainer.state = "Fighting";
             }
             
             if (trainer.facingDirection == "Left" || trainer.facingDirection == "Right"){
@@ -500,7 +489,7 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
     
     
     
-    if (map_name == "first" || map_name == "fourth" || map_name == "third" || map_name == "home") fillTree(window);
+    if (map_name == "first" || map_name == "fourth" || map_name == "third" || map_name == "home" || map_name == "maze") fillTree(window);
      
     
     /* trainer.displacement(event, view); */
@@ -882,6 +871,7 @@ void Map::illuTunnelL(sf::RenderWindow &window){
             sprite.setPosition(16, 176 + 16 * k );
             window.draw(sprite);
         }
+        
     }
 }
 
