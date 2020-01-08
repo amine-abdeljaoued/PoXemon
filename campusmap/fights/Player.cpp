@@ -27,14 +27,14 @@ void Player::update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clock
 	std::cout<<"player"<<std::endl;
 	velocityX = 0.0f;
 	//Left and right movement
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+	if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Left))||(sf::Keyboard::isKeyPressed(sf::Keyboard::A))) {
 		velocityX -= speed;
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+	if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Right))||(sf::Keyboard::isKeyPressed(sf::Keyboard::D))) {
 		velocityX += speed;
 	}
 	//Jumps
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && canJump) {
+	if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && canJump)||(sf::Keyboard::isKeyPressed(sf::Keyboard::W) && canJump)) {
 		canJump = false;       //While jumping you can't jump
 		velocityY = -sqrt(2.0f * 981.0f * jumpHeight);
 	}
