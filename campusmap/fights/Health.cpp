@@ -65,15 +65,20 @@ void Healthbar::setHealth(int a){
 
 void Healthbar::decrease(int i) {
 	health -= i;
-	//std::cout << "ouch !" << std::endl;
 }
 
 void Healthbar::update(){
     //Text
     name_text.setString(name);
     level_text.setString("lvl: " + std::to_string(level));
-
-    healthbar.setSize(sf::Vector2f(health*healthwidth/100, healthheight));
+    //Size
+    if (health>0){
+        healthbar.setSize(sf::Vector2f(health*healthwidth/100, healthheight));
+    }
+    else{
+        healthbar.setSize(sf::Vector2f(0, healthheight));
+        health = 0;
+        }
     //Bar changes from green to red as health decreases
     if (health > 50){
         healthbar.setFillColor(sf::Color((100-health)*2.55*2, 255,0));

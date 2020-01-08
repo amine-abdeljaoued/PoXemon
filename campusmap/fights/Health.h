@@ -34,9 +34,4 @@ public:
     sf::Font font;
 	sf::Text name_text;
     sf::Text level_text;
-
-    // For the shaders
-    // sf::RenderTexture rendertexture;
-    // void setupForShader(sf::RenderWindow& target);
-
 };
