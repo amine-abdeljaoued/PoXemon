@@ -10,6 +10,7 @@
 #include "npc.hpp"
 #include "trainer.hpp"
 #include "shop.hpp"
+#include "interior.hpp"
 
 using namespace std;
 
@@ -43,6 +44,9 @@ class Map
         TileMap background7_1;
         TileMap background7_2;
         TileMap background8;
+        Interior background9;
+        Interior background10;
+    
         map<string, vector<Npc*> > npcs; //Map mapping each map_name to its associated vector of npcs
         
         map<string, const int*> collision_;

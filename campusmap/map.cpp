@@ -28,6 +28,8 @@ Map::Map(sf::RenderWindow &window)
     background7_1.load("Sprites/tileset1.png", sf::Vector2u(16, 16), level7_1, 34, 33);
     background7_2.load("Sprites/tileset2.png", sf::Vector2u(16, 16), level7_2, 34, 33);
     background8.load("Sprites/tileset1.png", sf::Vector2u(16, 16), level8, 34, 33);
+    background9.load("Sprites/interior.png", sf::Vector2u(16, 16), level9, 34, 33);
+    background10.load("Sprites/interior.png", sf::Vector2u(16, 16), level10, 34, 33);
     
     
     alpha = 255;
@@ -44,6 +46,10 @@ Map::Map(sf::RenderWindow &window)
     collision_.insert(pair<string, const int*>("pokeCenter", pokeCenterC));
     collision_.insert(pair<string, const int*>("home", collision7));
     collision_.insert(pair<string, const int*>("maze", collision8));
+    collision_.insert(pair<string, const int*>("interior_80", collision9));
+    collision_.insert(pair<string, const int*>("room_clement", collision10));
+    
+    
     
     map_name= "first"; //Beggining of the game
     
@@ -78,17 +84,12 @@ Map::Map(sf::RenderWindow &window)
     Npc* pannel_udg = new Npc(95,372,info_underground);
     npcs_underground.push_back(pannel_udg);
     
-    
     vector<string> dialogue_under;
     dialogue_under.push_back("Look at the nice fountain");
     dialogue_under.push_back("There is no exit here");
     dialogue_under.push_back("You just lost 2 minutes of your time");
     Npc* digger = new Npc("digger","Sprites/NPC1.png",209,673,32,32,1.f,8,16,dialogue_under,true);
     npcs_underground.push_back(digger);
-
-
-    
- 
 
     npcs.insert(pair<string, vector<Npc*> >("second", npcs_underground));
 
@@ -112,6 +113,30 @@ Map::Map(sf::RenderWindow &window)
     npcs_pokeCenter.push_back(healer) ;
     npcs.insert(pair< string, vector<Npc*> >("pokeCenter", npcs_pokeCenter));
     
+    //For Home
+    vector<Npc*> npcs_home;
+    vector<string> dialogueH;
+    dialogueH.push_back("Clement seems to be working...");
+    dialogueH.push_back("How unusual !");
+    dialogueH.push_back("Do you want to throw a rock");
+    dialogueH.push_back("on his window?");
+    dialogueH.push_back("Throwing");
+    dialogueH.push_back("Tu veux que je t'en mette une?");
+    npcs_home.push_back(new Npc("clemW","Sprites/NPC1.png",17,97,1,1,1.f,248,192,dialogueH, true)) ;
+    npcs.insert(pair< string, vector<Npc*> >("home", npcs_home));
+    
+    //For room_clement
+    vector<Npc*> npcs_roomC;
+    vector<string> dialogue_Cl;
+    dialogue_Cl.push_back("You walk me up");
+    dialogue_Cl.push_back("What's the matter?");
+    dialogue_Cl.push_back("Let's fight!"); 
+    Npc* clement = new Npc("clement","Sprites/NPC1.png",241,673,32,32,1.f,232,256,dialogue_Cl,false);
+    npcs_roomC.push_back(clement);
+
+    npcs.insert(pair<string, vector<Npc*> >("room_clement", npcs_roomC));
+
+    
     //Part 4: Loading of the textures
     
     
@@ -128,7 +153,7 @@ Map::Map(sf::RenderWindow &window)
     //for y multiple of 16
     
     //Spawning position
-    map_list = {"first","second","third","fourth","pokeShop","pokeCenter","home","maze"};
+    map_list = {"first","second","third","fourth","pokeShop","pokeCenter","home","maze","interior_80","room_clement"};
     //first map
     spawn_dict.insert(pair< string, vector<vector<int> >>("first",{{264, 256},{488, 464},{8, 192}}));
     //underground
@@ -142,9 +167,13 @@ Map::Map(sf::RenderWindow &window)
     //pokeCenter
     spawn_dict.insert(pair< string, vector<vector<int> >>("pokeCenter",{{104,112}}));
     //home
-    spawn_dict.insert(pair< string, vector<vector<int> >>("home",{{8,192},{472,128}}));
+    spawn_dict.insert(pair< string, vector<vector<int> >>("home",{{8,192},{472,128},{216,176}}));
     //maze
     spawn_dict.insert(pair< string, vector<vector<int> >>("maze",{{248,16},{472,128}}));
+    //interior_80
+    spawn_dict.insert(pair< string, vector<vector<int> >>("interior_80",{{216,368},{168,192}}));
+    //room_clement
+    spawn_dict.insert(pair< string, vector<vector<int> >>("room_clement",{{184,336}}));
     
     //Scenario
     scenario.insert(pair<string, vector<string>> ("bob", {"Nice Day!","You should go to the shop to buy what you need."}));
@@ -533,6 +562,12 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
     }
     else if (map_name== "maze"){
         window.draw(background8);
+    }
+    else if (map_name== "interior_80"){
+        window.draw(background9);
+    }
+    else if (map_name== "room_clement"){
+        window.draw(background10);
     }
     
     openDoorS(window);
