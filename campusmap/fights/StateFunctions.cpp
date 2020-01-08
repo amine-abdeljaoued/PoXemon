@@ -1,6 +1,8 @@
 
 #include "StateFunctions.h"
 
+StateFunctions1::StateFunctions1(){/*do nothing*/}
+
 void StateFunctions1::initialise(Opponent& opponent, Player& player, sf::RenderWindow& window, sf::Font& font){
 	opp = opponent.sprite;
     intro_text.setString("You are about to fight " + opponent.name);
@@ -94,8 +96,16 @@ void StateFunctions1::initialise_buttons(sf::RenderWindow& window, sf::Font& fon
     start_text.setString(start);
     info_text.setString(info);
 
+	// Reset position - must compensate for their initial position (can call fights multiple times)
+	opp.setPosition(0,0); 
+	star.setPosition(0,0);
+	intro_text.setPosition(0,0);
+	info_text.setPosition(0,0);
+	start_text.setPosition(0,0);
+	info_button.setPosition(0,0);
+	start_button.setPosition(0,0);
+
 	// Setting origin at centre
-	opp.setPosition(0,0); // we have to compensation for the initial position of the sprite
 	intro_text.setOrigin(intro_text.getGlobalBounds().width/2, intro_text.getGlobalBounds().height/2);
 	info_text.setOrigin(info_text.getGlobalBounds().width/2, info_text.getGlobalBounds().height/2);
 	start_text.setOrigin(start_text.getGlobalBounds().width/2, start_text.getGlobalBounds().height/2);
@@ -268,33 +278,32 @@ int StateFunctions1::countdown(sf::RenderWindow& window, float deltatime, sf::Ti
 
 //------------------------------------------------------------------------------------------------------------
 
-void StateFunctions56::fall(Pokemon& eevee, float& groundY, float& deltaTime) {//make player fall if it is still in the air
-	if (eevee.y < groundY) {
+void StateFunctions56::fall(Pokemon* eevee, float& groundY, float& deltaTime) {//make player fall if it is still in the air
+	if ((*eevee).y < groundY) {
 
-		eevee.velocityY += 981.0f * deltaTime;
-		eevee.y += eevee.velocityY * deltaTime;
-		eevee.sprite.setPosition(eevee.x, eevee.y);
+		(*eevee).velocityY += 981.0f * deltaTime;
+		(*eevee).y += (*eevee).velocityY * deltaTime;
+		(*eevee).sprite.setPosition((*eevee).x, (*eevee).y);
 
-		if (eevee.y >= groundY) {
-			eevee.y = groundY;
-			eevee.velocityY = 0.0f;
+		if ((*eevee).y >= groundY) {
+			(*eevee).y = groundY;
+			(*eevee).velocityY = 0.0f;
 		}
 
 	}
 }
 
-void StateFunctions56::initialize_state_5_6(char game_mode, Pokemon poke, sf::Font font, sf::Text& text_fainted, sf::Text& choose_pokemon, sf::Text& leave_fight, sf::RenderWindow& target, Pokemon_Button* buttons[], sf::Sprite& running_sprite) {
+void StateFunctions56::initialize_state_5_6(char game_mode, Pokemon* poke, sf::Font font, sf::Text& text_fainted, sf::Text& choose_pokemon, sf::Text& leave_fight, sf::RenderWindow& target, Pokemon_Button* buttons[], sf::Sprite& running_sprite) {
 
 	//the menu is almost the same when we play against a wild pokemon or a trainer
 	//the difference is that we cannot escape against a trainer 
 	//hence in 't' mode there is no run button and pokemon buttons are placed at the center
 
-	if (poke.health.health <= 0) {
-		text_fainted.setString(poke.name + " fainted!");
+	if ((*poke).health.health <= 0) {
+		text_fainted.setString((*poke).name + " fainted!");
 	}else{
-		text_fainted.setString(poke.enemy->name + " fainted!");
+		text_fainted.setString((*poke).enemy->name + " fainted!");
 	}
-	std::cout<<"strings set"<<std::endl;
 	//text elements
 	choose_pokemon.setFont(font);
 	text_fainted.setFont(font);
@@ -311,7 +320,6 @@ void StateFunctions56::initialize_state_5_6(char game_mode, Pokemon poke, sf::Fo
 		leave_fight.setCharacterSize(30);
 		leave_fight.setOrigin(leave_fight.getGlobalBounds().width / 2, leave_fight.getGlobalBounds().height / 2);
 	}
-	std::cout<<"text elements setup"<<std::endl;
 	//set their positions.
 	int placement = 3;
 	if (game_mode == 't') placement = 2;
@@ -319,15 +327,14 @@ void StateFunctions56::initialize_state_5_6(char game_mode, Pokemon poke, sf::Fo
 	choose_pokemon.setPosition(target.getSize().x / placement, target.getSize().y /4);
 	text_fainted.setPosition(target.getSize().x / 2, target.getSize().y / 9);
 	leave_fight.setPosition(target.getSize().x *2/3, target.getSize().y / 4);
-	std::cout<<"positions set"<<std::endl;
+
 	//set position of the buttons
 	buttons[0]->setPosition(target.getSize().x / placement, target.getSize().y * 7/16 );
 	buttons[1]->setPosition(target.getSize().x / placement, target.getSize().y * 9/16 );
 	buttons[2]->setPosition(target.getSize().x / placement, target.getSize().y * 11/16 );
-	std::cout<<"buttons set"<<std::endl;
+	
 	//update life of the pokemon on its button
-	buttons[poke.index]->setHealth(poke.health.health);
-	std::cout<<"life on button set"<<std::endl;
+	buttons[(*poke).index]->setHealth((*poke).health.health);
 }
 
 void const StateFunctions56::draw_state_5_6(char game_mode,  sf::Font& font, sf::Text& text_fainted, sf::Text choose_pokemon, sf::Text leave_fight, sf::RenderWindow& target, Pokemon_Button* buttons[], sf::Sprite& running_sprite) {
@@ -396,9 +403,9 @@ void StateFunctions56::initialize_state7(bool won, sf::Text& lost_fight, sf::Fon
 	lost_fight.setPosition(window.getSize().x /2, window.getSize().y / 2);
 }
 
-void StateFunctions56::initialize_state_8(Pokemon& poke, sf::Font& font, sf::Text& text_fainted, sf::RenderWindow& window) {
+void StateFunctions56::initialize_state_8(Pokemon* poke, sf::Font& font, sf::Text& text_fainted, sf::RenderWindow& window) {
 	
-	text_fainted.setString(poke.name + " fainted!");
+	text_fainted.setString(poke->name + " fainted!");
 	text_fainted.setFont(font);
 	text_fainted.setCharacterSize(50);
 	text_fainted.setFillColor(sf::Color::Black);

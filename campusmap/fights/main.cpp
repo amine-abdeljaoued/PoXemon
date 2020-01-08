@@ -49,7 +49,7 @@ int main ()
 	//ACTUAL MAIN: now for the fights...
 
 	Fight fight(window);
-	char mode = 't'; // this is decided before
+	char mode = 'w'; // this is decided before
 	fight.initialise(mode, bag, opponent_bag, player, opponent, window);
 
 // ------------------------------------------------------------------------------------------------
