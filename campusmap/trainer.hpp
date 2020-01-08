@@ -34,6 +34,10 @@ class Trainer {
         sf::ConvexShape bubble;
         bool fish;
     
+        //throw rock
+        void rock(sf::RenderWindow &window, sf::View &view);
+        int rock_throw;
+    
     private:
         
         
