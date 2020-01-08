@@ -111,6 +111,11 @@ void Npc::speak(sf::RenderWindow &window, sf::View &view, Trainer &trainer){
            if (discussion[speakCounter] == "Shopping"){
                trainer.state = "Shopping";
            }
+         
+           else if (discussion[speakCounter] == "Throwing"){
+             trainer.state = "Throwing";
+             trainer.counterWalk = 0;
+           }
            
            else{
                text.setString(discussion[speakCounter]);
