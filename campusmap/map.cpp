@@ -112,6 +112,18 @@ Map::Map(sf::RenderWindow &window)
     npcs_pokeCenter.push_back(healer) ;
     npcs.insert(pair< string, vector<Npc*> >("pokeCenter", npcs_pokeCenter));
     
+    //For Home
+    vector<Npc*> npcs_home;
+    vector<string> dialogueH;
+    dialogueH.push_back("Clement seems to be working...");
+    dialogueH.push_back("How unusual !");
+    dialogueH.push_back("Do you want to throw a rock");
+    dialogueH.push_back("on his window?");
+    dialogueH.push_back("Throwing");
+    dialogueH.push_back("Tu veux que je t'en mette une?");
+    npcs_home.push_back(new Npc("clemW","Sprites/NPC1.png",17,97,1,1,1.f,248,192,dialogueH, true)) ;
+    npcs.insert(pair< string, vector<Npc*> >("home", npcs_home));
+    
     //Part 4: Loading of the textures
     
     
@@ -370,7 +382,7 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
             float probagenerated = dis(gen);
             if (probagenerated<0.02) {
                 std::cout<<"POKEEEEMMMOONNN"<<std::endl;
-                trainer.state = "Fighting";
+                //trainer.state = "Fighting";
             }
             
             if (trainer.facingDirection == "Left" || trainer.facingDirection == "Right"){
