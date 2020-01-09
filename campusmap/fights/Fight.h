@@ -28,7 +28,8 @@ public:
     float groundX = 1000.f;
     
     //Parameters of the game
-    int state = 1;  // 1 = start menu
+    int state = 1;  // 0 = return to map
+                    // 1 = start menu
                     // 2 = normal fight mode
                     // 3 = pokeball landed in centre -- to be implemented
                     // 4 = caught the pokemon
@@ -38,6 +39,7 @@ public:
                     // 8 = how to play menu
                     // 9 = clicked start -> choose pokemon to play with
                     // 10 = countdown
+                    // 20 = all pokemons dead -> go to health shop
 
     char game_mode; // 'w' : wild pokemon
                     // 't' : trainer
