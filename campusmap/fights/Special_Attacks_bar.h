@@ -21,6 +21,10 @@ public:
 	void initialise(sf::RenderWindow& window);
 	void initial_state();
 
+// Background
+	sf::Texture bg_tex;
+	sf::Sprite bg;
+
 // Specical Attack 1
 	bool attack1_available;
 	bool shooting1; 		// tells us if we are shooting

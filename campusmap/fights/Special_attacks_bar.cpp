@@ -10,6 +10,10 @@ Special_Attacks_Bar::Special_Attacks_Bar() {
 	shooting3 = false;
 	regenerating1 = false;
 
+	// must implement a background
+	if (!bg_tex.loadFromFile("fights/Images/Special_Attacks_Bar/attackbar.png")) { std::cout << "could not load attackbar bg" << std::endl; }
+	bg_tex.loadFromFile("fights/Images/Special_Attacks_Bar/attackbar.png");
+	/* bg.setTexture(bg_tex); */
 }
 
 void Special_Attacks_Bar::initialise(sf::RenderWindow& window){
@@ -49,16 +53,20 @@ void Special_Attacks_Bar::initialise(sf::RenderWindow& window){
 	// Set scales according to window size
 	sf::Vector2u TextureSize1 = key1_texture.getSize(); 	//Get size of texture.
 	sf::Vector2u TextureSize2 = attack_1_texture.getSize();
-	sf::Vector2u WindowSize = window.getSize();      //Get size of window.
+	sf::Vector2u TextureSize3 = bg_tex.getSize();
+	sf::Vector2u WindowSize = window.getSize();      		//Get size of window.
 
 	float ScaleKey = (float) WindowSize.y / TextureSize1.y; //Calculate scale.
 	float ScaleSprite = (float) WindowSize.y / TextureSize2.y;
+	float ScaleBg = (float) WindowSize.y / TextureSize3.y;
 
 	key1.setScale(ScaleKey/14,ScaleKey/14);	//Set scale.  
 	attack_1_sprite.setScale(ScaleSprite/7, ScaleSprite/7);
+	/* bg.setScale(ScaleBg/5, ScaleBg/5); */
+	bg.setScale(0.2,0.2);
 	
 	// Set up rectangles
-	boxsize = window.getSize().y/7; // NB CHANGE ACCORDING TO WINDOW SIZE
+	boxsize = window.getSize().y/7; 
     base_rect.setFillColor(sf::Color(192,192,192)); 
     base_rect.setOutlineThickness(4);
     base_rect.setOutlineColor(sf::Color::Black);
@@ -67,14 +75,16 @@ void Special_Attacks_Bar::initialise(sf::RenderWindow& window){
     timer_rect.setSize(sf::Vector2f(boxsize,boxsize));
 
 	// Change origins
+	attack_1_sprite.setPosition(0,0);
+	key1.setPosition(0,0);
 	attack_1_sprite.setOrigin(sf::Vector2f(attack_1_sprite.getLocalBounds().width / 2, attack_1_sprite.getLocalBounds().height / 2));
 	key1.setOrigin(sf::Vector2f(key1.getGlobalBounds().width / 2, key1.getGlobalBounds().height / 2));
 
-	// Set position - ACCORDING TO WINDOW SIZE
-	xpos = 100;
-	ypos = 550;
+	// Set position 
+	bg.setPosition(0, 0/* window.getSize().y - bg.getGlobalBounds().height */);
+	xpos = window.getSize().x/14;
+	ypos = 8*window.getSize().y/10;
 	setPosition(xpos, ypos);//might change it 
-
 }
 
 void Special_Attacks_Bar::setPosition(float x, float y) {
@@ -134,6 +144,7 @@ void Special_Attacks_Bar::update1(sf::Clock& clock1) {
 
 void Special_Attacks_Bar::draw(sf::RenderWindow& target){
 	// Special Attack 1
+	target.draw(bg);
 	target.draw(base_rect);
 	target.draw(timer_rect);
 	target.draw(attack_1_sprite);
@@ -141,6 +152,7 @@ void Special_Attacks_Bar::draw(sf::RenderWindow& target){
 }
 
 void Special_Attacks_Bar::draw(sf::RenderTexture& texture){
+	texture.draw(bg);
 	texture.draw(base_rect);
 	texture.draw(timer_rect);
 	texture.draw(attack_1_sprite);
