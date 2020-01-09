@@ -5,6 +5,17 @@
 
 #include <map>
 
+/*Ok so the pokemons are initialised with the following things in the following order...
+1. window (you don't need to put anything here)
+2. float height: max height you can jump to (approx 200.f)
+3. float velocity: speed of movement (approx 500.f-800.f)
+4. Backpack_Pokemon - this is intiated like this Backpack_Pokemon(std::string name, int level, int index, int health=100, int ptype)
+	( the ptype is 	10 - earth
+			20 - water
+			30 - air
+			40 - fire )
+*/
+
 int main() {
 	struct Pokemon_info {
 		//float xstart; (always the same)
