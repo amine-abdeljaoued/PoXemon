@@ -184,7 +184,7 @@ Map::Map(sf::RenderWindow &window)
     //home
     spawn_dict.insert(pair< string, vector<vector<int> >>("home",{{8,192},{472,128},{216,176}}));
     //maze
-    spawn_dict.insert(pair< string, vector<vector<int> >>("maze",{{248,16},{472,128}}));
+    spawn_dict.insert(pair< string, vector<vector<int> >>("maze",{{248,16},{264,464}}));
     //interior_80
     spawn_dict.insert(pair< string, vector<vector<int> >>("interior_80",{{216,368},{168,192}}));
     //room_clement
