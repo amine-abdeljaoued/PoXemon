@@ -270,8 +270,6 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
     int x = position.x + 16;
     int y = position.y + 16;
     
-//    cout << x << " " << y << endl;
-    
     //Switching map
     if (collision_[map_name][(int) x/16 +( (int)y/16 *34)] >= 100 && trainer.state == "Stop"){
         int n = collision_[map_name][(int) x/16 +( (int)y/16 *34)];
@@ -287,7 +285,6 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
             trainer.counterWalk = 0;
         }
     }
-    cout << trainer.state << endl;
     
     //Dying
     if (trainer.state == "Dead"){
@@ -894,57 +891,6 @@ void Map::illuShop(sf::RenderWindow &window){
     }
 }
 
-void Map::illuTunnelR(sf::RenderWindow &window){
-    if (map_name == "fourth"){
-        for(int i = 0; i < 5; i++){
-            sf::Sprite sprite;
-            (sprite).setTexture(texture_2);
-            (sprite).setTextureRect(sf::IntRect(409, 18 + 17 * i, 16, 16));
-            sprite.setPosition(528, 416 + 16 * i );
-            window.draw(sprite);
-            
-            sf::Sprite sprite2;
-            (sprite2).setTexture(texture_2);
-            (sprite2).setTextureRect(sf::IntRect(426, 18 + 17 * i, 16, 16));
-            sprite2.setPosition(544, 416 + 16 * i );
-            window.draw(sprite2);
-        }
-        
-        for(int k = 0; k<2; k++){
-            sf::Sprite sprite;
-            (sprite).setTexture(texture_2);
-            (sprite).setTextureRect(sf::IntRect(392, 35 + 17 * k, 16, 16));
-            sprite.setPosition(512, 432 + 16 * k );
-            window.draw(sprite);
-        }
-    }
-}
 
-
-void Map::illuTunnelL(sf::RenderWindow &window){
-    if (map_name == "home"){
-        for(int i = 0; i < 5; i++){
-            sf::Sprite sprite;
-            (sprite).setTexture(texture_2);
-            (sprite).setTextureRect(sf::IntRect(494, 18 + 17 * i, 16, 16));
-            sprite.setPosition(0, 160 + 16 * i );
-            window.draw(sprite);
-            
-            sf::Sprite sprite2;
-            (sprite2).setTexture(texture_2);
-            (sprite2).setTextureRect(sf::IntRect(426, 18 + 17 * i, 16, 16));
-            sprite2.setPosition(-16, 160 + 16 * i );
-            window.draw(sprite2);
-        }
-        
-        for(int k = 0; k<2; k++){
-            sf::Sprite sprite;
-            (sprite).setTexture(texture_2);
-            (sprite).setTextureRect(sf::IntRect(511, 35 + 17 * k, 16, 16));
-            sprite.setPosition(16, 176 + 16 * k );
-            window.draw(sprite);
-        }
-        
-    }
 }
 
