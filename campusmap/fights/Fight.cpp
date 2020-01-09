@@ -54,6 +54,61 @@ void Fight::initialise(char& mode, Backpack& pbag, Backpack& popponent_bag, Play
     clicked_button = -2; // no button clicked  
 }
 
+void Fight::initialise_wild (Backpack& pbag, Player* player, Opponent* opponent, sf::RenderWindow& window){
+	// background - must change depending on where we are
+    functions1.initialise_background(window, "fights/Images/grassbg.png", background, BackgroundTexture);
+
+    // basic set up
+    bag = pbag;
+    game_mode = 'w';
+    pplayer = player;
+    popponent = opponent;
+    for (int i=0; i<3; i++){
+        poke_buttons[i] =  &((bag.backpack_pokemons[i])->button);
+    }
+    (bag).set_opponent(popponent);
+    (*pplayer).set_enemy(popponent);
+	(*popponent).set_enemy(pplayer);
+
+	// create a 'backpack' for the scenario
+	Backpack popponent_bag;
+	Backpack_Pokemon opoke1((*opponent).name, (*opponent).level, (*opponent).index, (*opponent).health.health, (*opponent).type);
+	popponent_bag.backpack_pokemons[0] = &opoke1;
+	opponent_bag = popponent_bag;
+
+	// for the states
+    state = 1;
+	functions1.initialise(*popponent, *player, window, font);
+    deltaTime = 0.0f;
+    counter = 0;
+    clicked_button = -2; // no button clicked  
+} 
+
+void Fight::initialise_trainer (Backpack& pbag, Backpack& popponent_bag, Player* player, sf::RenderWindow& window){
+	// background - must change depending on where we are
+	functions1.initialise_background(window, "fights/Images/grassbg.png", background, BackgroundTexture);
+
+	// basic setup
+    bag = pbag;
+    opponent_bag = popponent_bag;
+    game_mode = 't';
+    pplayer = player;
+    popponent = new Opponent(window, 200.f, 500.f, *popponent_bag.backpack_pokemons[0]);
+    for (int i=0; i<3; i++){
+        poke_buttons[i] =  &((bag.backpack_pokemons[i])->button);
+    }
+    (bag).set_opponent(popponent);
+    (*pplayer).set_enemy(popponent);
+	(*popponent).set_enemy(pplayer);
+
+    // for the states
+    state = 1;
+	functions1.initialise(*popponent, *player, window, font);
+    deltaTime = 0.0f;
+    counter = 0;
+    clicked_button = -2; // no button clicked
+} 
+
 int Fight::update(sf::RenderWindow& window){
     deltaTime = clock.restart().asSeconds();
     elapsed = clock_regenerate_bullets.getElapsedTime();
