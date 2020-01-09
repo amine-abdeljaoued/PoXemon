@@ -46,6 +46,8 @@ class Map
         TileMap background8;
         Interior background9;
         Interior background10;
+        TileMap background11;
+        TileMap background11_2;
     
         map<string, vector<Npc*> > npcs; //Map mapping each map_name to its associated vector of npcs
         
