@@ -11,6 +11,7 @@
 #include "trainer.hpp"
 #include "shop.hpp"
 #include "interior.hpp"
+#include "center.hpp"
 
 using namespace std;
 
@@ -64,6 +65,7 @@ class Map
         sf::Texture pokeInterior;
         sf::Sprite pokeBuilding;
         Shop shop;
+        Center center;
     
         //Places of Spawn of the Trainer
         int initialX;

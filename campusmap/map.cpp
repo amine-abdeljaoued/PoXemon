@@ -120,6 +120,7 @@ Map::Map(sf::RenderWindow &window)
     dialogueC.push_back("Welcome to our center!");
     dialogueC.push_back("We restore your tired Pokemon to full health");
     dialogueC.push_back("Would you restore your Pokemon?");
+    dialogueC.push_back("Healing");
     Npc* healer = new Npc("healer","Sprites/NPC1.png",433,962,32,32,1.f,105,16,dialogueC, true);
     npcs_pokeCenter.push_back(healer) ;
     npcs.insert(pair< string, vector<Npc*> >("pokeCenter", npcs_pokeCenter));
@@ -321,7 +322,7 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
         }
 
         //Exiting Shop
-        if (event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::W&&map_name == "pokeShop"&&trainer.state == "Shopping"){
+        if (event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::W&&((map_name == "pokeShop"&&trainer.state == "Shopping")||(trainer.state == "Healing"&&map_name == "pokeCenter"))){
             //if (trainer.state == "Shopping")
             trainer.state = "Stop";
             //else trainer.state = "Shopping";
@@ -331,7 +332,7 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
         if (event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::D&&trainer.state != "Walking"){
             if (collision_[map_name][(int) x/16 +(((int) y/16 -1)*34)]>=60 && collision_[map_name][(int) x/16 +(((int) y/16 -1)*34)]<=69 && trainer.facingDirection=="Up"){
                 nNpc = collision_[map_name][(int) x/16 +(((int) y/16 -1)*34)] % 60;
-                if(trainer.state != "Shopping"){
+                if(trainer.state != "Shopping"&&trainer.state != "Healing"){
                     if(trainer.state == "SpeakingScenario"){
                         if(scenario[npcs[map_name][nNpc]->name].size() == 1){
                             scenario.erase(npcs[map_name][nNpc]->name);
@@ -359,7 +360,7 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
             }
             else if (collision_[map_name][(int) x/16 -1+((int) y/16 *34)]>=60 && collision_[map_name][(int) x/16 -1+((int) y/16 *34)]<=69 && trainer.facingDirection=="Left"){
                 nNpc = collision_[map_name][(int) x/16 -1+((int) y/16 *34)] % 60;
-                if(trainer.state != "Shopping"){
+                if(trainer.state != "Shopping"&&trainer.state != "Healing"){
                     if(trainer.state == "SpeakingScenario"){
                         if(scenario[npcs[map_name][nNpc]->name].size() == 1){
                             scenario.erase(npcs[map_name][nNpc]->name);
@@ -386,7 +387,7 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
             }
             else if (collision_[map_name][(int) x/16 +1+((int) y/16 *34)]>=60 && collision_[map_name][(int) x/16 +1+((int) y/16 *34)]<=69 && trainer.facingDirection=="Right"){
                 nNpc = collision_[map_name][(int) x/16 +1+((int) y/16 *34)] % 60;
-                if(trainer.state != "Shopping"){
+                if(trainer.state != "Shopping"&&trainer.state != "Healing"){
                     if(trainer.state == "SpeakingScenario"){
                        if(scenario[npcs[map_name][nNpc]->name].size() == 1){
                             scenario.erase(npcs[map_name][nNpc]->name);
@@ -414,7 +415,7 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
         }
         
         //Fishing for François
-        if ((collision_[map_name][(int) x/16 + 1 +( (int)y/16 *34)]==6 &&trainer.facingDirection=="Right") || (collision_[map_name][(int) x/16 -1 +( (int)y/16 *34)]==6 &&trainer.facingDirection=="Left") || (collision_[map_name][(int) x/16  + (((int) y/16 -1) *34)]==6 &&trainer.facingDirection=="Up") || (collision_[map_name][(int) x/16 +(((int) y/16 +1) *34)]==6 &&trainer.facingDirection=="Down")){
+        if ((collision_[map_name][(int) x/16 + 1 +( (int)y/16 *34)]==7 &&trainer.facingDirection=="Right") || (collision_[map_name][(int) x/16 -1 +( (int)y/16 *34)]==7 &&trainer.facingDirection=="Left") || (collision_[map_name][(int) x/16  + (((int) y/16 -1) *34)]==7 &&trainer.facingDirection=="Up") || (collision_[map_name][(int) x/16 +(((int) y/16 +1) *34)]==7 &&trainer.facingDirection=="Down")){
             if (event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::X&&trainer.fish==true&&trainer.state != "Walking"){
                 if (trainer.state == "Fishing"){
                     trainer.state = "stopFishing";
@@ -434,7 +435,7 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
         //Fighting
         if (trainer.state == "Stop" && fight == true){
             fight = false;
-            trainer.state = "Fighting";
+            //trainer.state = "Fighting";
         }
         
         //Walking
@@ -757,6 +758,7 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
     }
     this->trainerDisplacement(window, trainer,event,clock,view);
     shop.draw(window, view, event, trainer);
+    center.draw(window, view, event, trainer);
     
 }
         
