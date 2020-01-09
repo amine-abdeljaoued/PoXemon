@@ -12,7 +12,7 @@ public:
 	
     void update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clock, 
 				sf::Time& elapsed, sf::Clock& clock1, sf::Clock& clock2, sf::Clock& clock3, float& groundY);
-    void move(float& deltaTime);
+    void move(float& deltaTime, sf::RenderWindow& window);
     void draw(sf::RenderWindow& target);
 	void draw(sf::RenderTexture& texture);
 
