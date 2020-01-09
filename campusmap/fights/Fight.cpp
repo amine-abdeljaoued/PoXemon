@@ -177,7 +177,7 @@ int Fight::update(sf::RenderWindow& window){
 		functions56.draw_state_5_6(game_mode, font, text_fainted, choose_pokemon, leave_fight, window, poke_buttons, running_sprite);
 		if (clicked_button >= 0) {//we clicked on a pokemon but
 			delete pplayer;
-			pplayer = new Player(10.f, groundY, 200.f, 500.f, *(bag.backpack_pokemons[clicked_button]));//reinitialize player with the chosen pokemon
+			pplayer = new Player(window, 200.f, 500.f, *(bag.backpack_pokemons[clicked_button]));//reinitialize player with the chosen pokemon
 			(*popponent).x = 1000.f;//reset opponent's position
 			(bag).set_opponent(popponent);
 			//dont forget to reset enemies
@@ -220,10 +220,10 @@ int Fight::update(sf::RenderWindow& window){
 
 		if (clicked_button >= 0) {//we clicked on a pokemon button
 			delete pplayer;//maybe it would be better not to delete it if we chose the same ?
-			pplayer = new Player(10.f, groundY, 200.f, 500.f, *(bag.backpack_pokemons[clicked_button]));//reinitialize player with the chosen pokemon
+			pplayer = new Player(window, 200.f, 500.f, *(bag.backpack_pokemons[clicked_button]));//reinitialize player with the chosen pokemon
 			
 			delete popponent;
-			popponent = new Opponent(1000.f, groundY, 200.f, 500.f, *(opponent_bag.backpack_pokemons[index+1]));//reinitialize opponent with the next one in the trainer's bag //change it randomly ?
+			popponent = new Opponent(window, 200.f, 500.f, *(opponent_bag.backpack_pokemons[index+1]));//reinitialize opponent with the next one in the trainer's bag //change it randomly ?
 
 			(bag).set_opponent(popponent);
 			//dont forget to reset enemies
@@ -259,7 +259,6 @@ int Fight::update(sf::RenderWindow& window){
 		//draw stuff
 		window.clear(sf::Color::Blue);
 		functions1.draw_blurry_background(window, background, bag, *pplayer, *popponent, &shader);
-
 
 		window.draw(wonlost);
 		return 0;
