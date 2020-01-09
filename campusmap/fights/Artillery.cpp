@@ -15,8 +15,8 @@ Artillery::~Artillery(){
     }
 }
 
-void Artillery::initialise(){
-    attacksbar.initialise();
+void Artillery::initialise(sf::RenderWindow& window){
+    attacksbar.initialise(window);
 }
 
 void Artillery::draw(sf::RenderWindow& target){
