@@ -30,8 +30,8 @@ Map::Map(sf::RenderWindow &window)
     background8.load("Sprites/tileset1.png", sf::Vector2u(16, 16), level8, 34, 33);
     background9.load("Sprites/interior.png", sf::Vector2u(16, 16), level9, 34, 33);
     background10.load("Sprites/interior.png", sf::Vector2u(16, 16), level10, 34, 33);
-    background11.load("Sprites/tileset1.png", sf::Vector2u(16, 16), level9, 34, 33);
-    background11_2.load("Sprites/tileset2.png", sf::Vector2u(16, 16), level9_2, 34, 33);
+    background11.load("Sprites/tileset1.png", sf::Vector2u(16, 16), level11, 34, 33);
+    background11_2.load("Sprites/tileset2.png", sf::Vector2u(16, 16), level11_2, 34, 33);
     
     
     alpha = 255;
