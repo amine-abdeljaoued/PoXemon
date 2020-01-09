@@ -30,6 +30,8 @@ Map::Map(sf::RenderWindow &window)
     background8.load("Sprites/tileset1.png", sf::Vector2u(16, 16), level8, 34, 33);
     background9.load("Sprites/interior.png", sf::Vector2u(16, 16), level9, 34, 33);
     background10.load("Sprites/interior.png", sf::Vector2u(16, 16), level10, 34, 33);
+    background11.load("Sprites/tileset1.png", sf::Vector2u(16, 16), level9, 34, 33);
+    background11_2.load("Sprites/tileset2.png", sf::Vector2u(16, 16), level9_2, 34, 33);
     
     
     alpha = 255;
@@ -48,7 +50,7 @@ Map::Map(sf::RenderWindow &window)
     collision_.insert(pair<string, const int*>("maze", collision8));
     collision_.insert(pair<string, const int*>("interior_80", collision9));
     collision_.insert(pair<string, const int*>("room_clement", collision10));
-    
+    collision_.insert(pair<string, const int*>("bossfinal", collision11));
     
     
     map_name= "first"; //Beggining of the game
@@ -166,7 +168,7 @@ Map::Map(sf::RenderWindow &window)
     //for y multiple of 16
     
     //Spawning position
-    map_list = {"first","second","third","fourth","pokeShop","pokeCenter","home","maze","interior_80","room_clement"};
+    map_list = {"first","second","third","fourth","pokeShop","pokeCenter","home","maze","interior_80","room_clement","bossfinal"};
     //first map
     spawn_dict.insert(pair< string, vector<vector<int> >>("first",{{264, 256},{488, 464},{8, 192}}));
     //underground
@@ -187,6 +189,8 @@ Map::Map(sf::RenderWindow &window)
     spawn_dict.insert(pair< string, vector<vector<int> >>("interior_80",{{216,368},{168,192}}));
     //room_clement
     spawn_dict.insert(pair< string, vector<vector<int> >>("room_clement",{{184,336}}));
+    //bossfinal
+    spawn_dict.insert(pair< string, vector<vector<int> >>("bossfinal",{{248,480}}));
     
     //Scenario
     scenario.insert(pair<string, vector<string>> ("bob", {"Nice Day!","You should go to the shop to buy what you need."}));
@@ -548,7 +552,7 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
     
     
     
-    if (map_name == "first" || map_name == "fourth" || map_name == "third" || map_name == "home" || map_name == "maze") fillTree(window);
+    if (map_name == "first" || map_name == "fourth" || map_name == "third" || map_name == "home" || map_name == "maze" || map_name == "bossfinal") fillTree(window);
      
     
     /* trainer.displacement(event, view); */
@@ -598,6 +602,10 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
     }
     else if (map_name== "room_clement"){
         window.draw(background10);
+    }
+    else if (map_name== "bossfinal"){
+        window.draw(background11);
+        window.draw(background11_2);
     }
     
     openDoorS(window);
