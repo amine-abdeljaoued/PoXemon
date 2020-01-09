@@ -125,6 +125,19 @@ Map::Map(sf::RenderWindow &window)
     npcs_home.push_back(new Npc("clemW","Sprites/NPC1.png",17,97,1,1,1.f,248,192,dialogueH, true)) ;
     npcs.insert(pair< string, vector<Npc*> >("home", npcs_home));
     
+    //For interior_80
+    vector<Npc*> npcs_80;
+    vector<string> dialogue_80;
+    dialogue_80.push_back("This fridge looks dirty");
+    dialogue_80.push_back("Do you want to open it?");
+    dialogue_80.push_back("You die because of the smell.");
+    dialogue_80.push_back("Dead");
+    Npc* fridge = new Npc("fridge","Sprites/NPC1.png",17,97,1,1,1.f,264,160,dialogue_80,false);
+    npcs_80.push_back(fridge);
+
+    npcs.insert(pair<string, vector<Npc*> >("interior_80", npcs_80));
+
+    
     //For room_clement
     vector<Npc*> npcs_roomC;
     vector<string> dialogue_Cl;
@@ -202,7 +215,6 @@ void Map::initialisation(sf::RenderWindow &window, Trainer &trainer, sf::View &v
     sf::Vector2f position = trainer.spritePlayer.getPosition();
     int x = position.x + 16;
     int y = position.y + 16;
-    std::cout<<trainer.state<<std::endl;
     trainer.spritePlayer.setPosition(spawn_dict[map_name][door][0], spawn_dict[map_name][door][1]);
     view.setCenter(spawn_dict[map_name][door][0] + 16, spawn_dict[map_name][door][1] + 16);;
     trainer.state = "Blocked";
@@ -233,7 +245,7 @@ void Map::initialisation(sf::RenderWindow &window, Trainer &trainer, sf::View &v
 }
 
 void Map::end(sf::RenderWindow &window, Trainer &trainer){
-    trainer.state = "Blocked";
+    if (trainer.state != "Dead") trainer.state = "Blocked";
     sf::ConvexShape black;
     black.setPointCount(4);
     black.setPoint(0, sf::Vector2f(-256, -256));
@@ -271,6 +283,24 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
             trainer.counterWalk = 0;
         }
     }
+    cout << trainer.state << endl;
+    
+    //Dying
+    if (trainer.state == "Dead"){
+        if (alpha < 250 && state == "end"){
+            end(window, trainer);
+        }
+        else{
+            map_name = "pokeCenter";
+            door = 0;
+            clock.restart();
+            state = "start";
+            initialisation(window, trainer, view);
+            trainer.counterWalk = 0;
+            
+        }
+    }
+    
     
     //Opening doors
     if ((x == 200 && map_name == "first" && trainer.facingDirection == "Up" && y >= 160 && y <= 176) ||(x == 376 && map_name == "fourth" && trainer.facingDirection == "Up" && y >= 400 && y <= 416)){ // open door of the pokeShop and pokeCenter
@@ -321,7 +351,7 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
             nNpc = collision_[map_name][(int) x/16 -1+((int) y/16 *34)] % 60;
             if(trainer.state != "Shopping"){
                 if(trainer.state == "SpeakingScenario"){
-                   if(scenario[npcs[map_name][nNpc]->name].size() == 1){
+                    if(scenario[npcs[map_name][nNpc]->name].size() == 1){
                         scenario.erase(npcs[map_name][nNpc]->name);
                     }
                     else{
