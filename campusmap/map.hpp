@@ -75,6 +75,7 @@ class Map
         map<string, vector<string>> scenario;
         bool enter;
         bool catched;
+        bool fight;
         int nNpc;
     
         //illusions

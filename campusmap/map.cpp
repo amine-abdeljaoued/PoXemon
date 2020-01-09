@@ -39,6 +39,7 @@ Map::Map(sf::RenderWindow &window)
     door = 0;
     enter = false;
     catched = false;
+    fight = false;
     
     //Part 2: Creation of the collision maps
     if (catched == false) collision_.insert(pair<string, const int*>("first", collision));
@@ -430,6 +431,12 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
         }
     }
 
+    //Fighting
+    if (trainer.state == "Stop" && fight == true){
+        fight = false;
+        trainer.state = "Fighting";
+    }
+    
     //Walking
     if (trainer.state == "Walking"){
         if (collision_[map_name][(int) x/16 +( (int)y/16 *34)]==1){
@@ -438,12 +445,11 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
             uniform_real_distribution<> dis(0.0, 1.0);
             float probagenerated = dis(gen);
             if (probagenerated<0.02) {
+                fight = true;
                 std::cout<<"POKEEEEMMMOONNN"<<std::endl;
-                
-//                trainer.state = "Fighting";
+            //            trainer.state = "Fighting";
                 catched = true;
             }
-            
             if (trainer.facingDirection == "Left" || trainer.facingDirection == "Right"){
                 sf::Sprite sprite;
                 (sprite).setTexture(texture_3);
