@@ -224,6 +224,7 @@ void StateFunctions1::shrink_text(sf::Text& text, float deltatime){
 	float add_font_size = 5 * deltatime * max_char_size / 2 ; // must be in proportion to how long its on the screen for
                                                                 // i.e. we're on screen for 4/10 = 2/5 of a second
     int font_size = (int)text.getCharacterSize() - (int)add_font_size ;
+	if(font_size<1){font_size = 1;}
     text.setCharacterSize(font_size);
 }
 
