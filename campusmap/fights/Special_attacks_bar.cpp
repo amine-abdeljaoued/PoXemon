@@ -12,7 +12,7 @@ Special_Attacks_Bar::Special_Attacks_Bar() {
 
 }
 
-void Special_Attacks_Bar::initialise(){
+void Special_Attacks_Bar::initialise(sf::RenderWindow& window){
 
     // Load images into our sprites
 	if (!key1_texture.loadFromFile("fights/Images/Special_Attacks_Bar/key1.png")) { std::cout << "could not load key1" << std::endl; }
@@ -44,22 +44,30 @@ void Special_Attacks_Bar::initialise(){
 
     // Set textures
 	key1.setTexture(key1_texture);
-	key1.setScale(2,2); // NB MUST SET SCALE ACCORDING TO WINDOW SIZE
 	attack_1_sprite.setTexture(attack_1_texture);
-	attack_1_sprite.setScale(sf::Vector2f(1, 1)); // NB MUST SET SCALE ACCORDING TO WINDOW SIZE
-														// NB MUST BE CAREFUL W THE DIFFERENT SPRITES
+	
+	// Set scales according to window size
+	sf::Vector2u TextureSize1 = key1_texture.getSize(); 	//Get size of texture.
+	sf::Vector2u TextureSize2 = attack_1_texture.getSize();
+	sf::Vector2u WindowSize = window.getSize();      //Get size of window.
+
+	float ScaleKey = (float) WindowSize.y / TextureSize1.y; //Calculate scale.
+	float ScaleSprite = (float) WindowSize.y / TextureSize2.y;
+
+	key1.setScale(ScaleKey/14,ScaleKey/14);	//Set scale.  
+	attack_1_sprite.setScale(ScaleSprite/7, ScaleSprite/7);
 	
 	// Set up rectangles
-	boxsize = 90; // NB CHANGE ACCORDING TO WINDOW SIZE
+	boxsize = window.getSize().y/7; // NB CHANGE ACCORDING TO WINDOW SIZE
     base_rect.setFillColor(sf::Color(192,192,192)); 
-    base_rect.setOutlineThickness(5);
+    base_rect.setOutlineThickness(4);
     base_rect.setOutlineColor(sf::Color::Black);
     base_rect.setSize(sf::Vector2f(boxsize,boxsize));
     timer_rect.setFillColor(sf::Color(114, 228, 110)); // green: available
     timer_rect.setSize(sf::Vector2f(boxsize,boxsize));
 
 	// Change origins
-	attack_1_sprite.setOrigin(sf::Vector2f(attack_1_sprite.getGlobalBounds().width / 2, attack_1_sprite.getGlobalBounds().height / 2));
+	attack_1_sprite.setOrigin(sf::Vector2f(attack_1_sprite.getLocalBounds().width / 2, attack_1_sprite.getLocalBounds().height / 2));
 	key1.setOrigin(sf::Vector2f(key1.getGlobalBounds().width / 2, key1.getGlobalBounds().height / 2));
 
 	// Set position - ACCORDING TO WINDOW SIZE

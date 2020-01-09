@@ -23,7 +23,7 @@ public:
     void new_shot_opp(float& x, float& y, const sf::FloatRect& bounds, sf::RenderWindow& window, float& xshoot, float& yshoot);
     int update(sf::RenderWindow& window, float& deltaTime, sf::Clock& clock, sf::Time& elapsed, sf::Clock& clock1, sf::Clock& clock2, sf::Clock& clock3, 
                 const sf::Sprite & opponent_sprite, float& groundY);
-    void initialise();
+    void initialise(sf::RenderWindow& window);
 
 	std::vector<Bullet*> bullets;
     int attack_type = 0; 

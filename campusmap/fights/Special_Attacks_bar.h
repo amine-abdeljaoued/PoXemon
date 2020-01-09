@@ -18,7 +18,7 @@ public:
 	void draw(sf::RenderTexture& texture);
 	void setPosition(float x, float y);     // the components must be moved together
 	void update1(sf::Clock& clock1);
-	void initialise();
+	void initialise(sf::RenderWindow& window);
 	void initial_state();
 
 // Specical Attack 1

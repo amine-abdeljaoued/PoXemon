@@ -26,7 +26,7 @@ Pokemon::Pokemon(sf::RenderWindow& window, float h, float v, Backpack_Pokemon ba
 	special_attack_1 = false;
 	bullets.type = backpack_pokemon.type;
 	bullets.attacksbar.type = backpack_pokemon.type;
-	bullets.initialise();
+	bullets.initialise(window);
 	
 	//set the x origin at the middle
 	//useful when we flip (mirror image) the sprite with update_sprite_orientation (in the player class)
