@@ -453,6 +453,7 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
                 sprite.setPosition(16 * a , 16 * b);
                 window.draw(sprite);
             }
+            
         }
     }
     
@@ -569,6 +570,10 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
         if (catched == true){
             collision_.erase("first");
             collision_.insert(pair<string, const int*>("first", collision_passed));
+            for (auto const& np : npcs[map_name]) {
+
+            }
+            
         }
         window.draw(background1_1); 
         window.draw(background1_2); //Both backgrounds associated to each tileset will have the same background
@@ -624,6 +629,7 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
     /* movingFlower(window, 176, 176); */
 
     for (auto const& np : npcs[map_name]) {
+//        std::cout<<(*np).name<<std::endl;
         sf::Vector2f pos2 = (*np).getPos();
          if(pos.y >= pos2.y)
          {
