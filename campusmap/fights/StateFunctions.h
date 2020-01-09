@@ -39,27 +39,28 @@ public:
     void draw_how_to(sf::RenderWindow& window);
 
     // Countdown
-    sf::Text text; 
+    sf::Text text;
     sf::Font font;
     bool draw_count;
     int max_char_size = 150; // how big our fountsize of the countdown is
-    
-    void initialise_countdown(sf::RenderTarget& window); 
-    void draw_blurry_background(sf::RenderWindow& window, sf::Sprite& background, Backpack& bag, Player& player, 
+
+    void initialise_countdown(sf::RenderTarget& window);
+    void draw_blurry_background(sf::RenderWindow& window, sf::Sprite& background, Backpack& bag, Player& player,
             Opponent& opponent, sf::Shader*shader);
     int countdown(sf::RenderWindow& window, float deltatime, sf::Time time); // shows the countdown
-    void shrink_text(sf::Text& text, float deltatime); 
+    void shrink_text(sf::Text& text, float deltatime);
 };
 
 class StateFunctions56 {
 public:
-    void fall(Pokemon* eevee, float& groundY, float& deltaTime);
-    void initialize_state_5_6(char game_mode, Pokemon* poke, sf::Font font, sf::Text& text_fainted, sf::Text& choose_pokemon, sf::Text& leave_fight, 
+  void fall(Pokemon* eevee, float& groundY, float& deltaTime);
+  void initialize_state_5_6(char game_mode, Pokemon* poke, sf::Font font, sf::Text& text_fainted, sf::Text& choose_pokemon, sf::Text& leave_fight,
         sf::RenderWindow& target, Pokemon_Button* buttons[], sf::Sprite& running_sprite);
-    void const draw_state_5_6(char game_mode,  sf::Font& font, sf::Text& text_fainted, sf::Text choose_pokemon, sf::Text leave_fight, 
+    void const draw_state_5_6(char game_mode,  sf::Font& font, sf::Text& text_fainted, sf::Text choose_pokemon, sf::Text leave_fight,
         sf::RenderWindow& target, Pokemon_Button* buttons[], sf::Sprite& running_sprite);
     void update_state_5_6(char game_mode, sf::RenderWindow& window, Pokemon_Button* buttons[], int& clicked_button, sf::Sprite& running_sprite );
     void initialize_state7(bool won, sf::Text& lost_fight, sf::Font& font, sf::RenderWindow& window);
     void initialize_state_8(Pokemon* poke, sf::Font& font, sf::Text& text_fainted, sf::RenderWindow& window);
+	bool check_leave(sf::Sprite &arrow_sprite, sf::RenderWindow& window); // used to update the leave button (used in states 7,8,11)
 
 };
