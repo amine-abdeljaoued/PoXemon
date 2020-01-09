@@ -18,6 +18,53 @@ int main() {
 		bool caught; //for the pokedex
 	};
 
+
+	std::map<int, std::string> Air_Pokemons = {
+		{1,"Abata"},
+		{2,"Kangascuno"},
+		{3,"Marodactyl"},
+		{4,"Pulple"},
+		{5,"Wapefet"},
+
+	};
+
+	std::map<int, std::string> Earth_Pokemons = {
+		{1,"Taukazam"},
+		{2,"Churita"},
+		{3,"Gixeor"},
+		{4,"Sandlax"},
+		{5,"Seemar"},
+
+		{6,"Venion"},
+		{7,"Vewaro"},
+		{8,"Withuble"},
+		{9,"Ganstakabra"},
+
+	};
+	
+	std::map<int, std::string> Water_Pokemons = {
+		{1,"Molag"},
+		{2,"Auron"},
+		{3,"Golnite"},
+		{4,"Warmau"},
+		{5,"Mepowat"},
+
+	};
+
+	std::map<int, std::string> Fire_Pokemons = {
+		{1,"Poras"},
+		{2,"Arfau"},
+		{3,"Lowtor"},
+		{4,"Pikalee"},
+		{5,"Ponag"},
+		{6,"Qulyd"},
+		{7,"Ronew"},
+		{8,"Twobee"},
+		{9,"Raporoy"},
+
+	};
+
+
 	std::map<std::string, Pokemon_info> Pokemons;
 
 	//Air
