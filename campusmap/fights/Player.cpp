@@ -68,8 +68,7 @@ void Player::update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clock
 
 void Player::move(float& deltaTime, sf::RenderWindow& window) {
 	x += velocityX * deltaTime;
-	y += velocityY * deltaTime;
-	float groundY = 300.0f; //Cannot go below this height
+	y += velocityY * deltaTime; 
 	if (y >= groundY) {
 		y = groundY;
 		velocityY = 0.0f;

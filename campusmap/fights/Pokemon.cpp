@@ -1,14 +1,19 @@
 #include "Pokemon.h"
 
 //should be initialized with a backpack pokemon
-Pokemon::Pokemon(float xstart, float ystart, float h, float v, Backpack_Pokemon backpack_pokemon)
+Pokemon::Pokemon(sf::RenderWindow& window, float h, float v, Backpack_Pokemon backpack_pokemon)
 {
 	//rarity = pokemon_rarity; //1 == common, 2 == rare, 3 == epic, 4 == legendary
 	index = backpack_pokemon.index;
 	name = backpack_pokemon.name;
 	type = backpack_pokemon.type;
-	health.setHealth(backpack_pokemon.health); 		
-	health.setPosition(xstart+50, ystart-250);
+
+	std::string path = "fights/Images/Pokemon_Images/" + name + ".png";
+	if (!pic.loadFromFile(path)){ std::cout << "could not load pokemon image" << std::endl;} //path = Images/eevee.png
+	pic.loadFromFile(path);
+	sprite.setTexture(pic);
+
+	health.setHealth(backpack_pokemon.health); 	
 	health.name = name;
 	health.level = backpack_pokemon.level;
 
@@ -19,18 +24,10 @@ Pokemon::Pokemon(float xstart, float ystart, float h, float v, Backpack_Pokemon 
 	canJump = true;
 	shooting = false;
 	special_attack_1 = false;
-	x = xstart;
-	y = ystart;
 	bullets.type = backpack_pokemon.type;
 	bullets.attacksbar.type = backpack_pokemon.type;
 	bullets.initialise();
-
-	sprite.setPosition(sf::Vector2f(x, y));
-
-	std::string path = "fights/Images/Pokemon_Images/" + name + ".png";
-	if (!pic.loadFromFile(path)){ std::cout << "could not load pokemon image" << std::endl;} //path = Images/eevee.png
-	pic.loadFromFile(path);
-	sprite.setTexture(pic);
+	
 	//set the x origin at the middle
 	//useful when we flip (mirror image) the sprite with update_sprite_orientation (in the player class)
 	//also useful for death_dissapear()

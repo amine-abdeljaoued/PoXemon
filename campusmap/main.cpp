@@ -82,9 +82,9 @@ using namespace std;
 	opponent_bag.backpack_pokemons[1] = &opoke2;
 	opponent_bag.backpack_pokemons[2] = &opoke3;
 
-	Player* player = new Player(10.f, groundY, 200.f, 500.f, poke1);//by default, we take the first pokemon of the backpack
+	Player* player = new Player(window, 200.f, 500.f, poke1);//by default, we take the first pokemon of the backpack
 																			//do we want to be able to choose our pokemon at the beginning of the fight?
-	Opponent* opponent = new Opponent(1000.f, groundY, 200.f, 800.f, opoke1); 
+	Opponent* opponent = new Opponent(window, 200.f, 800.f, opoke1); 
 
 	//ACTUAL MAIN: now for the fights...
 

@@ -87,8 +87,10 @@ void Opponent::move(float& deltaTime) {
 
 	x += velocityX * deltaTime;
 	y += velocityY * deltaTime;
-	float groundY = 300.0f; //Cannot go below this height
+	std::cout<<y<<std::endl;
+	std::cout<<groundY<<std::endl;
 	if (y >= groundY) {
+		std::cout<<"esY"<<std::endl;
 		y = groundY;
 		velocityY = 0.0f;
 		canJump = true;
