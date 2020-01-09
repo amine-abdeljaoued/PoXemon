@@ -38,9 +38,12 @@ Map::Map(sf::RenderWindow &window)
     state = "start";
     door = 0;
     enter = false;
+    catched = false;
     
+    std::cout<<"coucou"<<std::endl;
     //Part 2: Creation of the collision maps
-    collision_.insert(pair<string, const int*>("first", collision));
+    if (catched == false) collision_.insert(pair<string, const int*>("first", collision));
+    if (catched == true) collision_.insert(pair<string, const int*>("first", collision_passed));
     collision_.insert(pair<string, const int*>("second", collision2));
     collision_.insert(pair<string, const int*>("third", collision3));
     collision_.insert(pair<string, const int*>("pokeShop", pokeShopC));
@@ -74,6 +77,12 @@ Map::Map(sf::RenderWindow &window)
     npcs_map1.push_back(new Npc("bob","Sprites/NPC1.png",113,97,32,32,1.f,264,240,{"dialogue"}, false));
     
     npcs_map1.push_back(new Npc("nerd","Sprites/NPC1.png",17,97,32,32,1.f,136,240,{"Hi"}, false));
+    
+    vector<string> dialogue2;
+    dialogue2.push_back("Before adventuring yourself");
+    dialogue2.push_back("into the wild");
+    dialogue2.push_back("try catching one wild PoXemon !");
+    if (catched == false) npcs_map1.push_back(new Npc("passeur","Sprites/NPC1.png",432,675,32,32,1.f,24,224,dialogue2, false));
 
     npcs.insert(pair< string, vector<Npc*> >("first", npcs_map1));
     
@@ -170,7 +179,7 @@ Map::Map(sf::RenderWindow &window)
     //Spawning position
     map_list = {"first","second","third","fourth","pokeShop","pokeCenter","home","maze","interior_80","room_clement","bossfinal"};
     //first map
-    spawn_dict.insert(pair< string, vector<vector<int> >>("first",{{264, 256},{488, 464},{8, 192}}));
+    spawn_dict.insert(pair< string, vector<vector<int> >>("first",{{264, 256},{8, 192},{184, 160}}));
     //underground
     spawn_dict.insert(pair< string, vector<vector<int> >>("second",{{488, 480},{520,16}}));
     //Sport
@@ -431,7 +440,9 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
             float probagenerated = dis(gen);
             if (probagenerated<0.02) {
                 std::cout<<"POKEEEEMMMOONNN"<<std::endl;
+                
 //                trainer.state = "Fighting";
+                catched = true;
             }
             
             if (trainer.facingDirection == "Left" || trainer.facingDirection == "Right"){
@@ -556,6 +567,10 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
       
     sf::Vector2f pos =trainer.getPos();
     if (map_name== "first"){
+        if (catched == true){
+            collision_.erase("first");
+            collision_.insert(pair<string, const int*>("first", collision_passed));
+        }
         window.draw(background1_1); 
         window.draw(background1_2); //Both backgrounds associated to each tileset will have the same background
     }
