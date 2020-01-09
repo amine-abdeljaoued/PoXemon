@@ -40,7 +40,6 @@ Map::Map(sf::RenderWindow &window)
     enter = false;
     catched = false;
     
-    std::cout<<"coucou"<<std::endl;
     //Part 2: Creation of the collision maps
     if (catched == false) collision_.insert(pair<string, const int*>("first", collision));
     if (catched == true) collision_.insert(pair<string, const int*>("first", collision_passed));
