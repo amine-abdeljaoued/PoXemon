@@ -99,7 +99,7 @@ using namespace std;
     
 
     //TO NOT GET ANNOYED WITH FIGHTS: 
-    //JUST COMMENT LINE 359 of map.cpp
+    //JUST COMMENT in map.cpp in Fighting the trainer.state = "Fighting" in line 437
      while (window.isOpen())
      {
          //For the fights team uncomment this line:
