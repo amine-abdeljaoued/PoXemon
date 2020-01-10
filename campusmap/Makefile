@@ -11,8 +11,11 @@ npc.o: npc.cpp npc.hpp
 tilemap.o: tilemap.cpp tilemap.hpp
 	$(CXX) -c  tilemap.cpp
 	
-map.o: map.cpp map.hpp tilemap.hpp npc.hpp trainer.hpp const.hpp
-	$(CXX) -c  map.cpp
+interior.o: interior.cpp interior.hpp
+	$(CXX) -c  interior.cpp
+	
+map.o: map.cpp map.hpp tilemap.hpp npc.hpp trainer.hpp const.hpp interior.hpp
+	$(CXX) -c  map.cpp 
 
 intro.o: intro.cpp intro.hpp
 	$(CXX) -c  intro.cpp
@@ -20,6 +23,9 @@ intro.o: intro.cpp intro.hpp
 
 shop.o: shop.cpp shop.hpp
 	$(CXX) -c  shop.cpp
+	
+center.o: center.cpp center.hpp
+	$(CXX) -c  center.cpp
 
 HEADERS_FIGHTS := $(wildcard fights/*.h)
 SOURCES_FIGHTS_TMP := $(wildcard fights/*.cpp)
@@ -30,13 +36,13 @@ fights: $(OBJECTS_FIGHTS)
 
 
 
-main.o: main.cpp tilemap.hpp npc.hpp map.hpp trainer.hpp const.hpp intro.hpp shop.hpp $(HEADERS_FIGHTS)
+main.o: main.cpp tilemap.hpp npc.hpp map.hpp trainer.hpp const.hpp intro.hpp shop.hpp interior.hpp center.hpp $(HEADERS_FIGHTS)
 	$(CXX) -c  main.cpp
 	
 
-game: fights main.o map.o tilemap.o trainer.o npc.o  intro.o  shop.o
+game: fights main.o map.o tilemap.o trainer.o npc.o  intro.o  shop.o interior.o center.o
 	echo $(SOURCES_FIGHTS)
-	$(CXX) main.o map.o trainer.o tilemap.o npc.o  intro.o shop.o $(OBJECTS_FIGHTS) -o game $(LDLIBS)  
+	$(CXX) main.o map.o trainer.o tilemap.o npc.o  intro.o shop.o interior.o center.o $(OBJECTS_FIGHTS) -o game $(LDLIBS)  
 
 
 clean:

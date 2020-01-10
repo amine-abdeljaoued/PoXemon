@@ -10,9 +10,10 @@
 
 class Pokemon {
 public:
+	int xp;
 	int index;//index in the backpack
 	float rarity;
-	int level = 1; 			// must be implemented by pokemon team!!
+	int level; 			// must be implemented by pokemon team!!
 	std::string name;
 	sf::Sprite sprite;
 	float groundY; 			// lowest point we can go
@@ -36,7 +37,7 @@ public:
 	void set_enemy(Pokemon* enemy);
 
 	void death_disappear(float& deltaTime); //scale down and make the pokemon 'implode'
-	
+
 	int type; /* We know which type a pokemon is by its identifier type
 							10 - earth
 							20 - water

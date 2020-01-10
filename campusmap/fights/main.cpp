@@ -24,8 +24,8 @@ int main ()
 	std::string name1 = "jistolwer";
 	std::string name2 = "auron";
 	std::string name3 = "husabus";
-	Backpack_Pokemon poke1(name1, 1, 0, 50, 20);//not the actual types though
-	Backpack_Pokemon poke2(name2, 1, 1, 60, 20);
+	Backpack_Pokemon poke1(name1, 50, 0, 50, 20);//not the actual types though
+	Backpack_Pokemon poke2(name2, 56, 1, 60, 20);
 	Backpack_Pokemon poke3(name3, 1, 2, 70, 30);
 	bag.backpack_pokemons[0] = &poke1;
 	bag.backpack_pokemons[1] = &poke2;
@@ -35,7 +35,7 @@ int main ()
 	name1 = "donryle";
 	name2 = "fepeur";
 	name3 = "geodos";
-	Backpack_Pokemon opoke1(name1, 1, 0, 50, 10);
+	Backpack_Pokemon opoke1(name1, 1, 0, 100, 10);
 	Backpack_Pokemon opoke2(name2, 1, 1, 60, 20);
 	Backpack_Pokemon opoke3(name3, 1, 2, 70, 30);
 	opponent_bag.backpack_pokemons[0] = &opoke1;

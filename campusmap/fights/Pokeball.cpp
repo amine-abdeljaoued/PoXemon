@@ -4,7 +4,7 @@
 
 
     Pokeball::Pokeball() {   // Thing to add: should also initialise ball                                            image, with views for rotation
-        //pic.loadFromFile("fights/Images/pokeball.png");
+        //pic.loadFromFile("Images/pokeball.png");
         //ball.setTexture(pic);
         ball.setScale(sf::Vector2f(0.4f, 0.4f));
         in_air = false;
@@ -25,19 +25,19 @@
         ball.setPosition(xpos, ypos);
     }
 
-    
 
-    bool Pokeball::update(float deltaTime,sf::RenderWindow& window,float proba, sf::Clock &clock2, sf::Time &elapsed2, float opphealth) {
+
+    int Pokeball::update(float deltaTime,sf::RenderWindow& window,float proba, sf::Clock &clock2, sf::Time &elapsed2, float opphealth) {
         //update the velocityY of the pokeball using low gravity and airfriction
         velocityY += gravity * deltaTime - airfriction * velocityY * deltaTime;
         x += velocityX * deltaTime - airfriction * velocityX * deltaTime;
         y += velocityY * deltaTime;
-        
+
         setPosition(x, y);
         //Accessing to the health of the opponent to determine a better proba of catching the pokeball
-        
+
         //std::cout<<opphealth<<std::endl;
-        
+
         sf::Vector2u size = window.getSize();
         float w = size.x;
         float width = (float) w;
@@ -46,8 +46,8 @@
         float miheight = height/2;
         float groundX = width;
         float bounceX = 0.4 * width;
-        
-        
+
+
         if ((x >= bounceX)&&(bounce<8)&&(y>=miheight)) {     // does the bounce only one time
             float counter =0;
             velocityY = -velocityY + coefimpact* velocityY;
@@ -63,7 +63,7 @@
                     velocityX = 0;
                 }
             }
-            
+
             bounce+=1;
             //std::cout<<bounce<<std::endl;
         }
@@ -83,39 +83,43 @@
             velocityX = 0;
             //}
             //catched(proba, clock2, elapsed2);
-            if (catched(proba, clock2, elapsed2,opphealth)==true){
-                dissapear();
-                return false;
-            }
+
+            //if (catched(proba, clock2, elapsed2,opphealth)){
+                //dissapear();
+            //    return 1;
+           // }
+
             //std::cout<<proba<<std::endl;
 //            if (catched(proba)){
 //                dissapear();
 //            };
         }
         if ((x >= groundX)||((x>=width/2)&&(y>height))) {     // Ball off the screen, we want to remove it from                               visible, to avoid any complications
-            dissapear();
-            return false;
+            //dissapear();
+            //return 0;
         }
         //window.draw(ball);
-        return true;
+        //return 0;
+
+		return catched(proba, clock2, elapsed2, opphealth);
     }
 
-bool Pokeball::catched(float proba, sf::Clock& clock2, sf::Time& elapsed2,float opphealth){
+int Pokeball::catched(float proba, sf::Clock& clock2, sf::Time& elapsed2,float opphealth){//0 if nothing, 1 if catched, 2 if not catched
     // //Prints the elapsed time
     //std::cout<<elapsed2.asSeconds()<<std::endl;
-    
+
     //Not very beautiful way to restart the clock at the eight bounce since the
     //clock is running since the throw
-    if (elapsed2.asSeconds() > 5.0f) {
+    if (elapsed2.asSeconds() > 7.0f) {
         clock2.restart();
-        return false;
+        return 0;
     }
     //wait 3 seconds to catch the pokemon
-    if (elapsed2.asSeconds() > 4.0f) {
+    if (elapsed2.asSeconds() > 6.0f) {
         clock2.restart();
-        
+
         //compares a random number between 0 and 1 with the proba of the ball
-        
+
         std::random_device rd;
         std::mt19937 gen(rd());
         std::uniform_real_distribution<> dis(0.0, 1.0);
@@ -123,28 +127,28 @@ bool Pokeball::catched(float proba, sf::Clock& clock2, sf::Time& elapsed2,float 
         // double in [1, 2). Each call to dis(gen) generates a new random double
         //std::cout << dis(gen) << ' ';
         //}
-        
+
         float probagenerated = dis(gen);
         //std::cout<< "proba generated: "<<probagenerated <<std::endl;
         //std::cout<<"proba modified: "<<proba +(proba+0.4)*((100-opphealth)/100)<<std::endl;
-        
+
         //now it works in fct of the life of the opponent
         //the term (proba+0.4)*((100-opphealth)/100) increaments the chnace of catching the pokemons if it is low life
         if (probagenerated < proba + ((proba+0.4)*((100-opphealth)/100))){
             std::cout<<"Catched !"<<std::endl;
-            return true;
+            return 1;
         }
         else{
             std::cout<<"Not Catched !"<<std::endl;
-            return true;
+            return 2;
         }
-        
-        
-    }
+
 
     }
 
-    
+    }
+
+
 Normalball::Normalball() {  //derived class
         proba = 0.20;
         pic1.loadFromFile("fights/Images/pokeball.png");
