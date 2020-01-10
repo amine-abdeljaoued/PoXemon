@@ -634,9 +634,8 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
     closeDoorS(window);
     
     //Flowers
-    if (map_name == "first"){
-        flowerList(window);
-    }
+    flowerList(window);
+    
 //    else if (map_name == "fourth"){
 //        flowerList(window, {176,176,160,176});
 //    }
@@ -987,10 +986,10 @@ void Map::movingFlower(sf::RenderWindow &window, int x, int y){
     sprite.setPosition(x, y);
     
     if (animClock.getElapsedTime().asMilliseconds() > 500){
-         animationCounter++;
-         if (animationCounter == 3){
-             animationCounter = 0;
-         }
+        animationCounter++;
+        if (animationCounter == 3){
+            animationCounter = 0;
+        }
         animClock.restart();
     }
     window.draw(sprite);
@@ -998,9 +997,18 @@ void Map::movingFlower(sf::RenderWindow &window, int x, int y){
 
 void Map::flowerList(sf::RenderWindow &window){
     map<string,vector<int>> flower_list = {
-        {"first",{144,160,144,144,144,128,144,112,224,160,224,144,224,128,224,112,144,94,160,94,176,94,192,94,208,94,224,94}}
-        
+        {"first",
+            {144,160,144,144,144,128,144,112,224,160,224,144,224,128,224,112,144,94,160,94,176,94,192,94,208,94,224,94}
+        },
+        {"fourth",
+            {464,0,480,0,496,0,512,0,528,0,
+             464,16,480,16,496,16,512,16,528,16,
+             464,32,528,32
+            }
+        }
     };
+    
+    
     
     if (map_name == "first" || map_name == "fourth" || map_name == "home"){
         for (vector<int>::iterator it = flower_list[map_name].begin(); it < flower_list[map_name].end(); it+=2){
