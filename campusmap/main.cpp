@@ -99,11 +99,11 @@ using namespace std;
     
 
     //TO NOT GET ANNOYED WITH FIGHTS: 
-    //JUST COMMENT LINE 359 of map.cpp
+    //JUST COMMENT LINE 453 of map.cpp
      while (window.isOpen())
      {
          //For the fights team uncomment this line:
-         Arthur.state="Fighting";
+         /* Arthur.state="Fighting"; */
          
          sf::Event event;
          window.pollEvent(event);
@@ -121,14 +121,11 @@ using namespace std;
              }
              else{
                 int i = fight.update(window);
-                // window.draw(fight.popponent-> sprite);
                 if(i==0){
-                // return to other state
-                /* cout << "Exiting fights" <<endl; */
                 Arthur.state = "Stop";
-                /* view.setCenter(sf::Vector2f(0.f, 0.f));
-                view.setSize(sf::Vector2f(1400.f, 700.f));
-                view.zoom(0.5f); */
+                }
+                if(i==11){
+                    Arthur.state = "Dead";
                 }
                 }
          }
