@@ -279,7 +279,6 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
     sf::Vector2f position = trainer.spritePlayer.getPosition();
     int x = position.x + 16;
     int y = position.y + 16;
-    
     //Dying
     if (trainer.state == "Dead"){
         if (alpha < 250 && state == "end"){
@@ -633,7 +632,15 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
     
     openDoorS(window);
     closeDoorS(window);
-    /* movingFlower(window, 176, 176); */
+    
+    //Flowers
+    if (map_name == "first"){
+        flowerList(window);
+    }
+//    else if (map_name == "fourth"){
+//        flowerList(window, {176,176,160,176});
+//    }
+    
 
     for (auto const& np : npcs[map_name]) {
 //        std::cout<<(*np).name<<std::endl;
@@ -759,7 +766,7 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
     this->trainerDisplacement(window, trainer,event,clock,view);
     shop.draw(window, view, event, trainer);
     center.draw(window, view, event, trainer);
-    
+    light(window, trainer);
 }
         
     
@@ -799,24 +806,6 @@ void Map::fillTree(sf::RenderWindow &window){
             window.draw(sprite);
         }
     }
-}
-
-
-void Map::movingFlower(sf::RenderWindow &window, int x, int y){
-    
-    sf::Sprite sprite;
-    (sprite).setTexture(texture_3);
-    (sprite).setTextureRect(sf::IntRect(8 + 16 * animationCounter, 44, 16, 16));
-    sprite.setPosition(x, y);
-    
-    if (animClock.getElapsedTime().asMilliseconds() > 500){
-         animationCounter++;
-         if (animationCounter == 3){
-             animationCounter = 0;
-         }
-        animClock.restart();
-    }
-    window.draw(sprite);
 }
 
 void Map::openDoorS(sf::RenderWindow &window){
@@ -973,3 +962,49 @@ void Map::illuTunnelL(sf::RenderWindow &window){
     }
 }
 
+void Map::light(sf::RenderWindow &window, Trainer &trainer){
+    if (map_name == "second"){
+        sf::Vector2f position = trainer.spritePlayer.getPosition();
+        int x = position.x + 16;
+        int y = position.y + 16;
+        //for the underground map, a circle of light around player
+        sf::CircleShape shape(30.f);
+        shape.setFillColor(sf::Color(0,0,0,150));
+        shape.setPosition(x-30, y-30);
+
+        // définit un contour faded tres large
+        shape.setOutlineThickness(500.f);
+        shape.setOutlineColor(sf::Color(0,0,0,245));
+        window.draw(shape);
+    }
+}
+
+void Map::movingFlower(sf::RenderWindow &window, int x, int y){
+    
+    sf::Sprite sprite;
+    (sprite).setTexture(texture_3);
+    (sprite).setTextureRect(sf::IntRect(8 + 16 * animationCounter, 44, 16, 16));
+    sprite.setPosition(x, y);
+    
+    if (animClock.getElapsedTime().asMilliseconds() > 500){
+         animationCounter++;
+         if (animationCounter == 3){
+             animationCounter = 0;
+         }
+        animClock.restart();
+    }
+    window.draw(sprite);
+}
+
+void Map::flowerList(sf::RenderWindow &window){
+    map<string,vector<int>> flower_list = {
+        {"first",{144,160,144,144,144,128,144,112,224,160,224,144,224,128,224,112,144,94,160,94,176,94,192,94,208,94,224,94}}
+        
+    };
+    
+    if (map_name == "first" || map_name == "fourth" || map_name == "home"){
+        for (vector<int>::iterator it = flower_list[map_name].begin(); it < flower_list[map_name].end(); it+=2){
+            movingFlower(window, *it, *(it+1));
+        }
+    }
+}

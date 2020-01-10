@@ -1103,3 +1103,4 @@ const int collision11[] =
 const std::string case_num[] = {
     "normal","herbe","change_map","house","","stairs","blocked","water","pnj"
 };
+
