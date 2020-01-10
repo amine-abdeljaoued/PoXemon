@@ -16,18 +16,21 @@
 			40 - fire )
 */
 
+
 int main() {
 	struct Pokemon_info {
 		//float xstart; (always the same)
 		//float ystart; (always the same)
-		float h;
-		float v;
-		float hp;
-		char path[50];
-		float pokemon_rarity; //1-legendary, 2-mythic, 3-starter
-		char pname[50];
-		bool caught; //for the pokedex
+		float height;
+		float velocity;
+		std::string name;
+		int health;
+		int level;
+		int index;
+		float ptype;
+		
 	};
+
 
 
 	std::map<int, std::string> Air_Pokemons = {
@@ -79,46 +82,46 @@ int main() {
 	std::map<std::string, Pokemon_info> Pokemons;
 
 	//Air
-	Pokemons["Abata"] = { 300.f, 900.f, 90, "Images/Pokemon_Images/abata.png", 1, "Abata" ,false};
-	Pokemons["Kangascuno"] = { 280.f, 850.f, 85, "Images/Pokemon_Images/kangascuno.png", 2, "Kangascuno", false };
-	Pokemons["Marodactyl"] = { 280.f, 850.f, 85, "Images/Pokemon_Images/marodactyl.png", 2, "Marodactyl", false };
-	Pokemons["Pulple"] = { 280.f, 850.f, 85, "Images/Pokemon_Images/pulple.png", 2, "Pulple" , false };
+	Pokemons["Abata"] = { 220.f, 750.f, "abata", 90, 1, 0, 30};
+	Pokemons["Kangascuno"] = { 200.f, 700.f, "kangascuno", 85, 1, 0, 30};
+	Pokemons["Marodactyl"] = { 200.f, 700.f, "marodactyl",85, 1, 0, 30 };
+	Pokemons["Pulple"] = { 200.f, 700.f, "pulple" ,85, 1, 0, 30};
 	
-	Pokemons["Wapefet"] = { 200.f, 750.f, 60, "Images/Pokemon_Images/wapefet.png", 3, "Wapefet",false };
+	Pokemons["Wapefet"] = { 120.f, 600.f, "wapefet",60, 1, 0, 30};
 
 	//Earth
-	Pokemons["Taukazam"] = { 250.f, 800.f, 180, "Images/Pokemon_Images/taukazam.png", 1, "Taukazam" ,false };
+	Pokemons["Taukazam"] = { 170.f, 650.f, "taukazam" ,180, 1, 0, 10};
 	
-	Pokemons["Churita"] = { 180.f, 700.f, 160, "Images/Pokemon_Images/churita.png", 2, "Churita",false };
-	Pokemons["Gixeor"] = { 180.f, 700.f, 160, "Images/Pokemon_Images/gixeor.png", 2, "Gixeor" ,false };
-	Pokemons["Sandlax"] = { 180.f, 700.f, 160, "Images/Pokemon_Images/sandlax.png", 2, "Sandlax",false };
-	Pokemons["Seemar"] = { 180.f, 700.f, 160, "Images/Pokemon_Images/seemar.png", 2, "Seemar",false };
-	Pokemons["Venion"] = { 180.f, 700.f, 160, "Images/Pokemon_Images/venion.png", 2, "Venion",false };
-	Pokemons["Vewaro"] = { 180.f, 700.f, 160, "Images/Pokemon_Images/vewaro.png", 2, "Vewaro",false };
-	Pokemons["Withuble"] = { 180.f, 700.f, 160, "Images/Pokemon_Images/withuble.png", 2, "Withuble",false };
+	Pokemons["Churita"] = { 100.f, 600.f,  "churita", 160, 1, 0, 10};
+	Pokemons["Gixeor"] = { 100.f, 600.f, "gixeor" ,160, 1, 0, 10 };
+	Pokemons["Sandlax"] = { 100.f, 600.f, "sandlax",160, 1, 0, 10};
+	Pokemons["Seemar"] = { 100.f, 600.f, "seemar",160, 1, 0, 10};
+	Pokemons["Venion"] = { 100.f, 600.f, "venion",160, 1, 0, 10 };
+	Pokemons["Vewaro"] = { 100.f, 600.f, "vewaro",160, 1, 0, 10};
+	Pokemons["Withuble"] = { 100.f, 600.f, "withuble",160, 1, 0, 10 };
 
-	Pokemons["Ganstakabra"] = { 120.f, 600.f, 110, "Images/Pokemon_Images/ganstakabra.png", 3, "Ganstakabra",false };
+	Pokemons["Ganstakabra"] = { 50.f, 550.f, "ganstakabra", 110, 1, 0, 10 };
 	
 	//Water
-	Pokemons["Molag"] = { 350.f, 850.f, 160, "Images/Pokemon_Images/molag.png", 1, "Molag",false };
+	Pokemons["Molag"] = { 270.f, 700.f, "molag", 160, 1, 0, 20 };
 
-	Pokemons["Auron"] = { 280.f, 720.f, 110, "Images/Pokemon_Images/auron.png", 2, "Auron",false };
-	Pokemons["Golnite"] = { 280.f, 720.f, 110, "Images/Pokemon_Images/golnite.png", 2, "Golnite",false };
-	Pokemons["Warmau"] = { 280.f, 720.f, 110, "Images/Pokemon_Images/warmau.png", 2, "Warmau",false };
-	Pokemons["Mepowat"] = { 280.f, 720.f, 110, "Images/Pokemon_Images/mepowat.png", 2, "Mepowat" ,false };
+	Pokemons["Auron"] = { 200.f, 620.f, "auron", 110, 1, 0, 20 };
+	Pokemons["Golnite"] = { 200.f, 620.f, "golnite", 110, 1, 0, 20 };
+	Pokemons["Warmau"] = { 200.f, 620.f, "warmau", 110, 1, 0, 20 };
+	Pokemons["Mepowat"] = { 200.f, 620.f, "mepowat" ,110, 1, 0, 20 };
 
 	//Fire
-	Pokemons["Poras"] = { 350.f, 950.f, 170, "Images/Pokemon_Images/poras.png", 1, "Poras",false };
+	Pokemons["Poras"] = { 270.f, 800.f, "poras",170, 1, 0, 40 };
 
-	Pokemons["Arfau"] = { 310.f, 820.f, 120, "Images/Pokemon_Images/arfau.png", 2, "Arfau",false };
-	Pokemons["Lowtor"] = { 310.f, 820.f, 120, "Images/Pokemon_Images/lowtor.png", 2, "Lowtor" ,false };
-	Pokemons["Pikalee"] = { 310.f, 820.f, 120, "Images/Pokemon_Images/pikalee.png", 2, "Pikalee" ,false };
-	Pokemons["Ponag"] = { 310.f, 820.f, 120, "Images/Pokemon_Images/ponag.png", 2, "Ponag",false };
-	Pokemons["Qulyd"] = { 310.f, 820.f, 120, "Images/Pokemon_Images/qulyd.png", 2, "Qulyd",false };
-	Pokemons["Ronew"] = { 310.f, 820.f, 120, "Images/Pokemon_Images/ronew.png", 2, "Ronew" ,false };
-	Pokemons["Twobee"] = { 310.f, 820.f, 120, "Images/Pokemon_Images/twobee.png", 2, "Twobee" ,false };
+	Pokemons["Arfau"] = { 220.f, 700.f, "arfau",120, 1, 0, 40  };
+	Pokemons["Lowtor"] = { 220.f, 700.f, "lowtor" ,120, 1, 0, 40 };
+	Pokemons["Pikalee"] = { 220.f, 700.f, "pikalee" ,120, 1, 0, 40};
+	Pokemons["Ponag"] = { 220.f, 650.f, "ponag", 120, 1, 0, 40 };
+	Pokemons["Qulyd"] = { 220.f, 650.f, "qulyd",120, 1, 0, 40};
+	Pokemons["Ronew"] = { 220.f, 650.f, "ronew" ,120, 1, 0, 40};
+	Pokemons["Twobee"] = { 220.f, 650.f, "twobee" ,120, 1, 0, 40 };
 
-	Pokemons["Raporoy"] = { 210.f, 620.f, 80, "Images/Pokemon_Images/raporoy.png", 2, "Raporoy" ,false };
+	Pokemons["Raporoy"] = { 130.f, 540.f, "raporoy" ,80, 1, 0, 40 };
 
 	std::cout << Pokemons["Raporoy"].path << "\n";
 	return 0;
