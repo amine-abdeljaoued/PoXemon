@@ -52,9 +52,6 @@ const float air [16] = {0, 0, 182, 206, 3, 1, 3, 0.35,
 						0, 2, 182, 206, 3, 2, 2, 0.35};		// type 30
 const float fire [16] = {0, 0, 128, 128, 3, 0, 3, 0.5,
 						 0, 1, 256, 256, 0, 5, 0, 0.2 };  	// type 40
-/* 
-const float water [14] ; // type 20
- */
 
 class Bullet_Attack1: public Bullet{
 public:
