@@ -3,7 +3,7 @@
 Bullet::Bullet() {
 	deleted = false;
 	deleting = false;
-	if (!bpic.loadFromFile("fights/Images/red_bullet.png")) std::cout << "could not load bullet image" << std::endl; 
+	if (!bpic.loadFromFile("fights/Images/red_bullet.png")) std::cout << "could not load bullet image" << std::endl;
 	bpic.loadFromFile("fights/Images/red_bullet.png");//to change
 	bullet.setTexture(bpic);
 	//I find easier to set the origin at center

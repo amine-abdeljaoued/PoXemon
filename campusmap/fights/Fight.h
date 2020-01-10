@@ -11,8 +11,6 @@
 #include "Pokemon_Button.h"
 #include "StateFunctions.h"
 
-// test
-
 class Fight 
 {
 public:
@@ -71,6 +69,11 @@ public:
     sf::Time elapsed;
     sf::Clock clock2;
     sf::Time elapsed2;
+
+	//leave button (when the game is finished)
+	sf::Text leave;
+	sf::Texture arrow;
+	sf::Sprite arrow_sprite;
 	
     // For the player
 	sf::Clock attack_1_clock;
@@ -102,6 +105,9 @@ public:
     // state 7
 	sf::Text wonlost;
 	bool won;
+
+	//pokeball states
+	sf::Text caught;
 
     //will be useful
 	sf::Text money;

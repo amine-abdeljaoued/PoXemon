@@ -11,6 +11,7 @@ public:
 	Pokemon_Button() {};
 	Pokemon_Button(std::string& name, int& lvl, int& health, int&i );
 	void setHealth(int& a);
+	void Levelup();
 	void draw(sf::RenderWindow& target);
 	void setPosition(float x, float y);     // all the components of the health bar must be moved together
 	void update_mouse(sf::Vector2f& mouse_pos, int&clicked_button); //check for clicked buttons    
