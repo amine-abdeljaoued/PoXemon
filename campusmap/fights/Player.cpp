@@ -63,17 +63,22 @@ void Player::update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clock
 	health.update();
 
 	velocityY += 981.0f * deltaTime;
-	move(deltaTime);	
+	move(deltaTime, window);	
 }
 
-void Player::move(float& deltaTime) {
+void Player::move(float& deltaTime, sf::RenderWindow& window) {
 	x += velocityX * deltaTime;
-	y += velocityY * deltaTime;
-	float groundY = 300.0f; //Cannot go below this height
+	y += velocityY * deltaTime; 
 	if (y >= groundY) {
 		y = groundY;
 		velocityY = 0.0f;
 		canJump = true;
+	}
+	if (x < sprite.getGlobalBounds().width/2){
+		x = sprite.getGlobalBounds().width/2;
+	}
+	if (x > window.getSize().x -sprite.getGlobalBounds().width/2){
+		x = window.getSize().x -sprite.getGlobalBounds().width/2;
 	}
 
 	update_sprite_orientation();

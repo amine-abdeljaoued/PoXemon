@@ -18,8 +18,12 @@ public:
 	void draw(sf::RenderTexture& texture);
 	void setPosition(float x, float y);     // the components must be moved together
 	void update1(sf::Clock& clock1);
-	void initialise();
+	void initialise(sf::RenderWindow& window);
 	void initial_state();
+
+// Background
+	sf::Texture bg_tex;
+	sf::Sprite bg;
 
 // Specical Attack 1
 	bool attack1_available;

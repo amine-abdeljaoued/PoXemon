@@ -10,11 +10,13 @@
 
 class Pokemon {
 public:
+	int xp;
 	int index;//index in the backpack
 	float rarity;
-	int level = 1; 			// must be implemented by pokemon team!!
+	int level; 			// must be implemented by pokemon team!!
 	std::string name;
 	sf::Sprite sprite;
+	float groundY; 			// lowest point we can go
 	float x;                //x and y store current position
 	float y;
 	float speed;            //Determines how far pokemon moves each time you press l/r
@@ -31,11 +33,11 @@ public:
 	Pokemon* enemy;
 
 	Pokemon()=default;
-	Pokemon(float xstart, float ystart, float h, float v, Backpack_Pokemon backpack_pokemon);
+	Pokemon(sf::RenderWindow& window, float h, float v, Backpack_Pokemon backpack_pokemon);
 	void set_enemy(Pokemon* enemy);
 
 	void death_disappear(float& deltaTime); //scale down and make the pokemon 'implode'
-	
+
 	int type; /* We know which type a pokemon is by its identifier type
 							10 - earth
 							20 - water

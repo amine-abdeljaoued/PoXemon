@@ -64,7 +64,7 @@ using namespace std;
 	std::string name1 = "jistolwer";
 	std::string name2 = "auron";
 	std::string name3 = "husabus";
-	Backpack_Pokemon poke1(name1, 1, 0, 50, 20);//not the actual types though
+	Backpack_Pokemon poke1(name1, 1, 0, 50, 10);//not the actual types though
 	Backpack_Pokemon poke2(name2, 1, 1, 60, 20);
 	Backpack_Pokemon poke3(name3, 1, 2, 70, 30);
 	bag.backpack_pokemons[0] = &poke1;
@@ -82,9 +82,9 @@ using namespace std;
 	opponent_bag.backpack_pokemons[1] = &opoke2;
 	opponent_bag.backpack_pokemons[2] = &opoke3;
 
-	Player* player = new Player(10.f, groundY, 200.f, 500.f, poke1);//by default, we take the first pokemon of the backpack
+	Player* player = new Player(window, 200.f, 500.f, poke1);//by default, we take the first pokemon of the backpack
 																			//do we want to be able to choose our pokemon at the beginning of the fight?
-	Opponent* opponent = new Opponent(1000.f, groundY, 200.f, 800.f, opoke1); 
+	Opponent* opponent = new Opponent(window, 200.f, 800.f, opoke1); 
 
 	//ACTUAL MAIN: now for the fights...
 
@@ -99,7 +99,7 @@ using namespace std;
     
 
     //TO NOT GET ANNOYED WITH FIGHTS: 
-    //JUST COMMENT LINE 453 of map.cpp
+    //JUST COMMENT in map.cpp in Fighting the trainer.state = "Fighting" in line 437
      while (window.isOpen())
      {
          //For the fights team uncomment this line:

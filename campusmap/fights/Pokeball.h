@@ -37,8 +37,8 @@ public:
     void dissapear();
     
     void setPosition(float& xpos, float& ypos);
-    bool update(float deltaTime,sf::RenderWindow& window,float proba, sf::Clock &clock2, sf::Time &elapsed2,float opphealth);
-    bool catched(float proba, sf::Clock& clock, sf::Time& elapsed,float opphealth);
+    int update(float deltaTime,sf::RenderWindow& window,float proba, sf::Clock &clock2, sf::Time &elapsed2,float opphealth);
+    int catched(float proba, sf::Clock& clock, sf::Time& elapsed,float opphealth);
     bool waiting = false;
 
     

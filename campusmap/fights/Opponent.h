@@ -10,14 +10,26 @@ protected:
     Pokemon* player;
 public:
 
-    Opponent(float xstart, float ystart, float h, float v, Backpack_Pokemon backpack_pokemon)
-    :Pokemon(xstart, ystart, h, v, backpack_pokemon){
-		sprite.setScale(sf::Vector2f(0.5f, 0.5f));
+    Opponent(sf::RenderWindow& window, float h, float v, Backpack_Pokemon backpack_pokemon)
+    :Pokemon(window, h, v, backpack_pokemon){
+		sf::Vector2u TextureSize = pic.getSize(); 	//Get size of texture.
+		sf::Vector2u WindowSize = window.getSize();      //Get size of window.
+
+		float ScaleY = (float) WindowSize.y / TextureSize.y; //Calculate scale.
+		sprite.setScale(ScaleY/5, ScaleY/5);	//Set scale
+
 		speed = 400;
 		int randomDirection[2] = { -1,1 };
 		int randomIndex = rand() % 2;
 		direction = randomDirection[randomIndex];
 		time_change_dir = 0.3 + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (2 - 0.3))); //random float between 0.3 and 2
+
+		x = 4*window.getSize().x/5;
+		y = 3*window.getSize().y/5;
+		groundY = y;
+
+		sprite.setPosition(sf::Vector2f(x, y));
+		health.setPosition(window.getSize().x - sprite.getGlobalBounds().width/2 - health.bar.getGlobalBounds().width, window.getSize().y/20);
     };
 
     void update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clock, sf::Time& elapsed, 
