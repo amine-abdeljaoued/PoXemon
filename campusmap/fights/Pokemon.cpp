@@ -33,13 +33,11 @@ Pokemon::Pokemon(sf::RenderWindow& window, float h, float v, Backpack_Pokemon ba
 	//also useful for death_dissapear()
 	//these functions both scale sprites, which is is done wrt the origin so if it is not set at center, it won't look nice
 	sprite.setOrigin(sf::Vector2f(sprite.getGlobalBounds().width / 2, sprite.getGlobalBounds().height / 2));
-
 }
 
 void Pokemon::set_enemy(Pokemon* enemy) {
 	this->enemy = enemy;
 }
-
 
 void Pokemon::death_disappear(float& deltaTime) {//to improve
 
