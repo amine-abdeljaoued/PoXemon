@@ -33,7 +33,7 @@ class Backpack
         sf::Sprite masterball;
     
         // Functions
-        void Pokeball_shoot(float& deltaTime, sf::RenderWindow& window, sf::Clock &clock2, sf::Time & elapsed2);
+        int Pokeball_shoot(float& deltaTime, sf::RenderWindow& window, sf::Clock &clock2, sf::Time & elapsed2);// was void
         void Pokeball_throw(Pokeball Poke,float& deltaTime, sf::RenderWindow& window);
         void draw (sf::RenderWindow &target) const;
         void draw (sf::RenderTexture& texture) const;

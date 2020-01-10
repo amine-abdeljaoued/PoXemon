@@ -29,7 +29,7 @@ void StateFunctions1::initialise_background(sf::RenderWindow& window, std::strin
 		float ScaleY = (float) WindowSize.y / TextureSize.y; //Calculate scale.
 
 		background.setTexture(texture);
-		background.setScale(ScaleX, ScaleY);	//Set scale.  
+		background.setScale(ScaleX, ScaleY);	//Set scale.
   	}
 }
 
@@ -39,7 +39,7 @@ void StateFunctions1::initialise_howto(sf::RenderWindow& window){
 	if(!quit_texture.loadFromFile("fights/Images/quit.png")){std::cout<<"quit button didn't load"<<std::endl;}
 
 	sf::Vector2u TextureSize = how_texture.getSize(); 	//Get size of texture.
-	sf::Vector2u TextureSize1 = quit_texture.getSize(); 
+	sf::Vector2u TextureSize1 = quit_texture.getSize();
 	sf::Vector2u WindowSize = window.getSize();      //Get size of window.
 
 	float ScaleY = (float) WindowSize.y / TextureSize.y; //Calculate scale.
@@ -80,10 +80,10 @@ void StateFunctions1::initialise_buttons(sf::RenderWindow& window, sf::Font& fon
     opp.setScale(sf::Vector2f(1,1));
     opp.setOrigin(0,0);
 
-    // Text 
+    // Text
     std::string start = "Start";
     std::string info = "How to Play";
-    
+
 	start_text.setFont(font);
     info_text.setFont(font);
     intro_text.setFont(font);
@@ -92,12 +92,12 @@ void StateFunctions1::initialise_buttons(sf::RenderWindow& window, sf::Font& fon
     intro_text.setCharacterSize(60);
     start_text.setFillColor(sf::Color::Black);
     info_text.setFillColor(sf::Color::Black);
-    intro_text.setFillColor(sf::Color::Black); 
+    intro_text.setFillColor(sf::Color::Black);
     start_text.setString(start);
     info_text.setString(info);
 
 	// Reset position - must compensate for their initial position (can call fights multiple times)
-	opp.setPosition(0,0); 
+	opp.setPosition(0,0);
 	star.setPosition(0,0);
 	intro_text.setPosition(0,0);
 	info_text.setPosition(0,0);
@@ -139,7 +139,7 @@ void StateFunctions1::draw1(sf::RenderWindow& window){
 	window.draw(opp);
 }
 
-void StateFunctions1::draw_blurry_background(sf::RenderWindow& window, sf::Sprite& background, Backpack& bag, Player& player, 
+void StateFunctions1::draw_blurry_background(sf::RenderWindow& window, sf::Sprite& background, Backpack& bag, Player& player,
 			Opponent& opponent, sf::Shader* shader){
 	// we create a new texture with all the objects on the screen
 	sf::RenderTexture texture;
@@ -163,7 +163,7 @@ void StateFunctions1::draw_how_to(sf::RenderWindow& window){
 
 int StateFunctions1::update_state1(sf::RenderWindow& window, sf::Clock& clock){
     //Rotate star
-    star.rotate(2); 
+    star.rotate(2);
     // Buttons go red when hovering
     if ((sf::Event::MouseMoved)||(sf::Event::MouseButtonPressed)){
         sf::Vector2i mousepixel = sf::Mouse::getPosition(window);
@@ -173,7 +173,7 @@ int StateFunctions1::update_state1(sf::RenderWindow& window, sf::Clock& clock){
             start_button.setFillColor(sf::Color(255,99,99)); //reddish
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
 				clock.restart();
-                return 10; 
+                return 10;
 				// should change to choose pokemon
 				// then to countdown
 				// when the countdown is done we return 2
@@ -203,7 +203,7 @@ int StateFunctions1::howtoplay(sf::RenderWindow& window, float& deltaTime){
 		sf::Vector2i mousepixel = sf::Mouse::getPosition(window);
 		sf::Vector2f mouse_pos = window.mapPixelToCoords(mousepixel);
 		if (quit.getGlobalBounds().contains(mouse_pos)){
-			return 1; 
+			return 1;
 			}
 	}
 	return 8;
@@ -215,6 +215,7 @@ void StateFunctions1::initialise_countdown(sf::RenderTarget& window){
     font.loadFromFile("fights/upheavtt.ttf");
     text.setFont(font);
     text.setFillColor(sf::Color::Black);
+	text.setPosition(0,0);
     text.setOrigin(text.getGlobalBounds().width/2, text.getGlobalBounds().height);
     text.move(window.getSize().x/2 , 2*window.getSize().y/5);
     bool draw_count = true;
@@ -224,11 +225,12 @@ void StateFunctions1::shrink_text(sf::Text& text, float deltatime){
 	float add_font_size = 5 * deltatime * max_char_size / 2 ; // must be in proportion to how long its on the screen for
                                                                 // i.e. we're on screen for 4/10 = 2/5 of a second
     int font_size = (int)text.getCharacterSize() - (int)add_font_size ;
+	if(font_size<1){font_size = 1;}
     text.setCharacterSize(font_size);
 }
 
 int StateFunctions1::countdown(sf::RenderWindow& window, float deltatime, sf::Time time){
-	 /*  Idea: 
+	 /*  Idea:
 		Number shows large for 0.5s
 		Number shrinks for 0.4s
 		Not shown for 0.1s (smoother looking)
@@ -271,6 +273,7 @@ int StateFunctions1::countdown(sf::RenderWindow& window, float deltatime, sf::Ti
     	text.move(window.getSize().x/2 , 2*window.getSize().y/5);
 	}
 	else if (time.asSeconds()>4){
+			text.setString("3");//for the next time we call it
 		return 2;
 	}
 	return 10;
@@ -296,7 +299,7 @@ void StateFunctions56::fall(Pokemon* eevee, float& groundY, float& deltaTime) {/
 void StateFunctions56::initialize_state_5_6(char game_mode, Pokemon* poke, sf::Font font, sf::Text& text_fainted, sf::Text& choose_pokemon, sf::Text& leave_fight, sf::RenderWindow& target, Pokemon_Button* buttons[], sf::Sprite& running_sprite) {
 
 	//the menu is almost the same when we play against a wild pokemon or a trainer
-	//the difference is that we cannot escape against a trainer 
+	//the difference is that we cannot escape against a trainer
 	//hence in 't' mode there is no run button and pokemon buttons are placed at the center
 
 	if ((*poke).health.health <= 0) {
@@ -314,7 +317,7 @@ void StateFunctions56::initialize_state_5_6(char game_mode, Pokemon* poke, sf::F
 	leave_fight.setFillColor(sf::Color::Black);
 	text_fainted.setOrigin(text_fainted.getGlobalBounds().width / 2, text_fainted.getGlobalBounds().height / 2);
 	choose_pokemon.setOrigin(choose_pokemon.getGlobalBounds().width / 2, choose_pokemon.getGlobalBounds().height/2);
-	
+
 	if (game_mode == 'w') {
 		leave_fight.setFont(font);
 		leave_fight.setCharacterSize(30);
@@ -332,7 +335,7 @@ void StateFunctions56::initialize_state_5_6(char game_mode, Pokemon* poke, sf::F
 	buttons[0]->setPosition(target.getSize().x / placement, target.getSize().y * 7/16 );
 	buttons[1]->setPosition(target.getSize().x / placement, target.getSize().y * 9/16 );
 	buttons[2]->setPosition(target.getSize().x / placement, target.getSize().y * 11/16 );
-	
+
 	//update life of the pokemon on its button
 	buttons[(*poke).index]->setHealth((*poke).health.health);
 }
@@ -343,7 +346,7 @@ void const StateFunctions56::draw_state_5_6(char game_mode,  sf::Font& font, sf:
 	text_fainted.setFont(font);
 	target.draw(text_fainted);
 	target.draw(choose_pokemon);
-	
+
 
 	//buttons
 	buttons[0]->draw(target);
@@ -351,12 +354,12 @@ void const StateFunctions56::draw_state_5_6(char game_mode,  sf::Font& font, sf:
 	buttons[2]->draw(target);
 
 
-	if (game_mode == 'w') { 
+	if (game_mode == 'w') {
 		leave_fight.setFont(font);
 		target.draw(leave_fight);
 		target.draw(running_sprite);
 	}
-	
+
 }
 
 void StateFunctions56::update_state_5_6(char game_mode, sf::RenderWindow& window, Pokemon_Button* buttons[], int& clicked_button, sf::Sprite& running_sprite ) { //this function will change the clicked_button value if a button is clicked
@@ -404,7 +407,7 @@ void StateFunctions56::initialize_state7(bool won, sf::Text& lost_fight, sf::Fon
 }
 
 void StateFunctions56::initialize_state_8(Pokemon* poke, sf::Font& font, sf::Text& text_fainted, sf::RenderWindow& window) {
-	
+
 	text_fainted.setString(poke->name + " fainted!");
 	text_fainted.setFont(font);
 	text_fainted.setCharacterSize(50);
@@ -413,5 +416,22 @@ void StateFunctions56::initialize_state_8(Pokemon* poke, sf::Font& font, sf::Tex
 	text_fainted.setPosition(window.getSize().x / 2, window.getSize().y / 9);
 
 	//maybe add a button to leave ?
-	
+
+}
+
+
+bool StateFunctions56::check_leave(sf::Sprite &arrow_sprite, sf::RenderWindow& window) {
+	sf::Vector2i mousepixel = sf::Mouse::getPosition(window);
+	sf::Vector2f mouse_pos = window.mapPixelToCoords(mousepixel);
+	if (arrow_sprite.getGlobalBounds().contains(mouse_pos)) {
+		arrow_sprite.setScale(0.6, 0.6); // slightly bigger when the mouse is on the button
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+			std::cout << "you pressed the run button" << std::endl;
+			return true;
+		}
+	}
+	else {
+		arrow_sprite.setScale(0.5, 0.5);
+	}
+	return false;
 }

@@ -11,16 +11,18 @@
 #include "Pokemon_Button.h"
 #include "StateFunctions.h"
 
-// test
-
 class Fight 
 {
 public:
     // basic constructor
     Fight();
     Fight(sf::RenderWindow& window); 
+
     // start a specific fight
-    void initialise (char& mode, Backpack& pbag, Backpack& popponent_bag, Player* player, Opponent* opponent, sf::RenderWindow& window); 
+    void initialise (char& mode, Backpack& pbag, Backpack& popponent_bag, Player* player, Opponent* opponent, sf::RenderWindow& window); // any - to be deleted
+    void initialise_wild (Backpack& pbag, Player* player, Opponent* opponent, sf::RenderWindow& window); // initialise a fight with a wild pokemon
+    void initialise_trainer (Backpack& pbag, Backpack& popponent_bag, Player* player, sf::RenderWindow& window); // initilaise a fight with a trainer
+
     Backpack bag;
     Backpack opponent_bag;
     // Boundaries
@@ -28,7 +30,8 @@ public:
     float groundX = 1000.f;
     
     //Parameters of the game
-    int state = 1;  // 1 = start menu
+    int state = 1;  // 0 = return to map
+                    // 1 = start menu
                     // 2 = normal fight mode
                     // 3 = pokeball landed in centre -- to be implemented
                     // 4 = caught the pokemon
@@ -38,6 +41,7 @@ public:
                     // 8 = how to play menu
                     // 9 = clicked start -> choose pokemon to play with
                     // 10 = countdown
+                    // 20 = all pokemons dead -> go to health shop
 
     char game_mode; // 'w' : wild pokemon
                     // 't' : trainer
@@ -65,6 +69,11 @@ public:
     sf::Time elapsed;
     sf::Clock clock2;
     sf::Time elapsed2;
+
+	//leave button (when the game is finished)
+	sf::Text leave;
+	sf::Texture arrow;
+	sf::Sprite arrow_sprite;
 	
     // For the player
 	sf::Clock attack_1_clock;
@@ -96,6 +105,9 @@ public:
     // state 7
 	sf::Text wonlost;
 	bool won;
+
+	//pokeball states
+	sf::Text caught;
 
     //will be useful
 	sf::Text money;

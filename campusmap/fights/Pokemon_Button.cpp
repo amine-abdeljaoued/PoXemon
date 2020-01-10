@@ -4,11 +4,12 @@
 Pokemon_Button::Pokemon_Button(std::string& name, int& lvl, int& h, int& i) {
 
 	index = i; //index of the corresponding backpack pokemon
+	level = lvl;
 
 	//used for placement
 	/*red_circle.setRadius(5);
 	red_circle.setFillColor(sf::Color(255, 0, 0));*/
-	
+
 	//Text
 	if (!font.loadFromFile("fights/upheavtt.ttf")) { std::cout << "could not  pokemon button font" << std::endl; }
 	font.loadFromFile("fights/upheavtt.ttf");
@@ -25,7 +26,7 @@ Pokemon_Button::Pokemon_Button(std::string& name, int& lvl, int& h, int& i) {
 	bar.setTexture(bar_pic);
 	bar.setScale(sf::Vector2f(0.2, 0.2));
 
-	
+
 	//Little heart next to bar - numbers used just work, don't know how to make them nice
 	if (!heart_pic.loadFromFile("fights/Images/heart.png")) { std::cout << "could not load" << std::endl; }
 	heart_pic.loadFromFile("fights/Images/heart.png");
@@ -72,6 +73,11 @@ void Pokemon_Button::setHealth(int& a) {
 	update();
 }
 
+void Pokemon_Button::Levelup() {
+	level++;
+	level_text.setString("lvl: " + std::to_string(level));
+}
+
 void Pokemon_Button::update() {
 	//update the healthbar
 	healthbar.setSize(sf::Vector2f(health * healthwidth / 100, healthheight));
@@ -97,7 +103,7 @@ void Pokemon_Button::update() {
 
 void Pokemon_Button::setPosition(float x, float y) {
 
-	
+
 
 	// Background
 	bar.setPosition(x, y);
@@ -127,14 +133,14 @@ void Pokemon_Button::update_mouse(sf::Vector2f& mouse_pos, int& clicked_button) 
 			bar.setColor(sf::Color(255, 99, 99));
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 				std::cout << "you pressed the button" << std::endl;
-				clicked_button = index; //value changes if we click 
+				clicked_button = index; //value changes if we click
 			}
 		}
 		else {
 			bar.setColor(sf::Color(255, 255, 255));
 		}
 	}
-	else 
+	else
 	{//heath==0
 		if (bar.getGlobalBounds().contains(mouse_pos)) {//check if the mouse is on a pokemon button
 			bar.setColor(sf::Color(60, 60, 60));
@@ -166,4 +172,3 @@ void Pokemon_Button::draw(sf::RenderWindow& target) {
 
 	//target.draw(red_circle);
 }
-
