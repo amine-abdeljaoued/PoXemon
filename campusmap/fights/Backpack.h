@@ -12,7 +12,7 @@ class Backpack
 {
     public:
 		Backpack();
-
+        void setBackpack(int i);
         // Our Pokeballs
         Normalball new_Normalball;
         Superball new_Superball;

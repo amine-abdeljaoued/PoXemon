@@ -65,6 +65,7 @@ Npc::Npc(string name, string pathName, int sheetPosX, int sheetPosY, int sheetRe
     this->fixed = fixed;
 }
 
+Npc::~Npc(){}
 
 void Npc::draw(sf::RenderWindow &window) const {
     window.draw(spriteNpc);

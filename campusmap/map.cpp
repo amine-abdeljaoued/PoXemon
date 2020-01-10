@@ -1,9 +1,11 @@
 #include "map.hpp"
 #include "const.hpp"
 #include "trainer.hpp"
+#include "fights/trainer_opponent.hpp"
+#include "fights/Backpack.h"
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
-#include <unistd.h>
+/* #include <unistd.h> */
 #include <stdio.h>
 #include <iostream>
 #include <list>
@@ -57,7 +59,7 @@ Map::Map(sf::RenderWindow &window)
     
     map_name= "first"; //Beggining of the game
     
-    //Part 3: Creation of the NPCs
+    //Part 3: Creation of the NPCs and opponent trainers
     
     //For the first_map 
     vector<Npc*> npcs_map1;
@@ -77,12 +79,22 @@ Map::Map(sf::RenderWindow &window)
     
     npcs_map1.push_back(new Npc("nerd","Sprites/NPC1.png",17,97,32,32,1.f,136,240,{"Hi"}, false));
     
+
+
     vector<string> dialogue2;
     dialogue2.push_back("Before adventuring yourself");
     dialogue2.push_back("into the wild");
     dialogue2.push_back("try catching one wild PoXemon !");
     if (catched == false) npcs_map1.push_back(new Npc("passeur","Sprites/NPC1.png",432,675,32,32,1.f,24,224,dialogue2, false));
 
+    
+    vector<string>trainer_dialogue1;
+    trainer_dialogue1.push_back("You don't seem to know who I am");
+    trainer_dialogue1.push_back("Fighting");
+    Backpack bag_opponent1;
+    bag_opponent1.setBackpack(1);
+    npcs_map1.push_back(new Trainer_opponent("Fighter","Sprites/NPC1.png",113,97,32,32,1.f,264,320,trainer_dialogue1, false,bag_opponent1));
+    
     npcs.insert(pair< string, vector<Npc*> >("first", npcs_map1));
     
     //For the underground
@@ -328,7 +340,7 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
 
     //Entering Speaking mode with different npcs
     if (event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::D&&trainer.state != "Walking"){
-        if (collision_[map_name][(int) x/16 +(((int) y/16 -1)*34)]>=60 && collision_[map_name][(int) x/16 +(((int) y/16 -1)*34)]<=69 && trainer.facingDirection=="Up"){
+        if (collision_[map_name][(int) x/16 +(((int) y/16 -1)*34)]>=60 && collision_[map_name][(int) x/16 +(((int) y/16 -1)*34)]<=70 && trainer.facingDirection=="Up"){
             nNpc = collision_[map_name][(int) x/16 +(((int) y/16 -1)*34)] % 60;
             if(trainer.state != "Shopping"){
                 if(trainer.state == "SpeakingScenario"){
@@ -356,7 +368,7 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
                 }
             }
         }
-        else if (collision_[map_name][(int) x/16 -1+((int) y/16 *34)]>=60 && collision_[map_name][(int) x/16 -1+((int) y/16 *34)]<=69 && trainer.facingDirection=="Left"){
+        else if (collision_[map_name][(int) x/16 -1+((int) y/16 *34)]>=60 && collision_[map_name][(int) x/16 -1+((int) y/16 *34)]<=70 && trainer.facingDirection=="Left"){
             nNpc = collision_[map_name][(int) x/16 -1+((int) y/16 *34)] % 60;
             if(trainer.state != "Shopping"){
                 if(trainer.state == "SpeakingScenario"){
@@ -383,7 +395,7 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
                 }
             }
         }
-        else if (collision_[map_name][(int) x/16 +1+((int) y/16 *34)]>=60 && collision_[map_name][(int) x/16 +1+((int) y/16 *34)]<=69 && trainer.facingDirection=="Right"){
+        else if (collision_[map_name][(int) x/16 +1+((int) y/16 *34)]>=60 && collision_[map_name][(int) x/16 +1+((int) y/16 *34)]<=70 && trainer.facingDirection=="Right"){
             nNpc = collision_[map_name][(int) x/16 +1+((int) y/16 *34)] % 60;
             if(trainer.state != "Shopping"){
                 if(trainer.state == "SpeakingScenario"){
@@ -411,6 +423,9 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
             }
         }
     }
+
+    //TRAINER TO INCLUDE IN SCENARIO:
+    
     
     //Fishing for François
     if ((collision_[map_name][(int) x/16 + 1 +( (int)y/16 *34)]==6 &&trainer.facingDirection=="Right") || (collision_[map_name][(int) x/16 -1 +( (int)y/16 *34)]==6 &&trainer.facingDirection=="Left") || (collision_[map_name][(int) x/16  + (((int) y/16 -1) *34)]==6 &&trainer.facingDirection=="Up") || (collision_[map_name][(int) x/16 +(((int) y/16 +1) *34)]==6 &&trainer.facingDirection=="Down")){
@@ -429,32 +444,34 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
             trainer.fish = true;
         }
     }
-
+    //Fighting
+    if (collision_[map_name][(int) x/16 +( (int)y/16 *34)]==1){
+        random_device rd;
+        mt19937 gen(rd());
+        uniform_real_distribution<> dis(0.0, 1.0);
+        float probagenerated = dis(gen);
+        if (probagenerated<0.02) {
+            std::cout<<"POKEEEEMMMOONNN"<<std::endl;
+                
+            trainer.state = "Fighting"; 
+            catched = true;
+        }
+            
+    }
     //Walking
     if (trainer.state == "Walking"){
-        if (collision_[map_name][(int) x/16 +( (int)y/16 *34)]==1){
-            random_device rd;
-            mt19937 gen(rd());
-            uniform_real_distribution<> dis(0.0, 1.0);
-            float probagenerated = dis(gen);
-            if (probagenerated<0.02) {
-                std::cout<<"POKEEEEMMMOONNN"<<std::endl;
-                
-//                trainer.state = "Fighting";
-                catched = true;
-            }
-            
-            if (trainer.facingDirection == "Left" || trainer.facingDirection == "Right"){
-                sf::Sprite sprite;
-                (sprite).setTexture(texture_3);
-                (sprite).setTextureRect(sf::IntRect(197, 144, 16, 16));
-                int a = (int) x/16;
-                int b = (int) y/16;
-                sprite.setPosition(16 * a , 16 * b);
-                window.draw(sprite);
-            }
-            
+        
+        if (trainer.facingDirection == "Left" || trainer.facingDirection == "Right"){
+            sf::Sprite sprite;
+            (sprite).setTexture(texture_3);
+            (sprite).setTextureRect(sf::IntRect(197, 144, 16, 16));
+            int a = (int) x/16;
+            int b = (int) y/16;
+            sprite.setPosition(16 * a , 16 * b);
+            window.draw(sprite);
         }
+            
+        
     }
     
     if (trainer.state == "Stop"){
