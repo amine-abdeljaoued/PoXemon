@@ -94,10 +94,13 @@ Map::Map(sf::RenderWindow &window)
     dialogue2.push_back("try catching one wild PoXemon !");
     if (catched == false) npcs_map1.push_back(new Npc("passeur","Sprites/NPC1.png",432,675,32,32,1.f,24,224,dialogue2, false));
     
-    vector<string>trainer_dialogue1;
-    trainer_dialogue1.push_back("You don't seem to know who I am");
-    trainer_dialogue1.push_back("Fighting");
-    npcs_map1.push_back(new Trainer_opponent("Fighter","Sprites/NPC1.png",113,97,32,32,1.f,264,320,trainer_dialogue1, false, 1));
+//    vector<string>trainer_dialogue1;
+//    trainer_dialogue1.push_back("You don't seem to know who I am");
+//    trainer_dialogue1.push_back("Fighting");
+//    Backpack bag_opponent1;
+//    bag_opponent1.setBackpack(1);
+//    npcs_map1.push_back(new Trainer_opponent("Fighter","Sprites/NPC1.png",113,97,32,32,1.f,264,320,trainer_dialogue1, false,bag_opponent1));
+    
     npcs.insert(pair< string, vector<Npc*> >("first", npcs_map1));
     
     //For the underground alias second
@@ -513,8 +516,8 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
                 if (probagenerated<0.02) {
                     fight = true;
                     std::cout<<"POKEEEEMMMOONNN"<<std::endl;
-                    trainer.fight_mode = 'w'; //Which means single pokemon in grass
-                    trainer.state = "Fighting";
+//                    trainer.fight_mode = 'w'; //Which means single pokemon in grass
+//                    trainer.state = "Fighting";
                     catched = true;
                 }
                 if (trainer.facingDirection == "Left" || trainer.facingDirection == "Right"){
@@ -826,6 +829,7 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
     illuTunnelR(window);
     illuTunnelL(window);
     illuGrandhall(window);
+    illuBat80(window);
     
     
     if (map_name == "fourth") tunnel(window, 544, 416);
@@ -1126,5 +1130,17 @@ void Map::illuGrandhall(sf::RenderWindow &window){
             sprite2.setPosition(176 + (8+i) * 16, 368);
             window.draw(sprite2);
                }
+    }
+}
+
+void Map::illuBat80(sf::RenderWindow &window){
+    if (map_name == "home"){
+          for(int i = 0; i < 2; i++){
+            sf::Sprite sprite;
+            (sprite).setTexture(texture_2);
+            (sprite).setTextureRect(sf::IntRect(18 + 21*17 - i*17, 1038, 16, 16));
+            sprite.setPosition(224 - i*16, 160);
+            window.draw(sprite);
+          }
     }
 }
