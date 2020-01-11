@@ -69,10 +69,11 @@ void Fight::initialise(char& mode, Backpack& pbag, Backpack& popponent_bag, Play
     clicked_button = -2; // no button clicked
 }
 
-void Fight::initialise_wild (Backpack& pbag, Player* player, Opponent* opponent, sf::RenderWindow& window){
+void Fight::initialise_wild (Backpack& pbag, Player* player, sf::RenderWindow& window){
 	// background - must change depending on where we are
     functions1.initialise_background(window, "fights/Images/grassbg.png", background, BackgroundTexture);
-
+	// we choose a random pokemon fight
+	Opponent* opponent /*=*/;
     // basic set up
     bag = pbag;
     game_mode = 'w';
@@ -99,16 +100,18 @@ void Fight::initialise_wild (Backpack& pbag, Player* player, Opponent* opponent,
     clicked_button = -2; // no button clicked  
 } 
 
-void Fight::initialise_trainer (Backpack& pbag, Backpack& popponent_bag, Player* player, sf::RenderWindow& window){
+void Fight::initialise_trainer (Backpack& pbag, Backpack& popponent_bag, sf::RenderWindow& window){
 	// background - must change depending on where we are
 	functions1.initialise_background(window, "fights/Images/grassbg.png", background, BackgroundTexture);
 
 	// basic setup
+	delete pplayer;
+	delete popponent;
     bag = pbag;
     opponent_bag = popponent_bag;
     game_mode = 't';
-    pplayer = player;
     popponent = new Opponent(window, 200.f, 500.f, *popponent_bag.backpack_pokemons[0]);
+	pplayer = new Player(window, 200.f, 500.f, *pbag.backpack_pokemons[0]);
     for (int i=0; i<3; i++){
         poke_buttons[i] =  &((bag.backpack_pokemons[i])->button);
     }
@@ -118,7 +121,7 @@ void Fight::initialise_trainer (Backpack& pbag, Backpack& popponent_bag, Player*
 
     // for the states
     state = 1;
-	functions1.initialise(*popponent, *player, window, font);
+	functions1.initialise(*popponent, *pplayer, window, font);
     deltaTime = 0.0f;
     counter = 0;
     clicked_button = -2; // no button clicked

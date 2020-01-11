@@ -7,6 +7,8 @@
 #include <string>
 #include <vector>
 #include "trainer.hpp"
+#include "fights/Backpack.h"
+
 using namespace std;
 
 class Npc {
@@ -36,6 +38,7 @@ class Npc {
         int sheetRectX;
         int sheetRectY;
         bool fixed;
+        
         
 };
 

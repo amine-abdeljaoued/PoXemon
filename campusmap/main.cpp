@@ -107,33 +107,25 @@ using namespace std;
          
          sf::Event event;
          window.pollEvent(event);
-        /*  if ((event.type == sf::Event::KeyPressed)&&((event.key.code == sf::Keyboard::P))) if(openbackpck()==1) window.close(); */
+        
          if (event.type == sf::Event::Closed) window.close();
          window.clear(); //CHANGE AND PUT IN map.draw
          
          if(Arthur.state=="Fighting"){
-             if(start_fight==false){ //Which means we're not already fighting
+             if(start_fight==false){ //Which means we're not already fighting - must initialise the fight
                  view.reset(sf::FloatRect(0.f, 0.f, 1400.f, 700.f));
-                 /* if(Arthur.fight_mode=='t'){ //Which means fighting against trainer 
-                    fight.initialise(Arthur.fight_mode, bag, opponent_bag, player, opponent, window);
-                    //Opponent ????????????????
-                 } */
-               /*   else{ // TO IMPLEMENT: Fighting against savage pokemons
-                    fight.initialise(Arthur.fight_mode, bag, /* *(Arthur.opponent_bag) *//* opponent_bag, player, opponent, window);
-                 } */ //For now it's not a random pokemon but just the bag declared above */
-                 fight.initialise(mode, bag, /* *(Arthur.opponent_bag) */opponent_bag, player, opponent, window);
-                 
-                
+                  if(Arthur.fight_mode=='t'){ //Which means fighting against trainer 
+                    fight.initialise_trainer(bag, *(Arthur.opponent_bag), window);
+                 } 
+                 else { // TO IMPLEMENT: Fighting against savage pokemons
+                    // fight.initialise(Arthur.fight_mode, bag, /* *(Arthur.opponent_bag) */ opponent_bag, player, opponent, window);
+                 }  //For now it's not a random pokemon but just the bag declared above
                  start_fight = true;
              }
              else{
                 int i = fight.update(window);
-                if(i==0){
-                Arthur.state = "Stop";
-                }
-                if(i==11){
-                    Arthur.state = "Dead";
-                }
+                if(i==0){ Arthur.state = "Stop";}
+                if(i==11){Arthur.state = "Dead";}
                 }
          }
          else{ //Not fighting
@@ -144,7 +136,6 @@ using namespace std;
                  view.setSize(sf::Vector2f(544.f, 544.f));
                  view.setCenter(sf::Vector2f(position.x, position.y));
                  view.zoom(0.5f);
-
              }
              map1.draw(window,view, Arthur, clock, event);
              

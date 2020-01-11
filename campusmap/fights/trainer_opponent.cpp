@@ -48,9 +48,15 @@ void Trainer_opponent::speak(sf::RenderWindow &window, sf::View &view, Trainer &
     
      else{
            if (discussion[speakCounter] == "Fighting"){
+               std::cout<<"here"<<std::endl;
+               //std::cout<<"ChEKCING1"<<(*(bag.backpack_pokemons[0])).name<<std::endl;
                trainer.fight_mode = 't';
                trainer.state = "Fighting";
+               std::cout<<"1 yes"<<std::endl;
                trainer.opponent_bag = &bag;
+               std::cout<<"2 yes"<<std::endl;
+               std::cout<<"checking1"<<(*(trainer.opponent_bag)).masternow<<std::endl;
+               std::cout<<"ChEKCING2"<<(*((*(trainer.opponent_bag)).backpack_pokemons[0])).name<<std::endl;
            }
          
            
