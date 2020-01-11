@@ -94,12 +94,12 @@ Map::Map(sf::RenderWindow &window)
     dialogue2.push_back("try catching one wild PoXemon !");
     if (catched == false) npcs_map1.push_back(new Npc("passeur","Sprites/NPC1.png",432,675,32,32,1.f,24,224,dialogue2, false));
     
-    vector<string>trainer_dialogue1;
-    trainer_dialogue1.push_back("You don't seem to know who I am");
-    trainer_dialogue1.push_back("Fighting");
-    Backpack bag_opponent1;
-    bag_opponent1.setBackpack(1);
-    npcs_map1.push_back(new Trainer_opponent("Fighter","Sprites/NPC1.png",113,97,32,32,1.f,264,320,trainer_dialogue1, false,bag_opponent1));
+//    vector<string>trainer_dialogue1;
+//    trainer_dialogue1.push_back("You don't seem to know who I am");
+//    trainer_dialogue1.push_back("Fighting");
+//    Backpack bag_opponent1;
+//    bag_opponent1.setBackpack(1);
+//    npcs_map1.push_back(new Trainer_opponent("Fighter","Sprites/NPC1.png",113,97,32,32,1.f,264,320,trainer_dialogue1, false,bag_opponent1));
     
     npcs.insert(pair< string, vector<Npc*> >("first", npcs_map1));
     
@@ -399,9 +399,25 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
 
         //Exiting Shop and Center
         if (event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::W&&((map_name == "pokeShop"&&trainer.state == "Shopping")||(trainer.state == "Healing"&&map_name == "pokeCenter"))){
-            //if (trainer.state == "Shopping")
-            trainer.state = "Stop";
-            //else trainer.state = "Shopping";
+            if(trainer.state == "Healing"&&map_name == "pokeCenter"){
+                if (center.counter == 1){
+                    center.counter = 0;
+                    center.sw = false;
+                    center.swi1 = -1;
+                    center.swi2 = -1;
+                    center.Selecteditem = 0;
+                }
+                else{
+                    center.counter = 0;
+                    center.sw = false;
+                    center.swi1 = -1;
+                    center.swi2 = -1;
+                    trainer.state = "Stop";
+                }
+            }
+            else if(trainer.state == "Shopping"&&map_name == "pokeShop"){
+                trainer.state = "Stop";
+            }
         }
 
         //Entering Speaking mode with different npcs
@@ -422,7 +438,7 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
                     }
                 }
             }
-            else if (collision_[map_name][(int) x/16 -1+((int) y/16 *34)]>=60 && collision_[map_name][(int) x/16 -1+((int) y/16 *34)]<=69 && trainer.facingDirection=="Left"){
+            else if (collision_[map_name][(int) x/16 -1+((int) y/16 *34)]>=60 && collision_[map_name][(int) x/16 -1+((int) y/16 *34)]<=69 && trainer.facingDirection=="Left"&&npcs[map_name][collision_[map_name][(int) x/16 -1+((int) y/16 *34)] % 60]->fixed != true){
                 nNpc = collision_[map_name][(int) x/16 -1+((int) y/16 *34)] % 60;
                 if(trainer.state != "Shopping"&&trainer.state != "Healing"){
                     if(trainer.state == "SpeakingScenario"){
@@ -438,7 +454,7 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
                     }
                 }
             }
-            else if (collision_[map_name][(int) x/16 +1+((int) y/16 *34)]>=60 && collision_[map_name][(int) x/16 +1+((int) y/16 *34)]<=69 && trainer.facingDirection=="Right"){
+            else if (collision_[map_name][(int) x/16 +1+((int) y/16 *34)]>=60 && collision_[map_name][(int) x/16 +1+((int) y/16 *34)]<=69 && trainer.facingDirection=="Right"&&npcs[map_name][collision_[map_name][(int) x/16 -1+((int) y/16 *34)] % 60]->fixed != true){
                 nNpc = collision_[map_name][(int) x/16 +1+((int) y/16 *34)] % 60;
                 if(trainer.state != "Shopping"&&trainer.state != "Healing"){
                     if(trainer.state == "SpeakingScenario"){
@@ -705,11 +721,6 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
     
     //Flowers
     flowerList(window);
-    
-//    else if (map_name == "fourth"){
-//        flowerList(window, {176,176,160,176});
-//    }
-    
 
     for (auto const& np : npcs[map_name]) {
 //        std::cout<<(*np).name<<std::endl;
@@ -817,6 +828,7 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
     illuShop(window);
     illuTunnelR(window);
     illuTunnelL(window);
+    illuGrandhall(window);
     
     
     if (map_name == "fourth") tunnel(window, 544, 416);
@@ -1072,10 +1084,20 @@ void Map::flowerList(sf::RenderWindow &window){
         {"first",
             {144,160,144,144,144,128,144,112,224,160,224,144,224,128,224,112,144,94,160,94,176,94,192,94,208,94,224,94}
         },
+
         {"fourth",
+            //flowers around the tree
             {464,0,480,0,496,0,512,0,528,0,
              464,16,480,16,496,16,512,16,528,16,
-             464,32,528,32
+             464,32,528,32,
+             464,48,528,48,
+             464,64,528,64,
+             464,80,528,80,
+             464,96,480,96,496,96,512,96,528,96,
+            //flowers in grass
+             32,32,112,48,
+            //flowers neer pokecenter
+            288,336,288,400,448,336,448,400
             }
         }
     };
@@ -1086,5 +1108,26 @@ void Map::flowerList(sf::RenderWindow &window){
         for (vector<int>::iterator it = flower_list[map_name].begin(); it < flower_list[map_name].end(); it+=2){
             movingFlower(window, *it, *(it+1));
         }
+    }
+}
+
+void Map::illuGrandhall(sf::RenderWindow &window){
+
+    if (map_name == "first"){
+        for(int i = 0; i < 8; i++){
+            sf::Sprite sprite;
+            (sprite).setTexture(texture_2);
+            (sprite).setTextureRect(sf::IntRect(579 + 17 * i, 545, 16, 16));
+            sprite.setPosition(176 + i * 16, 368);
+            window.draw(sprite);
+        }
+
+        for(int i = 0; i < 3; i++){
+            sf::Sprite sprite2;
+            (sprite2).setTexture(texture_2);
+            (sprite2).setTextureRect(sf::IntRect(579 + 17 * (6+i), 545, 16, 16));
+            sprite2.setPosition(176 + (8+i) * 16, 368);
+            window.draw(sprite2);
+               }
     }
 }
