@@ -24,7 +24,8 @@ class Npc {
         bool seller;
         string name;
         vector<string> discussion;
-
+        bool fixed;
+    
     protected:
         sf::Texture textureNpc;
         sf::Sprite spriteNpc;
@@ -37,7 +38,7 @@ class Npc {
         int sheetPosY;
         int sheetRectX;
         int sheetRectY;
-        bool fixed;
+        
         
         
 };

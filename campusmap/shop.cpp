@@ -124,7 +124,6 @@ void Shop::draw_shop(sf::RenderWindow &window, sf::View &view, sf::Event &event)
     rect.setOutlineColor(sf::Color::Black);
     rect.setPosition(sf::Vector2f(viewBounds.left + viewBounds.width/2 -2, viewBounds.top + 2));
     
-    cout << viewBounds.top << endl;
     window.draw(rect);
     
     for(int i=0; i < 7; i++){
@@ -168,3 +167,4 @@ void Shop::draw(sf::RenderWindow &window, sf::View &view, sf::Event &event, Trai
         draw_money(window, view, event, trainer, backpack);
     }
 }
+

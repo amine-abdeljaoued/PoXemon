@@ -1,11 +1,10 @@
-#pragma once
-#include <string>
 #include <iostream>
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <sstream>
 #include "trainer.hpp"
 #include "Backpack_map.hpp"
+#pragma once
 
 using namespace std;
 
@@ -35,6 +34,12 @@ class Shop
         bool arrow;
         bool release;
 };
+
+
+
+
+
+
 
 
 
