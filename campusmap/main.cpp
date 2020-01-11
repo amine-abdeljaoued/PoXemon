@@ -73,14 +73,14 @@ using namespace std;
 
 	Backpack opponent_bag;
 	name1 = "donryle";
-	name2 = "fepeur";
-	name3 = "geodos";
+/* 	name2 = "fepeur";
+	name3 = "geodos"; */
 	Backpack_Pokemon opoke1(name1, 1, 0, 50, 10);
-	Backpack_Pokemon opoke2(name2, 1, 1, 60, 20);
-	Backpack_Pokemon opoke3(name3, 1, 2, 70, 30);
+/* 	Backpack_Pokemon opoke2(name2, 1, 1, 60, 20);
+	Backpack_Pokemon opoke3(name3, 1, 2, 70, 30); */
 	opponent_bag.backpack_pokemons[0] = &opoke1;
-	opponent_bag.backpack_pokemons[1] = &opoke2;
-	opponent_bag.backpack_pokemons[2] = &opoke3;
+/* 	opponent_bag.backpack_pokemons[1] = &opoke2;
+	opponent_bag.backpack_pokemons[2] = &opoke3; */
 
 	Player* player = new Player(window, 200.f, 500.f, poke1);//by default, we take the first pokemon of the backpack
 																			//do we want to be able to choose our pokemon at the beginning of the fight?
@@ -89,7 +89,7 @@ using namespace std;
 	//ACTUAL MAIN: now for the fights...
 
  	Fight fight(window);
-	char mode = 't'; // this is decided before
+    char mode = 'w';  // this is decided before
 	//fight.initialise(mode, bag, opponent_bag, player, opponent, window); 
 
     //END OF FIGHTS INITIALISATION
@@ -114,9 +114,16 @@ using namespace std;
          if(Arthur.state=="Fighting"){
              if(start_fight==false){ //Which means we're not already fighting
                  view.reset(sf::FloatRect(0.f, 0.f, 1400.f, 700.f));
-                 fight.initialise(mode, bag, opponent_bag, player, opponent, window);
-                 //This will allow us to initialise the fight how we want
-                 //We can add to the fighting mode other parameters (opponent_bag is what matters)
+                 /* if(Arthur.fight_mode=='t'){ //Which means fighting against trainer 
+                    fight.initialise(Arthur.fight_mode, bag, opponent_bag, player, opponent, window);
+                    //Opponent ????????????????
+                 } */
+               /*   else{ // TO IMPLEMENT: Fighting against savage pokemons
+                    fight.initialise(Arthur.fight_mode, bag, /* *(Arthur.opponent_bag) *//* opponent_bag, player, opponent, window);
+                 } */ //For now it's not a random pokemon but just the bag declared above */
+                 fight.initialise(mode, bag, /* *(Arthur.opponent_bag) */opponent_bag, player, opponent, window);
+                 
+                
                  start_fight = true;
              }
              else{
