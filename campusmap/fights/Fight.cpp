@@ -53,8 +53,6 @@ void Fight::initialise_wild (Backpack& pbag, sf::RenderWindow& window){
     functions1.initialise_background(window, "fights/Images/grassbg.png", background, BackgroundTexture);
 
 	// set up players
-	delete pplayer;
-	delete popponent;
 	Opponent* opponent = get_wild_pokemon(window, type);
 	popponent = opponent;
 	pplayer = new Player(window, 200.f, 500.f, *pbag.backpack_pokemons[0]);
@@ -85,8 +83,6 @@ void Fight::initialise_trainer (Backpack& pbag, Backpack& popponent_bag, sf::Ren
 	functions1.initialise_background(window, "fights/Images/grassbg.png", background, BackgroundTexture);
 
 	// basic setup
-	delete pplayer;
-	delete popponent;
 	popponent = new Opponent(window, 200.f, 500.f, *popponent_bag.backpack_pokemons[0]);
 	pplayer = new Player(window, 200.f, 500.f, *pbag.backpack_pokemons[0]);
 

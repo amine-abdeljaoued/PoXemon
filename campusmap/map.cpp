@@ -474,7 +474,7 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
         //Fighting
         if (trainer.state == "Stop" && fight == true){
             fight = false;
-            //trainer.state = "Fighting";
+            trainer.state = "Fighting";
         }
         
         //Backapck
@@ -498,7 +498,7 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
                     fight = true;
                     std::cout<<"POKEEEEMMMOONNN"<<std::endl;
                     trainer.fight_mode = 'w'; //Which means single pokemon in grass
-                    trainer.state = "Fighting";
+                    //trainer.state = "Fighting";
                     catched = true;
                 }
                 if (trainer.facingDirection == "Left" || trainer.facingDirection == "Right"){
