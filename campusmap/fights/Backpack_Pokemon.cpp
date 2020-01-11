@@ -3,6 +3,10 @@
 
 class Backpack_Pokemon { 
 public:
+    Backpack_Pokemon(){
+        name = "Empty";
+    }
+    
 	Backpack_Pokemon(std::string n, int lvl, int i, int h, int ptype) {
 		name = n;
 		level = lvl;
