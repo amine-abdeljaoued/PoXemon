@@ -92,7 +92,10 @@ using namespace std;
              if(start_fight==false){ // must initialise the fight
                  view.reset(sf::FloatRect(0.f, 0.f, 1400.f, 700.f));
                  if(Arthur.fight_mode=='t'){ fight.initialise_trainer(bag, *(Arthur.opponent_bag), window);} // trainer fight
-                 else {fight.initialise_wild(bag, window);} // wild pokemon fight
+                 else {
+                     std::cout<<"main: before initialising fight"<<std::endl;
+                     fight.initialise_wild(bag, window);} // wild pokemon fight
+                     std::cout<<"main: after initialising fight"<<std::endl;
                  start_fight = true;
              }
              else{
@@ -117,8 +120,6 @@ using namespace std;
          window.display();
      }
      // to fix...
-     delete player;
-     delete opponent;
      return 0;
  }
  

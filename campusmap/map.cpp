@@ -40,23 +40,31 @@ Map::Map(sf::RenderWindow &window)
     state = "start";
     door = 0;
     enter = false;
+    
+    //variables for progression
     catched = false;
-    fight = false;
+    water_catch = false;
+    obtained_light = false;
+    mr_fountain = false;
+    foot_players = false;
     
     //Part 2: Creation of the collision maps
     if (catched == false) collision_.insert(pair<string, const int*>("first", collision));
     if (catched == true) collision_.insert(pair<string, const int*>("first", collision_passed));
-    collision_.insert(pair<string, const int*>("second", collision2));
-    collision_.insert(pair<string, const int*>("third", collision3));
+    if (mr_fountain == false) collision_.insert(pair<string, const int*>("second", collision2));
+    if (mr_fountain == true) collision_.insert(pair<string, const int*>("second", collision2_passed));
+    if (foot_players == false) collision_.insert(pair<string, const int*>("third", collision3));
+    if (foot_players == true) collision_.insert(pair<string, const int*>("third", collision3_passed));
     collision_.insert(pair<string, const int*>("pokeShop", pokeShopC));
-    collision_.insert(pair<string, const int*>("fourth", collision4));
+    if (water_catch == false) collision_.insert(pair<string, const int*>("fourth", collision4));
+    if (water_catch == true) collision_.insert(pair<string, const int*>("fourth", collision4_passed));
     collision_.insert(pair<string, const int*>("pokeCenter", pokeCenterC));
-    collision_.insert(pair<string, const int*>("home", collision7));
+    if (obtained_light == false) collision_.insert(pair<string, const int*>("home", collision7));
+    if (obtained_light == true) collision_.insert(pair<string, const int*>("home", collision7_passed));
     collision_.insert(pair<string, const int*>("maze", collision8));
     collision_.insert(pair<string, const int*>("interior_80", collision9));
     collision_.insert(pair<string, const int*>("room_clement", collision10));
     collision_.insert(pair<string, const int*>("bossfinal", collision11));
-    
     
     map_name= "first"; //Beggining of the game
     
@@ -92,7 +100,7 @@ Map::Map(sf::RenderWindow &window)
     npcs_map1.push_back(new Trainer_opponent("Fighter","Sprites/NPC1.png",113,97,32,32,1.f,264,320,trainer_dialogue1, false, 1));
     npcs.insert(pair< string, vector<Npc*> >("first", npcs_map1));
     
-    //For the underground
+    //For the underground alias second
     vector<Npc*> npcs_underground;
     
     vector<string> info_underground;
@@ -105,8 +113,17 @@ Map::Map(sf::RenderWindow &window)
     dialogue_under.push_back("Look at the nice fountain");
     dialogue_under.push_back("There is no exit here");
     dialogue_under.push_back("You just lost 2 minutes of your time");
+    dialogue_under.push_back("Now let's fight !");
+//    intiate fight
+//    if game is won change mr_fountain to true else do nothing
     Npc* digger = new Npc("digger","Sprites/NPC1.png",209,673,32,32,1.f,8,16,dialogue_under,true);
     npcs_underground.push_back(digger);
+    
+    vector<string> dialogue_pass4;
+    dialogue_pass4.push_back("Have you seen the nice fountain ?");
+    dialogue_pass4.push_back("It's nice isn't it ?");
+    Npc* passeur4 = new Npc("passeur4","Sprites/NPC1.png",432,675,32,32,1.f,504,16,dialogue_pass4, false);
+    if (mr_fountain == false) npcs_underground.push_back(passeur4);
 
     npcs.insert(pair<string, vector<Npc*> >("second", npcs_underground));
 
@@ -139,8 +156,16 @@ Map::Map(sf::RenderWindow &window)
     dialogueH.push_back("Do you want to throw a rock");
     dialogueH.push_back("on his window?");
     dialogueH.push_back("Throwing");
-    dialogueH.push_back("Tu veux que je t'en mette une?");
+    dialogueH.push_back("In the building light can be found");
     npcs_home.push_back(new Npc("clemW","Sprites/NPC1.png",17,97,1,1,1.f,248,192,dialogueH, true)) ;
+    
+    vector<string> dialogue_pass;
+    dialogue_pass.push_back("You wouldn't want to go in there");
+    dialogue_pass.push_back("without a light...");
+    dialogue_pass.push_back("have you try asking Clement ?");
+    Npc* passeur3 = new Npc("passeur3","Sprites/NPC1.png",430,736,32,32,1.f,470,96,dialogue_pass,false);
+    if (obtained_light == false) npcs_home.push_back(passeur3);
+    
     npcs.insert(pair< string, vector<Npc*> >("home", npcs_home));
     
     //For interior_80
@@ -158,15 +183,78 @@ Map::Map(sf::RenderWindow &window)
     
     //For room_clement
     vector<Npc*> npcs_roomC;
-    vector<string> dialogue_Cl;
-    dialogue_Cl.push_back("You walk me up");
-    dialogue_Cl.push_back("What's the matter?");
-    dialogue_Cl.push_back("Let's fight!"); 
-    Npc* clement = new Npc("clement","Sprites/NPC1.png",241,673,32,32,1.f,232,256,dialogue_Cl,false);
+    vector<string> dialogue_light;
+    dialogue_light.push_back("So you want to adventure yourself");
+    dialogue_light.push_back("into the cave ?");
+    dialogue_light.push_back("I guess you don't have a light");
+    dialogue_light.push_back("Want one ? Fight me first !");
+//    intiate fight
+        
+//    if fight is won change obtained_light to true
+    dialogue_light.push_back("Arghhhhhhhhh");
+    dialogue_light.push_back("I underestimated you...");
+    dialogue_light.push_back("You well deserve this");
+    dialogue_light.push_back("You obtained LIGHT");
+    dialogue_light.push_back("LIGHT is activiated in dark places");
+    dialogue_light.push_back("also be cartefull, some say");
+    dialogue_light.push_back("wild animals live in the fridge");
+    dialogue_light.push_back("I wouldn't try to open it.");
+
+    //    if fight is loss
+        dialogue_light.push_back("Hahahaha you suck !");
+    Npc* clement = new Npc("clement","Sprites/NPC1.png",241,673,32,32,1.f,232,256,dialogue_light,false);
     npcs_roomC.push_back(clement);
 
     npcs.insert(pair<string, vector<Npc*> >("room_clement", npcs_roomC));
+    
+        //For demi-lune alias fourth
+    vector<Npc*> npcs_demilune;
+    vector<string> dialogue_dl;
+    dialogue_dl.push_back("Did you know that");
+    dialogue_dl.push_back("You can catch water PoXemon");
+    dialogue_dl.push_back("By fishing ?");
+    Npc* passeur2 = new Npc("passeur2","Sprites/NPC1.png",430,736,32,32,1.f,488,452,dialogue_dl,true);
+    if (water_catch == false) npcs_demilune.push_back(passeur2);
 
+    npcs.insert(pair<string, vector<Npc*> >("fourth", npcs_demilune));
+    
+    //For sports alias third
+    vector<Npc*> npcs_sport;
+    vector<string> dialogue_sp;
+    dialogue_sp.push_back("You are not yet ready to fight");
+    dialogue_sp.push_back("World champion PoXemon trainer");
+    dialogue_sp.push_back("His name is Julien");
+    dialogue_sp.push_back("But he clames he claims to be");
+    dialogue_sp.push_back("the world champion of everything");
+    dialogue_sp.push_back("I bet you will beat him pfff");
+    dialogue_sp.push_back("But first you need some training");
+    dialogue_sp.push_back("Go see the players on the field");
+    dialogue_sp.push_back("They are very good");
+    Npc* passeur5 = new Npc("passeur5","Sprites/NPC1.png",432,675,32,32,1.f,440,384,dialogue_sp,false);
+    if (foot_players == false) npcs_sport.push_back(passeur5);
+
+    npcs.insert(pair<string, vector<Npc*> >("third", npcs_sport));
+    
+    //For the maze
+    vector<Npc*> npcs_maze;
+    vector<string> dialogue_mz;
+    dialogue_mz.push_back("Very impressive");
+    dialogue_mz.push_back("to have made it that far");
+    dialogue_mz.push_back("you are exceptional !");
+    dialogue_mz.push_back("Take some rest,");
+    dialogue_mz.push_back("heal your pokemons,");
+    dialogue_mz.push_back("and good luck");
+    dialogue_mz.push_back("for that final fight !");
+    dialogue_mz.push_back("Do not go gentle");
+    dialogue_mz.push_back("into that good night");
+    dialogue_mz.push_back("Old age should burn");
+    dialogue_mz.push_back("and rave at close of day");
+    dialogue_mz.push_back("Rage, rage ");
+    dialogue_mz.push_back("against the dying of the light.");
+    Npc* gros = new Npc("gros","Sprites/NPC1.png",336,963,32,32,1.f,248,464,dialogue_mz,false);
+    npcs_maze.push_back(gros);
+
+    npcs.insert(pair<string, vector<Npc*> >("maze", npcs_maze));
     
     //Part 4: Loading of the textures
     
@@ -248,20 +336,6 @@ void Map::initialisation(sf::RenderWindow &window, Trainer &trainer, sf::View &v
     black.setFillColor(sf::Color(10, 10, 10, alpha));
     window.draw(black);
     alpha -= 5;
-    
-//    if (alpha <= 50){
-//        sf::Sprite sprite;
-//        (sprite).setTexture(texture_3);
-//        (sprite).setTextureRect(sf::IntRect(23 + 17 * animationDoor, 232, 16, 16));
-//        sprite.setPosition(192,160);
-//
-//        if (animClock.getElapsedTime().asMilliseconds() > 400){
-//            animationDoor-=1;
-//        }
-//        window.draw(sprite);
-//
-//
-//    }
 }
 
 void Map::end(sf::RenderWindow &window, Trainer &trainer){
@@ -275,7 +349,6 @@ void Map::end(sf::RenderWindow &window, Trainer &trainer){
     black.setFillColor(sf::Color(10, 10, 10, alpha));
     window.draw(black);
     alpha += 5;
-
 }
 
 
@@ -287,9 +360,7 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
     int y = position.y + 16;
     //Dying
     if (trainer.state == "Dead"){
-        if (alpha < 250 && state == "end"){
-            end(window, trainer);
-        }
+        if (alpha < 250 && state == "end") end(window, trainer);
         else{
             map_name = "pokeCenter";
             door = 0;
@@ -297,7 +368,6 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
             state = "start";
             initialisation(window, trainer, view);
             trainer.counterWalk = 0;
-            
         }
     }
     
@@ -322,9 +392,7 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
         if ((x == 200 && map_name == "first" && trainer.facingDirection == "Up" && y >= 160 && y <= 176) ||(x == 376 && map_name == "fourth" && trainer.facingDirection == "Up" && y >= 400 && y <= 416)){ // open door of the pokeShop and pokeCenter
             enter = true;
         }
-        else {
-            enter = false;
-        }
+        else enter = false;
 
         //Exiting Shop and Center
         if (event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::W&&((map_name == "pokeShop"&&trainer.state == "Shopping")||(trainer.state == "Healing"&&map_name == "pokeCenter"))){
@@ -339,24 +407,12 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
                 nNpc = collision_[map_name][(int) x/16 +(((int) y/16 -1)*34)] % 60;
                 if(trainer.state != "Shopping"&&trainer.state != "Healing"){
                     if(trainer.state == "SpeakingScenario"){
-                        if(scenario[npcs[map_name][nNpc]->name].size() == 1){
-                            scenario.erase(npcs[map_name][nNpc]->name);
-                        }
-                        else{
-                            scenario[npcs[map_name][nNpc]->name].erase(scenario[npcs[map_name][nNpc]->name].begin());
-                        }
-                                            
-                        if (scenario.begin()->first == npcs[map_name][nNpc]->name){
-                            trainer.state = "SpeakingScenario";
-                        }
-                        else{
-                            trainer.state = "Stop";
-                            
-                        }
+                        if(scenario[npcs[map_name][nNpc]->name].size() == 1) scenario.erase(npcs[map_name][nNpc]->name);
+                        else scenario[npcs[map_name][nNpc]->name].erase(scenario[npcs[map_name][nNpc]->name].begin());                
+                        if (scenario.begin()->first == npcs[map_name][nNpc]->name) trainer.state = "SpeakingScenario";
+                        else trainer.state = "Stop";
                     }
-                    else if (scenario.begin()->first == npcs[map_name][nNpc]->name){
-                        trainer.state = "SpeakingScenario";
-                    }
+                    else if (scenario.begin()->first == npcs[map_name][nNpc]->name) trainer.state = "SpeakingScenario";
                     else{
                         trainer.state = "Speaking";
                         npcs[map_name][nNpc]->speakCounter ++ ;
@@ -367,23 +423,12 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
                 nNpc = collision_[map_name][(int) x/16 -1+((int) y/16 *34)] % 60;
                 if(trainer.state != "Shopping"&&trainer.state != "Healing"){
                     if(trainer.state == "SpeakingScenario"){
-                        if(scenario[npcs[map_name][nNpc]->name].size() == 1){
-                            scenario.erase(npcs[map_name][nNpc]->name);
-                        }
-                        else{
-                            scenario[npcs[map_name][nNpc]->name].erase(scenario[npcs[map_name][nNpc]->name].begin());
-                        }
-                        if (scenario.begin()->first == npcs[map_name][nNpc]->name){
-                            trainer.state = "SpeakingScenario";
-                        }
-                        else{
-                            trainer.state = "Stop";
-                            
-                        }
+                        if(scenario[npcs[map_name][nNpc]->name].size() == 1) scenario.erase(npcs[map_name][nNpc]->name);
+                        else scenario[npcs[map_name][nNpc]->name].erase(scenario[npcs[map_name][nNpc]->name].begin());
+                        if (scenario.begin()->first == npcs[map_name][nNpc]->name) trainer.state = "SpeakingScenario";
+                        else trainer.state = "Stop";
                     }
-                    else if (scenario.begin()->first == npcs[map_name][nNpc]->name){
-                        trainer.state = "SpeakingScenario";
-                    }
+                    else if (scenario.begin()->first == npcs[map_name][nNpc]->name) trainer.state = "SpeakingScenario";
                     else{
                         trainer.state = "Speaking";
                         npcs[map_name][nNpc]->speakCounter ++ ;
@@ -394,23 +439,12 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
                 nNpc = collision_[map_name][(int) x/16 +1+((int) y/16 *34)] % 60;
                 if(trainer.state != "Shopping"&&trainer.state != "Healing"){
                     if(trainer.state == "SpeakingScenario"){
-                       if(scenario[npcs[map_name][nNpc]->name].size() == 1){
-                            scenario.erase(npcs[map_name][nNpc]->name);
-                        }
-                        else{
-                            scenario[npcs[map_name][nNpc]->name].erase(scenario[npcs[map_name][nNpc]->name].begin());
-                        }
-                        if (scenario.begin()->first == npcs[map_name][nNpc]->name){
-                            trainer.state = "SpeakingScenario";
-                        }
-                        else{
-                            trainer.state = "Stop";
-                            
-                        }
+                       if(scenario[npcs[map_name][nNpc]->name].size() == 1) scenario.erase(npcs[map_name][nNpc]->name);
+                        else scenario[npcs[map_name][nNpc]->name].erase(scenario[npcs[map_name][nNpc]->name].begin());
+                        if (scenario.begin()->first == npcs[map_name][nNpc]->name) trainer.state = "SpeakingScenario";
+                        else trainer.state = "Stop";
                     }
-                    else if (scenario.begin()->first == npcs[map_name][nNpc]->name){
-                        trainer.state = "SpeakingScenario";
-                    }
+                    else if (scenario.begin()->first == npcs[map_name][nNpc]->name) trainer.state = "SpeakingScenario";
                     else{
                         trainer.state = "Speaking";
                         npcs[map_name][nNpc]->speakCounter ++ ;
@@ -593,23 +627,27 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
         if (catched == true){
             collision_.erase("first");
             collision_.insert(pair<string, const int*>("first", collision_passed));
-            for (auto const& np : npcs[map_name]) {
-
-            }
-            
         }
         window.draw(background1_1); 
         window.draw(background1_2); //Both backgrounds associated to each tileset will have the same background
     }
     
     else if (map_name== "second"){
+        if (mr_fountain == true){
+            collision_.erase("second");
+            collision_.insert(pair<string, const int*>("second", collision2_passed));
+        }
         window.draw(background2_1);
 //        window.draw(background2_2);
     }
     
     else if (map_name== "third"){
-            window.draw(background3_1);
-            window.draw(background3_2);
+        if (foot_players == true){
+            collision_.erase("third");
+            collision_.insert(pair<string, const int*>("third", collision3_passed));
+        }
+        window.draw(background3_1);
+        window.draw(background3_2);
     }
     
     else if (map_name == "pokeShop"){
@@ -625,23 +663,35 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
     }
     
     else if(map_name== "fourth"){
+        if (water_catch == true){
+            collision_.erase("fourth");
+            collision_.insert(pair<string, const int*>("fourth", collision4_passed));
+        }
         window.draw(background4_1);
         window.draw(background4_2);
     }
     
     else if(map_name== "home"){
+        if (obtained_light == true){
+            collision_.erase("home");
+            collision_.insert(pair<string, const int*>("home", collision7_passed));
+        }
         window.draw(background7_1);
         window.draw(background7_2);
     }
+    
     else if (map_name== "maze"){
         window.draw(background8);
     }
+    
     else if (map_name== "interior_80"){
         window.draw(background9);
     }
+    
     else if (map_name== "room_clement"){
         window.draw(background10);
     }
+    
     else if (map_name== "bossfinal"){
         window.draw(background11);
         window.draw(background11_2);
@@ -702,7 +752,8 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
                 
             }
             else {
-            (*np).draw(window);
+                if ((*np).name!="passeur" && (*np).name!="passeur2" && (*np).name!="passeur3" && (*np).name!="passeur4" && (*np).name!="passeur5") (*np).draw(window);
+                if ( ((*np).name=="passeur" && catched==false) || ((*np).name=="passeur2" && water_catch==false) || ((*np).name=="passeur3" && obtained_light==false) || ((*np).name=="passeur4" && mr_fountain==false) || ((*np).name=="passeur5" && foot_players==false) ) (*np).draw(window);
             }
          }
     }

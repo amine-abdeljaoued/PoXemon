@@ -32,6 +32,11 @@ class Map
         void openDoorS(sf::RenderWindow &window);
         void closeDoorS(sf::RenderWindow &window);
         void tunnel(sf::RenderWindow &window, int x, int y);
+        bool catched;
+        bool water_catch;
+        bool obtained_light;
+        bool mr_fountain;
+        bool foot_players;
     
     private:
         TileMap background1_1;
@@ -76,7 +81,6 @@ class Map
         vector<string> map_list;
         map<string, vector<string>> scenario;
         bool enter;
-        bool catched;
         bool fight;
         int nNpc;
     
