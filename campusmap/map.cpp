@@ -97,10 +97,7 @@ Map::Map(sf::RenderWindow &window)
     vector<string>trainer_dialogue1;
     trainer_dialogue1.push_back("You don't seem to know who I am");
     trainer_dialogue1.push_back("Fighting");
-    Backpack bag_opponent1;
-    bag_opponent1.setBackpack(1);
-    npcs_map1.push_back(new Trainer_opponent("Fighter","Sprites/NPC1.png",113,97,32,32,1.f,264,320,trainer_dialogue1, false,bag_opponent1));
-    
+    npcs_map1.push_back(new Trainer_opponent("Fighter","Sprites/NPC1.png",113,97,32,32,1.f,264,320,trainer_dialogue1, false, 1));
     npcs.insert(pair< string, vector<Npc*> >("first", npcs_map1));
     
     //For the underground alias second
@@ -494,7 +491,7 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
         //Fighting
         if (trainer.state == "Stop" && fight == true){
             fight = false;
-            //trainer.state = "Fighting";
+            trainer.state = "Fighting";
         }
         
         //Backapck
@@ -517,8 +514,7 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
                 if (probagenerated<0.02) {
                     fight = true;
                     std::cout<<"POKEEEEMMMOONNN"<<std::endl;
-//                    trainer.fight_mode = 'w'; //Which means single pokemon in grass
-//                    trainer.state = "Fighting";
+                    trainer.fight_mode = 'w'; //Which means single pokemon in grass
                     catched = true;
                 }
                 if (trainer.facingDirection == "Left" || trainer.facingDirection == "Right"){
