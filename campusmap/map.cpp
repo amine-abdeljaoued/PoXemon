@@ -475,6 +475,7 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
         //Fishing for François
         if ((collision_[map_name][(int) x/16 + 1 +( (int)y/16 *34)]==7 &&trainer.facingDirection=="Right") || (collision_[map_name][(int) x/16 -1 +( (int)y/16 *34)]==7 &&trainer.facingDirection=="Left") || (collision_[map_name][(int) x/16  + (((int) y/16 -1) *34)]==7 &&trainer.facingDirection=="Up") || (collision_[map_name][(int) x/16 +(((int) y/16 +1) *34)]==7 &&trainer.facingDirection=="Down")){
             if (event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::X&&trainer.fish==true&&trainer.state != "Walking"){
+                water_catch = true;
                 if (trainer.state == "Fishing"){
                     trainer.state = "stopFishing";
                     trainer.counterWalk = 3;
@@ -818,7 +819,8 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
                  
             }
             else {
-            (*np).draw(window);
+                if ( (*np).name!="passeur" && (*np).name!="passeur2" && (*np).name!="passeur3" && (*np).name!="passeur4" && (*np).name!="passeur5") (*np).draw(window);
+                if ( ((*np).name=="passeur" && catched==false) || ((*np).name=="passeur2" && water_catch==false) || ((*np).name=="passeur3" && obtained_light==false) || ((*np).name=="passeur4" && mr_fountain==false) || ((*np).name=="passeur5" && foot_players==false) ) (*np).draw(window);
             }
          }
     }
