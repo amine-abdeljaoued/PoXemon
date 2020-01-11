@@ -4,26 +4,24 @@
 #include <SFML/Graphics.hpp>
 #include <sstream>
 #include <string>
-#include "ResourcePath.hpp"
 
 BackpackMap::BackpackMap() {
     
     //Load textures for backpack
-    if (!rectangle_texture.loadFromFile(resourcePath() + "button.png")) {
+    if (!rectangle_texture.loadFromFile(/* resourcePath() + */ "Sprites/button.png")) {
         std::cout<<"error"<<std::endl;
     }
-
-    if (!money_texture.loadFromFile(resourcePath() + "money.png")) {
+    if (!money_texture.loadFromFile(/* resourcePath() + */ "Sprites/money.png")) {
         std::cout<<"error"<<std::endl;
     }
     
-    if (!texture_background.loadFromFile(resourcePath() + "screen_menu.jpg")) {
+    if (!texture_background.loadFromFile(/* resourcePath() + */ "Sprites/screen_menu.jpg")) {
         std::cout<<"error"<<std::endl;
     }
-    if (!texture_backpack.loadFromFile(resourcePath() + "Pt_bag.png")) {
+    if (!texture_backpack.loadFromFile(/* resourcePath() + */ "Sprites/Pt_bag.png")) {
         std::cout<<"error"<<std::endl;
     }
-    if (!font.loadFromFile(resourcePath() + "sansation.ttf")) {
+    if (!font.loadFromFile(/* resourcePath() + */ "Fonts/sansation.ttf")) {
         std::cout<<"error"<<std::endl;
     }
     

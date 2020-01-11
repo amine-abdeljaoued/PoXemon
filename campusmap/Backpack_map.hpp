@@ -7,7 +7,7 @@
 #include <SFML/Audio.hpp>
 #include <sstream>
 #include "trainer.hpp"
-#include "Backpack_Pokemon.cpp"
+#include "fights/Backpack_Pokemon.cpp"
 
 using namespace std;
 
