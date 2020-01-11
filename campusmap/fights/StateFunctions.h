@@ -35,7 +35,7 @@ public:
     sf::Sprite quit;
 
     void initialise_howto(sf::RenderWindow& window);
-    /* void howtoplay(sf::RenderWindow& window, float& deltaTime); */
+    int howtoplay(sf::RenderWindow& window, float& deltaTime);
     void draw_how_to(sf::RenderWindow& window);
 
     // Countdown
@@ -53,11 +53,8 @@ public:
 
 class StateFunctions56 {
 public:
-    StateFunctions56();
-    bool onquit;
-    bool offquit;
-    void fall(Pokemon* eevee, float& groundY, float& deltaTime);
-    void initialize_state_5_6(char game_mode, Pokemon* poke, sf::Font font, sf::Text& text_fainted, sf::Text& choose_pokemon, sf::Text& leave_fight,
+  void fall(Pokemon* eevee, float& groundY, float& deltaTime);
+  void initialize_state_5_6(char game_mode, Pokemon* poke, sf::Font font, sf::Text& text_fainted, sf::Text& choose_pokemon, sf::Text& leave_fight,
         sf::RenderWindow& target, Pokemon_Button* buttons[], sf::Sprite& running_sprite);
     void const draw_state_5_6(char game_mode,  sf::Font& font, sf::Text& text_fainted, sf::Text choose_pokemon, sf::Text leave_fight,
         sf::RenderWindow& target, Pokemon_Button* buttons[], sf::Sprite& running_sprite);

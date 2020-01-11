@@ -10,25 +10,24 @@
 #include "Opponent.h"
 #include "Pokemon_Button.h"
 #include "StateFunctions.h"
-#include "../pokemons_structure.hpp"
 
 class Fight 
 {
 public:
     // basic constructor
     Fight();
-    ~Fight();
     Fight(sf::RenderWindow& window); 
 
     // start a specific fight
-    void initialise_wild (Backpack& pbag, sf::RenderWindow& window); // initialise a fight with a wild pokemon
-    void initialise_trainer (Backpack& pbag, Backpack& popponent_bag, sf::RenderWindow& window); // initilaise a fight with a trainer
-    Opponent* get_wild_pokemon(sf::RenderWindow& window, int type);
+    void initialise (char& mode, Backpack& pbag, Backpack& popponent_bag, Player* player, Opponent* opponent, sf::RenderWindow& window); // any - to be deleted
+    void initialise_wild (Backpack& pbag, Player* player, Opponent* opponent, sf::RenderWindow& window); // initialise a fight with a wild pokemon
+    void initialise_trainer (Backpack& pbag, Backpack& popponent_bag, Player* player, sf::RenderWindow& window); // initilaise a fight with a trainer
 
     Backpack bag;
     Backpack opponent_bag;
     // Boundaries
-	float groundY; //Cannot go below this height
+	float groundY = 300.0f; //Cannot go below this height - NB INITIALISE WITH WINDOW??
+    float groundX = 1000.f;
     
     //Parameters of the game
     int state = 1;  // 0 = return to map
@@ -37,14 +36,11 @@ public:
                     // 3 = pokeball landed in centre -- to be implemented
                     // 4 = caught the pokemon
                     // 5 = we died -> choose another or quit
-                    // 6 = opponent died and trainer still has pokemons
-                    // 7 = end of the duel against a trainer
-                    // 8 = end of the fight against a wild pokemon
-                    // 9 = pokeball is in air (transition state before knowing if we caught the pokemon)
+                    // 6 = opponent died
+                    // 7 = no more pokemons -> go to hospital/shop
+                    // 8 = how to play menu
+                    // 9 = clicked start -> choose pokemon to play with
                     // 10 = countdown
-                    // 11 = we caught the pokemon with the pokeball
-                    // 12 = the pokeball didn't work
-                    // 15 = how to play
                     // 20 = all pokemons dead -> go to health shop
 
     char game_mode; // 'w' : wild pokemon

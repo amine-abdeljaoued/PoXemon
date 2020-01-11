@@ -12,7 +12,6 @@ class Backpack
 {
     public:
 		Backpack();
-        ~Backpack();
         void setBackpack(int i);
         // Our Pokeballs
         Normalball new_Normalball;
@@ -48,7 +47,7 @@ class Backpack
         void change_pokemons();
         void heal_pokemons() {//should be called every time we enter the shop
 			for (unsigned int i = 0; i < 3; i++) {
-				(*backpack_pokemons[i]).health = 100;
+				if (backpack_pokemons[i])(*backpack_pokemons[i]).health = 100;
 			}
 		}
 

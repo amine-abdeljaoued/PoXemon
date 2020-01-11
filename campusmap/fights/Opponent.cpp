@@ -17,6 +17,7 @@ void Opponent::draw(sf::RenderTexture& texture){
 
 void Opponent::update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clock, sf::Time& elapsed, 
 						sf::Clock& clock1, sf::Clock& clock2, sf::Clock& clock3, float& groundY){
+	std::cout<<"OPP"<<std::endl;
 	//Movement
 	velocityX = 0.0f;
 	velocityX = direction * speed;
@@ -72,9 +73,12 @@ void Opponent::update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clo
 
 	bullets.new_shot_opp(x, y, sprite.getGlobalBounds(), window, xp, yp);
 	int i = bullets.update(window, deltaTime, clock, elapsed, clock1, clock2, clock3, (*enemy).sprite, groundY);
+	std::cout<<"opp: update: past updating artillery"<<std::endl;
 	if (i != 0) {
 		(*enemy).health.decrease(i);
+		//std::cout<<(*enemy).health.health << std::endl;
 	}
+	std::cout<<"opp: update: past decreasing health of enemy"<<std::endl;
 	// health
 	health.update();
 }
@@ -83,7 +87,10 @@ void Opponent::move(float& deltaTime) {
 
 	x += velocityX * deltaTime;
 	y += velocityY * deltaTime;
+	std::cout<<y<<std::endl;
+	std::cout<<groundY<<std::endl;
 	if (y >= groundY) {
+		std::cout<<"esY"<<std::endl;
 		y = groundY;
 		velocityY = 0.0f;
 		canJump = true;

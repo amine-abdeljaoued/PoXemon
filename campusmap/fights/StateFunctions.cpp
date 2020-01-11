@@ -186,7 +186,7 @@ int StateFunctions1::update_state1(sf::RenderWindow& window, sf::Clock& clock){
 			info_button.setFillColor(sf::Color(255,99,99));
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
 				clock.restart();
-				return 15;
+				return 8;
 				// should go to "how to play"
 			}
 		}
@@ -197,7 +197,7 @@ int StateFunctions1::update_state1(sf::RenderWindow& window, sf::Clock& clock){
     }
 }
 
-/* void StateFunctions1::howtoplay(sf::RenderWindow& window, float& deltaTime){
+int StateFunctions1::howtoplay(sf::RenderWindow& window, float& deltaTime){
 
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
 		sf::Vector2i mousepixel = sf::Mouse::getPosition(window);
@@ -206,8 +206,8 @@ int StateFunctions1::update_state1(sf::RenderWindow& window, sf::Clock& clock){
 			return 1;
 			}
 	}
-	return 15;
-} */
+	return 8;
+}
 
 void StateFunctions1::initialise_countdown(sf::RenderTarget& window){
 	text.setString("3");
@@ -419,26 +419,19 @@ void StateFunctions56::initialize_state_8(Pokemon* poke, sf::Font& font, sf::Tex
 
 }
 
-StateFunctions56::StateFunctions56(){
-	onquit = false;
-	offquit = false;
-}
 
 bool StateFunctions56::check_leave(sf::Sprite &arrow_sprite, sf::RenderWindow& window) {
 	sf::Vector2i mousepixel = sf::Mouse::getPosition(window);
 	sf::Vector2f mouse_pos = window.mapPixelToCoords(mousepixel);
-	if ((arrow_sprite.getGlobalBounds().contains(mouse_pos))&& !(onquit)) {
-		arrow_sprite.setScale(arrow_sprite.getScale().x*1.2, arrow_sprite.getScale().y*1.2);
-		onquit = true;
-		offquit = false;} // slightly bigger when the mouse is on the button
-	else if (!(arrow_sprite.getGlobalBounds().contains(mouse_pos))&& !(offquit)){
-		arrow_sprite.setScale(arrow_sprite.getScale().x/1.2, arrow_sprite.getScale().y/1.2);
-		offquit = true;
-		onquit = false;}
-
-	if ((sf::Mouse::isButtonPressed(sf::Mouse::Left))&&(arrow_sprite.getGlobalBounds().contains(mouse_pos))) {
-		std::cout << "you pressed the run button" << std::endl;
-		return true;
+	if (arrow_sprite.getGlobalBounds().contains(mouse_pos)) {
+		arrow_sprite.setScale(0.6, 0.6); // slightly bigger when the mouse is on the button
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+			std::cout << "you pressed the run button" << std::endl;
+			return true;
+		}
+	}
+	else {
+		arrow_sprite.setScale(0.5, 0.5);
 	}
 	return false;
 }

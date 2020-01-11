@@ -40,29 +40,22 @@ Backpack::Backpack(){
     new_Superball.ball.setPosition(150,150);
 }
 
-Backpack::~Backpack(){
-	std::cout<<"backpack destructor"<<std::endl;
-	for (int i=0; i<3; i++){
-		delete backpack_pokemons[i];
-	}
-}
-
 void Backpack::setBackpack(int i){ //Some standard backpacks
     if(i==1){
         std::string name1 = "jistolwer";
         std::string name2 = "auron";
         std::string name3 = "husabus";
-        Backpack_Pokemon* poke1 = new Backpack_Pokemon(name1, 1, 0, 50, 20);
-        Backpack_Pokemon* poke2 = new Backpack_Pokemon(name2, 1, 1, 60, 20);
-        Backpack_Pokemon* poke3 = new Backpack_Pokemon(name3, 1, 2, 70, 30);
-        backpack_pokemons[0] = poke1;
-        backpack_pokemons[1] = poke2;
-        backpack_pokemons[2] = poke3;
+        Backpack_Pokemon poke1(name1, 1, 0, 50, 20);
+        Backpack_Pokemon poke2(name2, 1, 1, 60, 20);
+        Backpack_Pokemon poke3(name3, 1, 2, 70, 30);
+        backpack_pokemons[0] = &poke1;
+        backpack_pokemons[1] = &poke2;
+        backpack_pokemons[2] = &poke3;
     }
 	if(i==2){
         std::string name1 = "jistolwer";
-        Backpack_Pokemon* poke1 = new Backpack_Pokemon(name1, 1, 0, 50, 20);
-        backpack_pokemons[0] = poke1;
+        Backpack_Pokemon poke1(name1, 1, 0, 50, 20);
+        backpack_pokemons[0] = &poke1;
     }
 }
 
@@ -293,7 +286,9 @@ void Backpack::draw(sf::RenderTexture& texture) const {
 
 	bool Backpack::alive_pokemons() {
 		for (int i = 0; i < 3; i++) {
-			if (backpack_pokemons[i]->health > 0) return true;
+            if (backpack_pokemons[i]){
+                if (backpack_pokemons[i]->health > 0) return true;
+            }
 		}
 		return false;
 	}
