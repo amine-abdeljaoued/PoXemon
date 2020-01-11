@@ -484,7 +484,6 @@ int Fight::update(sf::RenderWindow& window){
 	if (functions56.check_leave(arrow_sprite, window)) return 0;
 	}
 
-
 	else if (state = 12) {//the pokeball didn't work
 	//this is a very short state
 	//we only say that the pokeball failed to catch opponent and go back to the countown after 1 second
@@ -492,7 +491,6 @@ int Fight::update(sf::RenderWindow& window){
 	if (clock2.getElapsedTime().asSeconds() > 1.0f) {
 		clock_regenerate_bullets.restart();//reset this for the countdown
 		state = 10; // go back to countdown
-	}
 
 	}
 
