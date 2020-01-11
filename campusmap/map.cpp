@@ -339,23 +339,123 @@ void Map::initialisation(sf::RenderWindow &window, Trainer &trainer, sf::View &v
     black.setFillColor(sf::Color(10, 10, 10, alpha));
     window.draw(black);
     alpha -= 5;
-    
-//    if (alpha <= 50){
-//        sf::Sprite sprite;
-//        (sprite).setTexture(texture_3);
-//        (sprite).setTextureRect(sf::IntRect(23 + 17 * animationDoor, 232, 16, 16));
-//        sprite.setPosition(192,160);
-//
-//        if (animClock.getElapsedTime().asMilliseconds() > 400){
-//            animationDoor-=1;
-//        }
-//        window.draw(sprite);
-//
-//
-//    }
+}
+
+void Map::end(sf::RenderWindow &window, Trainer &trainer){
+    if (trainer.state != "Dead") trainer.state = "Blocked";
+    sf::ConvexShape black;
+    black.setPointCount(4);
+    black.setPoint(0, sf::Vector2f(-256, -256));
+    black.setPoint(1, sf::Vector2f(800, -256));
+    black.setPoint(2, sf::Vector2f(800, 800));
+    black.setPoint(3, sf::Vector2f(-256, 800));
+    black.setFillColor(sf::Color(10, 10, 10, alpha));
+    window.draw(black);
+    alpha += 5;
 }
 
 
+void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Event &event, sf::Clock& clock, sf::View &view){
+   
+    
+    sf::Vector2f position = trainer.spritePlayer.getPosition();
+    int x = position.x + 16;
+    int y = position.y + 16;
+    //Dying
+    if (trainer.state == "Dead"){
+        if (alpha < 250 && state == "end") end(window, trainer);
+        else{
+            map_name = "pokeCenter";
+            door = 0;
+            clock.restart();
+            state = "start";
+            initialisation(window, trainer, view);
+            trainer.counterWalk = 0;
+        }
+    }
+    
+    else{
+        //Switching map
+        if (collision_[map_name][(int) x/16 +( (int)y/16 *34)] >= 100 && trainer.state == "Stop"){
+            int n = collision_[map_name][(int) x/16 +( (int)y/16 *34)];
+            if (alpha < 250 && state == "end"){
+                end(window, trainer);
+            }
+            else{
+                map_name = map_list[((int) n /100) - 1];
+                door = n % 100;
+                clock.restart();
+                state = "start";
+                initialisation(window, trainer, view);
+                trainer.counterWalk = 0;
+            }
+        }
+        
+        //Opening doors
+        if ((x == 200 && map_name == "first" && trainer.facingDirection == "Up" && y >= 160 && y <= 176) ||(x == 376 && map_name == "fourth" && trainer.facingDirection == "Up" && y >= 400 && y <= 416)){ // open door of the pokeShop and pokeCenter
+            enter = true;
+        }
+        else enter = false;
+
+        //Exiting Shop and Center
+        if (event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::W&&((map_name == "pokeShop"&&trainer.state == "Shopping")||(trainer.state == "Healing"&&map_name == "pokeCenter"))){
+            //if (trainer.state == "Shopping")
+            trainer.state = "Stop";
+            //else trainer.state = "Shopping";
+        }
+
+        //Entering Speaking mode with different npcs
+        if (event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::D&&trainer.state != "Walking"){
+            if (collision_[map_name][(int) x/16 +(((int) y/16 -1)*34)]>=60 && collision_[map_name][(int) x/16 +(((int) y/16 -1)*34)]<=69 && trainer.facingDirection=="Up"){
+                nNpc = collision_[map_name][(int) x/16 +(((int) y/16 -1)*34)] % 60;
+                if(trainer.state != "Shopping"&&trainer.state != "Healing"){
+                    if(trainer.state == "SpeakingScenario"){
+                        if(scenario[npcs[map_name][nNpc]->name].size() == 1) scenario.erase(npcs[map_name][nNpc]->name);
+                        else scenario[npcs[map_name][nNpc]->name].erase(scenario[npcs[map_name][nNpc]->name].begin());                
+                        if (scenario.begin()->first == npcs[map_name][nNpc]->name) trainer.state = "SpeakingScenario";
+                        else trainer.state = "Stop";
+                    }
+                    else if (scenario.begin()->first == npcs[map_name][nNpc]->name) trainer.state = "SpeakingScenario";
+                    else{
+                        trainer.state = "Speaking";
+                        npcs[map_name][nNpc]->speakCounter ++ ;
+                    }
+                }
+            }
+            else if (collision_[map_name][(int) x/16 -1+((int) y/16 *34)]>=60 && collision_[map_name][(int) x/16 -1+((int) y/16 *34)]<=69 && trainer.facingDirection=="Left"){
+                nNpc = collision_[map_name][(int) x/16 -1+((int) y/16 *34)] % 60;
+                if(trainer.state != "Shopping"&&trainer.state != "Healing"){
+                    if(trainer.state == "SpeakingScenario"){
+                        if(scenario[npcs[map_name][nNpc]->name].size() == 1) scenario.erase(npcs[map_name][nNpc]->name);
+                        else scenario[npcs[map_name][nNpc]->name].erase(scenario[npcs[map_name][nNpc]->name].begin());
+                        if (scenario.begin()->first == npcs[map_name][nNpc]->name) trainer.state = "SpeakingScenario";
+                        else trainer.state = "Stop";
+                    }
+                    else if (scenario.begin()->first == npcs[map_name][nNpc]->name) trainer.state = "SpeakingScenario";
+                    else{
+                        trainer.state = "Speaking";
+                        npcs[map_name][nNpc]->speakCounter ++ ;
+                    }
+                }
+            }
+            else if (collision_[map_name][(int) x/16 +1+((int) y/16 *34)]>=60 && collision_[map_name][(int) x/16 +1+((int) y/16 *34)]<=69 && trainer.facingDirection=="Right"){
+                nNpc = collision_[map_name][(int) x/16 +1+((int) y/16 *34)] % 60;
+                if(trainer.state != "Shopping"&&trainer.state != "Healing"){
+                    if(trainer.state == "SpeakingScenario"){
+                       if(scenario[npcs[map_name][nNpc]->name].size() == 1) scenario.erase(npcs[map_name][nNpc]->name);
+                        else scenario[npcs[map_name][nNpc]->name].erase(scenario[npcs[map_name][nNpc]->name].begin());
+                        if (scenario.begin()->first == npcs[map_name][nNpc]->name) trainer.state = "SpeakingScenario";
+                        else trainer.state = "Stop";
+                    }
+                    else if (scenario.begin()->first == npcs[map_name][nNpc]->name) trainer.state = "SpeakingScenario";
+                    else{
+                        trainer.state = "Speaking";
+                        npcs[map_name][nNpc]->speakCounter ++ ;
+                    }
+                }
+            }
+        }
+        
         //Fishing for François
         if ((collision_[map_name][(int) x/16 + 1 +( (int)y/16 *34)]==7 &&trainer.facingDirection=="Right") || (collision_[map_name][(int) x/16 -1 +( (int)y/16 *34)]==7 &&trainer.facingDirection=="Left") || (collision_[map_name][(int) x/16  + (((int) y/16 -1) *34)]==7 &&trainer.facingDirection=="Up") || (collision_[map_name][(int) x/16 +(((int) y/16 +1) *34)]==7 &&trainer.facingDirection=="Down")){
             if (event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::X&&trainer.fish==true&&trainer.state != "Walking"){
