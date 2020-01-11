@@ -6,6 +6,11 @@ Fight::Fight(){
 	else {font.loadFromFile("fights/upheavtt.ttf");}
 }
 
+Fight::~Fight(){
+	delete pplayer;
+	delete popponent;
+}
+
 Fight::Fight(sf::RenderWindow& window){
     if (!font.loadFromFile("fights/upheavtt.ttf")) { std::cout << "could not load font" << std::endl; }
 	else {font.loadFromFile("fights/upheavtt.ttf");}
@@ -69,16 +74,21 @@ void Fight::initialise(char& mode, Backpack& pbag, Backpack& popponent_bag, Play
     clicked_button = -2; // no button clicked
 }
 
-void Fight::initialise_wild (Backpack& pbag, Player* player, sf::RenderWindow& window){
+void Fight::initialise_wild (Backpack& pbag, sf::RenderWindow& window){
+	int type = 10; // must be implemented
 	// background - must change depending on where we are
     functions1.initialise_background(window, "fights/Images/grassbg.png", background, BackgroundTexture);
-	// we choose a random pokemon fight
-	Opponent* opponent /*=*/;
+
+	// set up players
+	delete pplayer;
+	delete popponent;
+	Opponent* opponent = get_wild_pokemon(type);
+	popponent = opponent;
+	pplayer = new Player(window, 200.f, 500.f, *pbag.backpack_pokemons[0]);
+
     // basic set up
     bag = pbag;
     game_mode = 'w';
-    pplayer = player;
-    popponent = opponent;
     for (int i=0; i<3; i++){
         poke_buttons[i] =  &((bag.backpack_pokemons[i])->button);
     }
@@ -94,7 +104,7 @@ void Fight::initialise_wild (Backpack& pbag, Player* player, sf::RenderWindow& w
 
 	// for the states
     state = 1;
-	functions1.initialise(*popponent, *player, window, font);
+	functions1.initialise(*popponent, *pplayer, window, font);
     deltaTime = 0.0f;
     counter = 0;
     clicked_button = -2; // no button clicked  
@@ -107,14 +117,17 @@ void Fight::initialise_trainer (Backpack& pbag, Backpack& popponent_bag, sf::Ren
 	// basic setup
 	delete pplayer;
 	delete popponent;
+	popponent = new Opponent(window, 200.f, 500.f, *popponent_bag.backpack_pokemons[0]);
+	pplayer = new Player(window, 200.f, 500.f, *pbag.backpack_pokemons[0]);
+
     bag = pbag;
     opponent_bag = popponent_bag;
     game_mode = 't';
-    popponent = new Opponent(window, 200.f, 500.f, *popponent_bag.backpack_pokemons[0]);
-	pplayer = new Player(window, 200.f, 500.f, *pbag.backpack_pokemons[0]);
+    
     for (int i=0; i<3; i++){
         poke_buttons[i] =  &((bag.backpack_pokemons[i])->button);
     }
+
     (bag).set_opponent(popponent);
     (*pplayer).set_enemy(popponent);
 	(*popponent).set_enemy(pplayer);
@@ -126,6 +139,19 @@ void Fight::initialise_trainer (Backpack& pbag, Backpack& popponent_bag, sf::Ren
     counter = 0;
     clicked_button = -2; // no button clicked
 } 
+
+Opponent* Fight::get_wild_pokemon(int type){
+	// randomly choose an opponent - must be based on where we are
+	/*There are:
+	- Identifier for the type: 10 - earth (9 pokemons), 20 - water (5), 30 - air (5), 40 - fire (9)*/
+	int index; 			// which pokemon we will choose
+	std::string name; 	// the pokemon we get	
+	if (type==10){index = rand()%9;}
+	if (type==20){index = rand()%5;}
+	if (type==30){index = rand()%5;}
+	if (type==40){index = rand()%9;}
+	return new Opponent(/*everything needed*/);
+}
 
 int Fight::update(sf::RenderWindow& window){
     deltaTime = clock.restart().asSeconds();

@@ -16,12 +16,14 @@ class Fight
 public:
     // basic constructor
     Fight();
+    ~Fight();
     Fight(sf::RenderWindow& window); 
 
     // start a specific fight
     void initialise (char& mode, Backpack& pbag, Backpack& popponent_bag, Player* player, Opponent* opponent, sf::RenderWindow& window); // any - to be deleted
-    void initialise_wild (Backpack& pbag, Player* player, sf::RenderWindow& window); // initialise a fight with a wild pokemon
+    void initialise_wild (Backpack& pbag, sf::RenderWindow& window); // initialise a fight with a wild pokemon
     void initialise_trainer (Backpack& pbag, Backpack& popponent_bag, sf::RenderWindow& window); // initilaise a fight with a trainer
+    Opponent* get_wild_pokemon(int type);
 
     Backpack bag;
     Backpack opponent_bag;

@@ -48,7 +48,6 @@ Backpack::~Backpack(){
 }
 
 void Backpack::setBackpack(int i){ //Some standard backpacks
-	std::cout<<"setting backpack"<<std::endl;
     if(i==1){
         std::string name1 = "jistolwer";
         std::string name2 = "auron";
@@ -65,7 +64,6 @@ void Backpack::setBackpack(int i){ //Some standard backpacks
         Backpack_Pokemon* poke1 = new Backpack_Pokemon(name1, 1, 0, 50, 20);
         backpack_pokemons[0] = poke1;
     }
-	std::cout<<"set backpack"<<std::endl;
 }
 
 void Backpack::set_opponent(Opponent* opponent) {
