@@ -163,7 +163,7 @@ Map::Map(sf::RenderWindow &window)
     dialogue_pass.push_back("You wouldn't want to go in there");
     dialogue_pass.push_back("without a light...");
     dialogue_pass.push_back("have you try asking Clement ?");
-    Npc* passeur3 = new Npc("passeur3","Sprites/NPC1.png",430,736,32,32,1.f,470,96,dialogue_pass,false);
+    Npc* passeur3 = new Npc("passeur3","Sprites/NPC1.png",430,736,32,32,1.f,470,96,dialogue_pass,true);
     if (obtained_light == false) npcs_home.push_back(passeur3);
     
     npcs.insert(pair< string, vector<Npc*> >("home", npcs_home));
@@ -457,6 +457,7 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
         if ((collision_[map_name][(int) x/16 + 1 +( (int)y/16 *34)]==7 &&trainer.facingDirection=="Right") || (collision_[map_name][(int) x/16 -1 +( (int)y/16 *34)]==7 &&trainer.facingDirection=="Left") || (collision_[map_name][(int) x/16  + (((int) y/16 -1) *34)]==7 &&trainer.facingDirection=="Up") || (collision_[map_name][(int) x/16 +(((int) y/16 +1) *34)]==7 &&trainer.facingDirection=="Down")){
             if (event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::X&&trainer.fish==true&&trainer.state != "Walking"){
                 if (trainer.state == "Fishing"){
+                    water_catch = true;
                     trainer.state = "stopFishing";
                     trainer.counterWalk = 3;
                 }
@@ -714,6 +715,8 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
          if(pos.y >= pos2.y)
          {
               if (trainer.state == "Speaking"){
+                if ((*np).name == "clement") obtained_light = true;
+                if ((*np).name == "digger") mr_fountain = true;
                 if((*np).name=="seller" || (*np).name=="healer"){
                     if((abs(pos.y - pos2.y) <= 32) && (abs(pos.x - pos2.x) <= 32) ){
                         (*np).speak(window, view, trainer);
@@ -766,6 +769,8 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
          if(pos.y < pos2.y)
          {
               if (trainer.state == "Speaking"){
+                if ((*np).name == "clement") obtained_light = true;
+                if ((*np).name == "digger") mr_fountain = true;
                 if((*np).name=="seller" || (*np).name=="healer"){
                     if((abs(pos.y - pos2.y) <= 32) && (abs(pos.x - pos2.x) <= 32) ){
                         (*np).speak(window, view, trainer);
@@ -804,7 +809,8 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
                  
             }
             else {
-            (*np).draw(window);
+                if ( (*np).name!="passeur" && (*np).name!="passeur2" && (*np).name!="passeur3" && (*np).name!="passeur4" && (*np).name!="passeur5") (*np).draw(window);
+                if ( ((*np).name=="passeur" && catched==false) || ((*np).name=="passeur2" && water_catch==false) || ((*np).name=="passeur3" && obtained_light==false) || ((*np).name=="passeur4" && mr_fountain==false) || ((*np).name=="passeur5" && foot_players==false) ) (*np).draw(window);
             }
          }
     }
