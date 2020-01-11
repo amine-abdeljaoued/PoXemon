@@ -17,6 +17,7 @@ public:
 	std::string name;
 	sf::Sprite sprite;
 	float groundY; 			// lowest point we can go
+	float Scale;
 	float x;                //x and y store current position
 	float y;
 	float speed;            //Determines how far pokemon moves each time you press l/r
@@ -44,6 +45,5 @@ public:
 							30 - air
 							40 - fire
 							(use multiples of 10 to avoid confusion with backpack) */
-//protected:
 	sf::Texture pic;
 };
