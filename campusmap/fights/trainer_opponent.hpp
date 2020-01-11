@@ -19,9 +19,7 @@ class Trainer_opponent: public Npc{
                         float scale, int posX, int posY, vector<string> discu, bool fixed, int i):
                         Npc (name, pathName, sheetPosX, sheetPosY, sheetRectX, sheetRectY,
                         scale, posX, posY, discu, fixed  /*everything except backpack*/){
-                            std::cout<<"hello"<<std::endl;
                             bag.setBackpack(i);
-                            std::cout<<"bag set"<<std::endl;
                         };
 
         virtual void speak(sf::RenderWindow &window, sf::View &view, Trainer &trainer);
