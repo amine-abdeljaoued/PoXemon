@@ -40,6 +40,7 @@ Npc::Npc(int posX, int posY, vector<string> discu)
     sheetRectY = 0;
 }
 
+Npc::~Npc(){}
 
 Npc::Npc(string name, string pathName, int sheetPosX, int sheetPosY, int sheetRectX,int sheetRectY, float scale, int posX, int posY, vector<string> discu, bool fixed){
     
