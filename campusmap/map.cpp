@@ -166,7 +166,7 @@ Map::Map(sf::RenderWindow &window)
     dialogue_pass.push_back("You wouldn't want to go in there");
     dialogue_pass.push_back("without a light...");
     dialogue_pass.push_back("have you try asking Clement ?");
-    Npc* passeur3 = new Npc("passeur3","Sprites/NPC1.png",430,736,32,32,1.f,470,96,dialogue_pass,false);
+    Npc* passeur3 = new Npc("passeur3","Sprites/NPC1.png",430,736,32,32,1.f,470,96,dialogue_pass,true);
     if (obtained_light == false) npcs_home.push_back(passeur3);
     
     npcs.insert(pair< string, vector<Npc*> >("home", npcs_home));
