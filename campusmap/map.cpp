@@ -463,7 +463,8 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
                 if (probagenerated<0.02) {
                     fight = true;
                     std::cout<<"POKEEEEMMMOONNN"<<std::endl;
-                    trainer.state = "Fighting";
+                    trainer.fight_mode = 'w'; //Which means single pokemon in grass
+                    trainer.state = "Fighting";                   
                     catched = true;
                 }
                 if (trainer.facingDirection == "Left" || trainer.facingDirection == "Right"){

@@ -52,6 +52,11 @@ void Backpack::setBackpack(int i){ //Some standard backpacks
         backpack_pokemons[1] = &poke2;
         backpack_pokemons[2] = &poke3;
     }
+	if(i==2){
+        std::string name1 = "jistolwer";
+        Backpack_Pokemon poke1(name1, 1, 0, 50, 20);
+        backpack_pokemons[0] = &poke1;
+    }
 }
 
 void Backpack::set_opponent(Opponent* opponent) {

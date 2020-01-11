@@ -37,7 +37,7 @@ void Trainer_opponent::speak(sf::RenderWindow &window, sf::View &view, Trainer &
     }
       
     
-    if (speakCounter == discussion.size()){
+    if (speakCounter >= discussion.size()){
         if (trainer.state != "Shopping"){
             if (trainer.state != "Dead") trainer.state = "Stop";
             speakCounter = -1;
@@ -48,7 +48,9 @@ void Trainer_opponent::speak(sf::RenderWindow &window, sf::View &view, Trainer &
     
      else{
            if (discussion[speakCounter] == "Fighting"){
+               trainer.fight_mode = 't';
                trainer.state = "Fighting";
+               trainer.opponent_bag = &bag;
            }
          
            

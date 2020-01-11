@@ -9,6 +9,8 @@
 #include "trainer.hpp"
 using namespace std;
 
+
+
 class Npc {
     public:
         Npc(int posX, int posY, vector<string> discu);  //Constructors for pannels
