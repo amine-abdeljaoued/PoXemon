@@ -5,13 +5,14 @@
 #include <SFML/Graphics.hpp>
 #include <sstream>
 #include "trainer.hpp"
+#include "Backpack_map.hpp"
 
 using namespace std;
 
 class Center {
     public:
         Center();
-        void draw(sf::RenderWindow &window, sf::View &view, sf::Event &event, Trainer &trainer);
+        void draw(sf::RenderWindow &window, sf::View &view, sf::Event &event, Trainer &trainer, BackpackMap &backpack);
     
     private:
         bool arrow;
@@ -24,4 +25,5 @@ class Center {
         
         void Moveup(sf::Event &event);
         void Movedown(sf::Event &event);
+        void heal_pokemons(BackpackMap &backpack, sf::Event &event, Trainer &trainer);
 };

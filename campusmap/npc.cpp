@@ -65,7 +65,6 @@ Npc::Npc(string name, string pathName, int sheetPosX, int sheetPosY, int sheetRe
     this->fixed = fixed;
 }
 
-Npc::~Npc(){}
 
 void Npc::draw(sf::RenderWindow &window) const {
     window.draw(spriteNpc);
@@ -117,6 +116,11 @@ void Npc::speak(sf::RenderWindow &window, sf::View &view, Trainer &trainer){
              trainer.state = "Throwing";
              trainer.counterWalk = 0;
            }
+         
+         else if (discussion[speakCounter] == "Healing"){
+           trainer.state = "Healing";
+           trainer.counterWalk = 0;
+         }
          
            else if (discussion[speakCounter] == "Dead"){
                      trainer.state = "Dead";

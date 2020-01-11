@@ -1,12 +1,5 @@
 #include "shop.hpp"
 
-template <typename T>
-std::string toString(T arg){
-    std::stringstream ss;
-    ss << arg;
-    return ss.str();
-}
-
 Shop::Shop(){
     Selecteditem = 0;
     arrow = true;
@@ -38,7 +31,7 @@ Shop::Shop(){
     }
     moneyI.setTexture(money_texture);
     
-    money = 300;
+    release = true;
 };
 
 sf::FloatRect Shop::getViewBounds(const sf::View &view)
@@ -49,6 +42,24 @@ sf::FloatRect Shop::getViewBounds(const sf::View &view)
         rt.width  = view.getSize().x;
         rt.height = view.getSize().y;
         return rt;
+}
+
+//Buy Function
+void Shop::Buy(sf::Event &event, Trainer &trainer, BackpackMap &backpack) {
+    if (event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::X&&release == true){
+        if (trainer.state == "Shopping") {
+            if (price[item_list[Selecteditem]]<=backpack.wallet) {
+                backpack.inventory[item_type[Selecteditem]] += 1;
+                backpack.wallet -= price[item_list[Selecteditem]];
+            }
+            release = false;
+        }
+    }
+    
+    //bool release to check if key D is release or not
+    else if (event.type == sf::Event::KeyReleased&&event.key.code == sf::Keyboard::X){
+        release = true;
+    }
 }
 
 void Shop::Moveup(sf::Event &event) {
@@ -79,6 +90,7 @@ void Shop::Movedown(sf::Event &event) {
     }
 }
 
+//Draw function for the shop: big white rectangle, columns for items and their prices
 void Shop::draw_shop(sf::RenderWindow &window, sf::View &view, sf::Event &event){
     
     Moveup(event);
@@ -96,21 +108,38 @@ void Shop::draw_shop(sf::RenderWindow &window, sf::View &view, sf::Event &event)
     
     item[Selecteditem].setFillColor(sf::Color::Red);
     
+    for (int i=0; i < 7; i++){
+        price_column[i].setCharacterSize(10);
+        price_column[i].setFillColor(sf::Color::Black);
+        price_column[i].setFont(font);
+        price_column[i].setPosition(110+ viewBounds.width/2 + viewBounds.left, viewBounds.top + 10*i + 4);
+        price_column[i].setString(toString(price[item_list[i]]));
+    }
+    
+    price_column[Selecteditem].setFillColor(sf::Color::Red);
+    
     sf::RectangleShape rect(sf::Vector2f(viewBounds.width/2, viewBounds.height/3));
     rect.setFillColor(sf::Color::White);
     rect.setOutlineThickness(2);
     rect.setOutlineColor(sf::Color::Black);
     rect.setPosition(sf::Vector2f(viewBounds.left + viewBounds.width/2 -2, viewBounds.top + 2));
+    
+    cout << viewBounds.top << endl;
     window.draw(rect);
     
     for(int i=0; i < 7; i++){
         window.draw(item[i]);
+        window.draw(price_column[i]);
     }
 }
 
-void Shop::draw_money(sf::RenderWindow &window, sf::View &view, sf::Event &event){
+//Draw function for the money in the shop: small white rectangle and current money in wallet
+void Shop::draw_money(sf::RenderWindow &window, sf::View &view, sf::Event &event, Trainer &trainer, BackpackMap &backpack){
+    
+    Buy(event, trainer, backpack);
+    
     sf::FloatRect viewBounds = getViewBounds(view);
-    sf::RectangleShape rect(sf::Vector2f(viewBounds.width/4, viewBounds.height/8));
+    sf::RectangleShape rect(sf::Vector2f(viewBounds.width/4, viewBounds.height/9));
     rect.setFillColor(sf::Color::White);
     rect.setOutlineThickness(2);
     rect.setOutlineColor(sf::Color::Black);
@@ -118,25 +147,24 @@ void Shop::draw_money(sf::RenderWindow &window, sf::View &view, sf::Event &event
     window.draw(rect);
     
     sf::Text moneyS;
-    moneyS.setString(toString(money));
+    moneyS.setString(toString(backpack.wallet));
     moneyS.setFillColor(sf::Color::Black);
     moneyS.setCharacterSize(10);
     moneyS.setFont(font);
-    moneyS.setPosition(viewBounds.left + 50, viewBounds.top + 2);
+    moneyS.setPosition(viewBounds.left + 50, viewBounds.top + 5);
     
     moneyI.setScale(0.1, 0.1);
-    moneyI.setPosition(viewBounds.left +2, viewBounds.top +2);
+    moneyI.setPosition(viewBounds.left +5, viewBounds.top +5);
     
     window.draw(moneyI);
     
     window.draw(moneyS);
-    
 }
 
-
-void Shop::draw(sf::RenderWindow &window, sf::View &view, sf::Event &event, Trainer &trainer){
+//Final function for drawing the shop
+void Shop::draw(sf::RenderWindow &window, sf::View &view, sf::Event &event, Trainer &trainer, BackpackMap &backpack){
     if (trainer.state == "Shopping"){
         draw_shop(window, view, event);
-        draw_money(window, view, event);
+        draw_money(window, view, event, trainer, backpack);
     }
 }

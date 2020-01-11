@@ -12,6 +12,7 @@
 #include "shop.hpp"
 #include "interior.hpp"
 #include "center.hpp"
+#include "Backpack_map.hpp"
 
 using namespace std;
 
@@ -91,4 +92,7 @@ class Map
         //Flower animation
         void movingFlower(sf::RenderWindow &window, int x, int y);
         void flowerList(sf::RenderWindow &window);
+    
+        //Backpack
+        BackpackMap backpack;
 };  

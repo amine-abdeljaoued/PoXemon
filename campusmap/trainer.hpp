@@ -6,8 +6,8 @@
 #include <iostream>
 #include <string>
 #include "fights/Backpack.h"
-using namespace std;
 
+using namespace std;
 
 class Trainer {
     public:
@@ -35,8 +35,10 @@ class Trainer {
         sf::FloatRect getViewBounds(const sf::View &view);
         sf::ConvexShape bubble;
         bool fish;
+    
         Backpack *opponent_bag;
         char fight_mode;
+    
         //throw rock
         void rock(sf::RenderWindow &window, sf::View &view);
         int rock_throw;
