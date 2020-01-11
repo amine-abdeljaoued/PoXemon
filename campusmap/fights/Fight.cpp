@@ -469,7 +469,7 @@ int Fight::update(sf::RenderWindow& window){
 	}
 
 
-	else if (state = 12) {//the pokeball didn't work
+	else if (state == 12) {//the pokeball didn't work
 		//this is a very short state
 		//we only say that the pokeball failed to catch opponent and go back to the countown after 1 second
 		window.draw(caught);
