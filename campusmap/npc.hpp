@@ -9,15 +9,12 @@
 #include "trainer.hpp"
 using namespace std;
 
-
-
 class Npc {
     public:
         Npc(int posX, int posY, vector<string> discu);  //Constructors for pannels
         Npc(string name, string pathName, int sheetPosX, int sheetPosY, int sheetRectX,int sheetRectY, float scale, int posX, int posY, vector<string> discu, bool fixed);
-        virtual ~Npc();
         void draw(sf::RenderWindow &window) const;
-        virtual void speak(sf::RenderWindow &window, sf::View &view, Trainer &trainer);
+        void speak(sf::RenderWindow &window, sf::View &view, Trainer &trainer);
         void speakScenario(sf::RenderWindow &window, sf::View &view, Trainer &trainer, map<string,vector<string>> &scenario);
         sf::Vector2f getPos();
         int speakCounter;

@@ -10,7 +10,7 @@ Center::Center(){
     }
 }
 
-void Center::draw(sf::RenderWindow &window, sf::View &view, sf::Event &event, Trainer &trainer){
+void Center::draw(sf::RenderWindow &window, sf::View &view, sf::Event &event, Trainer &trainer, BackpackMap &backpack){
     if (trainer.state == "Healing"){
         Moveup(event);
         Movedown(event);
@@ -36,6 +36,7 @@ void Center::draw(sf::RenderWindow &window, sf::View &view, sf::Event &event, Tr
         for(int i=0; i < 2; i++){
             window.draw(action[i]);
         }
+        heal_pokemons(backpack, event, trainer);
     }
 }
 
@@ -74,5 +75,16 @@ void Center::Movedown(sf::Event &event) {
     }
     else if (event.type == sf::Event::KeyReleased&&event.key.code == sf::Keyboard::Down){
         arrow = true;
+    }
+}
+
+    
+void Center::heal_pokemons(BackpackMap &backpack, sf::Event &event, Trainer &trainer) {
+    if (event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::X&&Selecteditem == 0){
+        for (unsigned int i = 0; i < 3; i++) {
+            backpack.backpack_pokemons[i]->health = 100;
+            cout << backpack.backpack_pokemons[i]->health << endl;
+        }
+        trainer.state = "Stop";
     }
 }
