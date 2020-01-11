@@ -10,8 +10,7 @@ public:
 		sf::Vector2u WindowSize = window.getSize();      //Get size of window.
 
 		float ScaleY = (float) WindowSize.y / TextureSize.y; //Calculate scale.
-		Scale = ScaleY /5;
-		sprite.setScale(-Scale, Scale);	//Set scale: it has to face towards the right (intially, the images are all 'facing towards the left')
+		sprite.setScale(-ScaleY/5, ScaleY/5);	//Set scale: it has to face towards the right (intially, the images are all 'facing towards the left')
 
 		was_left = true;
 		

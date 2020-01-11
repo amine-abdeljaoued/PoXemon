@@ -16,8 +16,7 @@ public:
 		sf::Vector2u WindowSize = window.getSize();      //Get size of window.
 
 		float ScaleY = (float) WindowSize.y / TextureSize.y; //Calculate scale.
-		Scale = ScaleY / 5;
-		sprite.setScale(Scale, Scale);	//Set scale
+		sprite.setScale(ScaleY/5, ScaleY/5);	//Set scale
 
 		speed = 400;
 		int randomDirection[2] = { -1,1 };

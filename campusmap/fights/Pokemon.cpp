@@ -42,18 +42,19 @@ void Pokemon::set_enemy(Pokemon* enemy) {
 void Pokemon::death_disappear(float& deltaTime) {//to improve
 
 	float total_time = 0.3; 
+	float initial_scale = 0.5;
 	float new_x;
 
 	//scale it down until zero
 	if (sprite.getScale().y > 0) {
 		if (sprite.getScale().x < 0) {
-			new_x = sprite.getScale().x + (deltaTime / total_time) * Scale;
+			new_x = sprite.getScale().x + (deltaTime / total_time) * initial_scale;
 		}
 		if (sprite.getScale().x > 0) {
-			new_x = sprite.getScale().x - (deltaTime / total_time) * Scale;
+			new_x = sprite.getScale().x - (deltaTime / total_time) * initial_scale;
 		}
 
-		float new_y = sprite.getScale().y - (deltaTime / total_time) * Scale;
+		float new_y = sprite.getScale().y - (deltaTime / total_time) * initial_scale;
 		sprite.setScale(new_x, new_y);
 	}
 
