@@ -36,8 +36,8 @@ class Trainer {
         sf::ConvexShape bubble;
         bool fish;
     
-        Backpack *opponent_bag;
-        char fight_mode;
+//        Backpack *opponent_bag;
+//        char fight_mode;
     
         //throw rock
         void rock(sf::RenderWindow &window, sf::View &view);

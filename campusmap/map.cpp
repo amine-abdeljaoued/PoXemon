@@ -94,12 +94,12 @@ Map::Map(sf::RenderWindow &window)
     dialogue2.push_back("try catching one wild PoXemon !");
     if (catched == false) npcs_map1.push_back(new Npc("passeur","Sprites/NPC1.png",432,675,32,32,1.f,24,224,dialogue2, false));
     
-//    vector<string>trainer_dialogue1;
-//    trainer_dialogue1.push_back("You don't seem to know who I am");
-//    trainer_dialogue1.push_back("Fighting");
-//    Backpack bag_opponent1;
-//    bag_opponent1.setBackpack(1);
-//    npcs_map1.push_back(new Trainer_opponent("Fighter","Sprites/NPC1.png",113,97,32,32,1.f,264,320,trainer_dialogue1, false,bag_opponent1));
+    vector<string>trainer_dialogue1;
+    trainer_dialogue1.push_back("You don't seem to know who I am");
+    trainer_dialogue1.push_back("Fighting");
+    Backpack bag_opponent1;
+    bag_opponent1.setBackpack(1);
+    npcs_map1.push_back(new Trainer_opponent("Fighter","Sprites/NPC1.png",113,97,32,32,1.f,264,320,trainer_dialogue1, false,bag_opponent1));
     
     npcs.insert(pair< string, vector<Npc*> >("first", npcs_map1));
     
