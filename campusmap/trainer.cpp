@@ -30,7 +30,7 @@ Trainer::Trainer( float Speed, int sheetRect, int sizeAnim)
     font.loadFromFile("Fonts/sansation.ttf");
     
     fish = true;
-    fight_mode = 'w';
+//    fight_mode = 'w';
 }
 
 void Trainer::draw(sf::RenderWindow &window, sf::Event &event, sf::View &view){
