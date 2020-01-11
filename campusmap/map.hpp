@@ -89,6 +89,7 @@ class Map
         void illuShop(sf::RenderWindow &window);
         void illuTunnelR(sf::RenderWindow &window);
         void illuTunnelL(sf::RenderWindow &window);
+        void illuGrandhall(sf::RenderWindow &window);
     
         //Shader for the underground
         void light(sf::RenderWindow &window, Trainer &trainer);
