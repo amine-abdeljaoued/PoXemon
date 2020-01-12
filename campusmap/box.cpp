@@ -512,31 +512,45 @@ void Box::Moveright(sf::Event &event) {
     }
 }
 
-bool Box::pointerEmpty(int i, BackpackMap &backpack){
-    return box_pokemons[i];
+bool Box::pointerEmpty(int i){
+    return (box_pokemons[i] == NULL);
 }
 
+bool Box::addPokemonB(std::string name, int level, int index, int health, int type){
+    bool in = false;
+    int i = 0;
+    while(i<10 && in == false){
+        if (pointerEmpty(i) == true){
+            box_pokemons[i] = new Backpack_Pokemon(name,level,index,health,type);
+            poke_list.push_back(name);
+            in = true;
+            return in;
+        }
+        i++;
+    }
+    return false;
+}
 
-void Box::addPokemon(Backpack_Pokemon poke, BackpackMap &backpack){
+bool Box::addPokemon(Backpack_Pokemon poke, BackpackMap &backpack){
     //Unpacking
     string name = poke.name;
     int level = poke.level;
     int index = poke.index;
     int health = poke.health;
     int type = poke.type;
-    
     bool in = false;
-    
     int i = 0;
-    while(i<10 && in == false){
-        if (pointerEmpty(i, backpack) == true){
-            box_pokemons[i] = new Backpack_Pokemon(name,level,index,health,type);
-            poke_list.push_back(name);
+    while(i<2 && in == false){
+        if (backpack.backpack_pokemons[i] == NULL){
+            backpack.backpack_pokemons[i] = new Backpack_Pokemon(name,level,index,health,type);
             in = true;
+            return in;
         }
         i++;
     }
+    return addPokemonB(name, level, index, health, type);
 }
+
 
 void Box::switchPoke(BackpackMap &backpack, sf::Event &event){
     if (event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::X&&sw==false){
