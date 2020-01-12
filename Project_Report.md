@@ -14,9 +14,37 @@
 
 ### Maxence Dulac (PoXemon Team):
 
+During this project I worked the most with Julien Luzzatto and we cooperated with the other teams of the project.
+
+At first, our idea was to create the whole game based on our adventure in the Bachelor. The pokemons were going to be original pokemons with faces of our classmates the trainers the teachers we had. The different types of the pokemons would then be the 3 different majors one can choose from (econ, cs, physics) and the stats of the pokemons would be somewhat representative of everyone. 
+
+We then learned how to use OpenCV to implement an automatic face photoshop to make the creation of pokemons automatic with the idea that one could “customize” their pokemons by simply uploading/taking a live picture of their face. Once this worked we realised that we had a flaw in our program, the facial recognition could not recognize the face of a drawing of a pokemon. We then made an editor in which one could set the face at the right place changing size, position. Even though this idea worked fine, it was scrapped due to purely esthetic reasons, as an ovally cropped face didn’t graphically cut it … (more details during the presentation).
+
+After this unfortunate setback, we changed completely the storyline and used Alexonsager Pokemon fusion site to create many new pokemons.  I found uniquely generated names for each of them with the help of Francois’s program and then created different stats for all of them. At first I was creating pokemon objects but in the end I decided to use structures/maps in order to make it less heavy on the computer. We also started working on an intro for the game in which one would not only choose it’s starter pokemon but also discover the amazing world of pokemons (in case someone actually never heard of them …). During the Pokemon creation process I got ahead of myself and created way too many pokemons (>150). In the end, due to time and performance issues, only 30 pokemons are available in the game. At the same time, I was helping Julien realising the introduction of the game.
+
+We then created a really cool Pokemon List/Pokedex which will unfortunately not be in the game as we did not have time to fix the window/size problems (frustrated about that).
+
+After that, we worked on super attacks in the game. The whole idea was to have them unlock after a certain level and then for them to be pivotal in a fight to help defeat bosses/trainers… An extension to this project would be to add even more of these and have skill points to upgrade/unlock new things.
+
+Finally we worked with the map team in order to create maps/collision maps in which one can walk/interact. We then gave those maps to the map team in order to implement them. 
+
+All in all, this project was super fun even though it generated a lot of frustration. Our group was amazing and the skills and creativity of everyone involved was off the charts. I think our end result is super cool and we hope you will enjoy as much as we did!
+
 ### Anya Fries (Fight Team, Fight manager):
 
 ### Julien Luzzatto (PoXemon Team, Intro manager):
+
+To face the challenge of organising and launching a project involving 10 people, the first thing we did was designing teams: in this spirit, I chose to become part of what we called the ‘PoXemon Team’. Our goal was to create and design the actual Pokemons (in the first place, we thought they would be classical Pokemons with our faces on them), to design secondary but still essential elements of the game, such as the introduction, the backpack and the Pokedex, and finally, more globally, to help other teams would they need a hand in performing time-consuming tasks. 
+
+Therefore, my personal experience of the project resulted in working closely with the different teams, cooperating especially with Maxence Dulac, with whom I divided and shared almost all the tasks I had to complete.
+
+The first task we dedicated ourselves to was the development of a face-photoshopping program to make the assembling of Pokemon bodies and human faces automatic. To do so, I spent a couple of sessions learning how to use the OpenCV library. However, we soon encountered many difficulties from an aesthetic perspective, from backgrounds to the actual assembling, and we just realised that the outcome was not graphically good-looking. Hence, we permanently abandoned the idea of Pokemon-Humans.
+
+The second main task we covered was the creation of an introduction for the game, i.e. a main menu, followed by a character introducing the player to the world of Pokemon, like in the real game, and proposing a short presentation of the first Pokemons. Once again, I spent a session understanding how the SFML library works, and then started designing the introduction, for which we also needed a sort of storyline to go behind. While Maxence was starting creating the Pokemons to present, I coded the graphical appearance of the introduction (menu, text bubbles, choices, etc.). That took a long time, as every single screening had to be handled individually, so we spent several weeks realising it, dividing our time between this and the creation of the different Pokemons that we use throughout the game, using sites and simple photo-editing softwares. After finishing the introduction, we spent one week designing a Pokedex, which, in the end, will not be present in the game because of window size issues (this was actually a problem we had all along: working on different platforms and computers, problems of compatibility were recurrent).
+
+Afterwards, I started working more closely with the other teams, as my main objectives regarding my part were achieved. Hence, Maxence and I first collaborated with the Fights Team, developing several new types of attacks, ‘super-attacks’, which one would unlock throughout the game. Then, we started helping the map team, as realizing map is not a particularly difficult task, but it is very time-consuming. We realized three new maps: one representing the sports facilities of the campus, one displaying the Bachelor buildings on campus (the ones we live in), and finally a labyrinth one, from which one accesses the map leading to the final boss one has to defeat to complete the game. Finally, I discussed with the map team to decide the best ways to connect them to the game’s path and they realised the bridges between the maps.
+
+The project was overall a challenging experience but it taught me a lot. It was my first project in such a big group, and, on the one hand, it made me aware of the incredible amount of issues that can come out of nowhere on the last day (compatibility, misunderstandings, merging problems, etc.), on the other hand, it was instructive, insightful and fun.
 
 ### Benjamin Montagnes (Map Team, Project leader):
 
@@ -27,7 +55,6 @@ The first thing that I did in the project was a name generator for the Pokemons 
 After this, I started to help the fight team. I concentrated myself on the backpack and the pokeball classes. I implemented different types of pokeballs with different probabilities of catching. I also implemented the launching and the trajectory of the pokeballs. As I am in the Physics double major, I created some parameters as air friction, bounces, gravity coefficient… I also worked on the rotation of the ball. Finally, I made the probabilities of catching the Pokemons depend on their health (using pointers objects). On this part, I received help from Antonin. At this point, I decided to start to help the map team. 
 
 First of all, Benjamin and Arthur took some time to explain me how the map team was working and explained me how to work with tilemaps, tilesets… Then, I started to create some new maps (I designed a total of 5 different maps). During the last week, I also work on some graphical elements such as the light spot in the underground map and on some easter eggs. During the last month, as my work was quite diverse and the fact that I have encounter some technical issues with XCode, I preferred to ask Arthur and Benjamin to commit the different things that I programmed. 
-
 
 ### Clement Sterlin (PoXemon Team, Graphist):
 
