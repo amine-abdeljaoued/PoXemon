@@ -63,6 +63,10 @@ using namespace std;
     /* Arthur.state="Fighting";
     Arthur.fight_mode = 'w'; */
 
+    //For the fights team uncomment this line:
+    /* Arthur.state="Fighting";
+    Arthur.fight_mode = 'w'; */
+
     //TO NOT GET ANNOYED WITH FIGHTS:
     //JUST COMMENT in map.cpp in Fighting the trainer.state = "Fighting" in line 437
      while (window.isOpen())
