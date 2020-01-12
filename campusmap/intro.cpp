@@ -594,14 +594,7 @@ bool choice(std::string prof, bool side, int which) {
     }
     sf::Sprite professor;
     sf::Vector2u ImageSize;
-    professor.scale(sf::Vector2f(5.f, 5.f)); //Set scale
-        
-    float x = 0.02; //which side of the screen
-    float y = 0.42;
-    if (side == 1){
-        x = 0.60;
-        y = 0.10;
-    }
+    professor.scale(sf::Vector2f(3.f, 3.f)); //Set scale
     
     // Create a dialogue box
     sf::RectangleShape dialogue(sf::Vector2f(1500.f, 400.f));
@@ -641,7 +634,7 @@ bool choice(std::string prof, bool side, int which) {
     sf::Text option1;
 
     option1.setFont(font);
-    option1.setCharacterSize(70);
+    option1.setCharacterSize(60);
     option1.setStyle(sf::Text::Bold);
     option1.setFillColor(sf::Color::Black);
     
@@ -649,7 +642,7 @@ bool choice(std::string prof, bool side, int which) {
     sf::Text option2;
 
     option2.setFont(font);
-    option2.setCharacterSize(70);
+    option2.setCharacterSize(60);
     option2.setStyle(sf::Text::Bold);
     option2.setFillColor(sf::Color::Black);
     
@@ -838,7 +831,7 @@ int choose(std::string prof, bool side) {
     }
     sf::Sprite professor;
     sf::Vector2u ImageSize;
-    professor.scale(sf::Vector2f(5.f, 5.f)); //Set scale
+    professor.scale(sf::Vector2f(3.f, 3.f)); //Set scale
     
     // Create a dialogue box
     sf::RectangleShape dialogue(sf::Vector2f(1500.f, 400.f));
@@ -1043,16 +1036,16 @@ int startgame(){
     if (closed<10)closed = intro("Sprites/professor5.png",1,10);
     if (closed<10)closed = intro("Sprites/professor3.png",0,11);
     if (closed<10)closed = intro("Sprites/professor2.png",0,12);
-    if (closed<10)closed = choice("Sprites/professor0.png",1,13);
+    if (closed<10)closed = choice("Sprites/professor1.png",1,13);
     if (closed<10){
-        if(choice("Sprites/professor0.png",1,14)==1) {
+        if(choice("Sprites/professor4.png",1,14)==1) {
             if(closed<10)closed=intro("Sprites/professor7.png",0,15);
             return 1;
         }
         else{
           if (closed<10)closed = intro("Sprites/professor4.png",0,16);
           if (closed<10)closed = intro("Sprites/professor1.png",1,17);
-          if (closed<10) closed= choose("Sprites/professor0.png",1);
+          if (closed<10) closed= choose("Sprites/professor6.png",1);
           if(closed==1) closed = intro("Sprites/professor5.png",0,18);
           else if(closed==2) closed = intro("Sprites/professor5.png",0,19);
           else if(closed==3) closed = intro("Sprites/professor5.png",0,20);
