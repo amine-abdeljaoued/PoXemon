@@ -33,10 +33,10 @@ using namespace std;
  {
      
      //the intro by Julien
-     /* if (startgame()==1) return 0; */
+     //if (startgame()==1) return 0;
      
      //Initializing the window
-     sf::RenderWindow window(sf::VideoMode(1400, 700), "My window");
+     sf::RenderWindow window(sf::VideoMode(1400, 700), "My window", sf::Style::Titlebar | sf::Style::Close);
 	 float groundY = 300.0f; //Cannot go below this height - NB INITIALISE WITH WINDOW??
      float groundX = 1000.f;
      /* sf::RenderWindow window(sf::VideoMode(sf::VideoMode::getDesktopMode().height, sf::VideoMode::getDesktopMode().height), "PoXemon"); */
