@@ -101,7 +101,9 @@ void Center::Movedown(sf::Event &event) {
 void Center::heal_pokemons(BackpackMap &backpack, sf::Event &event, Trainer &trainer) {
     if (event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::X&&Selecteditem == 0&&counter == 0){
         for (unsigned int i = 0; i < 3; i++) {
-            backpack.backpack_pokemons[i]->health = 100;
+            if(backpack.backpack_pokemons[i]){
+                backpack.backpack_pokemons[i]->health = 100;
+            }
         }
         trainer.state = "Stop";
         counter = 0;
