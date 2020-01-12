@@ -12,6 +12,8 @@ Fight::~Fight(){
 }
 
 Fight::Fight(sf::RenderWindow& window){
+	clicked_button = -2;
+
     if (!font.loadFromFile("fights/upheavtt.ttf")) { std::cout << "could not load font" << std::endl; }
 	else {font.loadFromFile("fights/upheavtt.ttf");}
     state = 1;
@@ -75,7 +77,9 @@ void Fight::initialise_wild (Backpack& pbag, sf::RenderWindow& window){
 	opponent_bag.backpack_pokemons[0] = opoke1;
 	// for the states
     state = 1;
-	functions1.initialise(*popponent, *pplayer, window, font);
+	char mode = 'w';
+	//functions1.initialise(mode, *popponent, *pplayer, window, font);
+	functions1.initialize_state1(mode, (*popponent).sprite, (*popponent).name, window, poke_buttons, running_sprite, font);
     deltaTime = 0.0f;
     counter = 0;
     clicked_button = -2; // no button clicked  
@@ -83,11 +87,12 @@ void Fight::initialise_wild (Backpack& pbag, sf::RenderWindow& window){
 
 void Fight::initialise_trainer (Backpack& pbag, Backpack& popponent_bag, sf::RenderWindow& window){
 	// background - must change depending on where we are
+	
 	functions1.initialise_background(window, "fights/Images/grassbg.png", background, BackgroundTexture);
 
 	// basic setup
 	popponent = new Opponent(window, 200.f, 500.f, *popponent_bag.backpack_pokemons[0]);
-	pplayer = new Player(window, 200.f, 500.f, *pbag.backpack_pokemons[0]);
+	//pplayer = new Player(window, 200.f, 500.f, *pbag.backpack_pokemons[0]);//not here
 
     bag = pbag;
     opponent_bag = popponent_bag;
@@ -101,12 +106,14 @@ void Fight::initialise_trainer (Backpack& pbag, Backpack& popponent_bag, sf::Ren
     }
 
     (bag).set_opponent(popponent);
-    (*pplayer).set_enemy(popponent);
-	(*popponent).set_enemy(pplayer);
+    /*(*pplayer).set_enemy(popponent);
+	(*popponent).set_enemy(pplayer);*/
 
     // for the states
     state = 1;
-	functions1.initialise(*popponent, *pplayer, window, font);
+	char mode = 't';
+	//functions1.initialise(mode, *popponent, *pplayer, window, font);
+	functions1.initialize_state1(mode, (*popponent).sprite, (*popponent).name, window, poke_buttons, running_sprite, font);
     deltaTime = 0.0f;
     counter = 0;
     clicked_button = -2; // no button clicked
@@ -143,15 +150,48 @@ int Fight::update(sf::RenderWindow& window){
     elapsed2 = clock2.getElapsedTime();
 
 	if (state==1){ // Initial game menu
-		state = functions1.update_state1(window, clock_regenerate_bullets);
+		//state = functions1.update_state1(window, clock_regenerate_bullets);
+
+		std::cout << clicked_button << std::endl;
 		window.clear();
 		window.draw(background);
-		functions1.draw1(window);
-		// we should be able to choose our pokemon...
+		std::cout << "draw background" << std::endl;
+		//functions1.draw1(window);
+		functions1.draw_state1(window, poke_buttons);
+		std::cout << "draw state 1" << std::endl;
+		functions1.update_state1(window, clock, poke_buttons, clicked_button);
+		std::cout << "update state 1 " << std::endl;
+
+
+		std::cout << clicked_button << std::endl;
+
+		if (clicked_button == -2) {//not clicked
+			state = 1;
+		}
+		if (0 <= clicked_button && clicked_button < 3) {//we clicked on a pokemon button
+			std::cout << "clicked on a pokemon" << std::endl;
+			//remove stuff at the top
+			//Backpack_Pokemon new_player = *bag.backpack_pokemons[clicked_button];
+			pplayer = new Player(window, 200.f, 500.f, *bag.backpack_pokemons[clicked_button]);
+			(bag).set_opponent(popponent);
+			(*pplayer).set_enemy(popponent);
+			(*popponent).set_enemy(pplayer);
+			state = 10;//countdown
+		}
+		if (clicked_button == -1) {//we clicked on the run button
+			return 0;
+		}
+		if (clicked_button == 3) {//we clicked on how to play
+			state = 15;
+			clicked_button = -2;
+		}
+		
+		clock.restart();
 	}
 
+
 	else if (state==15){ // how to menu
-		// functions1.howtoplay(window, deltaTime);
+		//functions1.howtoplay(window, deltaTime);
 		if (functions56.check_leave(functions1.quit, window)){state= 1;}
 		window.draw(background, &shader);
 		functions1.draw_how_to(window);
@@ -291,6 +331,7 @@ int Fight::update(sf::RenderWindow& window){
 		if (clicked_button == -1) {//we clicked on the run button
 			delete pplayer;
 			delete popponent;
+
       	return 0;
 			//black screen
 			//go back to where we were on the map
@@ -364,6 +405,7 @@ int Fight::update(sf::RenderWindow& window){
 		//leave button
 		window.draw(arrow_sprite);
 		window.draw(leave);
+
 		if (functions56.check_leave(arrow_sprite, window)) return 0;
 	}
 
@@ -448,8 +490,8 @@ int Fight::update(sf::RenderWindow& window){
 			bag.new_Normalball.in_air = false;
 			bag.new_Superball.in_air = false;
 
-			clock2.restart();//we need ta clock for the next state so i took this one arbitrarily
-			state = 12;
+			state = 12;//we need ta clock for the next state so i took this one arbitrarily
+			clock2.restart();
 		}
 
 	}
@@ -476,6 +518,7 @@ int Fight::update(sf::RenderWindow& window){
 	else if (state = 12) {//the pokeball didn't work
 		//this is a very short state
 		//we only say that the pokeball failed to catch opponent and go back to the countown after 1 second
+		functions1.draw_blurry_background(window, background, bag, *pplayer, *popponent, &shader);
 		window.draw(caught);
 		if (clock2.getElapsedTime().asSeconds() > 1.0f) {
 			clock_regenerate_bullets.restart();//reset this for the countdown
