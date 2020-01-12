@@ -365,7 +365,7 @@ int Fight::update(sf::RenderWindow& window){
 		window.draw(arrow_sprite);
 		window.draw(leave);
 		if(won && functions56.check_leave(arrow_sprite, window)){
-			return 0; //won against trainer
+			return 55; //won against trainer
 		}
 		if(!won && functions56.check_leave(arrow_sprite, window)){
 			return 50; //lost against trainer
@@ -401,7 +401,7 @@ int Fight::update(sf::RenderWindow& window){
 		if(!won && functions56.check_leave(arrow_sprite, window)){
 			return 60; //lost against wild
 		}
-		if (functions56.check_leave(arrow_sprite, window)) return 0;
+		/* if (functions56.check_leave(arrow_sprite, window)) return 0; */
 
 	} //wild opponent fainted
 

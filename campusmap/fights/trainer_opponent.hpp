@@ -20,9 +20,11 @@ class Trainer_opponent: public Npc{
                         Npc (name, pathName, sheetPosX, sheetPosY, sheetRectX, sheetRectY,
                         scale, posX, posY, discu, fixed  /*everything except backpack*/){
                             bag.setBackpack(i);
+                            beaten = false;
                         };
 
         virtual void speak(sf::RenderWindow &window, sf::View &view, Trainer &trainer);
 
         Backpack bag;
+        
 };

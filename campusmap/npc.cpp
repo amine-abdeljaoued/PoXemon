@@ -64,6 +64,8 @@ Npc::Npc(string name, string pathName, int sheetPosX, int sheetPosY, int sheetRe
     }
     text.setFont(font);
     this->fixed = fixed;
+
+    beaten = false;
 }
 
 
