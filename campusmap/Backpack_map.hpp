@@ -73,6 +73,8 @@ public:
     int actual_column;
     float health_poke;
     
+    string location;
+    
 private:
     void draw_background(sf::RenderWindow &window, sf::View &view, sf::Event &event, Trainer &trainer);
     void draw_menu(sf::RenderWindow &window, sf::View &view, sf::Event &event, Trainer &trainer);
