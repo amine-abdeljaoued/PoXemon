@@ -3,9 +3,12 @@
 
 StateFunctions1::StateFunctions1(){/*do nothing*/}
 
-void StateFunctions1::initialise(Opponent& opponent, Player& player, sf::RenderWindow& window, sf::Font& font){
+//no need for opponent
+void StateFunctions1::initialise(char& game_mode, Opponent& opponent, Player& player, sf::RenderWindow& window, sf::Font& font) {
 	opp = opponent.sprite;
-    intro_text.setString("You are about to fight " + opponent.name);
+
+	if (game_mode == 'w') intro_text.setString("You encountered a wild pokemon!");
+	if (game_mode == 't') intro_text.setString("You are in a duel! ");
     initialise_buttons(window, font);
 	initialise_howto(window);
 	initialise_countdown(window);
@@ -52,12 +55,14 @@ void StateFunctions1::initialise_howto(sf::RenderWindow& window){
 
 	how_to.setOrigin(how_to.getLocalBounds().width/2, how_to.getLocalBounds().height/2);
 	quit.setOrigin(quit.getLocalBounds().width/2, quit.getLocalBounds().height/2);
+	how_to.setPosition(0, 0);
+	quit.setPosition(0, 0);
 	how_to.move(window.getSize().x/2, window.getSize().y/2);
 	quit.move(window.getSize().x/2 + how_to.getGlobalBounds().width/2,
 			window.getSize().y/2 - how_to.getGlobalBounds().height/2 + quit.getGlobalBounds().height/5);
 }
 
-void StateFunctions1::initialise_buttons(sf::RenderWindow& window, sf::Font& font){
+void StateFunctions1::initialise_buttons(sf::RenderWindow& window, sf::Font& font){ // to rewrite 
 	// Window size
 	float x = window.getSize().x;
 	float y = window.getSize().y;
@@ -96,6 +101,7 @@ void StateFunctions1::initialise_buttons(sf::RenderWindow& window, sf::Font& fon
     start_text.setString(start);
     info_text.setString(info);
 
+
 	// Reset position - must compensate for their initial position (can call fights multiple times)
 	opp.setPosition(0,0);
 	star.setPosition(0,0);
@@ -121,12 +127,13 @@ void StateFunctions1::initialise_buttons(sf::RenderWindow& window, sf::Font& fon
 	float yoffset3 = y/15;
 
 	intro_text.move(x/2, y/7);
-	start_text.move(x/2 - xoffset, y/2 - yoffset1);
-	start_button.move(x/2 - xoffset, y/2 - yoffset1);
-	info_text.move(x/2 - xoffset, y/2 + yoffset2);
-	info_button.move(x/2 - xoffset, y/2 + yoffset2);
-	star.move(x/2 + xoffset, y/2 + yoffset3);
-	opp.move(x/2 + xoffset, y/2 + yoffset3);
+	start_text.move(x/2 , y/2 - yoffset1);
+	start_button.move(x/2 , y/2 - yoffset1);
+	info_text.move(x/2 , y/2 + yoffset2);
+	info_button.move(x/2, y/2 + yoffset2);
+	
+	//star.move(x/2 + xoffset, y/2 + yoffset3);
+	//opp.move(x/2 + xoffset, y/2 + yoffset3);
 }
 
 void StateFunctions1::draw1(sf::RenderWindow& window){
@@ -135,8 +142,8 @@ void StateFunctions1::draw1(sf::RenderWindow& window){
 	window.draw(start_text);
 	window.draw(info_text);
 	window.draw(intro_text);
-	window.draw(star);
-	window.draw(opp);
+	//window.draw(star);
+	//window.draw(opp);
 }
 
 void StateFunctions1::draw_blurry_background(sf::RenderWindow& window, sf::Sprite& background, Backpack& bag, Player& player,
@@ -161,40 +168,208 @@ void StateFunctions1::draw_how_to(sf::RenderWindow& window){
 	window.draw(quit);
 }
 
-int StateFunctions1::update_state1(sf::RenderWindow& window, sf::Clock& clock){
-    //Rotate star
-    star.rotate(2);
-    // Buttons go red when hovering
-    if ((sf::Event::MouseMoved)||(sf::Event::MouseButtonPressed)){
-        sf::Vector2i mousepixel = sf::Mouse::getPosition(window);
-        sf::Vector2f mouse_pos = window.mapPixelToCoords(mousepixel);
+//int StateFunctions1::update_state1(sf::RenderWindow& window, sf::Clock& clock){
+//    //Rotate star
+//    star.rotate(2);
+//    // Buttons go red when hovering
+//    if ((sf::Event::MouseMoved)||(sf::Event::MouseButtonPressed)){
+//        sf::Vector2i mousepixel = sf::Mouse::getPosition(window);
+//        sf::Vector2f mouse_pos = window.mapPixelToCoords(mousepixel);
+//
+//        if (start_button.getGlobalBounds().contains(mouse_pos)){
+//            start_button.setFillColor(sf::Color(255,99,99)); //reddish
+//            if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+//				clock.restart();
+//
+//                return 21;
+//				//go to the menu to change pokemon
+//
+//				// should change to choose pokemon
+//				// then to countdown
+//				// when the countdown is done we return 2
+//            }
+//        }
+//        else {
+//            start_button.setFillColor(sf::Color::White);
+//        }
+//		if (info_button.getGlobalBounds().contains(mouse_pos)){
+//			info_button.setFillColor(sf::Color(255,99,99));
+//			if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+//				clock.restart();
+//				return 15;
+//				// should go to "how to play"
+//			}
+//		}
+//		else {
+//			info_button.setFillColor(sf::Color::White);
+//		}
+//		return 1;
+//    }
+//}
 
-        if (start_button.getGlobalBounds().contains(mouse_pos)){
-            start_button.setFillColor(sf::Color(255,99,99)); //reddish
-            if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-				clock.restart();
-                return 10;
-				// should change to choose pokemon
-				// then to countdown
-				// when the countdown is done we return 2
-            }
-        }
-        else {
-            start_button.setFillColor(sf::Color::White);
-        }
-		if (info_button.getGlobalBounds().contains(mouse_pos)){
-			info_button.setFillColor(sf::Color(255,99,99));
-			if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-				clock.restart();
-				return 15;
-				// should go to "how to play"
+//state 1--------------------------------------------------------------------------------------------------------------
+void StateFunctions1::initialize_state1(char& game_mode, sf::Sprite& opp_sprite,std::string& opp_n, sf::RenderWindow& window, Pokemon_Button* buttons[], sf::Sprite& running_sprite, sf::Font& ffont) {
+	initialise_howto(window);
+
+	mode = game_mode;
+	//text elements
+	font = ffont;
+	intro_text.setString("");
+	if(game_mode == 'w') intro_text.setString("You encountered a wild pokemon!");
+	if (game_mode == 't') intro_text.setString("You are in a duel! ");
+	choose_pokemon.setString("");
+	choose_pokemon.setString("choose your fighter");
+	choose_pokemon.setFont(font);
+	intro_text.setFont(font);
+	choose_pokemon.setCharacterSize(20);
+	intro_text.setCharacterSize(50);
+	choose_pokemon.setFillColor(sf::Color::Black);
+	intro_text.setFillColor(sf::Color::Black);
+	choose_pokemon.setOrigin(choose_pokemon.getGlobalBounds().width / 2, choose_pokemon.getGlobalBounds().height / 2);
+	choose_pokemon.setPosition(window.getSize().x / 3, window.getSize().y *5/16);
+	intro_text.setOrigin(intro_text.getLocalBounds().width / 2, intro_text.getLocalBounds().height / 2);
+	
+	//choose_pokemon.setPosition(window.getSize().x / 3, window.getSize().y / 4);
+	intro_text.setPosition(0, 0);
+	intro_text.move(window.getSize().x / 2, window.getSize().y / 7);
+
+	//how to play
+	info_text.setString("");
+	info_text.setString("How to play ?");
+	info_text.setFont(font);
+	info_text.setCharacterSize(25);
+	info_text.setFillColor(sf::Color::Black);
+	info_text.setPosition(0, 0);
+	info_text.setOrigin(info_text.getGlobalBounds().width / 2, info_text.getGlobalBounds().height / 2);
+	info_text.setPosition(window.getSize().x / 9, window.getSize().y / 20); //top left corner
+
+	//pokemon buttons
+	if (buttons[0]) buttons[0]->setPosition(window.getSize().x / 3, window.getSize().y * 7 / 16);
+	if (buttons[1]) buttons[1]->setPosition(window.getSize().x / 3, window.getSize().y * 9 / 16);
+	if (buttons[2]) buttons[2]->setPosition(window.getSize().x / 3, window.getSize().y * 11 / 16);
+
+	//opponent + star
+	opp.setTexture(*opp_sprite.getTexture());
+	if (!star_texture.loadFromFile("fights/Images/12star.png")) { std::cout << "star could not load" << std::endl; }
+	star_texture.loadFromFile("fights/Images/12star.png");
+	star.setTexture(star_texture);
+	star.setOrigin(star.getGlobalBounds().width / 2, star.getGlobalBounds().height / 2);
+	star.setScale(sf::Vector2f(0.75, 0.75)); // How to make it relate to window size???
+	opp.setScale(sf::Vector2f(1, 1));
+	opp.setOrigin(opp.getGlobalBounds().width / 2, opp.getGlobalBounds().height / 2);
+	star.setPosition(0, 0);
+	star.move(window.getSize().x / 2 + 3 * window.getSize().x / 25, window.getSize().y / 2 + window.getSize().y / 15);
+	opp.setPosition(0, 0);
+	opp.move(window.getSize().x / 2 + 3 * window.getSize().x / 25, window.getSize().y / 2 + window.getSize().y / 15);
+	//opponent name
+	opp_name.setString("");
+	std::string str = opp_n;
+	opp_name.setString(str);
+	opp_name.setFont(font);
+	opp_name.setFillColor(sf::Color::Black);
+	opp_name.setOrigin(opp_name.getGlobalBounds().width / 2, opp_name.getGlobalBounds().height / 2);
+	opp_name.setCharacterSize(30);
+	opp_name.setPosition(0, 0);
+	opp_name.setPosition(window.getSize().x / 2 + 3 * window.getSize().x / 25, window.getSize().y / 2 + window.getSize().y / 15 - star.getGlobalBounds().height / 2);
+
+	//run button
+	if (game_mode == 'w') {//only possible to run in wild mode 
+		run_sprite = running_sprite;
+		run_sprite.setOrigin(run_sprite.getLocalBounds().width / 2, run_sprite.getLocalBounds().height / 2);
+		run_text.setString("");
+		run_text.setString("run");
+		run_text.setFillColor(sf::Color::Black);
+		run_text.setFont(font);
+		run_text.setCharacterSize(20);
+		run_text.setOrigin(run_text.getGlobalBounds().width /2, run_text.getGlobalBounds().height / 2);
+		run_text.setPosition(0, 0);
+		run_text.setPosition(window.getSize().x * 8/9 , window.getSize().y *8/9);
+		run_sprite.setPosition(run_text.getPosition().x, run_text.getPosition().y-run_sprite.getGlobalBounds().height/2); //bottom left corner
+	}
+
+}
+	
+
+
+void StateFunctions1::draw_state1(sf::RenderWindow& window, Pokemon_Button* buttons[]) {
+	
+	//text elements
+	window.draw(intro_text);
+	window.draw(choose_pokemon);
+	//how to play
+	window.draw(info_text);
+
+	//star+opponent
+	window.draw(star);
+	window.draw(opp);
+	window.draw(opp_name);
+
+	//buttons
+	if (buttons[0])buttons[0]->draw(window);
+	if (buttons[1])buttons[1]->draw(window);
+	if (buttons[2])buttons[2]->draw(window);
+
+	//how to play
+
+	//run
+	if (mode == 'w') {
+		window.draw(run_text);
+		window.draw(run_sprite);
+	}
+}
+
+
+void StateFunctions1::update_state1(sf::RenderWindow& window, sf::Clock& clock, Pokemon_Button* buttons[], int& clicked_button) {
+
+	star.rotate(2);
+	std::cout << "rotate" << std::endl;
+	
+
+	if ((sf::Event::MouseMoved) || (sf::Event::MouseButtonPressed)) {
+		sf::Vector2i mousepixel = sf::Mouse::getPosition(window);
+		sf::Vector2f mouse_pos = window.mapPixelToCoords(mousepixel);
+
+		//check for clicked pokemon buttons
+		for (int i = 0; i < 3; i++) {
+			std::cout << "checked for clicked buttons" << std::endl;
+			if (buttons[i]) {
+				std::cout << "update button" << i << std::endl;
+				(*buttons[i]).update_mouse(mouse_pos, clicked_button);
+			}
+			else {
+				std::cout << "no button" << i << std::endl;
 			}
 		}
-		else {
-			info_button.setFillColor(sf::Color::White);
+
+		//check for clicked run button
+		if (mode == 'w') {
+			if (run_sprite.getGlobalBounds().contains(mouse_pos)) {
+				run_sprite.setScale(1.2, 1.2); // slightly bigger when the mouse is on the button
+				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+					std::cout << "you pressed the run button" << std::endl;
+					clicked_button = -1;
+				}
+			}
+			else {
+				run_sprite.setScale(1, 1);
+			}
 		}
-		return 1;
-    }
+		
+		//check for clicked how to play button
+		if (info_text.getGlobalBounds().contains(mouse_pos)) {
+			info_text.setCharacterSize(26); // slightly bigger when the mouse is on the button
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+				std::cout << "you pressed the how to play button" << std::endl;
+				info_text.setCharacterSize(25);
+				clicked_button = 3;
+			}
+			else {
+				info_text.setCharacterSize(25);
+			}
+		}
+	}
+
+
 }
 
 void StateFunctions1::initialise_countdown(sf::RenderTarget& window){

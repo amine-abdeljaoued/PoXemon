@@ -33,10 +33,10 @@ using namespace std;
  {
      
      //the intro by Julien
-     /* if (startgame()==1) return 0; */
+     //if (startgame()==1) return 0;
      
      //Initializing the window
-     sf::RenderWindow window(sf::VideoMode(1400, 700), "My window");
+     sf::RenderWindow window(sf::VideoMode(1400, 700), "My window", sf::Style::Titlebar | sf::Style::Close);
 
      /* sf::RenderWindow window(sf::VideoMode(sf::VideoMode::getDesktopMode().height, sf::VideoMode::getDesktopMode().height), "PoXemon"); */
      sf::View view(sf::Vector2f(272, 272), sf::Vector2f(544, 544));
@@ -85,11 +85,10 @@ using namespace std;
              else{
                 int i = fight.update(window, map1.backpack);
                 if(i==0){ Arthur.state = "Stop";}
-                if(i==11){Arthur.state = "Dead";}
+                if(i==50 || i==60){Arthur.state = "Dead";}
                 }
          }
          else{ //Not fighting
-             /* view.zoom(0.5f); */
              if(start_fight==true){
                  start_fight = false;
                  sf::Vector2f position = Arthur.spritePlayer.getPosition();
