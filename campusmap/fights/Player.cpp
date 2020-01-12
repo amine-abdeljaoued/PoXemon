@@ -24,7 +24,6 @@ void Player::update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clock
 				sf::Time& elapsed, sf::Clock& clock1, sf::Clock& clock2, sf::Clock& clock3, float& groundY) {   
 									// Movement is dependant on time not on frame rate
 									// This means that we can have smooth movement over multiple frames, instead of static movement per each frame
-	std::cout<<"player"<<std::endl;
 	velocityX = 0.0f;
 	//Left and right movement
 	if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Left))||(sf::Keyboard::isKeyPressed(sf::Keyboard::A))) {
@@ -89,27 +88,24 @@ void Player::move(float& deltaTime, sf::RenderWindow& window) {
 void Player::collision_opponent() {
 	if (Collision::PixelPerfectTest(sprite, (*enemy).sprite)) {
 		//make it impossible for the pokemons to 'cross' each other
-		//maybe use some mechanics equations ?
 		velocityX *= -1;
 	}
 }
 
 
 void Player::update_sprite_orientation() {
-	//not very optimal
 
 	if (x > (*enemy).x + 2*sprite.getGlobalBounds().width/3 && was_left) { // if player gets at the right of the oppenent 
-																		   // a bit messy (found some numbers to make it look decent)
 		//flip the sprites
-		sprite.setScale(sf::Vector2f(0.5f, 0.5f));
-		(*enemy).sprite.setScale(sf::Vector2f(-0.5f, 0.5f));
+		sprite.setScale(sf::Vector2f(Scale, Scale));
+		(*enemy).sprite.setScale(sf::Vector2f(-enemy->Scale, enemy->Scale));
 		was_left = false;
 	}
 
 	if (x + 2*sprite.getGlobalBounds().width/3 < (*enemy).x && !was_left){ //if player gets at the left of the opponent
 		//flip the sprites
-		sprite.setScale(sf::Vector2f(-0.5f, 0.5f)); 
-		(*enemy).sprite.setScale(sf::Vector2f(0.5f, 0.5f));
+		sprite.setScale(sf::Vector2f(-Scale, Scale)); 
+		(*enemy).sprite.setScale(sf::Vector2f(enemy->Scale, enemy->Scale));
 		was_left = true;
 	}
 }

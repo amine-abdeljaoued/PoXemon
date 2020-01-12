@@ -167,3 +167,4 @@ void Shop::draw(sf::RenderWindow &window, sf::View &view, sf::Event &event, Trai
         draw_money(window, view, event, trainer, backpack);
     }
 }
+

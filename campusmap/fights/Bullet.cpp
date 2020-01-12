@@ -44,7 +44,6 @@ bool Bullet::update(float& deltaTime, float& groundY) {
 bool Bullet::offscreen(sf::RenderWindow& window) {
 	sf::Vector2f window_bounds = window.mapPixelToCoords(static_cast<sf::Vector2i>(window.getSize()));
 	if (position.x<-20 || position.x >window_bounds.x+20 ||  position.y<-20 || position.y >window_bounds.y+20) {
-		std::cout << "offscreen !" << std::endl;
 		return true;
 	}
 	return false;
