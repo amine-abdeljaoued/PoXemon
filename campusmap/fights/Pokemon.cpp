@@ -7,6 +7,7 @@ Pokemon::Pokemon(sf::RenderWindow& window, float h, float v, Backpack_Pokemon ba
 	index = backpack_pokemon.index;
 	name = backpack_pokemon.name;
 	type = backpack_pokemon.type;
+	level = backpack_pokemon.level;
 
 	std::string path = "fights/Images/Pokemon_Images/" + name + ".png";
 	if (!pic.loadFromFile(path)){ std::cout << "could not load pokemon image" << std::endl;} //path = Images/eevee.png

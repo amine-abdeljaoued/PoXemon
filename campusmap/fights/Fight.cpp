@@ -52,10 +52,10 @@ Fight::Fight(sf::RenderWindow& window){
 void Fight::initialise_basic(BackpackMap& pbag_map, sf::RenderWindow& window){
 	// background - must change depending on where we are
     functions1.initialise_background(window, "fights/Images/grassbg.png", background, BackgroundTexture);
-
+	std::cout << "ini background" << std::endl;
 	// initialise poke_buttons and the fight backpack of our player
     for (int i=0; i<3; i++){
-		std::cout<<i<<std::endl;
+		//std::cout<<i<<std::endl;
 		if (pbag_map.backpack_pokemons[i]) {
 			poke_buttons[i] = &((pbag_map.backpack_pokemons[i])->button);
 			bag.backpack_pokemons[i] = pbag_map.backpack_pokemons[i];
@@ -69,9 +69,11 @@ void Fight::initialise_basic(BackpackMap& pbag_map, sf::RenderWindow& window){
 
 	// for the states
     state = 1;
+	std::cout << "hey state1" << std::endl;
 
 	//functions1.initialise(mode, *popponent, *pplayer, window, font);
 	functions1.initialize_state1(game_mode, (*popponent).sprite, (*popponent).name, (*popponent).level, window, poke_buttons, running_sprite, font);
+	std::cout << "ini state 1" << std::endl;
     deltaTime = 0.0f;
     counter = 0;
     clicked_button = -2; // no button clicked
@@ -83,14 +85,43 @@ void Fight::initialise_wild (BackpackMap& pbag_map, sf::RenderWindow& window){
 	int type = 10; // must be implemented
     game_mode = 'w';
 
+
 	// set up players
 	Opponent* opponent = get_wild_pokemon(window, type);
 	popponent = opponent;
+
+	std::cout << "about to initialize_basic" << std::endl;
+	initialise_basic(pbag_map, window);
+	std::cout << "initialized basic" << std::endl;
 	//pplayer = new Player(window, 200.f, 500.f, *pbag_map.backpack_pokemons[0]);
 	//BAGCHECK: random level based on our level
 
-    // basic set up
-	initialise_basic(pbag_map, window);
+	//when we enconter a pokemon in the wild, it should have a level close to our pokemons
+	//we take the average of the levels of the pokemon and add a random integer between 5 and -5
+	int nb_pokemons = 0;
+	int sum_level = 0;
+	for (int i = 0; i < 3; i++) {
+		if (bag.backpack_pokemons[i]) {
+			nb_pokemons += 1;
+			sum_level += bag.backpack_pokemons[i]->level;
+		}
+	}
+	std::cout << nb_pokemons << std::endl;
+	std::cout << "computing average" << std::endl;
+	float average;
+	average = (float)sum_level / (float)nb_pokemons;
+	std::cout << "average" << average << std::endl;
+
+
+	//not very good generation but will do the job
+	std::cout << "about to get random_level" << std::endl;
+	int difference = (rand() % 7) - 3;
+	std::cout << difference << std::endl;
+	int random_level = abs((int)round(average) + difference);
+
+	std::cout << "random_level: " << random_level << std::endl;
+
+	popponent->level = random_level;
 
 
     bag.set_opponent(popponent);
@@ -103,12 +134,12 @@ void Fight::initialise_wild (BackpackMap& pbag_map, sf::RenderWindow& window){
 }
 
 void Fight::initialise_trainer(BackpackMap& pbag_map, Backpack& popponent_bag, sf::RenderWindow& window){
-	std::cout<<"ini";
+	//std::cout<<"ini";
 	// basic setup
 	popponent = new Opponent(window, 200.f, 500.f, *popponent_bag.backpack_pokemons[0]);
 	//pplayer = new Player(window, 200.f, 500.f, *pbag_map.backpack_pokemons[0]);
-	//opponent_bag = popponent_bag;
-  game_mode = 't';
+	opponent_bag = popponent_bag;
+	game_mode = 't';
 	initialise_basic(pbag_map, window);
 
     (bag).set_opponent(popponent);
@@ -118,6 +149,7 @@ void Fight::initialise_trainer(BackpackMap& pbag_map, Backpack& popponent_bag, s
 }
 
 Opponent* Fight::get_wild_pokemon(sf::RenderWindow& window, int type){
+	std::cout << "entering get_wild_pokemon" << std::endl;
 	// randomly choose an opponent - must be based on where we are
 	/*There are:
 	- Identifier for the type: 10 - earth (9 pokemons), 20 - water (5), 30 - air (5), 40 - fire (9)*/
@@ -135,26 +167,11 @@ Opponent* Fight::get_wild_pokemon(sf::RenderWindow& window, int type){
 	if (type==40){
 		index = rand()%9 + 1;
 		name = Fire_Pokemons.find(index)->second;}
+	std::cout << "just set type" << std::endl;
 
-	//when we enconter a pokemon in the wild, it should have a level close to our pokemons
-	//we take the average of the levels of the pokemon and add a random integer between 5 and -5
-	int nb_pokemons = 0;
-	int sum_level = 0;
-	for (int i = 0; i < 3; i++) {
-		if (bag.backpack_pokemons[i]) {
-			nb_pokemons += 1;
-			sum_level += bag.backpack_pokemons[i]->level;
-		}
-	}
-	double average = sum_level / nb_pokemons;
-	std::cout << "average of levels" << std::endl;
-
-	//not very good generation but will do the job
-	int random_level = abs(average - 5 + (rand() % static_cast<int>(average + 5 - (average - 5) + 1)));
-	std::cout << "random_level: " << random_level<< std::endl;
 
 	Opponent* opponent = new Opponent(window, Pokemons.find(name)->second.height, Pokemons.find(name)->second.velocity,
-								Backpack_Pokemon(Pokemons.find(name)->second.name, random_level,
+								Backpack_Pokemon(Pokemons.find(name)->second.name, Pokemons.find(name)->second.level,
 									Pokemons.find(name)->second.index, Pokemons.find(name)->second.health, Pokemons.find(name)->second.ptype));
 	return opponent;
 }
