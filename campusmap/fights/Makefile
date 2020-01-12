@@ -50,7 +50,7 @@ trainer_opponent.o: trainer_opponent.cpp trainer_opponent.hpp
 
 
 
-game:  Opponent.o Pokemon_Button.o Pokeball.o Fight.o main.o StateFunctions.o Pokemon.o Bullet.o Health.o Artillery.o Backpack.o Bullet_bar.o Player.o Collision.o Special_attacks_bar.o
+game:  Opponent.o Pokemon_Button.o Pokeball.o Fight.o StateFunctions.o Pokemon.o Bullet.o Health.o Artillery.o Backpack.o Bullet_bar.o Player.o Collision.o Special_attacks_bar.o
 	$(CXX) main.o  Opponent.o Pokemon_Button.o Fight.o Pokeball.o StateFunctions.o Pokemon.o Bullet.o Health.o Artillery.o Backpack.o Bullet_bar.o Player.o Collision.o Special_attacks_bar.o   -o game $(LDLIBS)  
 
 all:  Opponent.o Pokemon_Button.o Pokeball.o Fight.o StateFunctions.o Pokemon.o Bullet.o Health.o Artillery.o Backpack.o Bullet_bar.o Player.o Collision.o Special_attacks_bar.o trainer_opponent.o
