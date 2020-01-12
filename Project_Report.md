@@ -16,7 +16,7 @@
 
 ### Anya Fries (Fight Team, Fight manager):
 
-### Julien Luzzatto (PoXemon Team):
+### Julien Luzzatto (PoXemon Team, Intro manager):
 
 ### Benjamin Montagnes (Map Team, Project leader):
 
