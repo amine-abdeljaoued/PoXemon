@@ -104,6 +104,9 @@ class Map
         void movingFlower(sf::RenderWindow &window, int x, int y);
         void flowerList(sf::RenderWindow &window);
     
+        //Fish
+        void fish(sf::RenderWindow &window, sf::View &view, Trainer &trainer);
+    
         //Box
         Box box;
 };  
