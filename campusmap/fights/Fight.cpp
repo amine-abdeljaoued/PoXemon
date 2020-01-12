@@ -53,7 +53,6 @@ void Fight::initialise_basic(BackpackMap& pbag_map, sf::RenderWindow& window){
 	// background - must change depending on where we are
     functions1.initialise_background(window, "fights/Images/grassbg.png", background, BackgroundTexture);
 
-
 	// initialise poke_buttons and the fight backpack of our player
     for (int i=0; i<3; i++){
 		std::cout<<i<<std::endl;
@@ -70,9 +69,9 @@ void Fight::initialise_basic(BackpackMap& pbag_map, sf::RenderWindow& window){
 
 	// for the states
     state = 1;
-	char mode = 'w';
+
 	//functions1.initialise(mode, *popponent, *pplayer, window, font);
-	functions1.initialize_state1(mode, (*popponent).sprite, (*popponent).name, (*popponent).level, window, poke_buttons, running_sprite, font);
+	functions1.initialize_state1(game_mode, (*popponent).sprite, (*popponent).name, (*popponent).level, window, poke_buttons, running_sprite, font);
     deltaTime = 0.0f;
     counter = 0;
     clicked_button = -2; // no button clicked
@@ -82,20 +81,21 @@ void Fight::initialise_basic(BackpackMap& pbag_map, sf::RenderWindow& window){
 
 void Fight::initialise_wild (BackpackMap& pbag_map, sf::RenderWindow& window){
 	int type = 10; // must be implemented
+    game_mode = 'w';
 
 	// set up players
 	Opponent* opponent = get_wild_pokemon(window, type);
 	popponent = opponent;
-	pplayer = new Player(window, 200.f, 500.f, *pbag_map.backpack_pokemons[0]);
+	//pplayer = new Player(window, 200.f, 500.f, *pbag_map.backpack_pokemons[0]);
 	//BAGCHECK: random level based on our level
 
     // basic set up
 	initialise_basic(pbag_map, window);
-    game_mode = 'w';
+
 
     bag.set_opponent(popponent);
-    (*pplayer).set_enemy(popponent);
-	(*popponent).set_enemy(pplayer);
+    //(*pplayer).set_enemy(popponent);
+	//(*popponent).set_enemy(pplayer);
 
 	// create an opponent 'backpack' for the scenario
 	Backpack_Pokemon* opoke1 = new Backpack_Pokemon((*opponent).name, (*opponent).level, (*opponent).index, (*opponent).health.health, (*opponent).type);
@@ -106,30 +106,15 @@ void Fight::initialise_trainer(BackpackMap& pbag_map, Backpack& popponent_bag, s
 	std::cout<<"ini";
 	// basic setup
 	popponent = new Opponent(window, 200.f, 500.f, *popponent_bag.backpack_pokemons[0]);
-	pplayer = new Player(window, 200.f, 500.f, *pbag_map.backpack_pokemons[0]);
-	opponent_bag = popponent_bag;
-
-    game_mode = 't';
-
-    for (int i=0; i<3; i++){
-		if (bag.backpack_pokemons[i]) {
-			//std::cout << "initialise poke_button" << i << std::endl;
-			poke_buttons[i] = &((bag.backpack_pokemons[i])->button);
-		}
-    }
+	//pplayer = new Player(window, 200.f, 500.f, *pbag_map.backpack_pokemons[0]);
+	//opponent_bag = popponent_bag;
+  game_mode = 't';
+	initialise_basic(pbag_map, window);
 
     (bag).set_opponent(popponent);
-    /*(*pplayer).set_enemy(popponent);
-	(*popponent).set_enemy(pplayer);*/
-
-    // for the states
-    state = 1;
-	char mode = 't';
-	//functions1.initialise(mode, *popponent, *pplayer, window, font);
-	functions1.initialize_state1(mode, (*popponent).sprite, (*popponent).name, (*popponent).level, window, poke_buttons, running_sprite, font);
-    deltaTime = 0.0f;
-    counter = 0;
-    clicked_button = -2; // no button clicked
+    //(*pplayer).set_enemy(popponent);
+	//(*popponent).set_enemy(pplayer);
+	//std::cout<<2;
 }
 
 Opponent* Fight::get_wild_pokemon(sf::RenderWindow& window, int type){

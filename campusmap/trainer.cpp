@@ -11,7 +11,7 @@
 using namespace std;
 
 Trainer::Trainer( float Speed, int sheetRect, int sizeAnim) {
-    
+
     if (!texturePlayer.loadFromFile(/* resourcePath() + */ "Sprites/trainer.png")) {
         std::cout << "Error loading sprite";
     }
@@ -27,7 +27,7 @@ Trainer::Trainer( float Speed, int sheetRect, int sizeAnim) {
     speedSprite = 0;
 
     font.loadFromFile("Fonts/sansation.ttf");
-    
+
     fish = true;
 //    fight_mode = 'w';
 }
@@ -59,7 +59,7 @@ void Trainer::displacement(sf::Event &event, sf::View &view) {
     sf::Vector2f position = (spritePlayer).getPosition();
     int x = position.x + 16;
     int y = position.y + 16;
-    setSpeed(event); 
+    setSpeed(event);
     if (state == "Walking") {
         if(intern_clock.getElapsedTime().asMilliseconds() >= (float) 2000/30){
             if (facingDirection == "Down") {
@@ -72,7 +72,7 @@ void Trainer::displacement(sf::Event &event, sf::View &view) {
                     (spritePlayer).move(0, playerMovementSpeed);
                     (spritePlayer).setTextureRect(sf::IntRect(2 + counterWalk * (sheetRect+2)+speedSprite,2,sheetRect,sheetRect));
                     view.move(0,playerMovementSpeed);
-                        
+
                     counterWalk++;
                     if(counterWalk==sizeAnim){
                         counterWalk = 0;
@@ -89,7 +89,7 @@ void Trainer::displacement(sf::Event &event, sf::View &view) {
                     (spritePlayer).move(0, -playerMovementSpeed);
                     (spritePlayer).setTextureRect(sf::IntRect(2 + counterWalk * (2 + sheetRect)+speedSprite,2 + (sheetRect+2),sheetRect,sheetRect));
                     view.move(0, -playerMovementSpeed);
-                         
+
                     counterWalk++;
                     if(counterWalk == sizeAnim){
                         counterWalk = 0;
@@ -106,7 +106,7 @@ void Trainer::displacement(sf::Event &event, sf::View &view) {
                     (spritePlayer).move(playerMovementSpeed, 0);
                     (spritePlayer).setTextureRect(sf::IntRect(2+counterWalk * (sheetRect+2)+speedSprite,2+ 3*(sheetRect+2),sheetRect,sheetRect));
                     view.move(playerMovementSpeed, 0);
-                         
+
                     counterWalk++;
                     if(counterWalk == sizeAnim){
                         counterWalk = 0;
@@ -123,7 +123,7 @@ void Trainer::displacement(sf::Event &event, sf::View &view) {
                     (spritePlayer).move(-playerMovementSpeed, 0);
                     (spritePlayer).setTextureRect(sf::IntRect(2+counterWalk * (sheetRect+2)+speedSprite,2+2*(sheetRect+2),sheetRect,sheetRect));
                     view.move(-playerMovementSpeed, 0);
-                    
+
                     counterWalk++;
                     if(counterWalk == sizeAnim){
                         counterWalk = 0;
@@ -203,7 +203,7 @@ void Trainer::fishing(sf::RenderWindow &window, sf::View &view){
     int b = 0;
     int c = 0;
     int d = 0;
-    
+
     if (facingDirection == "Down"){
         y = 0;
         c = 1;
@@ -222,51 +222,9 @@ void Trainer::fishing(sf::RenderWindow &window, sf::View &view){
         a = 1;
         b = 8;
     }
-    
+
     if (state == "Fishing"){
-        
-        text.setFont(font);
-        
-        random_device rd;
-        mt19937 gen(rd());
-        uniform_real_distribution<> dis(0.0, 1.0);
-        float probagenerated = dis(gen);
-        if (probagenerated<0.005){
-            text.setString("A wild Pokemon was caught!");
-            state = "Fighting";
-        }
-        else if (text.getString() != "A wild Pokemon was caught!")
-            text.setString("Fishing...");
-        
-        
-        
-        text.setCharacterSize(15);
-        text.setFillColor(sf::Color::Black);
-        /* sf::Vector2f viewSize = view.getSize();
-        bubble.setSize(sf::Vector2f(viewSize.x, viewSize.y/4)); */
 
-        sf::FloatRect viewBounds = getViewBounds(view);
-        bubble.setPointCount(8);
-        bubble.setPoint(0, sf::Vector2f(float(viewBounds.left + 30), float(viewBounds.top + viewBounds.height - 60)));
-        bubble.setPoint(1, sf::Vector2f(float(viewBounds.left + viewBounds.height - 30), float(viewBounds.top + viewBounds.height - 60)));
-        bubble.setPoint(2, sf::Vector2f(float(viewBounds.left + viewBounds.height - 10), float(viewBounds.top + viewBounds.height - 45)));
-        bubble.setPoint(3, sf::Vector2f(float(viewBounds.left + viewBounds.height - 10), float(viewBounds.top + viewBounds.height - 25)));
-        bubble.setPoint(4, sf::Vector2f(float(viewBounds.left + viewBounds.height - 30), float(viewBounds.top + viewBounds.height - 10)));
-        bubble.setPoint(5, sf::Vector2f(float(viewBounds.left + 30), float(viewBounds.top + viewBounds.height - 10)));
-        bubble.setPoint(6, sf::Vector2f(float(viewBounds.left + 10), float(viewBounds.top + viewBounds.height - 25)));
-        bubble.setPoint(7, sf::Vector2f(float(viewBounds.left + 10), float(viewBounds.top + viewBounds.height - 45)));
-        bubble.setOutlineColor(sf::Color::Black);
-        bubble.setOutlineThickness(2.f);
-        text.setPosition(int(viewBounds.left) + 35, int(viewBounds.top + viewBounds.height - 40) );
-        /* bubble.setPosition(int(viewBounds.left), int(viewBounds.top + viewBounds.height - 50)); */
-
-        text.setStyle(sf::Text::Bold);
-        
-        window.draw(bubble);
-        window.draw(text);
-        
-        
-        
         if (counterWalk < 4){
             (spritePlayer).setTextureRect(sf::IntRect(512 + counterWalk * (sheetRect+2),2+y*(sheetRect+2),sheetRect,sheetRect));
             if (counterWalk == 0){
@@ -295,7 +253,7 @@ void Trainer::fishing(sf::RenderWindow &window, sf::View &view){
         }
 
     }
-    
+
 }
 
 
@@ -308,7 +266,7 @@ void Trainer::rock(sf::RenderWindow &window, sf::View &view){
         text.setCharacterSize(15);
         text.setFillColor(sf::Color::Black);
         text.setStyle(sf::Text::Bold);
-        
+
         bubble.setPointCount(8);
         bubble.setPoint(0, sf::Vector2f(float(viewBounds.left + 30), float(viewBounds.top + viewBounds.height - 60)));
         bubble.setPoint(1, sf::Vector2f(float(viewBounds.left + viewBounds.height - 30), float(viewBounds.top + viewBounds.height - 60)));
@@ -322,10 +280,10 @@ void Trainer::rock(sf::RenderWindow &window, sf::View &view){
         bubble.setOutlineThickness(2.f);
         text.setPosition(int(viewBounds.left) + 35, int(viewBounds.top + viewBounds.height - 40) );
         /* bubble.setPosition(int(viewBounds.left), int(viewBounds.top + viewBounds.height - 50)); */
-        
+
         window.draw(bubble);
         window.draw(text);
-        
+
         sf::Sprite sprite;
         sprite.setTexture(texturePlayer);
         sprite.setTextureRect(sf::IntRect(2 + ((int) counterWalk/3) *82,322,80,80));
