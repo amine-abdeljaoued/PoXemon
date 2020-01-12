@@ -97,6 +97,7 @@ class Box {
         bool release_down_right;
         bool release_up_right;
     
-        bool pointerEmpty(int i, BackpackMap &backpack);
-        void addPokemon(Backpack_Pokemon poke, BackpackMap &backpack);
+        bool pointerEmpty(int i);
+        bool addPokemon(Backpack_Pokemon poke, BackpackMap &backpack);
+        bool addPokemonB(std::string name, int level, int index, int health, int type);
 };
