@@ -6,6 +6,7 @@
 #include <sstream>
 #include "trainer.hpp"
 #include "Backpack_map.hpp"
+#include "box.hpp"
 
 using namespace std;
 
@@ -13,7 +14,7 @@ class Center {
     public:
         Center();
         void draw(sf::RenderWindow &window, sf::View &view, sf::Event &event, Trainer &trainer, BackpackMap &backpack);
-    
+
         int Selecteditem;
        
         //Switching
