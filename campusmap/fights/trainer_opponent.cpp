@@ -10,8 +10,8 @@
 using namespace std;
 
 void Trainer_opponent::speak(sf::RenderWindow &window, sf::View &view, Trainer &trainer){
-    cout<<"Speakok"<<endl;
-    if (fixed == true){
+    if(beaten==false){
+        if (fixed == true){
         this->draw(window);
     }
     
@@ -86,6 +86,12 @@ void Trainer_opponent::speak(sf::RenderWindow &window, sf::View &view, Trainer &
                window.draw(text);
         }
     }
+
+    }
+    else{
+        this->draw(window);
+    }
+    
 }
 
         

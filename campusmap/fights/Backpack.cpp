@@ -50,7 +50,7 @@ Backpack::~Backpack(){
 }
 
 void Backpack::setBackpack(int i){ //Some standard backpacks
-    if(i==1){
+    if(i==1){ //First opponent;
         std::string name1 = "jistolwer";
         std::string name2 = "auron";
         std::string name3 = "husabus";
@@ -60,6 +60,7 @@ void Backpack::setBackpack(int i){ //Some standard backpacks
         backpack_pokemons[0] = poke1;
         backpack_pokemons[1] = poke2;
         backpack_pokemons[2] = poke3;
+		bag_number = i;
     }
 	if(i==2){
         std::string name1 = "jistolwer";

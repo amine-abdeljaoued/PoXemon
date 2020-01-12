@@ -54,6 +54,7 @@ class Backpack
 			}
 		}
 
+        int bag_number;
 
     private:
     sf::Texture normaltext1;

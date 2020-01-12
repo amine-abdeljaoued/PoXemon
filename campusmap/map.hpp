@@ -13,6 +13,7 @@
 #include "interior.hpp"
 #include "center.hpp"
 #include "Backpack_map.hpp"
+#include "fights/Backpack.h"
 
 using namespace std;
 
@@ -37,6 +38,10 @@ class Map
         bool obtained_light;
         bool mr_fountain;
         bool foot_players;
+        map<string, vector<Npc*> > npcs; //Map mapping each map_name to its associated vector of npcs
+
+         //Checking opponent trainers
+        void check_opponents(Backpack &bag);
     
     private:
         TileMap background1_1;
@@ -55,7 +60,7 @@ class Map
         TileMap background11;
         TileMap background11_2;
     
-        map<string, vector<Npc*> > npcs; //Map mapping each map_name to its associated vector of npcs
+        
         
         map<string, const int*> collision_;
         string map_name;
@@ -101,4 +106,6 @@ class Map
     
         //Backpack
         BackpackMap backpack;
+
+       
 };  

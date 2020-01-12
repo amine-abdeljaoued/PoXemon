@@ -100,12 +100,17 @@ using namespace std;
              }
              else{
                 int i = fight.update(window);
+                if(i==55){ //Won against trainer
+                    Arthur.state = "Stop";
+                    map1.check_opponents(*(Arthur.opponent_bag));
+                }
                 if(i==0){ Arthur.state = "Stop";}
                 if(i==50 || i==60){Arthur.state = "Dead";}
                 }
          }
          else{ //Not fighting
              if(start_fight==true){
+
                  start_fight = false;
                  sf::Vector2f position = Arthur.spritePlayer.getPosition();
                  view.setSize(sf::Vector2f(544.f, 544.f));
@@ -121,4 +126,5 @@ using namespace std;
      // to fix...
      return 0;
  }
+
  
