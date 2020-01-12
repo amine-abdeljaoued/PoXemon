@@ -53,12 +53,6 @@ void Fight::initialise_basic(BackpackMap& pbag_map, sf::RenderWindow& window){
 	// background - must change depending on where we are
     functions1.initialise_background(window, "fights/Images/grassbg.png", background, BackgroundTexture);
 
-	  Opponent* opponent = get_wild_pokemon(window, type);
-	   popponent = opponent;
-	     //pplayer = new Player(window, 200.f, 500.f, *pbag.backpack_pokemons[0]);
-
-    // basic set up
-    game_mode = 'w';
 
 	// initialise poke_buttons and the fight backpack of our player
     for (int i=0; i<3; i++){
