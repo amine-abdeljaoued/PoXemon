@@ -364,7 +364,12 @@ int Fight::update(sf::RenderWindow& window){
 		//leave button
 		window.draw(arrow_sprite);
 		window.draw(leave);
-		if (functions56.check_leave(arrow_sprite, window)) return 0;
+		if(won && functions56.check_leave(arrow_sprite, window)){
+			return 50; //won against trainer
+		}
+		if(!won && functions56.check_leave(arrow_sprite, window)){
+			return 51; //lost against trainer
+		}
 	}
 
 	else if (state == 8) { //end of the fight against a wild pokemon
@@ -390,6 +395,12 @@ int Fight::update(sf::RenderWindow& window){
 		//leave button
 		window.draw(arrow_sprite);
 		window.draw(leave);
+		if(won && functions56.check_leave(arrow_sprite, window)){
+			return 60; //won against wild
+		}
+		if(!won && functions56.check_leave(arrow_sprite, window)){
+			return 61; //lost against wild
+		}
 		if (functions56.check_leave(arrow_sprite, window)) return 0;
 
 	} //wild opponent fainted
