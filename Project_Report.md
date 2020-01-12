@@ -1,4 +1,4 @@
-### Project Report
+# Project Report
 
 For the project, we separated ourselves at the beginning into small different groups working on different parts of the project that we later assembled.
 
@@ -6,22 +6,22 @@ We thus had one group working on the map with the player being able to move on t
 
 ## What we did personaly:
 
-# Amine Abdeljaoued:
+### Amine Abdeljaoued:
 
-# Arthur Collette:
+### Arthur Collette:
 
-# Maxence Dulac:
+### Maxence Dulac:
 
-# Anya Fries:
+### Anya Fries:
 
-# Julien Luzzatto:
+### Julien Luzzatto:
 
-# Benjamin Montagnes:
+### Benjamin Montagnes:
 
-# Francois Reynal:
+### Francois Reynal:
 
-# Clement Sterlin
+### Clement Sterlin
 
-# Antonin Wattel:
+### Antonin Wattel:
 
-# Jiahe Zhu:
+### Jiahe Zhu:
