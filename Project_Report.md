@@ -28,9 +28,6 @@ Then they told us that what they had was ready. As the responsible of the git re
 Finally after having linked the work, I implemented a subclass of NPCs for opponent trainers with whom we could fight. With Benjamin, I put some where needed for the scenario.
 
 
-
-Github
-
 ### Arthur Collette (Map Team, Map manager):
 
 ### Maxence Dulac (PoXemon Team):
