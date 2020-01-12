@@ -104,6 +104,11 @@ private:
     bool release_right;
     
     sf::FloatRect getViewBounds(const sf::View &view);
+    
+    void switchPokemon(sf::RenderWindow &window, sf::Event &event, sf::View &view, Trainer &trainer);
+    bool sw;
+    int swi1;
+    int swi2;
 };
 
 //dictionnary giving the different possible existing items in the game
