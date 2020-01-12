@@ -521,7 +521,7 @@ bool Box::addPokemonB(std::string name, int level, int index, int health, int ty
     int i = 0;
     while(i<10 && in == false){
         if (pointerEmpty(i) == true){
-            box_pokemons[i] = new Backpack_Pokemon(name,level,index,health,type);
+            box_pokemons[i] = new Backpack_Pokemon(name,level,i,health,type);
             poke_list.push_back(name);
             in = true;
             return in;
@@ -542,7 +542,7 @@ bool Box::addPokemon(Backpack_Pokemon poke, BackpackMap &backpack){
     int i = 0;
     while(i<2 && in == false){
         if (backpack.backpack_pokemons[i] == NULL){
-            backpack.backpack_pokemons[i] = new Backpack_Pokemon(name,level,index,health,type);
+            backpack.backpack_pokemons[i] = new Backpack_Pokemon(name,level,i,health,type);
             in = true;
             return in;
         }

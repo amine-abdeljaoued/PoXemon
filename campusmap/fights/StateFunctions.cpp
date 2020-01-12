@@ -210,7 +210,7 @@ void StateFunctions1::draw_how_to(sf::RenderWindow& window){
 //state 1--------------------------------------------------------------------------------------------------------------
 void StateFunctions1::initialize_state1(char& game_mode, sf::Sprite& opp_sprite,std::string& opp_n,int& opplvl, sf::RenderWindow& window, Pokemon_Button* buttons[], sf::Sprite& running_sprite, sf::Font& ffont) {
 	initialise_howto(window);
-
+	std::cout << "ini howto" << std::endl;
 	mode = game_mode;
 	//text elements
 	font = ffont;
@@ -506,7 +506,7 @@ void StateFunctions56::initialize_state_5_6(char game_mode, Pokemon* poke, sf::F
 
 	//update life of the pokemon on its button
 	//std::cout << "index"<<poke->index << std::endl;
-	std::cout << buttons[(*poke).index] << std::endl;
+	//std::cout << buttons[(*poke).index] << std::endl;
 	buttons[(*poke).index]->setHealth((*poke).health.health);
 	//std::cout << "just set life" << std::endl;
 }
