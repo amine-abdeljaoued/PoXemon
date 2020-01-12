@@ -90,7 +90,7 @@ BackpackMap::BackpackMap() {
         Backpack_Pokemon *poke3 = new Backpack_Pokemon(name3, 1, 1, 70, 30);
         backpack_pokemons[0] = poke1;
         backpack_pokemons[1] = poke2;
-        //backpack_pokemons[2] = poke3; //test with only two pokemons in the bag
+        backpack_pokemons[2] = poke3; //test with only two pokemons in the bag
 
 
         //For Display of Pokemon in bag

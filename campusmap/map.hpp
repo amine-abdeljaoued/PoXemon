@@ -37,6 +37,9 @@ class Map
         bool obtained_light;
         bool mr_fountain;
         bool foot_players;
+
+        //Backpack
+        BackpackMap backpack;
     
     private:
         TileMap background1_1;
@@ -98,7 +101,4 @@ class Map
         //Flower animation
         void movingFlower(sf::RenderWindow &window, int x, int y);
         void flowerList(sf::RenderWindow &window);
-    
-        //Backpack
-        BackpackMap backpack;
 };  
