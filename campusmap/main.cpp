@@ -31,9 +31,9 @@ using namespace std;
 
  int main()
  {
-     
-     //the intro by Julien
-     //if (startgame()==1) return 0;
+        //the intro by Julien
+        int poke_name = startgame();
+        if (poke_name==1) return 0;
      
      //Initializing the window
      sf::RenderWindow window(sf::VideoMode(1400, 700), "PoXemon", sf::Style::Titlebar | sf::Style::Close);
