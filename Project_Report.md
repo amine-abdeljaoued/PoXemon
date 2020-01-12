@@ -10,6 +10,27 @@
 
 ### Amine Abdeljaoued (Map Team, Github manager):
 
+As said previously, we firstly decided to split the work in 3 teams. I decided to be part of the map team. 
+Benjamin and Arthur already had coded a bit to be able to have a character walking on the map. The first week, I didn’t really implement new features but I organized the code, splitting it in several classes and files. Then we met and spoke about the structure of our code.
+
+After that, I implemented the trainer class, handling its displacement on the map. This clearly wasn’t the final version but a first draft that was working.
+Then, I wanted to put NPCs in the map, with whom we could first have a discussion. I created the class, that would also be a basis for opponent trainers later. At that point we were able to put NPCs in the map anywhere specifying their sprite sheet for their appearance and their dialogues. 
+
+At this point we had a lot to draw on the map, with superposition between the different elements to handle…
+That’s why we started a map class and I worked quite a lot on the main drawing function. 
+I also contributed to the superposition of Tilesets on maps to implement our first building.
+
+Then I spoke with those that did the different maps, implemented NPCs and panels where they wanted to.
+The other teams were also working on their side and we had a meeting with the fight team to speak about the format of fights we needed what they could do to facilitate merging everything.
+
+
+Then they told us that what they had was ready. As the responsible of the git repository, I linked their work with ours. I first thought a lot on paper on the best way to do it. Then I did it. As the Git master, I also had to fix the problem of the team sometimes regarding branches, wrong manipulations…
+Finally after having linked the work, I implemented a subclass of NPCs for opponent trainers with whom we could fight. With Benjamin, I put some where needed for the scenario.
+
+
+
+Github
+
 ### Arthur Collette (Map Team, Map manager):
 
 ### Maxence Dulac (PoXemon Team):
