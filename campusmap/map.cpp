@@ -230,9 +230,43 @@ Map::Map(sf::RenderWindow &window)
     dialogue_sp.push_back("But first you need some training");
     dialogue_sp.push_back("Go see the players on the field");
     dialogue_sp.push_back("They are very good");
+    dialogue_sp.push_back("But some are too concentrated");
+    dialogue_sp.push_back("to even speak to you");
     Npc* passeur5 = new Npc("passeur5","Sprites/NPC1.png",432,675,32,32,1.f,440,384,dialogue_sp,false);
     if (foot_players == false) npcs_sport.push_back(passeur5);
 
+    vector<string> dialogue_pl;
+    dialogue_pl.push_back("You are not yet ready to fight");
+    dialogue_pl.push_back("World champion PoXemon trainer");
+    Npc* bla = new Npc("bla","Sprites/NPC1.png",17,1625,32,32,1.f,424,144,dialogue_pl,true);
+    npcs_sport.push_back(bla);
+    Npc* player_foot2 = new Npc("player_foot2","Sprites/NPC1.png",17,1625,32,32,1.f,344,144,dialogue_pl,true);
+    npcs_sport.push_back(player_foot2);
+    Npc* player_foot3 = new Npc("player_foot3","Sprites/NPC1.png",17,1817,32,32,1.f,360,208,dialogue_pl,true);
+    npcs_sport.push_back(player_foot3);
+    Npc* player_foot4 = new Npc("player_foot4","Sprites/NPC1.png",17,1625,32,32,1.f,360,80,dialogue_pl,true);
+    npcs_sport.push_back(player_foot4);
+    Npc* player_foot5 = new Npc("player_foot5","Sprites/NPC1.png",17,1817,32,32,1.f,248,64,dialogue_pl,true);
+    npcs_sport.push_back(player_foot5);
+    Npc* player_foot6 = new Npc("player_foot6","Sprites/NPC1.png",17,1625,32,32,1.f,264,176,dialogue_pl,true);
+    npcs_sport.push_back(player_foot6);
+    Npc* player_foot7 = new Npc("player_foot7","Sprites/NPC1.png",17,1817,32,32,1.f,200,160,dialogue_pl,true);
+    npcs_sport.push_back(player_foot7);
+    Npc* foot_player1 = new Npc("foot_player1","Sprites/NPC1.png",433,1657,32,32,1.f,72,144,dialogue_pl,true);
+    npcs_sport.push_back(foot_player1);
+    Npc* foot_player2 = new Npc("foot_player2","Sprites/NPC1.png",433,1881,32,32,1.f,152,176,dialogue_pl,true);
+    npcs_sport.push_back(foot_player2);
+    Npc* foot_player3 = new Npc("foot_player3","Sprites/NPC1.png",433,1657,32,32,1.f,152,144,dialogue_pl,true);
+    npcs_sport.push_back(foot_player3);
+    Npc* foot_player4 = new Npc("foot_player4","Sprites/NPC1.png",433,1881,32,32,1.f,120,80,dialogue_pl,true);
+    npcs_sport.push_back(foot_player4);
+    Npc* foot_player5 = new Npc("foot_player5","Sprites/NPC1.png",433,1657,32,32,1.f,200,96,dialogue_pl,true);
+    npcs_sport.push_back(foot_player5);
+    Npc* foot_player6 = new Npc("foot_player6","Sprites/NPC1.png",433,1881,32,32,1.f,232,224,dialogue_pl,true);
+    npcs_sport.push_back(foot_player6);
+    Npc* foot_player7 = new Npc("foot_player7","Sprites/NPC1.png",433,1657,32,32,1.f,296,112,dialogue_pl,true);
+    npcs_sport.push_back(foot_player7);
+    
     npcs.insert(pair<string, vector<Npc*> >("third", npcs_sport));
     
     //For the maze
