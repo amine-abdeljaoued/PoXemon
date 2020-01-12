@@ -941,6 +941,7 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
     shop.draw(window, view, event, trainer, backpack);
     center.draw(window, view, event, trainer, backpack);
     light(window, view);
+    fish(window, view, trainer);
     backpack.draw(window, view, event, trainer);
     box.draw(window, view, event, trainer, backpack);
 }
@@ -1242,5 +1243,49 @@ void Map::illuBat80(sf::RenderWindow &window){
             window.draw(sprite);
           }
     }
+}
+
+void Map::fish(sf::RenderWindow &window, sf::View &view, Trainer &trainer){
+    sf::FloatRect viewBounds = getViewBounds(view);
+    
+    if (trainer.state == "Fishing"){
+        trainer.text.setFont(trainer.font);
+               
+        random_device rd;
+        mt19937 gen(rd());
+        uniform_real_distribution<> dis(0.0, 1.0);
+        float probagenerated = dis(gen);
+        if (probagenerated<0.005){
+            trainer.text.setString("A wild Pokemon was caught!");
+//            trainer.state = "Fighting";
+//            trainer.fight_mode = "w";
+        }
+        else if (trainer.text.getString() != "A wild Pokemon was caught!")
+            trainer.text.setString("Fishing...");
+           
+        trainer.text.setFont(trainer.font);
+        trainer.text.setCharacterSize(15);
+        trainer.text.setFillColor(sf::Color::Black);
+        
+        trainer.bubble.setPointCount(8);
+        trainer.bubble.setPoint(0, sf::Vector2f(float(viewBounds.left + 30), float(viewBounds.top + viewBounds.height - 60)));
+        trainer.bubble.setPoint(1, sf::Vector2f(float(viewBounds.left + viewBounds.height - 30), float(viewBounds.top + viewBounds.height - 60)));
+        trainer.bubble.setPoint(2, sf::Vector2f(float(viewBounds.left + viewBounds.height - 10), float(viewBounds.top + viewBounds.height - 45)));
+        trainer.bubble.setPoint(3, sf::Vector2f(float(viewBounds.left + viewBounds.height - 10), float(viewBounds.top + viewBounds.height - 25)));
+        trainer.bubble.setPoint(4, sf::Vector2f(float(viewBounds.left + viewBounds.height - 30), float(viewBounds.top + viewBounds.height - 10)));
+        trainer.bubble.setPoint(5, sf::Vector2f(float(viewBounds.left + 30), float(viewBounds.top + viewBounds.height - 10)));
+        trainer.bubble.setPoint(6, sf::Vector2f(float(viewBounds.left + 10), float(viewBounds.top + viewBounds.height - 25)));
+        trainer.bubble.setPoint(7, sf::Vector2f(float(viewBounds.left + 10), float(viewBounds.top + viewBounds.height - 45)));
+        trainer.bubble.setOutlineColor(sf::Color::Black);
+        trainer.bubble.setOutlineThickness(2.f);
+        trainer.text.setPosition(int(viewBounds.left) + 35, int(viewBounds.top + viewBounds.height - 40) );
+        /* bubble.setPosition(int(viewBounds.left), int(viewBounds.top + viewBounds.height - 50)); */
+
+        trainer.text.setStyle(sf::Text::Bold);
+           
+        window.draw(trainer.bubble);
+        window.draw(trainer.text);
+    }
+   
 }
 
