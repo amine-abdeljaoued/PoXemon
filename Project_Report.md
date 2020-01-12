@@ -30,7 +30,7 @@ Finally after having linked the work, I implemented a subclass of NPCs for oppon
 
 ### Arthur Collette (Map Team, Map manager):
 
-### Maxence Dulac (PoXemon Team):
+### Maxence Dulac (PoXemon Team, PoXemon Manager):
 
 During this project I was part of the "PoXemon team" and throughout the duration I worked the most with Julien Luzzatto and we cooperated with the other teams of the project.
 
