@@ -225,6 +225,13 @@ int intro(std::string picture, bool side, int which) {
     // Create the main window
     sf::VideoMode desktop = sf::VideoMode().getDesktopMode();
     sf::RenderWindow intro(desktop, "PoXemon");
+    
+    sf::FloatRect rt;
+    sf::View view;
+    rt.left = view.getCenter().x - view.getSize().x/2.f;
+    rt.top  = view.getCenter().y - view.getSize().y/2.f;
+    rt.width  = view.getSize().x;
+    rt.height = view.getSize().y;
 
     // Set the Icon
     sf::Image icon;
@@ -259,21 +266,11 @@ int intro(std::string picture, bool side, int which) {
     sf::Sprite professor;
     sf::Vector2u ImageSize;
     professor.scale(sf::Vector2f(3.f, 3.f)); //Set scale
-        
-    float x = 0.02; //which side of the screen
-    float y = 0.42;
-    if (side == 1){
-        x = 0.60;
-        y = 0.10;
-    }
-    professor.setPosition(WindowSize.x*(x), WindowSize.y*(0.25));
-    professor.setTexture(image);
     
     // Create a dialogue box
     sf::RectangleShape dialogue(sf::Vector2f(1500.f, 400.f));
     dialogue.setOutlineThickness(20.f);
     dialogue.setOutlineColor(sf::Color(1, 1, 1));
-    dialogue.setPosition(WindowSize.x*(y), WindowSize.y*(0.15));
     
     // Create a graphical text to display
     sf::Text title;
@@ -285,7 +282,6 @@ int intro(std::string picture, bool side, int which) {
     title.setCharacterSize(70);
     title.setStyle(sf::Text::Bold);
     title.setFillColor(sf::Color::Black);
-    title.setPosition(WindowSize.x*(y)+WindowSize.x*(0.02), WindowSize.y*(0.15)+WindowSize.y*(0.05));
     
     // Create a second line of graphical text to display
     sf::Text subtitle;
@@ -294,7 +290,22 @@ int intro(std::string picture, bool side, int which) {
     subtitle.setCharacterSize(70);
     subtitle.setStyle(sf::Text::Bold);
     subtitle.setFillColor(sf::Color::Black);
-    subtitle.setPosition(WindowSize.x*(y)+WindowSize.x*(0.02), WindowSize.y*(0.15)+WindowSize.y*(0.10));
+    
+    if (side == 0){
+    professor.setPosition(rt.left + 0.15*rt.width, rt.top + 0.50*rt.height);
+    professor.setTexture(image);
+    dialogue.setPosition(rt.left + 1.40*rt.width, rt.top + 0.20*rt.height);
+    title.setPosition(rt.left + 1.43*rt.width, rt.top + 0.24*rt.height);
+    subtitle.setPosition(rt.left + 1.43*rt.width, rt.top + 0.36*rt.height);
+    }
+        
+    if (side == 1){
+    professor.setPosition(rt.left + 1.80*rt.width, rt.top + 0.50*rt.height);
+    professor.setTexture(image);
+    dialogue.setPosition(rt.left + 0.20*rt.width, rt.top + 0.20*rt.height);
+    title.setPosition(rt.left + 0.23*rt.width, rt.top + 0.24*rt.height);
+    subtitle.setPosition(rt.left + 0.23*rt.width, rt.top + 0.36*rt.height);
+    }
     
     // Create an explanation
     sf::Text expl("Press X to go forward", font, 40);
@@ -306,7 +317,6 @@ int intro(std::string picture, bool side, int which) {
     if (side == 0){
         expl.setPosition(WindowSize.x*(0.70), WindowSize.y*(0.90));
     }
-    
     
     if (which == 0){
     std::string str = "Hi! Sorry to keep you waiting!";
@@ -543,6 +553,13 @@ bool choice(std::string prof, bool side, int which) {
     // Create the main window
     sf::VideoMode desktop = sf::VideoMode().getDesktopMode();
     sf::RenderWindow choice(desktop, "PoXemon");
+    
+    sf::FloatRect rt;
+    sf::View view;
+    rt.left = view.getCenter().x - view.getSize().x/2.f;
+    rt.top  = view.getCenter().y - view.getSize().y/2.f;
+    rt.width  = view.getSize().x;
+    rt.height = view.getSize().y;
 
     // Set the Icon
     sf::Image icon;
@@ -577,34 +594,22 @@ bool choice(std::string prof, bool side, int which) {
     }
     sf::Sprite professor;
     sf::Vector2u ImageSize;
-    professor.scale(sf::Vector2f(5.f, 5.f)); //Set scale
-        
-    float x = 0.02; //which side of the screen
-    float y = 0.42;
-    if (side == 1){
-        x = 0.60;
-        y = 0.10;
-    }
-    professor.setPosition(WindowSize.x*(0.45), -650);
-    professor.setTexture(image);
+    professor.scale(sf::Vector2f(3.f, 3.f)); //Set scale
     
     // Create a dialogue box
     sf::RectangleShape dialogue(sf::Vector2f(1500.f, 400.f));
     dialogue.setOutlineThickness(20.f);
     dialogue.setOutlineColor(sf::Color(1, 1, 1));
-    dialogue.setPosition(WindowSize.x*(y), WindowSize.y*(0.15));
     
     // Create a choice 1
     sf::RectangleShape choice1(sf::Vector2f(700.f, 200.f));
     choice1.setOutlineThickness(10.f);
     choice1.setOutlineColor(sf::Color(1, 1, 1));
-    choice1.setPosition(WindowSize.x*(y), WindowSize.y*(0.55));
     
     // Create a choice 2
     sf::RectangleShape choice2(sf::Vector2f(700.f, 200.f));
     choice2.setOutlineThickness(10.f);
     choice2.setOutlineColor(sf::Color(1, 1, 1));
-    choice2.setPosition(WindowSize.x*(y+0.24), WindowSize.y*(0.55));
     
     // Create a graphical text to display
     sf::Text title;
@@ -616,7 +621,6 @@ bool choice(std::string prof, bool side, int which) {
     title.setCharacterSize(70);
     title.setStyle(sf::Text::Bold);
     title.setFillColor(sf::Color::Black);
-    title.setPosition(WindowSize.x*(y)+WindowSize.x*(0.02), WindowSize.y*(0.15)+WindowSize.y*(0.05));
     
     // Create a second line of graphical text to display
     sf::Text subtitle;
@@ -625,25 +629,46 @@ bool choice(std::string prof, bool side, int which) {
     subtitle.setCharacterSize(70);
     subtitle.setStyle(sf::Text::Bold);
     subtitle.setFillColor(sf::Color::Black);
-    subtitle.setPosition(WindowSize.x*(y)+WindowSize.x*(0.02), WindowSize.y*(0.15)+WindowSize.y*(0.10));
     
     // Create a first option
     sf::Text option1;
 
     option1.setFont(font);
-    option1.setCharacterSize(70);
+    option1.setCharacterSize(60);
     option1.setStyle(sf::Text::Bold);
     option1.setFillColor(sf::Color::Black);
-    option1.setPosition(WindowSize.x*(y)-WindowSize.x*(0.11), WindowSize.y*(0.55)+WindowSize.y*(0.03));
     
     // Create a second option
     sf::Text option2;
 
     option2.setFont(font);
-    option2.setCharacterSize(70);
+    option2.setCharacterSize(60);
     option2.setStyle(sf::Text::Bold);
     option2.setFillColor(sf::Color::Black);
-    option2.setPosition(WindowSize.x*(y+0.24)-WindowSize.x*(0.11), WindowSize.y*(0.55)+WindowSize.y*(0.03));
+    
+    if (side == 0){
+    professor.setPosition(rt.left + 0.15*rt.width, rt.top + 0.50*rt.height);
+    professor.setTexture(image);
+    dialogue.setPosition(rt.left + 1.40*rt.width, rt.top + 0.20*rt.height);
+    title.setPosition(rt.left + 1.43*rt.width, rt.top + 0.24*rt.height);
+    subtitle.setPosition(rt.left + 1.43*rt.width, rt.top + 0.36*rt.height);
+    choice1.setPosition(rt.left + 1.40*rt.width, rt.top + 0.80*rt.height);
+    choice2.setPosition(rt.left + 2.10*rt.width, rt.top + 0.80*rt.height);
+    option1.setPosition(rt.left + 1.00*rt.width, rt.top + 0.83*rt.height);
+    option2.setPosition(rt.left + 1.90*rt.width, rt.top + 0.83*rt.height);
+    }
+        
+    if (side == 1){
+    professor.setPosition(rt.left + 1.80*rt.width, rt.top + 0.50*rt.height);
+    professor.setTexture(image);
+    dialogue.setPosition(rt.left + 0.20*rt.width, rt.top + 0.20*rt.height);
+    title.setPosition(rt.left + 0.23*rt.width, rt.top + 0.24*rt.height);
+    subtitle.setPosition(rt.left + 0.23*rt.width, rt.top + 0.36*rt.height);
+    choice1.setPosition(rt.left + 0.20*rt.width, rt.top + 0.80*rt.height);
+    choice2.setPosition(rt.left + 0.90*rt.width, rt.top + 0.80*rt.height);
+    option1.setPosition(rt.left - 0.20*rt.width, rt.top + 0.83*rt.height);
+    option2.setPosition(rt.left + 0.50*rt.width, rt.top + 0.83*rt.height);
+    }
     
     // Create an explanation
     sf::Text expl("Press the left arrow for left choice, right arrow for the right choice", font, 40);
@@ -767,6 +792,13 @@ int choose(std::string prof, bool side) {
     // Create the main window
     sf::VideoMode desktop = sf::VideoMode().getDesktopMode();
     sf::RenderWindow choose(desktop, "PoXemon");
+    
+    sf::FloatRect rt;
+    sf::View view;
+    rt.left = view.getCenter().x - view.getSize().x/2.f;
+    rt.top  = view.getCenter().y - view.getSize().y/2.f;
+    rt.width  = view.getSize().x;
+    rt.height = view.getSize().y;
 
     // Set the Icon
     sf::Image icon;
@@ -799,40 +831,27 @@ int choose(std::string prof, bool side) {
     }
     sf::Sprite professor;
     sf::Vector2u ImageSize;
-    professor.scale(sf::Vector2f(5.f, 5.f)); //Set scale
-        
-    float x = 0.02; //which side of the screen
-    float y = 0.42;
-    if (side == 1){
-        x = 0.60;
-        y = 0.10;
-    }
-    professor.setPosition(WindowSize.x*(0.45), -650);
-    professor.setTexture(image);
+    professor.scale(sf::Vector2f(3.f, 3.f)); //Set scale
     
     // Create a dialogue box
     sf::RectangleShape dialogue(sf::Vector2f(1500.f, 400.f));
     dialogue.setOutlineThickness(20.f);
     dialogue.setOutlineColor(sf::Color(1, 1, 1));
-    dialogue.setPosition(WindowSize.x*(y), WindowSize.y*(0.15));
     
     // Create a choice 1
     sf::RectangleShape choice1(sf::Vector2f(400.f, 200.f));
     choice1.setOutlineThickness(10.f);
     choice1.setOutlineColor(sf::Color(1, 1, 1));
-    choice1.setPosition(WindowSize.x*(y), WindowSize.y*(0.60));
     
     // Create a choice 2
     sf::RectangleShape choice2(sf::Vector2f(400.f, 200.f));
     choice2.setOutlineThickness(10.f);
     choice2.setOutlineColor(sf::Color(1, 1, 1));
-    choice2.setPosition(WindowSize.x*(y+0.17), WindowSize.y*(0.60));
     
     // Create a choice 3
     sf::RectangleShape choice3(sf::Vector2f(400.f, 200.f));
     choice3.setOutlineThickness(10.f);
     choice3.setOutlineColor(sf::Color(1, 1, 1));
-    choice3.setPosition(WindowSize.x*(y+0.34), WindowSize.y*(0.60));
     
     // Create a graphical text to display
     sf::Text title;
@@ -844,7 +863,6 @@ int choose(std::string prof, bool side) {
     title.setCharacterSize(70);
     title.setStyle(sf::Text::Bold);
     title.setFillColor(sf::Color::Black);
-    title.setPosition(WindowSize.x*(y), WindowSize.y*(0.15)+WindowSize.y*(0.05));
     
     // Create a second line of graphical text to display
     sf::Text subtitle;
@@ -853,7 +871,6 @@ int choose(std::string prof, bool side) {
     subtitle.setCharacterSize(70);
     subtitle.setStyle(sf::Text::Bold);
     subtitle.setFillColor(sf::Color::Black);
-    subtitle.setPosition(WindowSize.x*(y)+WindowSize.x*(0.03), WindowSize.y*(0.15)+WindowSize.y*(0.10));
     
     // Create a first option
     sf::Text option1;
@@ -862,7 +879,6 @@ int choose(std::string prof, bool side) {
     option1.setCharacterSize(50);
     option1.setStyle(sf::Text::Bold);
     option1.setFillColor(sf::Color::Black);
-    option1.setPosition(WindowSize.x*(y)-WindowSize.x*(0.06), WindowSize.y*(0.60)+WindowSize.y*(0.03));
     
     // Create a second option
     sf::Text option2;
@@ -871,7 +887,6 @@ int choose(std::string prof, bool side) {
     option2.setCharacterSize(50);
     option2.setStyle(sf::Text::Bold);
     option2.setFillColor(sf::Color::Black);
-    option2.setPosition(WindowSize.x*(y+0.18)-WindowSize.x*(0.07), WindowSize.y*(0.60)+WindowSize.y*(0.03));
     
     // Create a third option
     sf::Text option3;
@@ -880,8 +895,18 @@ int choose(std::string prof, bool side) {
     option3.setCharacterSize(50);
     option3.setStyle(sf::Text::Bold);
     option3.setFillColor(sf::Color::Black);
-    option3.setPosition(WindowSize.x*(y+0.35)-WindowSize.x*(0.07), WindowSize.y*(0.60)+WindowSize.y*(0.03));
 
+    professor.setPosition(rt.left + 1.80*rt.width, rt.top + 0.50*rt.height);
+    professor.setTexture(image);
+    dialogue.setPosition(rt.left + 0.20*rt.width, rt.top + 0.20*rt.height);
+    title.setPosition(rt.left + 0.23*rt.width, rt.top + 0.24*rt.height);
+    subtitle.setPosition(rt.left + 0.23*rt.width, rt.top + 0.36*rt.height);
+    choice1.setPosition(rt.left + 0.20*rt.width, rt.top + 1.10*rt.height);
+    choice2.setPosition(rt.left + 0.80*rt.width, rt.top + 1.10*rt.height);
+    choice3.setPosition(rt.left + 1.40*rt.width, rt.top + 1.10*rt.height);
+    option1.setPosition(rt.left + 0.00*rt.width, rt.top + 1.13*rt.height);
+    option2.setPosition(rt.left + 0.60*rt.width, rt.top + 1.13*rt.height);
+    option3.setPosition(rt.left + 1.20*rt.width, rt.top + 1.13*rt.height);
     
     // Create an explanation
     sf::Text expl("Press the left arrow for left choice, down arrow for the middle choice, right arrow for the right choice", font, 30);
@@ -1011,16 +1036,16 @@ int startgame(){
     if (closed<10)closed = intro("Sprites/professor5.png",1,10);
     if (closed<10)closed = intro("Sprites/professor3.png",0,11);
     if (closed<10)closed = intro("Sprites/professor2.png",0,12);
-    if (closed<10)closed = choice("Sprites/professor0.png",1,13);
+    if (closed<10)closed = choice("Sprites/professor1.png",1,13);
     if (closed<10){
-        if(choice("Sprites/professor0.png",1,14)==1) {
+        if(choice("Sprites/professor4.png",1,14)==1) {
             if(closed<10)closed=intro("Sprites/professor7.png",0,15);
             return 1;
         }
         else{
           if (closed<10)closed = intro("Sprites/professor4.png",0,16);
           if (closed<10)closed = intro("Sprites/professor1.png",1,17);
-          if (closed<10) closed= choose("Sprites/professor0.png",1);
+          if (closed<10) closed= choose("Sprites/professor6.png",1);
           if(closed==1) closed = intro("Sprites/professor5.png",0,18);
           else if(closed==2) closed = intro("Sprites/professor5.png",0,19);
           else if(closed==3) closed = intro("Sprites/professor5.png",0,20);
