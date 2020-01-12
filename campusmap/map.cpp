@@ -245,6 +245,7 @@ Map::Map(sf::RenderWindow &window)
     Npc* passeur5 = new Npc("passeur5","Sprites/NPC1.png",432,675,32,32,1.f,440,384,dialogue_sp,false);
     if (foot_players == false) npcs_sport.push_back(passeur5);
 
+    vector<string> dialogue_pl;
     dialogue_pl.push_back("Hi I'm the referee");
     dialogue_pl.push_back("Do you want to see");
     dialogue_pl.push_back("what my team is capable of ?");
