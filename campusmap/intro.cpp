@@ -295,8 +295,8 @@ int intro(std::string picture, bool side, int which) {
     professor.setPosition(rt.left + 0.15*rt.width, rt.top + 0.50*rt.height);
     professor.setTexture(image);
     dialogue.setPosition(rt.left + 1.40*rt.width, rt.top + 0.20*rt.height);
-    title.setPosition(rt.left + 1.43*rt.width, rt.top + 0.22*rt.height);
-    subtitle.setPosition(rt.left + 1.43*rt.width, rt.top + 0.24*rt.height);
+    title.setPosition(rt.left + 1.43*rt.width, rt.top + 0.24*rt.height);
+    subtitle.setPosition(rt.left + 1.43*rt.width, rt.top + 0.36*rt.height);
     }
         
     if (side == 1){
