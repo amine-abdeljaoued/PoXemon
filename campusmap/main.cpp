@@ -101,7 +101,7 @@ using namespace std;
              else{
                 int i = fight.update(window);
                 if(i==0){ Arthur.state = "Stop";}
-                if(i==51 || i==61){Arthur.state = "Dead";}
+                if(i==50 || i==60){Arthur.state = "Dead";}
                 }
          }
          else{ //Not fighting

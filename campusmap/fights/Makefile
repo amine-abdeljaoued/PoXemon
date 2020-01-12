@@ -49,14 +49,11 @@ trainer_opponent.o: trainer_opponent.cpp trainer_opponent.hpp
 	$(CXX) -c -O2 trainer_opponent.cpp
 
 
-main.o: main.cpp Pokemon.h Pokeball.h Bullet.h Fight.h Health.h Artillery.h StateFunctions.h Backpack.h Opponent.h Bullet_bar.h Collision.h Special_Attacks_bar.h Pokemon_Button.h
-	$(CXX) -c -O2 main.cpp
-
 
 game:  Opponent.o Pokemon_Button.o Pokeball.o Fight.o main.o StateFunctions.o Pokemon.o Bullet.o Health.o Artillery.o Backpack.o Bullet_bar.o Player.o Collision.o Special_attacks_bar.o
 	$(CXX) main.o  Opponent.o Pokemon_Button.o Fight.o Pokeball.o StateFunctions.o Pokemon.o Bullet.o Health.o Artillery.o Backpack.o Bullet_bar.o Player.o Collision.o Special_attacks_bar.o   -o game $(LDLIBS)  
 
-all:  Opponent.o Pokemon_Button.o Pokeball.o Fight.o main.o StateFunctions.o Pokemon.o Bullet.o Health.o Artillery.o Backpack.o Bullet_bar.o Player.o Collision.o Special_attacks_bar.o trainer_opponent.o
+all:  Opponent.o Pokemon_Button.o Pokeball.o Fight.o StateFunctions.o Pokemon.o Bullet.o Health.o Artillery.o Backpack.o Bullet_bar.o Player.o Collision.o Special_attacks_bar.o trainer_opponent.o
 	
 
 clean:
