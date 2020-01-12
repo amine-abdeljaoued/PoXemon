@@ -6,22 +6,22 @@ We thus had one group working on the map with the player being able to move on t
 
 ## What we did personaly:
 
-### Amine Abdeljaoued:
+### Amine Abdeljaoued (Map Team, Github manager):
 
-### Arthur Collette:
+### Arthur Collette (Map Team, Map manager):
 
-### Maxence Dulac:
+### Maxence Dulac (PoXemon Team):
 
-### Anya Fries:
+### Anya Fries (Fight Team):
 
-### Julien Luzzatto:
+### Julien Luzzatto (PoXemon Team):
 
-### Benjamin Montagnes:
+### Benjamin Montagnes (Map Team, Project leader):
 
-### Francois Reynal:
+### Francois Reynal (PoXemon Team):
 
-### Clement Sterlin
+### Clement Sterlin (PoXemon Team):
 
-### Antonin Wattel:
+### Antonin Wattel (Fight Team):
 
-### Jiahe Zhu:
+### Jiahe Zhu (Fight Team):
