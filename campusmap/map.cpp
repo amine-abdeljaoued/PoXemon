@@ -91,7 +91,7 @@ Map::Map(sf::RenderWindow &window)
     vector<string> dialogue2;
     dialogue2.push_back("Before adventuring yourself");
     dialogue2.push_back("into the wild");
-    dialogue2.push_back("try catching one wild PoXemon !");
+    dialogue2.push_back("try fighting one wild PoXemon !");
     if (catched == false) npcs_map1.push_back(new Npc("passeur","Sprites/NPC1.png",432,675,32,32,1.f,24,224,dialogue2, false));
     
     vector<string>trainer_dialogue1;
@@ -156,7 +156,7 @@ Map::Map(sf::RenderWindow &window)
     dialogueH.push_back("Do you want to throw a rock");
     dialogueH.push_back("on his window?");
     dialogueH.push_back("Throwing");
-    dialogueH.push_back("In the building light can be found");
+	dialogueH.push_back("Come inside the bulding !");
     npcs_home.push_back(new Npc("clemW","Sprites/NPC1.png",17,97,1,1,1.f,248,192,dialogueH, true)) ;
     
     vector<string> dialogue_pass;
@@ -211,8 +211,8 @@ Map::Map(sf::RenderWindow &window)
     vector<Npc*> npcs_demilune;
     vector<string> dialogue_dl;
     dialogue_dl.push_back("Did you know that");
-    dialogue_dl.push_back("You can catch water PoXemon");
-    dialogue_dl.push_back("By fishing ?");
+	dialogue_dl.push_back("You can catch PoXemon");
+    dialogue_dl.push_back("By fishing or in tall grass");
     Npc* passeur2 = new Npc("passeur2","Sprites/NPC1.png",430,736,32,32,1.f,488,452,dialogue_dl,true);
     if (water_catch == false) npcs_demilune.push_back(passeur2);
 
@@ -230,14 +230,20 @@ Map::Map(sf::RenderWindow &window)
     dialogue_sp.push_back("But first you need some training");
     dialogue_sp.push_back("Go see the players on the field");
     dialogue_sp.push_back("They are very good");
-    dialogue_sp.push_back("But some are too concentrated");
-    dialogue_sp.push_back("to even speak to you");
+	dialogue_sp.push_back("but don't interrupt them");
+    dialogue_sp.push_back("speak to the referee");
     Npc* passeur5 = new Npc("passeur5","Sprites/NPC1.png",432,675,32,32,1.f,440,384,dialogue_sp,false);
     if (foot_players == false) npcs_sport.push_back(passeur5);
 
     vector<string> dialogue_pl;
-    dialogue_pl.push_back("You are not yet ready to fight");
-    dialogue_pl.push_back("World champion PoXemon trainer");
+    dialogue_pl.push_back("Hi I'm the referee");
+    dialogue_pl.push_back("Do you want to see");
+    dialogue_pl.push_back("what my team is capable of ?");
+    //initiate fight
+    //if fight is won set foot_players to true
+    Npc* arbitre = new Npc("arbitre","Sprites/NPC1.png",241,1561,32,32,1.f,248,128,dialogue_pl,false);
+    npcs_sport.push_back(arbitre);
+    
     Npc* bla = new Npc("bla","Sprites/NPC1.png",17,1625,32,32,1.f,424,144,dialogue_pl,true);
     npcs_sport.push_back(bla);
     Npc* player_foot2 = new Npc("player_foot2","Sprites/NPC1.png",17,1625,32,32,1.f,344,144,dialogue_pl,true);
