@@ -13,6 +13,7 @@
 #include "interior.hpp"
 #include "center.hpp"
 #include "Backpack_map.hpp"
+#include "box.hpp"
 
 using namespace std;
 
@@ -37,6 +38,9 @@ class Map
         bool obtained_light;
         bool mr_fountain;
         bool foot_players;
+
+        //Backpack
+        BackpackMap backpack;
     
     private:
         TileMap background1_1;
@@ -54,6 +58,7 @@ class Map
         Interior background10;
         TileMap background11;
         TileMap background11_2;
+        Interior background12;
     
         map<string, vector<Npc*> > npcs; //Map mapping each map_name to its associated vector of npcs
         
@@ -99,6 +104,6 @@ class Map
         void movingFlower(sf::RenderWindow &window, int x, int y);
         void flowerList(sf::RenderWindow &window);
     
-        //Backpack
-        BackpackMap backpack;
+        //Box
+        Box box;
 };  

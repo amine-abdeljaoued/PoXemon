@@ -20,7 +20,8 @@ public:
 	sf::Sprite run_sprite;
 	sf::Text opp_name;
 	sf::Text opp_name_shadow;
-	void initialize_state1(char& game_mode, sf::Sprite& opp_sprite, std::string& opp_n, sf::RenderWindow& window, Pokemon_Button* buttons[], sf::Sprite& running_sprite, sf::Font& ffont);
+	sf::Text opp_lvl;
+	void initialize_state1(char& game_mode, sf::Sprite& opp_sprite, std::string& opp_n, int& opp_lvl, sf::RenderWindow& window, Pokemon_Button* buttons[], sf::Sprite& running_sprite, sf::Font& ffont);
 	void update_state1(sf::RenderWindow& window, sf::Clock& clock, Pokemon_Button* buttons[], int& clicked_button);
 	void draw_state1(sf::RenderWindow& window, Pokemon_Button* buttons[]);
 
