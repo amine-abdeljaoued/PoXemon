@@ -13,7 +13,7 @@ using namespace std;
 Trainer::Trainer( float Speed, int sheetRect, int sizeAnim) {
     
     if (!texturePlayer.loadFromFile(/* resourcePath() + */ "Sprites/trainer.png")) {
-        cout << "Error loading sprite";
+        std::cout << "Error loading sprite";
     }
     (spritePlayer).setTexture(texturePlayer);
 
@@ -231,7 +231,10 @@ void Trainer::fishing(sf::RenderWindow &window, sf::View &view){
         mt19937 gen(rd());
         uniform_real_distribution<> dis(0.0, 1.0);
         float probagenerated = dis(gen);
-        if (probagenerated<0.005) text.setString("A wild Pokemon was caught!");
+        if (probagenerated<0.005){
+            text.setString("A wild Pokemon was caught!");
+            state = "Fighting";
+        }
         else if (text.getString() != "A wild Pokemon was caught!")
             text.setString("Fishing...");
         
@@ -299,7 +302,7 @@ void Trainer::fishing(sf::RenderWindow &window, sf::View &view){
 //throw rock
 void Trainer::rock(sf::RenderWindow &window, sf::View &view){
     if (state == "Throwing"){
-        cout << counterWalk << endl;
+        std::cout << counterWalk << std::endl;
         sf::FloatRect viewBounds = getViewBounds(view);
         text.setFont(font);
         text.setCharacterSize(15);

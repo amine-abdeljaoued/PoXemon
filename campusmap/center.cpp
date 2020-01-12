@@ -3,7 +3,7 @@
 Center::Center(){
     Selecteditem = 0;
     arrow = true;
-    action_list = {"Heal", "Switch Pokemon"};
+    action_list = {"Heal", "Switch Pokemon", "Pokemon Box"};
     pokemon_bag = {"jistolwer","auron","husabus"};
     
     if (!font.loadFromFile(/* resourcePath() + */ "Fonts/sansation.ttf")) {
@@ -17,13 +17,13 @@ Center::Center(){
     sw = false;
     swi1 = -1;
     swi2 = -1;
-    
 }
 
 void Center::draw(sf::RenderWindow &window, sf::View &view, sf::Event &event, Trainer &trainer, BackpackMap &backpack){
     if (trainer.state == "Healing"){
         Moveup(event);
         Movedown(event);
+        
         sf::FloatRect viewBounds = getViewBounds(view);
         
         sf::Text text[interface[counter].size()];
@@ -60,6 +60,8 @@ void Center::draw(sf::RenderWindow &window, sf::View &view, sf::Event &event, Tr
         switchPokemon(window, backpack, event, view, trainer);
     }
 }
+
+
 
 sf::FloatRect Center::getViewBounds(const sf::View &view)
 {
@@ -99,7 +101,9 @@ void Center::Movedown(sf::Event &event) {
 void Center::heal_pokemons(BackpackMap &backpack, sf::Event &event, Trainer &trainer) {
     if (event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::X&&Selecteditem == 0&&counter == 0){
         for (unsigned int i = 0; i < 3; i++) {
-            backpack.backpack_pokemons[i]->health = 100;
+            if(backpack.backpack_pokemons[i]){
+                backpack.backpack_pokemons[i]->health = 100;
+            }
         }
         trainer.state = "Stop";
         counter = 0;

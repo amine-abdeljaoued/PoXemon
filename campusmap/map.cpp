@@ -34,6 +34,7 @@ Map::Map(sf::RenderWindow &window)
     background10.load("Sprites/interior.png", sf::Vector2u(16, 16), level10, 34, 33);
     background11.load("Sprites/tileset1.png", sf::Vector2u(16, 16), level11, 34, 33);
     background11_2.load("Sprites/tileset2.png", sf::Vector2u(16, 16), level11_2, 34, 33);
+    background12.load("Sprites/interior.png", sf::Vector2u(16, 16), level12, 34, 33);
     
     
     alpha = 255;
@@ -65,6 +66,7 @@ Map::Map(sf::RenderWindow &window)
     collision_.insert(pair<string, const int*>("interior_80", collision9));
     collision_.insert(pair<string, const int*>("room_clement", collision10));
     collision_.insert(pair<string, const int*>("bossfinal", collision11));
+    collision_.insert(pair<string, const int*>("hall", collision12));
     
     map_name= "first"; //Beggining of the game
     
@@ -91,7 +93,7 @@ Map::Map(sf::RenderWindow &window)
     vector<string> dialogue2;
     dialogue2.push_back("Before adventuring yourself");
     dialogue2.push_back("into the wild");
-    dialogue2.push_back("try fighting one wild PoXemon !");
+    dialogue2.push_back("try catching one wild PoXemon !");
     if (catched == false) npcs_map1.push_back(new Npc("passeur","Sprites/NPC1.png",432,675,32,32,1.f,24,224,dialogue2, false));
     
     vector<string>trainer_dialogue1;
@@ -156,21 +158,13 @@ Map::Map(sf::RenderWindow &window)
     dialogueH.push_back("Do you want to throw a rock");
     dialogueH.push_back("on his window?");
     dialogueH.push_back("Throwing");
-	dialogueH.push_back("Come inside the bulding !");
+    dialogueH.push_back("In the building light can be found");
     npcs_home.push_back(new Npc("clemW","Sprites/NPC1.png",17,97,1,1,1.f,248,192,dialogueH, true)) ;
     
     vector<string> dialogue_pass;
     dialogue_pass.push_back("You wouldn't want to go in there");
     dialogue_pass.push_back("without a light...");
     dialogue_pass.push_back("have you try asking Clement ?");
-    dialogue_pass.push_back("you can talk to him");
-    dialogue_pass.push_back("by pressing D when");
-    dialogue_pass.push_back("you are in front of");
-    dialogue_pass.push_back("his window, on the");
-    dialogue_pass.push_back("right of the door");
-    dialogue_pass.push_back("when looking the building");
-    dialogue_pass.push_back("next to a big tree");
-    dialogue_pass.push_back("not far from here");
     Npc* passeur3 = new Npc("passeur3","Sprites/NPC1.png",430,736,32,32,1.f,470,96,dialogue_pass,true);
     if (obtained_light == false) npcs_home.push_back(passeur3);
     
@@ -204,7 +198,7 @@ Map::Map(sf::RenderWindow &window)
     dialogue_light.push_back("You well deserve this");
     dialogue_light.push_back("You obtained LIGHT");
     dialogue_light.push_back("LIGHT is activiated in dark places");
-    dialogue_light.push_back("also be carefull, some say");
+    dialogue_light.push_back("also be cartefull, some say");
     dialogue_light.push_back("wild animals live in the fridge");
     dialogue_light.push_back("I wouldn't try to open it.");
 
@@ -219,8 +213,8 @@ Map::Map(sf::RenderWindow &window)
     vector<Npc*> npcs_demilune;
     vector<string> dialogue_dl;
     dialogue_dl.push_back("Did you know that");
-	dialogue_dl.push_back("You can catch PoXemon");
-    dialogue_dl.push_back("By fishing or in tall grass");
+    dialogue_dl.push_back("You can catch water PoXemon");
+    dialogue_dl.push_back("By fishing ?");
     Npc* passeur2 = new Npc("passeur2","Sprites/NPC1.png",430,736,32,32,1.f,488,452,dialogue_dl,true);
     if (water_catch == false) npcs_demilune.push_back(passeur2);
 
@@ -232,26 +226,20 @@ Map::Map(sf::RenderWindow &window)
     dialogue_sp.push_back("You are not yet ready to fight");
     dialogue_sp.push_back("World champion PoXemon trainer");
     dialogue_sp.push_back("His name is Julien");
-    dialogue_sp.push_back("But he claims to be");
+    dialogue_sp.push_back("But he clames he claims to be");
     dialogue_sp.push_back("the world champion of everything");
     dialogue_sp.push_back("I bet you will beat him pfff");
     dialogue_sp.push_back("But first you need some training");
     dialogue_sp.push_back("Go see the players on the field");
     dialogue_sp.push_back("They are very good");
-	dialogue_sp.push_back("but don't interrupt them");
-    dialogue_sp.push_back("speak to the referee");
+    dialogue_sp.push_back("But some are too concentrated");
+    dialogue_sp.push_back("to even speak to you");
     Npc* passeur5 = new Npc("passeur5","Sprites/NPC1.png",432,675,32,32,1.f,440,384,dialogue_sp,false);
     if (foot_players == false) npcs_sport.push_back(passeur5);
 
     vector<string> dialogue_pl;
-    dialogue_pl.push_back("Hi I'm the referee");
-    dialogue_pl.push_back("Do you want to see");
-    dialogue_pl.push_back("what my team is capable of ?");
-    //initiate fight
-    //if fight is won set foot_players to true
-    Npc* arbitre = new Npc("arbitre","Sprites/NPC1.png",241,1561,32,32,1.f,248,128,dialogue_pl,false);
-    npcs_sport.push_back(arbitre);
-    
+    dialogue_pl.push_back("You are not yet ready to fight");
+    dialogue_pl.push_back("World champion PoXemon trainer");
     Npc* bla = new Npc("bla","Sprites/NPC1.png",17,1625,32,32,1.f,424,144,dialogue_pl,true);
     npcs_sport.push_back(bla);
     Npc* player_foot2 = new Npc("player_foot2","Sprites/NPC1.png",17,1625,32,32,1.f,344,144,dialogue_pl,true);
@@ -320,7 +308,7 @@ Map::Map(sf::RenderWindow &window)
     //for y multiple of 16
     
     //Spawning position
-    map_list = {"first","second","third","fourth","pokeShop","pokeCenter","home","maze","interior_80","room_clement","bossfinal"};
+    map_list = {"first","second","third","fourth","pokeShop","pokeCenter","home","maze","interior_80","room_clement","bossfinal", "hall"};
     //first map
     spawn_dict.insert(pair< string, vector<vector<int> >>("first",{{264, 256},{8, 192},{184, 160}}));
     //underground
@@ -343,6 +331,8 @@ Map::Map(sf::RenderWindow &window)
     spawn_dict.insert(pair< string, vector<vector<int> >>("room_clement",{{184,336}}));
     //bossfinal
     spawn_dict.insert(pair< string, vector<vector<int> >>("bossfinal",{{248,480}}));
+    //bossfinal
+    spawn_dict.insert(pair< string, vector<vector<int> >>("hall",{{248,352}}));
     
     //Scenario
     scenario.insert(pair<string, vector<string>> ("bob", {"Nice Day!","You should go to the shop to buy what you need."}));
@@ -403,6 +393,9 @@ void Map::end(sf::RenderWindow &window, Trainer &trainer){
 
 void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Event &event, sf::Clock& clock, sf::View &view){
    
+    cout << box.box_pokemons[5] << endl;
+    cout <<( box.box_pokemons[3] == NULL) << endl;
+    cout <<( box.box_pokemons[9] == NULL) << endl;
     
     sf::Vector2f position = trainer.spritePlayer.getPosition();
     int x = position.x + 16;
@@ -558,6 +551,17 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
             }
         }
         
+        //Box
+        if (event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::X && center.Selecteditem == 2 && trainer.state == "Healing") {
+            trainer.state = "Box";
+        }
+        if(event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::W && center.Selecteditem == 2 && trainer.state == "Box") {
+            trainer.state = "Healing";
+            box.selectedPokemon_right = 0;
+            box.selectedPokemon_left = 0;
+            box.actual_column = 0;
+        }
+        
         //Walking
         if (trainer.state == "Walking"){
             if (collision_[map_name][(int) x/16 +( (int)y/16 *34)]==1){
@@ -581,6 +585,20 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
                     window.draw(sprite);
                 }
                 
+            }
+            
+            
+            //fight underground
+            if (collision_[map_name][(int) x/16 +( (int)y/16 *34)]==2){
+            random_device rd;
+            mt19937 gen(rd());
+            uniform_real_distribution<> dis(0.0, 1.0);
+            float probagenerated = dis(gen);
+                if (probagenerated<0.02) {
+                    fight = true;
+                    std::cout<<"POKEEEEMMMOONNN"<<std::endl;
+                    trainer.fight_mode = 'w'; //Which means single pokemon in grass
+                }
             }
         }
         
@@ -767,6 +785,10 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
         window.draw(background11_2);
     }
     
+    else if (map_name== "hall"){
+        window.draw(background12);
+    }
+    
     openDoorS(window);
     closeDoorS(window);
     
@@ -906,6 +928,7 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
     center.draw(window, view, event, trainer, backpack);
     light(window, view);
     backpack.draw(window, view, event, trainer);
+    box.draw(window, view, event, trainer, backpack);
 }
         
     
