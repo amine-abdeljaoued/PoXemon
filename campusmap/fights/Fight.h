@@ -26,10 +26,10 @@ public:
     void initialise_trainer (BackpackMap& pbag_map, Backpack& popponent_bag, sf::RenderWindow& window); // initilaise a fight with a trainer
     void initialise_basic(BackpackMap& pbag_map, sf::RenderWindow& window);
     Opponent* get_wild_pokemon(sf::RenderWindow& window, int type);
+    int update(sf::RenderWindow& window, BackpackMap& bag_map);   // Updating the window
 
     Backpack bag;
     Backpack opponent_bag;
-    BackpackMap bag_map;
 
     // Boundaries
 	float groundY; //Cannot go below this height
@@ -58,9 +58,6 @@ public:
     Opponent* popponent;
     StateFunctions1 functions1;
     StateFunctions56 functions56;
-
-    // Updating the window
-    int update(sf::RenderWindow& window);
 
     // Used for blurring
     sf::Shader shader;
