@@ -4,12 +4,12 @@
 #include <SFML/Graphics.hpp>
 #include <sstream>
 #include <string>
-#include "ResourcePath.hpp"
+//#include "ResourcePath.hpp"
 
 BackpackMap::BackpackMap() {
 
     //Load textures for backpack
-    if (!rectangle_texture.loadFromFile(resourcePath() + "button.png")) {
+   /* if (!rectangle_texture.loadFromFile(resourcePath() + "button.png")) {
         std::cout<<"error"<<std::endl;
     }
     if (!money_texture.loadFromFile(resourcePath() + "money.png")) {
@@ -29,7 +29,7 @@ BackpackMap::BackpackMap() {
     }
     if (!types.loadFromFile(resourcePath() + "poke_type.png")) {
         std::cout<<"error"<<std::endl;
-    }
+    }*/
 
     //Set number of element of each item at beginning of game
     inventory["Normalball"] = 3;
@@ -90,7 +90,7 @@ BackpackMap::BackpackMap() {
         Backpack_Pokemon *poke3 = new Backpack_Pokemon(name3, 1, 1, 70, 30);
         backpack_pokemons[0] = poke1;
         backpack_pokemons[1] = poke2;
-        //backpack_pokemons[2] = poke3; //test with only two pokemons in the bag
+        backpack_pokemons[2] = poke3; //test with only two pokemons in the bag
 
 
         //For Display of Pokemon in bag

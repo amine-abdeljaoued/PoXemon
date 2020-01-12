@@ -69,7 +69,7 @@ using namespace std;
 	Backpack_Pokemon poke3(name3, 1, 2, 70, 30);
 	bag.backpack_pokemons[0] = &poke1;
 	bag.backpack_pokemons[1] = &poke2;
-	//bag.backpack_pokemons[2] = &poke3;
+	bag.backpack_pokemons[2] = &poke3;
 
  	Fight fight(window);
     bool start_fight = false;
