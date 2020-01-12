@@ -23,6 +23,9 @@ intro.o: intro.cpp intro.hpp
 
 shop.o: shop.cpp shop.hpp
 	$(CXX) -c  shop.cpp
+
+box.o: box.cpp box.hpp
+	$(CXX) -c  box.cpp
 	
 Backpack_map.o: Backpack_map.cpp Backpack_map.hpp
 	$(CXX) -c  Backpack_map.cpp
@@ -39,13 +42,13 @@ fights: $(OBJECTS_FIGHTS)
 
 
 
-main.o: main.cpp tilemap.hpp npc.hpp map.hpp trainer.hpp const.hpp intro.hpp shop.hpp interior.hpp center.hpp Backpack_map.hpp $(HEADERS_FIGHTS)
+main.o: main.cpp tilemap.hpp npc.hpp map.hpp trainer.hpp const.hpp intro.hpp shop.hpp interior.hpp center.hpp box.hpp Backpack_map.hpp $(HEADERS_FIGHTS)
 	$(CXX) -c  main.cpp
 	
 
-game: fights main.o map.o tilemap.o trainer.o npc.o  intro.o  shop.o interior.o center.o Backpack_map.o
+game: fights main.o map.o tilemap.o trainer.o npc.o  intro.o  shop.o interior.o center.o Backpack_map.o box.o
 	echo $(SOURCES_FIGHTS)
-	$(CXX) main.o map.o trainer.o tilemap.o npc.o  intro.o shop.o interior.o center.o Backpack_map.o $(OBJECTS_FIGHTS) -o game $(LDLIBS)  
+	$(CXX) main.o map.o trainer.o tilemap.o npc.o  intro.o shop.o interior.o center.o Backpack_map.o box.o $(OBJECTS_FIGHTS) -o game $(LDLIBS)  
 
 
 clean:
