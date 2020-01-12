@@ -101,11 +101,10 @@ using namespace std;
              else{
                 int i = fight.update(window);
                 if(i==0){ Arthur.state = "Stop";}
-                if(i==11){Arthur.state = "Dead";}
+                if(i==51 || i==61){Arthur.state = "Dead";}
                 }
          }
          else{ //Not fighting
-             /* view.zoom(0.5f); */
              if(start_fight==true){
                  start_fight = false;
                  sf::Vector2f position = Arthur.spritePlayer.getPosition();
