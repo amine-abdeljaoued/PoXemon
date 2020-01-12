@@ -9,25 +9,25 @@
 BackpackMap::BackpackMap() {
 
     //Load textures for backpack
-   /* if (!rectangle_texture.loadFromFile(resourcePath() + "button.png")) {
+    if (!rectangle_texture.loadFromFile(/*/*resourcePath() + */  "Sprites/button.png")) {
         std::cout<<"error"<<std::endl;
     }
-    if (!money_texture.loadFromFile(resourcePath() + "money.png")) {
+    if (!money_texture.loadFromFile(/*/*resourcePath() + */  "Sprites/money.png")) {
         std::cout<<"error"<<std::endl;
     }
-    if (!texture_background.loadFromFile(resourcePath() + "screen_menu.jpg")){
+    if (!texture_background.loadFromFile(/*/*resourcePath() + */  "Sprites/screen_menu.jpg")){
         std::cout<<"error"<<std::endl;
     }
-    if (!texture_backpack.loadFromFile(resourcePath() + "Pt_bag.png")) {
+    if (!texture_backpack.loadFromFile(/*resourcePath() + */ "Sprites/Pt_bag.png")) {
         std::cout<<"error"<<std::endl;
     }
-    if (!font.loadFromFile(resourcePath() + "sansation.ttf")) {
+    if (!font.loadFromFile(/*resourcePath() + */ "Fonts/sansation.ttf")) {
         std::cout<<"error"<<std::endl;
     }
-    if (!slots.loadFromFile(resourcePath() + "poke_slot.png")) {
+    if (!slots.loadFromFile(/*resourcePath() + */ "Sprites/poke_slot.png")) {
         std::cout<<"error"<<std::endl;
     }
-    if (!types.loadFromFile(resourcePath() + "poke_type.png")) {
+    if (!types.loadFromFile(/*resourcePath() + */ "Sprites/poke_type.png")) {
         std::cout<<"error"<<std::endl;
     }*/
 
@@ -90,7 +90,7 @@ BackpackMap::BackpackMap() {
         Backpack_Pokemon *poke3 = new Backpack_Pokemon(name3, 1, 1, 70, 30);
         backpack_pokemons[0] = poke1;
         backpack_pokemons[1] = poke2;
-        backpack_pokemons[2] = poke3; //test with only two pokemons in the bag
+        backpack_pokemons[2] = poke3; //uncomment to test with only two pokemons in the bag
 
 
         //For Display of Pokemon in bag

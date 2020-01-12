@@ -82,12 +82,12 @@ void Fight::initialise_wild (Backpack& pbag, sf::RenderWindow& window){
 	functions1.initialize_state1(mode, (*popponent).sprite, (*popponent).name, window, poke_buttons, running_sprite, font);
     deltaTime = 0.0f;
     counter = 0;
-    clicked_button = -2; // no button clicked  
-} 
+    clicked_button = -2; // no button clicked
+}
 
 void Fight::initialise_trainer (Backpack& pbag, Backpack& popponent_bag, sf::RenderWindow& window){
 	// background - must change depending on where we are
-	
+
 	functions1.initialise_background(window, "fights/Images/grassbg.png", background, BackgroundTexture);
 
 	// basic setup
@@ -97,7 +97,7 @@ void Fight::initialise_trainer (Backpack& pbag, Backpack& popponent_bag, sf::Ren
     bag = pbag;
     opponent_bag = popponent_bag;
     game_mode = 't';
-    
+
     for (int i=0; i<3; i++){
 		if (bag.backpack_pokemons[i]) {
 			std::cout << "initialise poke_button" << i << std::endl;
@@ -117,14 +117,14 @@ void Fight::initialise_trainer (Backpack& pbag, Backpack& popponent_bag, sf::Ren
     deltaTime = 0.0f;
     counter = 0;
     clicked_button = -2; // no button clicked
-} 
+}
 
 Opponent* Fight::get_wild_pokemon(sf::RenderWindow& window, int type){
 	// randomly choose an opponent - must be based on where we are
 	/*There are:
 	- Identifier for the type: 10 - earth (9 pokemons), 20 - water (5), 30 - air (5), 40 - fire (9)*/
 	int index; 			// which pokemon we will choose
-	std::string name; 	// the pokemon we get	
+	std::string name; 	// the pokemon we get
 	if (type==10){
 		index = rand()%9 + 1;
 		name = Earth_Pokemons.find(index)->second;}
@@ -139,7 +139,7 @@ Opponent* Fight::get_wild_pokemon(sf::RenderWindow& window, int type){
 		name = Fire_Pokemons.find(index)->second;}
 
 	Opponent* opponent = new Opponent(window, Pokemons.find(name)->second.height, Pokemons.find(name)->second.velocity,
-								Backpack_Pokemon(Pokemons.find(name)->second.name, Pokemons.find(name)->second.level, 
+								Backpack_Pokemon(Pokemons.find(name)->second.name, Pokemons.find(name)->second.level,
 									Pokemons.find(name)->second.index, Pokemons.find(name)->second.health, Pokemons.find(name)->second.ptype));
 	return opponent;
 }
@@ -185,7 +185,7 @@ int Fight::update(sf::RenderWindow& window){
 			state = 15;
 			clicked_button = -2;
 		}
-		
+
 		clock.restart();
 	}
 
@@ -361,7 +361,7 @@ int Fight::update(sf::RenderWindow& window){
 		if (clicked_button >= 0) {//we clicked on a pokemon button
 			delete pplayer;//maybe it would be better not to delete it if we chose the same ?
 			pplayer = new Player(window, 200.f, 500.f, *(bag.backpack_pokemons[clicked_button]));//reinitialize player with the chosen pokemon
-			
+
 			delete popponent;
 			popponent = new Opponent(window, 200.f, 500.f, *(opponent_bag.backpack_pokemons[index+1]));//reinitialize opponent with the next one in the trainer's bag //change it randomly ?
 
@@ -405,8 +405,12 @@ int Fight::update(sf::RenderWindow& window){
 		//leave button
 		window.draw(arrow_sprite);
 		window.draw(leave);
-
-		if (functions56.check_leave(arrow_sprite, window)) return 0;
+		if(won && functions56.check_leave(arrow_sprite, window)){
+			return 0; //won against trainer
+		}
+		if(!won && functions56.check_leave(arrow_sprite, window)){
+			return 50; //lost against trainer
+		}
 	}
 
 	else if (state == 8) { //end of the fight against a wild pokemon
@@ -432,6 +436,12 @@ int Fight::update(sf::RenderWindow& window){
 		//leave button
 		window.draw(arrow_sprite);
 		window.draw(leave);
+		if(won && functions56.check_leave(arrow_sprite, window)){
+			return 0; //won against wild
+		}
+		if(!won && functions56.check_leave(arrow_sprite, window)){
+			return 60; //lost against wild
+		}
 		if (functions56.check_leave(arrow_sprite, window)) return 0;
 
 	} //wild opponent fainted
