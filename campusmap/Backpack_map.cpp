@@ -4,32 +4,33 @@
 #include <SFML/Graphics.hpp>
 #include <sstream>
 #include <string>
-#include "ResourcePath.hpp"
+//#include "ResourcePath.hpp"
 
 BackpackMap::BackpackMap() {
     
     //Load textures for backpack
-    if (!rectangle_texture.loadFromFile(resourcePath() + "button.png")) {
-        std::cout<<"error"<<std::endl;
-    }
-    if (!money_texture.loadFromFile(resourcePath() + "money.png")) {
-        std::cout<<"error"<<std::endl;
-    }
-    if (!texture_background.loadFromFile(resourcePath() + "screen_menu.jpg")){
-        std::cout<<"error"<<std::endl;
-    }
-    if (!texture_backpack.loadFromFile(resourcePath() + "Pt_bag.png")) {
-        std::cout<<"error"<<std::endl;
-    }
-    if (!font.loadFromFile(resourcePath() + "sansation.ttf")) {
-        std::cout<<"error"<<std::endl;
-    }
-    if (!slots.loadFromFile(resourcePath() + "poke_slot.png")) {
-        std::cout<<"error"<<std::endl;
-    }
-    if (!types.loadFromFile(resourcePath() + "poke_type.png")) {
-        std::cout<<"error"<<std::endl;
-    }
+   // if (!rectangle_texture.loadFromFile(resourcePath() + "button.png")) {
+    //    std::cout<<"error"<<std::endl;
+   // }
+
+    //if (!money_texture.loadFromFile(resourcePath() + "money.png")) {
+    //    std::cout<<"error"<<std::endl;
+    //}
+    //if (!texture_background.loadFromFile(resourcePath() + "screen_menu.jpg")){
+    //    std::cout<<"error"<<std::endl;
+    //}
+    //if (!texture_backpack.loadFromFile(resourcePath() + "Pt_bag.png")) {
+    //    std::cout<<"error"<<std::endl;
+    //}
+    //if (!font.loadFromFile(resourcePath() + "sansation.ttf")) {
+    //    std::cout<<"error"<<std::endl;
+    //}
+    //if (!slots.loadFromFile(resourcePath() + "poke_slot.png")) {
+    //    std::cout<<"error"<<std::endl;
+    //}
+    //if (!types.loadFromFile(resourcePath() + "poke_type.png")) {
+    //    std::cout<<"error"<<std::endl;
+    //}
     
     //Set number of element of each item at beginning of game
     inventory["Normalball"] = 3;
@@ -87,10 +88,10 @@ BackpackMap::BackpackMap() {
         std::string name3 = "husabus";
         Backpack_Pokemon *poke1 = new Backpack_Pokemon(name1, 1, 0, 50, 10);
         Backpack_Pokemon *poke2 = new Backpack_Pokemon(name2, 1, 1, 60, 20);
-        Backpack_Pokemon *poke3 = new Backpack_Pokemon(name3, 1, 2, 70, 30);
+        Backpack_Pokemon *poke3 = new Backpack_Pokemon(name3, 1, 1, 70, 30);
         backpack_pokemons[0] = poke1;
         backpack_pokemons[1] = poke2;
-        backpack_pokemons[2] = poke3;
+        //backpack_pokemons[2] = poke3;
         
         
         //For Display of Pokemon in bag

@@ -16,10 +16,10 @@ using namespace std;
 class Trainer_opponent: public Npc{
     public:
         Trainer_opponent(string name, string pathName, int sheetPosX, int sheetPosY, int sheetRectX,int sheetRectY, 
-                        float scale, int posX, int posY, vector<string> discu, bool fixed, Backpack bag):
+                        float scale, int posX, int posY, vector<string> discu, bool fixed, int i):
                         Npc (name, pathName, sheetPosX, sheetPosY, sheetRectX, sheetRectY,
                         scale, posX, posY, discu, fixed  /*everything except backpack*/){
-                            this->bag = bag;
+                            bag.setBackpack(i);
                         };
 
         virtual void speak(sf::RenderWindow &window, sf::View &view, Trainer &trainer);

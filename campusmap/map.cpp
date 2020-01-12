@@ -303,6 +303,7 @@ Map::Map(sf::RenderWindow &window)
 
     scenario.insert(pair<string, vector<string>> ("toto", {"Oups"}));
      
+    fight = false;
 }
 
 Map::~Map()
@@ -451,7 +452,7 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
                     }
                 }
             }
-            else if (collision_[map_name][(int) x/16 +1+((int) y/16 *34)]>=60 && collision_[map_name][(int) x/16 +1+((int) y/16 *34)]<=69 && trainer.facingDirection=="Right"&&npcs[map_name][collision_[map_name][(int) x/16 -1+((int) y/16 *34)] % 60]->fixed != true){
+           else if (collision_[map_name][(int) x/16 +1+((int) y/16 *34)]>=60 && collision_[map_name][(int) x/16 +1+((int) y/16 *34)]<=69 && trainer.facingDirection=="Right"&&npcs[map_name][collision_[map_name][(int) x/16 +1+((int) y/16 *34)] % 60]->fixed != true){
                 nNpc = collision_[map_name][(int) x/16 +1+((int) y/16 *34)] % 60;
                 if(trainer.state != "Shopping"&&trainer.state != "Healing"){
                     if(trainer.state == "SpeakingScenario"){
@@ -472,8 +473,8 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
         //Fishing for François
         if ((collision_[map_name][(int) x/16 + 1 +( (int)y/16 *34)]==7 &&trainer.facingDirection=="Right") || (collision_[map_name][(int) x/16 -1 +( (int)y/16 *34)]==7 &&trainer.facingDirection=="Left") || (collision_[map_name][(int) x/16  + (((int) y/16 -1) *34)]==7 &&trainer.facingDirection=="Up") || (collision_[map_name][(int) x/16 +(((int) y/16 +1) *34)]==7 &&trainer.facingDirection=="Down")){
             if (event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::X&&trainer.fish==true&&trainer.state != "Walking"){
-                water_catch = true;
                 if (trainer.state == "Fishing"){
+                    water_catch = true;
                     trainer.state = "stopFishing";
                     trainer.counterWalk = 3;
                 }
@@ -720,11 +721,12 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
     flowerList(window);
 
     for (auto const& np : npcs[map_name]) {
-//        std::cout<<(*np).name<<std::endl;
         sf::Vector2f pos2 = (*np).getPos();
          if(pos.y >= pos2.y)
          {
               if (trainer.state == "Speaking"){
+                if ((*np).name == "clement") obtained_light = true;
+                if ((*np).name == "digger") mr_fountain = true;
                 if((*np).name=="seller" || (*np).name=="healer"){
                     if((abs(pos.y - pos2.y) <= 32) && (abs(pos.x - pos2.x) <= 32) ){
                         (*np).speak(window, view, trainer);
@@ -777,6 +779,8 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
          if(pos.y < pos2.y)
          {
               if (trainer.state == "Speaking"){
+                if ((*np).name == "clement") obtained_light = true;
+                if ((*np).name == "digger") mr_fountain = true;
                 if((*np).name=="seller" || (*np).name=="healer"){
                     if((abs(pos.y - pos2.y) <= 32) && (abs(pos.x - pos2.x) <= 32) ){
                         (*np).speak(window, view, trainer);
@@ -847,7 +851,7 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
     this->trainerDisplacement(window, trainer,event,clock,view);
     shop.draw(window, view, event, trainer, backpack);
     center.draw(window, view, event, trainer, backpack);
-    light(window, trainer);
+    light(window, view);
     backpack.draw(window, view, event, trainer);
 }
         
@@ -1044,15 +1048,23 @@ void Map::illuTunnelL(sf::RenderWindow &window){
     }
 }
 
-void Map::light(sf::RenderWindow &window, Trainer &trainer){
+sf::FloatRect Map::getViewBounds(const sf::View &view)
+{
+        sf::FloatRect rt;
+        rt.left = view.getCenter().x - view.getSize().x/2.f;
+        rt.top  = view.getCenter().y - view.getSize().y/2.f;
+        rt.width  = view.getSize().x;
+        rt.height = view.getSize().y;
+        return rt;
+}
+
+void Map::light(sf::RenderWindow &window, sf::View &view){
     if (map_name == "second"){
-        sf::Vector2f position = trainer.spritePlayer.getPosition();
-        int x = position.x + 16;
-        int y = position.y + 16;
+        sf::FloatRect viewBounds = getViewBounds(view);
         //for the underground map, a circle of light around player
         sf::CircleShape shape(30.f);
         shape.setFillColor(sf::Color(0,0,0,150));
-        shape.setPosition(x-30, y-30);
+        shape.setPosition(viewBounds.left+viewBounds.width/2-30, viewBounds.top +viewBounds.height/2-30);
 
         // définit un contour faded tres large
         shape.setOutlineThickness(500.f);
@@ -1083,7 +1095,6 @@ void Map::flowerList(sf::RenderWindow &window){
         {"first",
             {144,160,144,144,144,128,144,112,224,160,224,144,224,128,224,112,144,94,160,94,176,94,192,94,208,94,224,94}
         },
-
         {"fourth",
             //flowers around the tree
             {464,0,480,0,496,0,512,0,528,0,
@@ -1142,3 +1153,4 @@ void Map::illuBat80(sf::RenderWindow &window){
           }
     }
 }
+

@@ -186,7 +186,7 @@ int StateFunctions1::update_state1(sf::RenderWindow& window, sf::Clock& clock){
 			info_button.setFillColor(sf::Color(255,99,99));
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
 				clock.restart();
-				return 8;
+				return 15;
 				// should go to "how to play"
 			}
 		}
@@ -197,7 +197,7 @@ int StateFunctions1::update_state1(sf::RenderWindow& window, sf::Clock& clock){
     }
 }
 
-int StateFunctions1::howtoplay(sf::RenderWindow& window, float& deltaTime){
+/* void StateFunctions1::howtoplay(sf::RenderWindow& window, float& deltaTime){
 
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
 		sf::Vector2i mousepixel = sf::Mouse::getPosition(window);
@@ -206,8 +206,8 @@ int StateFunctions1::howtoplay(sf::RenderWindow& window, float& deltaTime){
 			return 1;
 			}
 	}
-	return 8;
-}
+	return 15;
+} */
 
 void StateFunctions1::initialise_countdown(sf::RenderTarget& window){
 	text.setString("3");
@@ -332,12 +332,17 @@ void StateFunctions56::initialize_state_5_6(char game_mode, Pokemon* poke, sf::F
 	leave_fight.setPosition(target.getSize().x *2/3, target.getSize().y / 4);
 
 	//set position of the buttons
-	buttons[0]->setPosition(target.getSize().x / placement, target.getSize().y * 7/16 );
-	buttons[1]->setPosition(target.getSize().x / placement, target.getSize().y * 9/16 );
-	buttons[2]->setPosition(target.getSize().x / placement, target.getSize().y * 11/16 );
+	std::cout <<"buttons[0]"<< buttons[0] << std::endl;
+	if (buttons[0]) buttons[0]->setPosition(target.getSize().x / placement, target.getSize().y * 7/16 );
+	if (buttons[1]) buttons[1]->setPosition(target.getSize().x / placement, target.getSize().y * 9/16 );
+	if (buttons[2]) buttons[2]->setPosition(target.getSize().x / placement, target.getSize().y * 11/16 );
+
 
 	//update life of the pokemon on its button
+	std::cout << "index"<<poke->index << std::endl;
+	std::cout << buttons[(*poke).index] << std::endl;
 	buttons[(*poke).index]->setHealth((*poke).health.health);
+	std::cout << "just set life" << std::endl;
 }
 
 void const StateFunctions56::draw_state_5_6(char game_mode,  sf::Font& font, sf::Text& text_fainted, sf::Text choose_pokemon, sf::Text leave_fight, sf::RenderWindow& target, Pokemon_Button* buttons[], sf::Sprite& running_sprite) {
@@ -349,9 +354,9 @@ void const StateFunctions56::draw_state_5_6(char game_mode,  sf::Font& font, sf:
 
 
 	//buttons
-	buttons[0]->draw(target);
-	buttons[1]->draw(target);
-	buttons[2]->draw(target);
+	if (buttons[0])buttons[0]->draw(target);
+	if (buttons[1])buttons[1]->draw(target);
+	if (buttons[2])buttons[2]->draw(target);
 
 
 	if (game_mode == 'w') {
@@ -370,7 +375,10 @@ void StateFunctions56::update_state_5_6(char game_mode, sf::RenderWindow& window
 
 	//check for clicked pokemon buttons
 		for (int i = 0; i < 3; i++) {
-			(*buttons[i]).update_mouse(mouse_pos, clicked_button);
+			std::cout << "checked for clicked buttons" << std::endl;
+			if (buttons[i]) {
+				(*buttons[i]).update_mouse(mouse_pos, clicked_button);
+			}
 		}
 
 		if (game_mode == 'w') {
@@ -419,19 +427,26 @@ void StateFunctions56::initialize_state_8(Pokemon* poke, sf::Font& font, sf::Tex
 
 }
 
+StateFunctions56::StateFunctions56(){
+	onquit = false;
+	offquit = false;
+}
 
 bool StateFunctions56::check_leave(sf::Sprite &arrow_sprite, sf::RenderWindow& window) {
 	sf::Vector2i mousepixel = sf::Mouse::getPosition(window);
 	sf::Vector2f mouse_pos = window.mapPixelToCoords(mousepixel);
-	if (arrow_sprite.getGlobalBounds().contains(mouse_pos)) {
-		arrow_sprite.setScale(0.6, 0.6); // slightly bigger when the mouse is on the button
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-			std::cout << "you pressed the run button" << std::endl;
-			return true;
-		}
-	}
-	else {
-		arrow_sprite.setScale(0.5, 0.5);
+	if ((arrow_sprite.getGlobalBounds().contains(mouse_pos))&& !(onquit)) {
+		arrow_sprite.setScale(arrow_sprite.getScale().x*1.2, arrow_sprite.getScale().y*1.2);
+		onquit = true;
+		offquit = false;} // slightly bigger when the mouse is on the button
+	else if (!(arrow_sprite.getGlobalBounds().contains(mouse_pos))&& !(offquit)){
+		arrow_sprite.setScale(arrow_sprite.getScale().x/1.2, arrow_sprite.getScale().y/1.2);
+		offquit = true;
+		onquit = false;}
+
+	if ((sf::Mouse::isButtonPressed(sf::Mouse::Left))&&(arrow_sprite.getGlobalBounds().contains(mouse_pos))) {
+		std::cout << "you pressed the run button" << std::endl;
+		return true;
 	}
 	return false;
 }

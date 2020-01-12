@@ -93,7 +93,7 @@ class Map
         void illuBat80(sf::RenderWindow &window);
     
         //Shader for the underground
-        void light(sf::RenderWindow &window, Trainer &trainer);
+        void light(sf::RenderWindow &window, sf::View &view);
         
         //Flower animation
         void movingFlower(sf::RenderWindow &window, int x, int y);
