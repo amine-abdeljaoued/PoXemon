@@ -204,7 +204,7 @@ Map::Map(sf::RenderWindow &window)
     dialogue_light.push_back("You well deserve this");
     dialogue_light.push_back("You obtained LIGHT");
     dialogue_light.push_back("LIGHT is activiated in dark places");
-    dialogue_light.push_back("also be cartefull, some say");
+    dialogue_light.push_back("also be carefull, some say");
     dialogue_light.push_back("wild animals live in the fridge");
     dialogue_light.push_back("I wouldn't try to open it.");
 
@@ -232,7 +232,7 @@ Map::Map(sf::RenderWindow &window)
     dialogue_sp.push_back("You are not yet ready to fight");
     dialogue_sp.push_back("World champion PoXemon trainer");
     dialogue_sp.push_back("His name is Julien");
-    dialogue_sp.push_back("But he clames he claims to be");
+    dialogue_sp.push_back("But he claims to be");
     dialogue_sp.push_back("the world champion of everything");
     dialogue_sp.push_back("I bet you will beat him pfff");
     dialogue_sp.push_back("But first you need some training");
