@@ -69,7 +69,7 @@ using namespace std;
 	Backpack_Pokemon poke3(name3, 1, 2, 70, 30);
 	bag.backpack_pokemons[0] = &poke1;
 	bag.backpack_pokemons[1] = &poke2;
-	//bag.backpack_pokemons[2] = &poke3;
+	bag.backpack_pokemons[2] = &poke3;
 
  	Fight fight(window);
     bool start_fight = false;
@@ -91,11 +91,8 @@ using namespace std;
          if(Arthur.state=="Fighting"){
              if(start_fight==false){ // must initialise the fight
                  view.reset(sf::FloatRect(0.f, 0.f, 1400.f, 700.f));
-                 if(Arthur.fight_mode=='t'){ fight.initialise_trainer(bag, *(Arthur.opponent_bag), window);} // trainer fight
-                 else {
-                     std::cout<<"main: before initialising fight"<<std::endl;
-                     fight.initialise_wild(bag, window);} // wild pokemon fight
-                     std::cout<<"main: after initialising fight"<<std::endl;
+                 if(Arthur.fight_mode=='t'){ fight.initialise_trainer(map1.backpack, *(Arthur.opponent_bag), window);} // trainer fight
+                 else {fight.initialise_wild(map1.backpack, window);} // wild pokemon fight
                  start_fight = true;
              }
              else{

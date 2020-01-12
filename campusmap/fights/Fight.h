@@ -11,6 +11,7 @@
 #include "Pokemon_Button.h"
 #include "StateFunctions.h"
 #include "../pokemons_structure.hpp"
+#include "../Backpack_map.hpp"
 
 class Fight 
 {
@@ -21,12 +22,15 @@ public:
     Fight(sf::RenderWindow& window); 
 
     // start a specific fight
-    void initialise_wild (Backpack& pbag, sf::RenderWindow& window); // initialise a fight with a wild pokemon
-    void initialise_trainer (Backpack& pbag, Backpack& popponent_bag, sf::RenderWindow& window); // initilaise a fight with a trainer
+    void initialise_wild (BackpackMap& pbag_map, sf::RenderWindow& window); // initialise a fight with a wild pokemon
+    void initialise_trainer (BackpackMap& pbag_map, Backpack& popponent_bag, sf::RenderWindow& window); // initilaise a fight with a trainer
+    void initialise_basic(BackpackMap& pbag_map, sf::RenderWindow& window);
     Opponent* get_wild_pokemon(sf::RenderWindow& window, int type);
 
     Backpack bag;
     Backpack opponent_bag;
+    BackpackMap bag_map;
+
     // Boundaries
 	float groundY; //Cannot go below this height
     

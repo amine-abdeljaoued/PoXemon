@@ -5,9 +5,9 @@
 
 
 Backpack::Backpack(){
-    dict_pokeball["Normalball"] = 3;
-    dict_pokeball["Superball"] = 3;
-    dict_pokeball["Masterball"] = 3;
+    dict_pokeball["Normalball"] = 0;
+    dict_pokeball["Superball"] = 0;
+    dict_pokeball["Masterball"] = 0;
 
 
     bool masternow = true;
@@ -74,36 +74,32 @@ void Backpack::set_opponent(Opponent* opponent) {
 
 int Backpack::Pokeball_shoot(float& deltaTime, sf::RenderWindow& window, sf::Clock &clock2, sf::Time & elapsed2){ // returns 0 if nothing,
 
-	//std::cout<< opponent->health.health<<std::endl;
 	float health_opponent = opponent->health.health;
 
-	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)&&(dict_pokeball["Normalball"]>0)&&new_Normalball.in_air ==false&&new_Superball.in_air ==false&&new_Masterball.in_air ==false){
 
-				//Get the mouse position:
-				sf::Vector2i mousepixel = sf::Mouse::getPosition(window);
-				sf::Vector2f mouse_pos = window.mapPixelToCoords(mousepixel);
-				//std::cout<<mouse_pos.x<<'\n';
-				//std::cout<<mouse_pos.y<<'\n';
+		//Get the mouse position:
+		sf::Vector2i mousepixel = sf::Mouse::getPosition(window);
+		sf::Vector2f mouse_pos = window.mapPixelToCoords(mousepixel);
 
 		//corresponds to the pokeball icon on the screen
 		if((mouse_pos.x>20)&&(mouse_pos.x<57)&&(mouse_pos.y>150)&&(mouse_pos.y<190)){
 
-				dict_pokeball["Normalball"]-=1;
+			dict_pokeball["Normalball"]-=1;
 
-				//std::cout<<dict_pokeball["Normalball"]<<'\n';
-				sf::Vector2u size = window.getSize();
-				float w = size.x;
-				float width = (float) w;
-				float h = size.y;
-				float height = (float) h + 2.0f;
-				float width4 = width/5;
+			//std::cout<<dict_pokeball["Normalball"]<<'\n';
+			sf::Vector2u size = window.getSize();
+			float w = size.x;
+			float width = (float) w;
+			float h = size.y;
+			float height = (float) h + 2.0f;
+			float width4 = width/5;
 
 
-				new_Normalball.setPosition(width4, height);// Need to figure out where the starting x and y position are
-				new_Normalball.velocityY = -sqrt(5.0f * 981.0f * new_Normalball.ballHeight); //We need to reset the ball's position and starting speed when you shoot, that's why its in this class
-				new_Normalball.velocityX = 500;
-				new_Normalball.in_air = true;
+			new_Normalball.setPosition(width4, height);// Need to figure out where the starting x and y position are
+			new_Normalball.velocityY = -sqrt(5.0f * 981.0f * new_Normalball.ballHeight); //We need to reset the ball's position and starting speed when you shoot, that's why its in this class
+			new_Normalball.velocityX = 500;
+			new_Normalball.in_air = true;
 
 		}
 	}
