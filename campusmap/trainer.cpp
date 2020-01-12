@@ -224,49 +224,6 @@ void Trainer::fishing(sf::RenderWindow &window, sf::View &view){
     }
     
     if (state == "Fishing"){
-        
-        text.setFont(font);
-        
-        random_device rd;
-        mt19937 gen(rd());
-        uniform_real_distribution<> dis(0.0, 1.0);
-        float probagenerated = dis(gen);
-        if (probagenerated<0.005){
-            text.setString("A wild Pokemon was caught!");
-            state = "Fighting";
-        }
-        else if (text.getString() != "A wild Pokemon was caught!")
-            text.setString("Fishing...");
-        
-        
-        
-        text.setCharacterSize(15);
-        text.setFillColor(sf::Color::Black);
-        /* sf::Vector2f viewSize = view.getSize();
-        bubble.setSize(sf::Vector2f(viewSize.x, viewSize.y/4)); */
-
-        sf::FloatRect viewBounds = getViewBounds(view);
-        bubble.setPointCount(8);
-        bubble.setPoint(0, sf::Vector2f(float(viewBounds.left + 30), float(viewBounds.top + viewBounds.height - 60)));
-        bubble.setPoint(1, sf::Vector2f(float(viewBounds.left + viewBounds.height - 30), float(viewBounds.top + viewBounds.height - 60)));
-        bubble.setPoint(2, sf::Vector2f(float(viewBounds.left + viewBounds.height - 10), float(viewBounds.top + viewBounds.height - 45)));
-        bubble.setPoint(3, sf::Vector2f(float(viewBounds.left + viewBounds.height - 10), float(viewBounds.top + viewBounds.height - 25)));
-        bubble.setPoint(4, sf::Vector2f(float(viewBounds.left + viewBounds.height - 30), float(viewBounds.top + viewBounds.height - 10)));
-        bubble.setPoint(5, sf::Vector2f(float(viewBounds.left + 30), float(viewBounds.top + viewBounds.height - 10)));
-        bubble.setPoint(6, sf::Vector2f(float(viewBounds.left + 10), float(viewBounds.top + viewBounds.height - 25)));
-        bubble.setPoint(7, sf::Vector2f(float(viewBounds.left + 10), float(viewBounds.top + viewBounds.height - 45)));
-        bubble.setOutlineColor(sf::Color::Black);
-        bubble.setOutlineThickness(2.f);
-        text.setPosition(int(viewBounds.left) + 35, int(viewBounds.top + viewBounds.height - 40) );
-        /* bubble.setPosition(int(viewBounds.left), int(viewBounds.top + viewBounds.height - 50)); */
-
-        text.setStyle(sf::Text::Bold);
-        
-        window.draw(bubble);
-        window.draw(text);
-        
-        
-        
         if (counterWalk < 4){
             (spritePlayer).setTextureRect(sf::IntRect(512 + counterWalk * (sheetRect+2),2+y*(sheetRect+2),sheetRect,sheetRect));
             if (counterWalk == 0){
