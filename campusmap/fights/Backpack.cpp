@@ -41,7 +41,6 @@ Backpack::Backpack(){
 }
 
 Backpack::~Backpack(){
-	std::cout<<"backpack destructor"<<std::endl;
 	for (int i=0; i<3; i++){
 		if (backpack_pokemons[i]){
 			delete backpack_pokemons[i];
@@ -72,8 +71,8 @@ void Backpack::set_opponent(Opponent* opponent) {
     this->opponent = opponent;
 }
 
-int Backpack::Pokeball_shoot(float& deltaTime, sf::RenderWindow& window, sf::Clock &clock2, sf::Time & elapsed2){ // returns 0 if nothing,
-
+ReturnValue Backpack::Pokeball_shoot(float& deltaTime, sf::RenderWindow& window, sf::Clock &clock2, sf::Time & elapsed2){ // returns 0 if nothing,
+	value.string = "None";
 	float health_opponent = opponent->health.health;
 
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)&&(dict_pokeball["Normalball"]>0)&&new_Normalball.in_air ==false&&new_Superball.in_air ==false&&new_Masterball.in_air ==false){
@@ -86,8 +85,8 @@ int Backpack::Pokeball_shoot(float& deltaTime, sf::RenderWindow& window, sf::Clo
 		if((mouse_pos.x>20)&&(mouse_pos.x<57)&&(mouse_pos.y>150)&&(mouse_pos.y<190)){
 
 			dict_pokeball["Normalball"]-=1;
+			value.string = "Normalball";
 
-			//std::cout<<dict_pokeball["Normalball"]<<'\n';
 			sf::Vector2u size = window.getSize();
 			float w = size.x;
 			float width = (float) w;
@@ -109,16 +108,14 @@ int Backpack::Pokeball_shoot(float& deltaTime, sf::RenderWindow& window, sf::Clo
 							//Get the mouse position:
 							sf::Vector2i mousepixel = sf::Mouse::getPosition(window);
 							sf::Vector2f mouse_pos = window.mapPixelToCoords(mousepixel);
-							//std::cout<<mouse_pos.x<<'\n';
-							//std::cout<<mouse_pos.y<<'\n';
 
-					//corresponds to the pokeball icon on the screen
-					if((mouse_pos.x>70)&&(mouse_pos.x<107)&&(mouse_pos.y>150)&&(mouse_pos.y<190)){
+							//corresponds to the pokeball icon on the screen
+							if((mouse_pos.x>70)&&(mouse_pos.x<107)&&(mouse_pos.y>150)&&(mouse_pos.y<190)){
 
 
 							dict_pokeball["Superball"]-=1;
+							value.string = "Superball";
 
-							//std::cout<<dict_pokeball["Superball"]<<'\n';
 							sf::Vector2u size = window.getSize();
 							float w = size.x;
 							float width = (float) w;
@@ -140,16 +137,14 @@ int Backpack::Pokeball_shoot(float& deltaTime, sf::RenderWindow& window, sf::Clo
 								//Get the mouse position:
 								sf::Vector2i mousepixel = sf::Mouse::getPosition(window);
 								sf::Vector2f mouse_pos = window.mapPixelToCoords(mousepixel);
-								//std::cout<<mouse_pos.x<<'\n';
-								//std::cout<<mouse_pos.y<<'\n';
 
-						//corresponds to the pokeball icon on the screen
-						if((mouse_pos.x>120)&&(mouse_pos.x<157)&&(mouse_pos.y>150)&&(mouse_pos.y<190)){
+								//corresponds to the pokeball icon on the screen
+								if((mouse_pos.x>120)&&(mouse_pos.x<157)&&(mouse_pos.y>150)&&(mouse_pos.y<190)){
 
 
 								dict_pokeball["Masterball"]-=1;
+								value.string = "Masterball";
 
-								//std::cout<<dict_pokeball["Masterball"]<<'\n';
 								sf::Vector2u size = window.getSize();
 								float w = size.x;
 								float width = (float) w;
@@ -174,19 +169,14 @@ int Backpack::Pokeball_shoot(float& deltaTime, sf::RenderWindow& window, sf::Clo
 			//bool still_on_screen = new_Normalball.update(deltaTime, window,new_Normalball.proba, clock2, elapsed2,health_opponent);
 		if(new_Normalball.waiting == false){
 			new_Normalball.ball.setOrigin(100, 100);//I suppose (100,100) is close to the center of the sprite before rescaling
-//                const sf::Vector2f vector= new_Normalball.ball.getOrigin();
-//                std::cout<<vector.x<<std::endl;
-//                std::cout<<vector.y<<std::endl;
 			new_Normalball.ball.rotate(2.0f);
 		}
 		else{
 			new_Normalball.ball.setRotation(0);
 		}
-			//new_Normalball.ball.move(-(37/2)*(1-cos(5.0)),20*sin(5.0));
-				//if the ball reached the end of the window, then the ball is not in air
 			if (catched == 1 || catched == 2) {
-						//new_Normalball.in_air = false;
-						return catched;
+						value.i = catched;
+						return value;
 			}
 	}
 	//Continuation of the one shot as time goes by
@@ -194,9 +184,6 @@ int Backpack::Pokeball_shoot(float& deltaTime, sf::RenderWindow& window, sf::Clo
 			int catched = new_Superball.update(deltaTime, window,new_Superball.proba, clock2, elapsed2,health_opponent);
 				if(new_Superball.waiting == false){
 					new_Superball.ball.setOrigin(100, 100);//I suppose (100,100) is close to the center of the sprite before rescaling
-		//          const sf::Vector2f vector= new_Superball.ball.getOrigin();
-		//          std::cout<<vector.x<<std::endl;
-		//          std::cout<<vector.y<<std::endl;
 					new_Superball.ball.rotate(1.5f);
 				}
 				else{
@@ -205,7 +192,8 @@ int Backpack::Pokeball_shoot(float& deltaTime, sf::RenderWindow& window, sf::Clo
 				//if the ball reached the end of the window, then the ball is not in air
 			if (catched == 1 || catched == 2) {
 						//new_Superball.in_air = false;
-						return catched;
+						value.i = catched;
+						return value;
 			}
 	}
 	//Continuation of the one shot as time goes by
@@ -213,9 +201,6 @@ int Backpack::Pokeball_shoot(float& deltaTime, sf::RenderWindow& window, sf::Clo
 			int catched = new_Masterball.update(deltaTime, window,new_Masterball.proba, clock2, elapsed2,health_opponent);
 				if(new_Masterball.waiting == false){
 					new_Masterball.ball.setOrigin(310, 310);//I suppose (310,310) is close to the center of the sprite before rescaling
-		//          const sf::Vector2f vector= new_Masterball.ball.getOrigin();
-		//          std::cout<<vector.x<<std::endl;
-		//          std::cout<<vector.y<<std::endl;
 					new_Masterball.ball.rotate(1.5f);
 				}
 				else{
@@ -224,11 +209,12 @@ int Backpack::Pokeball_shoot(float& deltaTime, sf::RenderWindow& window, sf::Clo
 				//if the ball reached the end of the window, then the ball is not in air
 				if (catched == 1 || catched == 2) {
 					//new_Masterball.in_air = false;
-					return catched;
+					value.i = catched;
+					return value;
 				}
 	}
-
-	return 0;
+	value.i = 0;
+	return value;
 }
 
 
@@ -275,17 +261,6 @@ void Backpack::draw(sf::RenderTexture& texture) const {
     texture.draw(superball);
     texture.draw(masterball);
 }
-
-//function that updates the backpack containt
-//void Backpack::update(){
-//    if (ball_nbre>0){
-//        if((ball.shooting == false)&&(sf::Keyboard::isKeyPressed(sf::Keyboard::Space))){
-//
-//            ball_nbre-=1;
-//        std::cout<<ball_nbre<<std::endl;
-//        }
-//    }
-//}
 
 
 

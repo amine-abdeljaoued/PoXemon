@@ -197,18 +197,6 @@ int StateFunctions1::update_state1(sf::RenderWindow& window, sf::Clock& clock){
     }
 }
 
-/* void StateFunctions1::howtoplay(sf::RenderWindow& window, float& deltaTime){
-
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-		sf::Vector2i mousepixel = sf::Mouse::getPosition(window);
-		sf::Vector2f mouse_pos = window.mapPixelToCoords(mousepixel);
-		if (quit.getGlobalBounds().contains(mouse_pos)){
-			return 1;
-			}
-	}
-	return 15;
-} */
-
 void StateFunctions1::initialise_countdown(sf::RenderTarget& window){
 	text.setString("3");
     text.setCharacterSize(max_char_size);

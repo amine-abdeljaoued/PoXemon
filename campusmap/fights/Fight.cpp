@@ -50,7 +50,6 @@ Fight::Fight(sf::RenderWindow& window){
 void Fight::initialise_basic(BackpackMap& pbag_map, sf::RenderWindow& window){
 	// background - must change depending on where we are
     functions1.initialise_background(window, "fights/Images/grassbg.png", background, BackgroundTexture);
-	bag_map = pbag_map;
 
 	// initialise poke_buttons and the fight backpack of our player
     for (int i=0; i<3; i++){
@@ -59,9 +58,12 @@ void Fight::initialise_basic(BackpackMap& pbag_map, sf::RenderWindow& window){
 			poke_buttons[i] = &((pbag_map.backpack_pokemons[i])->button);
 			bag.backpack_pokemons[i] = pbag_map.backpack_pokemons[i];
 		}
+		else{bag.backpack_pokemons[i] = NULL;}
     }
-	// set up number of pokeballs...
-	// to be implemented
+
+	bag.dict_pokeball["Normalball"] = pbag_map.inventory.find("Normalball")->second;
+	bag.dict_pokeball["Superball"] = pbag_map.inventory.find("Superball")->second;
+	bag.dict_pokeball["Masterball"] = pbag_map.inventory.find("Masterball")->second;
 
 	// for the states
     state = 1;
@@ -96,7 +98,7 @@ void Fight::initialise_wild (BackpackMap& pbag_map, sf::RenderWindow& window){
 } 
 
 void Fight::initialise_trainer(BackpackMap& pbag_map, Backpack& popponent_bag, sf::RenderWindow& window){
-
+	std::cout<<"ini";
 	// basic setup
 	popponent = new Opponent(window, 200.f, 500.f, *popponent_bag.backpack_pokemons[0]);
 	pplayer = new Player(window, 200.f, 500.f, *pbag_map.backpack_pokemons[0]);
@@ -108,6 +110,7 @@ void Fight::initialise_trainer(BackpackMap& pbag_map, Backpack& popponent_bag, s
     (bag).set_opponent(popponent);
     (*pplayer).set_enemy(popponent);
 	(*popponent).set_enemy(pplayer);
+	std::cout<<2;
 } 
 
 Opponent* Fight::get_wild_pokemon(sf::RenderWindow& window, int type){
@@ -135,7 +138,7 @@ Opponent* Fight::get_wild_pokemon(sf::RenderWindow& window, int type){
 	return opponent;
 }
 
-int Fight::update(sf::RenderWindow& window){
+int Fight::update(sf::RenderWindow& window, BackpackMap& bag_map){
     deltaTime = clock.restart().asSeconds();
     elapsed = clock_regenerate_bullets.getElapsedTime();
     elapsed2 = clock2.getElapsedTime();
@@ -175,7 +178,11 @@ int Fight::update(sf::RenderWindow& window){
 		window.clear(sf::Color::Blue);
 		window.draw(background);
 		if (game_mode == 'w'){//we can only throw pokeballs at wild pokemons
-			bag.Pokeball_shoot(deltaTime, window, clock2, elapsed2); // BAGCHECK - control no of pokeballs
+			ReturnValue value = bag.Pokeball_shoot(deltaTime, window, clock2, elapsed2); // BAGCHECK - control no of pokeballs
+			if (value.string!="None"){
+				bag_map.inventory.find(value.string)->second -= 1;
+				}
+			
 			bag.draw(window);
 		}
 
@@ -183,7 +190,6 @@ int Fight::update(sf::RenderWindow& window){
 		(*popponent).draw(window);
 		//player dies
 		if ((*pplayer).health.health <= 0) {
-			std::cout << "player dies" << std::endl;
 			bag.backpack_pokemons[(*pplayer).index]->health = 0; //set health of the corresponding backpack pokemon to 0
 			bag_map.backpack_pokemons[(*pplayer).index]->health = 0;
 			//update opponent's level
@@ -207,7 +213,6 @@ int Fight::update(sf::RenderWindow& window){
         		functions56.initialize_state_5_6(game_mode, pplayer, font, text_fainted, choose_pokemon, leave_fight, window, poke_buttons, running_sprite);
 				state = 5;
 			}
-			std::cout<<"hello"<<std::endl;
 		}
 
 		//opponent dies
@@ -399,7 +404,15 @@ int Fight::update(sf::RenderWindow& window){
 		elapsed2 = clock2.getElapsedTime(); // took that from francois but I don't really understand how it works so I use another clock
 		window.clear(sf::Color::Blue);
 		window.draw(background);
-		int c  = (bag).Pokeball_shoot(deltaTime, window, clock2, elapsed2); //BAGCHECK - update pokeballs
+		ReturnValue value  = (bag).Pokeball_shoot(deltaTime, window, clock2, elapsed2); //BAGCHECK - update pokeball
+
+		int c = value.i;
+		if (value.string!="None"){
+			std::cout<<"before: "<<bag_map.inventory.find(value.string)->second<<std::endl;
+			// bag_map.inventory.find(value.string)->second -= 1;
+			bag_map.inventory[value.string] -= 1;
+			std::cout<<"after: "<<bag_map.inventory.find(value.string)->second<<std::endl;}
+		
 		(bag).draw(window);
 		(*pplayer).draw(window);
 		(*popponent).draw(window);
@@ -472,9 +485,10 @@ int Fight::update(sf::RenderWindow& window){
 	}
 
 
-	else if (state = 12) {//the pokeball didn't work
+	else if (state == 12) {//the pokeball didn't work
 		//this is a very short state
 		//we only say that the pokeball failed to catch opponent and go back to the countown after 1 second
+		functions1.draw_blurry_background(window, background, bag, *pplayer, *popponent, &shader);
 		window.draw(caught);
 		if (clock2.getElapsedTime().asSeconds() > 1.0f) {
 			clock_regenerate_bullets.restart();//reset this for the countdown
