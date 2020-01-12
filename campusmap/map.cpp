@@ -586,6 +586,20 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
                 }
                 
             }
+            
+            
+            //fight underground
+            if (collision_[map_name][(int) x/16 +( (int)y/16 *34)]==2){
+            random_device rd;
+            mt19937 gen(rd());
+            uniform_real_distribution<> dis(0.0, 1.0);
+            float probagenerated = dis(gen);
+                if (probagenerated<0.02) {
+                    fight = true;
+                    std::cout<<"POKEEEEMMMOONNN"<<std::endl;
+                    trainer.fight_mode = 'w'; //Which means single pokemon in grass
+                }
+            }
         }
         
         if (trainer.state == "Stop"){
