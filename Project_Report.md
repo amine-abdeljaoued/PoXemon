@@ -22,6 +22,13 @@
 
 ### Francois Reynal (PoXemon Team):
 
+The first thing that I did in the project was a name generator for the Pokemons of our game (name_generator.cpp). The program that I did generates Pokemon-like names. I used a probabilistic approach in order to generate these new names. Indeed, the principle of this program is quite simple: it takes a list of “real” Pokemon names and computes conditional probabilities of appearance of letters in these Pokemons names. Then, I used a dictionary of dictionaries (actually I used maps:   std::map<char, std::map<char, double>> ) in order to store these conditional probabilities. To make it simple, let’s take an example. For example, I looked at the probability of having the char ‘t’ after ‘a’ in a list of Pokemon names. The program then generates some random numbers and uses the previously obtained frequency table, to construct the Pokemon-like names. The output of this program is thus a list of Pokemon-like names of a given number of letter. 
+
+After this, I started to help the fight team. I concentrated myself on the backpack and the pokeball classes. I implemented different types of pokeballs with different probabilities of catching. I also implemented the launching and the trajectory of the pokeballs. As I am in the Physics double major, I created some parameters as air friction, bounces, gravity coefficient… I also worked on the rotation of the ball. Finally, I made the probabilities of catching the Pokemons depend on their health (using pointers objects). On this part, I received help from Antonin. At this point, I decided to start to help the map team. 
+
+First of all, Benjamin and Arthur took some time to explain me how the map team was working and explained me how to work with tilemaps, tilesets… Then, I started to create some new maps (I designed a total of 5 different maps). During the last week, I also work on some graphical elements such as the light spot in the underground map and on some easter eggs. During the last month, as my work was quite diverse and the fact that I have encounter some technical issues with XCode, I preferred to ask Arthur and Benjamin to commit the different things that I programmed. 
+
+
 ### Clement Sterlin (PoXemon Team):
 
 ### Antonin Wattel (Fight Team):
