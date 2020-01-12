@@ -39,7 +39,7 @@ using namespace std;
      sf::RenderWindow window(sf::VideoMode(1400, 700), "PoXemon", sf::Style::Titlebar | sf::Style::Close);
 
      /* sf::RenderWindow window(sf::VideoMode(sf::VideoMode::getDesktopMode().height, sf::VideoMode::getDesktopMode().height), "PoXemon"); */
-     sf::View view(sf::Vector2f(272, 272), sf::Vector2f(544, 544));
+     sf::View view(sf::Vector2f(272, 272), sf::Vector2f(544, 272));
      view.zoom(0.5f);
      window.setPosition(sf::Vector2i(sf::VideoMode::getDesktopMode().width/8, 0));
      
