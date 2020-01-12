@@ -452,7 +452,7 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
                     }
                 }
             }
-           else if (collision_[map_name][(int) x/16 +1+((int) y/16 *34)]>=60 && collision_[map_name][(int) x/16 +1+((int) y/16 *34)]<=69 && trainer.facingDirection=="Right"&&npcs[map_name][collision_[map_name][(int) x/16 -1+((int) y/16 *34)] % 60]->fixed != true){
+           else if (collision_[map_name][(int) x/16 +1+((int) y/16 *34)]>=60 && collision_[map_name][(int) x/16 +1+((int) y/16 *34)]<=69 && trainer.facingDirection=="Right"&&npcs[map_name][collision_[map_name][(int) x/16 +1+((int) y/16 *34)] % 60]->fixed != true){
                 nNpc = collision_[map_name][(int) x/16 +1+((int) y/16 *34)] % 60;
                 if(trainer.state != "Shopping"&&trainer.state != "Healing"){
                     if(trainer.state == "SpeakingScenario"){
@@ -851,7 +851,7 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
     this->trainerDisplacement(window, trainer,event,clock,view);
     shop.draw(window, view, event, trainer, backpack);
     center.draw(window, view, event, trainer, backpack);
-    light(window, trainer);
+    light(window, view);
     backpack.draw(window, view, event, trainer);
 }
         
@@ -1048,15 +1048,23 @@ void Map::illuTunnelL(sf::RenderWindow &window){
     }
 }
 
-void Map::light(sf::RenderWindow &window, Trainer &trainer){
+sf::FloatRect Map::getViewBounds(const sf::View &view)
+{
+        sf::FloatRect rt;
+        rt.left = view.getCenter().x - view.getSize().x/2.f;
+        rt.top  = view.getCenter().y - view.getSize().y/2.f;
+        rt.width  = view.getSize().x;
+        rt.height = view.getSize().y;
+        return rt;
+}
+
+void Map::light(sf::RenderWindow &window, sf::View &view){
     if (map_name == "second"){
-        sf::Vector2f position = trainer.spritePlayer.getPosition();
-        int x = position.x + 16;
-        int y = position.y + 16;
+        sf::FloatRect viewBounds = getViewBounds(view);
         //for the underground map, a circle of light around player
         sf::CircleShape shape(30.f);
         shape.setFillColor(sf::Color(0,0,0,150));
-        shape.setPosition(x-30, y-30);
+        shape.setPosition(viewBounds.left+viewBounds.width/2-30, viewBounds.top +viewBounds.height/2-30);
 
         // définit un contour faded tres large
         shape.setOutlineThickness(500.f);
