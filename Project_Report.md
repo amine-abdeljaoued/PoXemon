@@ -10,21 +10,39 @@
 
 ### Amine Abdeljaoued (Map Team, Github manager):
 
+As said previously, we firstly decided to split the work in 3 teams. I decided to be part of the map team. 
+Benjamin and Arthur already had coded a bit to be able to have a character walking on the map. The first week, I didn’t really implement new features but I organized the code, splitting it in several classes and files. Then we met and spoke about the structure of our code.
+
+After that, I implemented the trainer class, handling its displacement on the map. This clearly wasn’t the final version but a first draft that was working.
+Then, I wanted to put NPCs in the map, with whom we could first have a discussion. I created the class, that would also be a basis for opponent trainers later. At that point we were able to put NPCs in the map anywhere specifying their sprite sheet for their appearance and their dialogues. 
+
+At this point we had a lot to draw on the map, with superposition between the different elements to handle…
+That’s why we started a map class and I worked quite a lot on the main drawing function. 
+I also contributed to the superposition of Tilesets on maps to implement our first building.
+
+Then I spoke with those that did the different maps, implemented NPCs and panels where they wanted to.
+The other teams were also working on their side and we had a meeting with the fight team to speak about the format of fights we needed what they could do to facilitate merging everything.
+
+
+Then they told us that what they had was ready. As the responsible of the git repository, I linked their work with ours. I first thought a lot on paper on the best way to do it. Then I did it. As the Git master, I also had to fix the problem of the team sometimes regarding branches, wrong manipulations…
+Finally after having linked the work, I implemented a subclass of NPCs for opponent trainers with whom we could fight. With Benjamin, I put some where needed for the scenario.
+
+
 ### Arthur Collette (Map Team, Map manager):
 
-### Maxence Dulac (PoXemon Team):
+### Maxence Dulac (PoXemon Team, PoXemon Manager):
 
-During this project I worked the most with Julien Luzzatto and we cooperated with the other teams of the project.
+During this project I was part of the "PoXemon team" and throughout the duration I worked the most with Julien Luzzatto and we cooperated with the other teams of the project.
 
 At first, our idea was to create the whole game based on our adventure in the Bachelor. The pokemons were going to be original pokemons with faces of our classmates the trainers the teachers we had. The different types of the pokemons would then be the 3 different majors one can choose from (econ, cs, physics) and the stats of the pokemons would be somewhat representative of everyone. 
 
 We then learned how to use OpenCV to implement an automatic face photoshop to make the creation of pokemons automatic with the idea that one could “customize” their pokemons by simply uploading/taking a live picture of their face. Once this worked we realised that we had a flaw in our program, the facial recognition could not recognize the face of a drawing of a pokemon. We then made an editor in which one could set the face at the right place changing size, position. Even though this idea worked fine, it was scrapped due to purely esthetic reasons, as an ovally cropped face didn’t graphically cut it … (more details during the presentation).
 
-After this unfortunate setback, we changed completely the storyline and used Alexonsager Pokemon fusion site to create many new pokemons.  I found uniquely generated names for each of them with the help of Francois’s program and then created different stats for all of them. At first I was creating pokemon objects but in the end I decided to use structures/maps in order to make it less heavy on the computer. We also started working on an intro for the game in which one would not only choose it’s starter pokemon but also discover the amazing world of pokemons (in case someone actually never heard of them …). During the Pokemon creation process I got ahead of myself and created way too many pokemons (>150). In the end, due to time and performance issues, only 30 pokemons are available in the game. At the same time, I was helping Julien realising the introduction of the game.
+After this unfortunate setback, we changed completely the storyline and used Alexonsager Pokemon fusion site to create many new pokemons.  I found uniquely generated names for each of them with the help of Francois’s program and then created different stats for all of them. At first I was creating pokemon objects but in the end I decided to use structures/maps in order to make it less heavy on the computer. Julien also started working on an intro for the game in which one would not only choose it’s starter pokemon but also discover the amazing world of pokemons (in case someone actually never heard of them …). During the Pokemon creation process I got ahead of myself and created way too many pokemons (>150). In the end, due to time and performance issues, only 30 pokemons are available in the game. Once again I worked closely with Julien on these two tasks.
 
 We then created a really cool Pokemon List/Pokedex which will unfortunately not be in the game as we did not have time to fix the window/size problems (frustrated about that).
 
-After that, we worked on super attacks in the game. The whole idea was to have them unlock after a certain level and then for them to be pivotal in a fight to help defeat bosses/trainers… An extension to this project would be to add even more of these and have skill points to upgrade/unlock new things.
+After that, we worked on super-super attacks in the game. The whole idea was to have them unlock after a certain level and then for them to be pivotal in a fight to help defeat bosses/trainers… An extension to this project would be to add even more of these and have skill points to upgrade/unlock new things.
 
 Finally we worked with the map team in order to create maps/collision maps in which one can walk/interact. We then gave those maps to the map team in order to implement them. 
 
@@ -40,7 +58,9 @@ Therefore, my personal experience of the project resulted in working closely wit
 
 The first task we dedicated ourselves to was the development of a face-photoshopping program to make the assembling of Pokemon bodies and human faces automatic. To do so, I spent a couple of sessions learning how to use the OpenCV library. However, we soon encountered many difficulties from an aesthetic perspective, from backgrounds to the actual assembling, and we just realised that the outcome was not graphically good-looking. Hence, we permanently abandoned the idea of Pokemon-Humans.
 
-The second main task we covered was the creation of an introduction for the game, i.e. a main menu, followed by a character introducing the player to the world of Pokemon, like in the real game, and proposing a short presentation of the first Pokemons. Once again, I spent a session understanding how the SFML library works, and then started designing the introduction, for which we also needed a sort of storyline to go behind. While Maxence was starting creating the Pokemons to present, I coded the graphical appearance of the introduction (menu, text bubbles, choices, etc.). That took a long time, as every single screening had to be handled individually, so we spent several weeks realising it, dividing our time between this and the creation of the different Pokemons that we use throughout the game, using sites and simple photo-editing softwares. After finishing the introduction, we spent one week designing a Pokedex, which, in the end, will not be present in the game because of window size issues (this was actually a problem we had all along: working on different platforms and computers, problems of compatibility were recurrent).
+The second main task we covered was the creation of an introduction for the game, i.e. a main menu, followed by a character introducing the player to the world of Pokemon, like in the real game, and proposing a short presentation of the first Pokemons. Once again, I spent a session understanding how the SFML library works, and then started designing the introduction, for which we also needed a sort of storyline to go behind. While Maxence was starting creating the Pokemons to present, I started coding the graphical appearance of the introduction (menu, text bubbles, choices, etc.). That took a long time, as every single screening had to be handled individually, so Maxence and I spent several weeks realising it, dividing our time between this and the creation of the different Pokemons that we use throughout the game, using sites and simple photo-editing softwares. 
+
+After finishing the introduction, we spent one week designing a Pokedex, which, in the end, will not be present in the game because of window size issues (this was actually a problem we had all along: working on different platforms and computers, problems of compatibility were recurrent).
 
 Afterwards, I started working more closely with the other teams, as my main objectives regarding my part were achieved. Hence, Maxence and I first collaborated with the Fights Team, developing several new types of attacks, ‘super-attacks’, which one would unlock throughout the game. Then, we started helping the map team, as realizing map is not a particularly difficult task, but it is very time-consuming. We realized three new maps: one representing the sports facilities of the campus, one displaying the Bachelor buildings on campus (the ones we live in), and finally a labyrinth one, from which one accesses the map leading to the final boss one has to defeat to complete the game. Finally, I discussed with the map team to decide the best ways to connect them to the game’s path and they realised the bridges between the maps.
 
