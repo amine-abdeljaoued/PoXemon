@@ -586,7 +586,7 @@ void Box::switchPoke(BackpackMap &backpack, sf::Event &event){
             box_pokemons[swi1] = backpack.backpack_pokemons[swi2];
             backpack.backpack_pokemons[swi2] = tempP;
             
-            backpack.backpack_pokemons[swi1]->index = swi1;
+            backpack.backpack_pokemons[swi2]->index = swi1;
             box_pokemons[swi2]->index = 3;
         }
         
