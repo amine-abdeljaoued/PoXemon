@@ -114,10 +114,11 @@ Map::Map(sf::RenderWindow &window)
     dialogue_under.push_back("There is no exit here");
     dialogue_under.push_back("You just lost 2 minutes of your time");
     dialogue_under.push_back("Now let's fight !");
+    dialogue_under.push_back("Fighting");
 //    intiate fight
 //    if game is won change mr_fountain to true else do nothing
-    Npc* digger = new Npc("digger","Sprites/NPC1.png",209,673,32,32,1.f,8,16,dialogue_under,true);
-    npcs_underground.push_back(digger);
+    // Npc* digger :
+    npcs_underground.push_back(new Trainer_opponent("Fighter","Sprites/NPC1.png",209,673,32,32,1.f,8,16,dialogue_under,true,2));
     
     vector<string> dialogue_pass4;
     dialogue_pass4.push_back("Have you seen the nice fountain ?");
@@ -157,7 +158,9 @@ Map::Map(sf::RenderWindow &window)
     dialogueH.push_back("on his window?");
     dialogueH.push_back("Throwing");
 	dialogueH.push_back("Come inside the bulding !");
-    npcs_home.push_back(new Npc("clemW","Sprites/NPC1.png",17,97,1,1,1.f,248,192,dialogueH, true)) ;
+    
+    
+    npcs_home.push_back(new Npc("wCLem","Sprites/NPC1.png",17,97,1,1,1.f,248,192,dialogueH, true) );
     
     vector<string> dialogue_pass;
     dialogue_pass.push_back("You wouldn't want to go in there");
@@ -195,22 +198,29 @@ Map::Map(sf::RenderWindow &window)
     dialogue_light.push_back("So you want to adventure yourself");
     dialogue_light.push_back("into the cave ?");
     dialogue_light.push_back("I guess you don't have a light");
+    dialogue_light.push_back("If you win you'll have light");
     dialogue_light.push_back("Want one ? Fight me first !");
+    dialogue_light.push_back("And in case I die...");
+    dialogue_light.push_back("wild animals live in the fridge");
+    dialogue_light.push_back("I wouldn't try to open it.");
+    dialogue_light.push_back("Fighting");
+
 //    intiate fight
         
 //    if fight is won change obtained_light to true
-    dialogue_light.push_back("Arghhhhhhhhh");
+/*     dialogue_light.push_back("Arghhhhhhhhh");
     dialogue_light.push_back("I underestimated you...");
     dialogue_light.push_back("You well deserve this");
     dialogue_light.push_back("You obtained LIGHT");
     dialogue_light.push_back("LIGHT is activiated in dark places");
     dialogue_light.push_back("also be carefull, some say");
     dialogue_light.push_back("wild animals live in the fridge");
-    dialogue_light.push_back("I wouldn't try to open it.");
+    dialogue_light.push_back("I wouldn't try to open it."); */
 
     //    if fight is loss
-        dialogue_light.push_back("Hahahaha you suck !");
-    Npc* clement = new Npc("clement","Sprites/NPC1.png",241,673,32,32,1.f,232,256,dialogue_light,false);
+ /*        dialogue_light.push_back("Hahahaha you suck !"); */
+    //Clement
+    Npc* clement = new Trainer_opponent("Fighter","Sprites/NPC1.png",241,673,32,32,1.f,232,256,dialogue_light,false,3);
     npcs_roomC.push_back(clement);
 
     npcs.insert(pair<string, vector<Npc*> >("room_clement", npcs_roomC));
@@ -247,10 +257,11 @@ Map::Map(sf::RenderWindow &window)
     dialogue_pl.push_back("Hi I'm the referee");
     dialogue_pl.push_back("Do you want to see");
     dialogue_pl.push_back("what my team is capable of ?");
+    dialogue_pl.push_back("Fighting");
     //initiate fight
     //if fight is won set foot_players to true
-    Npc* arbitre = new Npc("arbitre","Sprites/NPC1.png",241,1561,32,32,1.f,248,128,dialogue_pl,false);
-    npcs_sport.push_back(arbitre);
+    //Npc* arbitre :
+    npcs_sport.push_back(new Trainer_opponent("Fighter","Sprites/NPC1.png",241,1561,32,32,1.f,248,128,dialogue_pl,false,4) );
     
     Npc* bla = new Npc("bla","Sprites/NPC1.png",17,1625,32,32,1.f,424,144,dialogue_pl,true);
     npcs_sport.push_back(bla);
@@ -790,8 +801,8 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
          if(pos.y >= pos2.y)
          {
               if (trainer.state == "Speaking"){
-                if ((*np).name == "clement") obtained_light = true;
-                if ((*np).name == "digger") mr_fountain = true;
+/*                 if ((*np).name == "clement") obtained_light = true;
+                if ((*np).name == "digger") mr_fountain = true; */
                 if((*np).name=="seller" || (*np).name=="healer"){
                     if((abs(pos.y - pos2.y) <= 32) && (abs(pos.x - pos2.x) <= 32) ){
                         (*np).speak(window, view, trainer);
@@ -844,8 +855,8 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
          if(pos.y < pos2.y)
          {
               if (trainer.state == "Speaking"){
-                if ((*np).name == "clement") obtained_light = true;
-                if ((*np).name == "digger") mr_fountain = true;
+/*                 if ((*np).name == "clement") obtained_light = true;
+                if ((*np).name == "digger") mr_fountain = true; */
                 if((*np).name=="seller" || (*np).name=="healer"){
                     if((abs(pos.y - pos2.y) <= 32) && (abs(pos.x - pos2.x) <= 32) ){
                         (*np).speak(window, view, trainer);
@@ -918,6 +929,8 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
     center.draw(window, view, event, trainer, backpack);
     light(window, view);
     backpack.draw(window, view, event, trainer);
+
+    
 }
         
     
@@ -1221,8 +1234,22 @@ void Map::illuBat80(sf::RenderWindow &window){
 
 void Map::check_opponents(Backpack &bag){
      if((bag).bag_number == 1){
-         cout<<"TESTAMINEEEEE"<< (*(npcs["first"][5])).name<<endl;
          (*(npcs["first"][5])).beaten = true;
+     }
+     //digger
+     if((bag).bag_number == 2){
+         (*(npcs["second"][1])).beaten = true;
+         mr_fountain = true;
+     }
+     //clement
+     if((bag).bag_number == 3){
+         (*(npcs["room_clement"][0])).beaten = true;
+         obtained_light = true;
+     }
+     //Referee
+     if((bag).bag_number == 4){
+         (*(npcs["third"][1])).beaten = true;
+         foot_players = true;
      }
  }
 

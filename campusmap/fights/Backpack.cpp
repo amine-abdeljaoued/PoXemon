@@ -50,22 +50,56 @@ Backpack::~Backpack(){
 }
 
 void Backpack::setBackpack(int i){ //Some standard backpacks
-    if(i==1){ //First opponent;
+    bag_number = i;
+	if(i==1){ //First opponent;
         std::string name1 = "jistolwer";
         std::string name2 = "auron";
-        std::string name3 = "husabus";
+        std::string name3 = "pulple";
         Backpack_Pokemon* poke1 = new Backpack_Pokemon(name1, 1, 0, 50, 20);
         Backpack_Pokemon* poke2 = new Backpack_Pokemon(name2, 1, 1, 60, 20);
         Backpack_Pokemon* poke3 = new Backpack_Pokemon(name3, 1, 2, 70, 30);
         backpack_pokemons[0] = poke1;
         backpack_pokemons[1] = poke2;
         backpack_pokemons[2] = poke3;
-		bag_number = i;
+		
     }
-	if(i==2){
-        std::string name1 = "jistolwer";
-        Backpack_Pokemon* poke1 = new Backpack_Pokemon(name1, 1, 0, 50, 20);
+	if(i==2){ //Fire Pokemons for underground trainer;
+        std::string name1 = "poras";
+        std::string name2 = "arfau";
+        std::string name3 = "lowtor";
+        Backpack_Pokemon* poke1 = new Backpack_Pokemon(name1, 1, 0, 100, 40);
+        Backpack_Pokemon* poke2 = new Backpack_Pokemon(name2, 1, 1, 100, 40);
+        Backpack_Pokemon* poke3 = new Backpack_Pokemon(name3, 1, 2, 100, 40);
         backpack_pokemons[0] = poke1;
+        backpack_pokemons[1] = poke2;
+        backpack_pokemons[2] = poke3;
+		
+    }
+
+	if(i==3){ //Mixed for Clement trainer;
+        std::string name1 = "wapefet";
+        std::string name2 = "sandlax";
+        std::string name3 = "auron";
+        Backpack_Pokemon* poke1 = new Backpack_Pokemon(name1, 1, 0, 100, 30);
+        Backpack_Pokemon* poke2 = new Backpack_Pokemon(name2, 1, 1, 100, 10);
+        Backpack_Pokemon* poke3 = new Backpack_Pokemon(name3, 1, 2, 100, 20);
+        backpack_pokemons[0] = poke1;
+        backpack_pokemons[1] = poke2;
+        backpack_pokemons[2] = poke3;
+		
+    }
+
+	if(i==4){ //For the ref.
+        std::string name1 = "abata";
+        std::string name2 = "golnite";
+        std::string name3 = "pikalee";
+        Backpack_Pokemon* poke1 = new Backpack_Pokemon(name1, 1, 0, 100, 30);
+        Backpack_Pokemon* poke2 = new Backpack_Pokemon(name2, 1, 1, 100, 20);
+        Backpack_Pokemon* poke3 = new Backpack_Pokemon(name3, 1, 2, 100, 40);
+        backpack_pokemons[0] = poke1;
+        backpack_pokemons[1] = poke2;
+        backpack_pokemons[2] = poke3;
+		
     }
 }
 
