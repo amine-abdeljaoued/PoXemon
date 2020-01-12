@@ -163,6 +163,14 @@ Map::Map(sf::RenderWindow &window)
     dialogue_pass.push_back("You wouldn't want to go in there");
     dialogue_pass.push_back("without a light...");
     dialogue_pass.push_back("have you try asking Clement ?");
+    dialogue_pass.push_back("you can talk to him");
+    dialogue_pass.push_back("by pressing D when");
+    dialogue_pass.push_back("you are in front of");
+    dialogue_pass.push_back("his window, on the");
+    dialogue_pass.push_back("right of the door");
+    dialogue_pass.push_back("when looking the building");
+    dialogue_pass.push_back("next to a big tree");
+    dialogue_pass.push_back("not far from here");
     Npc* passeur3 = new Npc("passeur3","Sprites/NPC1.png",430,736,32,32,1.f,470,96,dialogue_pass,true);
     if (obtained_light == false) npcs_home.push_back(passeur3);
     
