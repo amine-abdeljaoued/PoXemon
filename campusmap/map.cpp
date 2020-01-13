@@ -468,20 +468,7 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
         //Exiting Shop and Center
         if (event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::W&&((map_name == "pokeShop"&&trainer.state == "Shopping")||(trainer.state == "Healing"&&map_name == "pokeCenter"))){
             if(trainer.state == "Healing"&&map_name == "pokeCenter"){
-                if (center.counter == 1){
-                    center.counter = 0;
-                    center.sw = false;
-                    center.swi1 = -1;
-                    center.swi2 = -1;
-                    center.Selecteditem = 0;
-                }
-                else{
-                    center.counter = 0;
-                    center.sw = false;
-                    center.swi1 = -1;
-                    center.swi2 = -1;
-                    trainer.state = "Stop";
-                }
+		trainer.state = "Stop";
             }
             else if(trainer.state == "Shopping"&&map_name == "pokeShop"){
                 trainer.state = "Stop";
@@ -588,12 +575,12 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
         }
 
         //Box
-         if (event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::X && center.Selecteditem == 2 && trainer.state == "Healing") {
+         if (event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::X && center.Selecteditem == 1 && trainer.state == "Healing") {
             trainer.state = "Box";
             view.setSize(sf::Vector2f(544.f, 544.f));
             view.zoom(0.5f);
         }
-        if(event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::W && center.Selecteditem == 2 && trainer.state == "Box") {
+        if(event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::W && center.Selecteditem == 1 && trainer.state == "Box") {
             trainer.state = "Healing";
             box.selectedPokemon_right = 0;
             box.selectedPokemon_left = 0;
