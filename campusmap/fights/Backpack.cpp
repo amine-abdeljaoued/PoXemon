@@ -287,3 +287,7 @@ void Backpack::draw(sf::RenderTexture& texture) const {
 		}
 		return false;
 	}
+
+void Backpack::reset(){
+	//...
+}

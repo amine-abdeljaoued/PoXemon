@@ -75,7 +75,6 @@ void Pokemon_Button::setHealth(int& a) {
 
 void Pokemon_Button::Levelup() {
 	level++;
-	level_text.setString("lvl: " + std::to_string(level));
 }
 
 void Pokemon_Button::update() {
@@ -96,6 +95,10 @@ void Pokemon_Button::update() {
 		heart.setColor(sf::Color(50,50,50));
 		outline.setFillColor(sf::Color(50, 50, 50));
 	}
+	else{
+		sprite.setColor(sf::Color(255,255,255));
+		heart.setColor(sf::Color(255,255,255));
+		outline.setFillColor(sf::Color(255,255,255));}
 
 }
 

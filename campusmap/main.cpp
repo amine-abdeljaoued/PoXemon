@@ -20,7 +20,6 @@
  //Files for fights
 #include "fights/Pokemon.h"
 #include "fights/Backpack.h"
-#include "fights/Backpack_Pokemon.cpp"
 #include "fights/Player.h"
 #include "fights/Opponent.h"
 #include "fights/Fight.h"

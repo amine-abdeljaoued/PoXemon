@@ -29,12 +29,8 @@ public:
     bool in_air;
     int bounce;
     
-    
-    
-    
-    //void Pokeball_shoot(float& deltaTime, sf::RenderWindow& window);
-    
     void dissapear();
+    void reset();
     
     void setPosition(float& xpos, float& ypos);
     int update(float deltaTime,sf::RenderWindow& window,float proba, sf::Clock &clock2, sf::Time &elapsed2,float opphealth);
