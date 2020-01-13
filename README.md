@@ -9,6 +9,13 @@ The first one is working on the map and the character.
 The second on Pokemons, the main menu and in-game features.
 And the third one on fights to which we'd like to add more dynamism.
 
+## How to run the game:
+
+- Download SFML for Linux
+- run the makefile in the folder campusmap by writing "make game
+- type "./game"
+- There is one bug that we are currently fixing: after each fight, it is possible that you have to wait around 10-20 seconds before being able to move again. Also using the bicycle may create some collision error, even thouh it is quite rare.
+
 ## How to play:
 
 - To move around, use the arrows of your keyboard to walk normally, and press SHIFT to use the bycicle in order to go faster.
