@@ -24,27 +24,29 @@ void Opponent::update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clo
 	//random left-right movement
 	//We choose a random amount of time (time_change_dir) throughout which we dont change direction.
 	//once it has elapsed, we change direction and repeat the process.
-	/*elapsed_direction = this->clock.getElapsedTime();
+	elapsed_direction = this->clock.getElapsedTime();
 	if (elapsed_direction.asSeconds() > time_change_dir) {
 		time_change_dir = 0.3 + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (2 - 0.3)));
 		this->clock.restart();
 		direction *= -1;
-	}*/
+	}
 
-	////jumps to avoid bullets 
-	//if (!(enemy->bullets.bullets.empty())) {
-	//	//get the position of the bullet that was shot first (that is still on screen and hasn't collided with the opponent)
-	//	float bx = (enemy->bullets.bullets[0])->position.x;
-	//	float by = (enemy->bullets.bullets[0])->position.y;
-	//	if (abs(x - bx) <= 200 && abs(y-by)<=30){//check if the bullet is close 
-	//		if (canJump) {
-	//			//to do: find a way not to make it always jump (otherwise its too hard to win)
-	//			std::cout << "esquive !" << std::endl;
-	//			canJump = false;
-	//			velocityY = -sqrt(2.0f * 981.0f * jumpHeight);//jump
-	//		}
-	//	}
-	//}
+	//jumps to avoid bullets 
+	if (!(enemy->bullets.bullets.empty())) {
+		//get the position of the bullet that was shot first (that is still on screen and hasn't collided with the opponent)
+		float bx = (enemy->bullets.bullets[0])->position.x;
+		float by = (enemy->bullets.bullets[0])->position.y;
+		if (abs(x - bx) <= 200 && abs(y-by)<=30){//check if the bullet is close 
+			if (canJump) {
+				int i = rand()%100;
+				if (i<1+(level*2)){
+					//to do: find a way not to make it always jump (otherwise its too hard to win)
+					canJump = false;
+					velocityY = -sqrt(2.0f * 981.0f * jumpHeight);//jump
+				}
+			}
+		}
+	}
 
 	//random jumps
 	if (rand() < 0.0005 * ((double)RAND_MAX + 1.0) && canJump) { // probability of jumping of 0.0005 at each update (if we are not already jumping)
@@ -73,7 +75,7 @@ void Opponent::update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clo
 	bullets.new_shot_opp(x, y, sprite.getGlobalBounds(), window, xp, yp);
 	int i = bullets.update(window, deltaTime, clock, elapsed, clock1, clock2, clock3, (*enemy).sprite, groundY);
 	if (i != 0) {
-		(*enemy).health.decrease(i);
+		(*enemy).health.decrease(i+level);
 	}
 	// health
 	health.update();

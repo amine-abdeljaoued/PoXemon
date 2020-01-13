@@ -25,17 +25,17 @@ Backpack::Backpack(){
     normaltext1.loadFromFile("fights/Images/pokeball.png");
     normalball.setTexture(normaltext1);
     normalball.setScale(sf::Vector2f(0.2f, 0.2f));
-    normalball.setPosition(20,150);
+    normalball.setPosition(70,150);
 
     normaltext2.loadFromFile("fights/Images/superball.png");
     superball.setTexture(normaltext2);
     superball.setScale(sf::Vector2f(0.2f, 0.2f));
-    superball.setPosition(70,150);
+    superball.setPosition(120,150);
 
     normaltext3.loadFromFile("fights/Images/masterball.png");
     masterball.setTexture(normaltext3);
     masterball.setScale(sf::Vector2f(0.055f, 0.055f));
-    masterball.setPosition(120,150);
+    masterball.setPosition(170,150);
 
     new_Superball.ball.setPosition(150,150);
 }
@@ -204,7 +204,7 @@ ReturnValue Backpack::Pokeball_shoot(float& deltaTime, sf::RenderWindow& window,
 			//bool still_on_screen = new_Normalball.update(deltaTime, window,new_Normalball.proba, clock2, elapsed2,health_opponent);
 		if(new_Normalball.waiting == false){
 			new_Normalball.ball.setOrigin(100, 100);//I suppose (100,100) is close to the center of the sprite before rescaling
-			new_Normalball.ball.rotate(2.0f);
+			new_Normalball.ball.rotate(3.0f);
 		}
 		else{
 			new_Normalball.ball.setRotation(0);
@@ -275,19 +275,19 @@ void Backpack::draw(sf::RenderTexture& texture) const {
     //don't need
 }
 
-
-
-	bool Backpack::alive_pokemons() {
-		for (int i = 0; i < 3; i++) {
-			if (backpack_pokemons[i]) {
-				if (backpack_pokemons[i]->health > 0) {
-					return true;
-				}
+bool Backpack::alive_pokemons() {
+	for (int i = 0; i < 3; i++) {
+		if (backpack_pokemons[i]) {
+			if (backpack_pokemons[i]->health > 0) {
+				return true;
 			}
 		}
-		return false;
 	}
+	return false;
+}
 
 void Backpack::reset(){
-	//...
+	new_Masterball.reset();
+	new_Normalball.reset();
+	new_Superball.reset();
 }

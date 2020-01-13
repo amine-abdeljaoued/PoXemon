@@ -28,6 +28,7 @@
     void Pokeball::reset(){
         bounce = 0;
         ball.setPosition(200.f, 2000.f);
+        waiting = false;
     }
 
 
