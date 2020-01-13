@@ -86,7 +86,7 @@ Map::Map(sf::RenderWindow &window, int poke_name)
     dialogue1.push_back("Start by exploring");
     npcs_map1.push_back(new  Npc("toto", "Sprites/NPC1.png",145,97,32,32,1.f,200,240,dialogue1, false));
 
-    npcs_map1.push_back(new Npc("bob","Sprites/NPC1.png",113,97,32,32,1.f,264,240,{"dialogue"}, false));
+    npcs_map1.push_back(new Npc("bob","Sprites/NPC1.png",113,97,32,32,1.f,264,240,{"Hello my name is Bob"}, false));
 
     npcs_map1.push_back(new Npc("nerd","Sprites/NPC1.png",17,97,32,32,1.f,136,240,{"Hi"}, false));
 
