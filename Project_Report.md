@@ -62,7 +62,20 @@ Finally we worked with the map team in order to create maps/collision maps in wh
 
 All in all, this project was super fun even though it generated a lot of frustration. Our group was amazing and the skills and creativity of everyone involved was off the charts. I think our end result is super cool and we hope you will enjoy as much as we did!
 
-### Anya Fries (Fight Team, Fight manager):
+### Anya Fries (Fight Team, Fight manager with Antonin):
+
+I worked on the fight mode of the project. Together with Antonin we implemented most of the fight. I was also in charge of setting up organisation. I set up a trello account with different boards for the different teams. Most of the organisation ended up being through telegram groups of the various teams, and bigger goals on trello.
+
+I started working on fights by creating the very basic scene: a sprite who can jump, move and shoot. I then started working on the live health bar, which shows the level of health of a pokemon during a fight and changes size and color as the pokemon loses health. At this point, our fights were becoming larger, so I sorted a lot of the code into different classes, including separating the shooting from the player. 
+
+Thereafter I started working on the opponent ‘bot’. I improved the shooting of the opponent slightly, adding a probability for when it shoots. I created the possibility of having "game states" (different parts of the game that are drawn and handled completely differently). This allowed our fight to advance. I created a start menu for the game which shows before commencing a fight. Later I improved the start menu, and added a countdown for when you press start, and added a how to play menu.
+
+I then started implementing a special attack, which are is another functionality in the fight scenario: a bullet that causes more damage and is animated. This was done in a subclass of our bullet function. I created the special attacks bar: this is a bar that works similarly to the health bar: a shrinking red rectangle as your time for the attack is running out, and a green growing one while it is regenerating. The bar also shows what the attack will look like: it has a picture of the special attack which goes black and white when the attack is no longer available.
+
+Later I did an enormous restructing the code, moving code from main to a new class 'Fight' so that our section can be linked to the rest of the game. This involved fixing many bugs. I fixed several major bugs that we had been having for a long time (segmentation fault bugs and pure virtual method bugs). 
+
+Finally I adjusted many objects scaling and placement according to window size, fixed minor bus, and did a large link to the map team, working with Arthur to make their backpack be linked to ours: handling pokemons we catch, the number of pokemons we have, etc. I also implemented the handling of catching pokemons in different areas. 
+
 
 ### Julien Luzzatto (PoXemon Team, Intro manager):
 
@@ -92,6 +105,6 @@ First of all, Benjamin and Arthur took some time to explain me how the map team 
 
 ### Clement Sterlin (PoXemon Team, Graphist/Data manager):
 
-### Antonin Wattel (Fight Team):
+### Antonin Wattel (Fight Team, Fight Manager with Anya):
 
 ### Jiahe Zhu (Fight Team):
