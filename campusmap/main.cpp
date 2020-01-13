@@ -32,8 +32,8 @@ using namespace std;
  int main()
  {
         //the intro by Julien
-        int poke_name = startgame();
-        if (poke_name==1) return 0;
+        /* int poke_name = startgame();
+        if (poke_name==1) return 0; */
 
      //Initializing the window
      sf::RenderWindow window(sf::VideoMode(1400, 700), "My window", sf::Style::Titlebar | sf::Style::Close);
@@ -53,7 +53,7 @@ using namespace std;
      int sizeAnim = 4;
 
      Trainer Arthur(playerMovementSpeed, sheetRect, sizeAnim);
-     Map map1(window, poke_name);
+     Map map1(window, -1);
 
     // For the fights
  	Fight fight(window);
