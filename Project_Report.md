@@ -103,11 +103,27 @@ After this, I started to help the fight team. I concentrated myself on the backp
 
 First of all, Benjamin and Arthur took some time to explain me how the map team was working and explained me how to work with tilemaps, tilesets… Then, I started to create some new maps (I designed a total of 5 different maps). During the last week, I also work on some graphical elements such as the light spot in the underground map and on some easter eggs. During the last month, as my work was quite diverse and the fact that I have encounter some technical issues with XCode, I preferred to ask Arthur and Benjamin to commit the different things that I programmed. 
 
-### Clement Sterlin (PoXemon Team, Graphist/Data manager):
+### Clement Sterlin (PoXemon Team, Data manager (Backpack, Shop, Box)):
+
+At the beginning of the project, I was supposed to work in the PoXemon Team, the team taking care of creating the poxemons (including pokedex with all the stats for each poxemon and the graphics).
+However, for the two first weeks, I had issues with my very old computer and I was not able to make SFML work. But after a few days I was able to get a more modern one and I was now able to start programming. 
+Rapidly, I saw that we were too many in the team to work only on the creation of poxemons and I observed that at one point, in the game, we would have to handle all the values concerning objects and poxemon.
+
+Thus, I decided to create and work on a Backpack (BackpackMap.hpp) that would store all the values for your objects and poxemons you have in the game. The Backpack at the beginning was just displaying the different objects you had in the backpack with their total number. Then I started implementing some other functions such as a “delete” one.
+
+But at this point, my Backpack was a window on its own, it was impossible to link it with the map, I had to draw it on the map. Thus it took me some time to understand how to draw on an existing window rather than creating a window each time I open the Backpack. To this purpose, I implemented a Backpack state and with the help of my colleagues, I was able to do so and draw the Backpack on the map. Then I was able to add many functions to my Backpack: Display of the current poxemons in the bag (with some cool stuff: healthbar, opening pokeball, types, …), healing poxemons with health potions and others.
+
+After implementing the Backpack, I worked on the notion of Money in the game. I started to create a value for each object and a wallet carried in the backpack. Then I was able, with a small help from Arthur to create the shop (shop.hpp) accessible from the PokeShop where you can buy the objects to fill your backpack. This was not hard to implement since I worked a lot on the Backpack before and to link it with the shop was easy.
+
+Then, we created the PokeCenter with Arthur (center.hpp), he did the Healing function and I did the Box (box.hpp) where you access all the poxemons you captured during the game. Thus, first, I had to display the poxemons in the box on one side and the one in the Backpack on the other side. Then the hardest part was the switch function. It is a very important function in the game, allowing you to change your team of 3 poxemons in your backpack with the poxemons in the box. It took me hours but finally managed to do it.
+
+Finally, the last days before the deadline, Arthur and I worked with the fight team to link our two backpacks.
+
+Just as an information, I had a lot of problems with github each time I was pushing, thus Arthur was pushing for me, that’s why I have no commit.
+
+To conclude, it was the first time for me working with a group of 10 people. I really liked it because it was challenging but in my opinion, we managed to produce a nice game because of the division of work that was very efficient, everybody knew what he had to do and thus, when I had a question to ask, I knew who to talk to. 
+
 
 ### Antonin Wattel (Fight Team, Fight Manager with Anya):
 
 ### Jiahe Zhu (Fight Team):
-
-During the project Jiahe tried at first to work with the Fight Team, she worked a bit on the opponent’s movement and how the opponents fight back against you. She also participated to the decisions in the group. She as well worked alongside Francois for some coding throughout the game. 
-During the first week, she also learnt like the others how to use the SFML library and how to code in C++ overall. 
