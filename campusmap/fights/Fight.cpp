@@ -480,6 +480,7 @@ int Fight::update(sf::RenderWindow& window, BackpackMap& bag_map, Box* box){
 			//else print you will be able to use it at the shop..
 			bool space = box->addPokemon(Backpack_Pokemon(popponent->name, popponent->level, popponent->index, (popponent->health).health, popponent->type), bag_map);
 			//i don't know which one was thown so i just reset them all (theres probably better things to do)
+			bag.reset();
 			state = 11;
 		}
 
@@ -495,7 +496,7 @@ int Fight::update(sf::RenderWindow& window, BackpackMap& bag_map, Box* box){
 			bag.new_Masterball.in_air = false;
 			bag.new_Normalball.in_air = false;
 			bag.new_Superball.in_air = false;
-
+			bag.reset();
 			state = 12;//we need ta clock for the next state so i took this one arbitrarily
 			clock2.restart();
 		}

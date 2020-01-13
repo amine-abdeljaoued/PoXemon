@@ -50,7 +50,7 @@ const float water [16] = {0, 0, 131.33, 119.5, 4, 0, 4, 0.3,
 						  5, 0, 131.33, 119.5, 5, 1, 2, 0.3}; // type 20
 const float air [16] = {0, 0, 182, 206, 3, 1, 3, 0.35,
 						0, 2, 182, 206, 3, 2, 2, 0.35};		// type 30
-const float fire [16] = {0, 0, 128, 128, 3, 0, 3, 0.5,
+const float fire [16] = {0, 1, 256, 256, 7, 0, 7, 0.2,
 						 0, 1, 256, 256, 0, 5, 0, 0.2 };  	// type 40
 
 class Bullet_Attack1: public Bullet{
@@ -86,15 +86,14 @@ public:
 		if(type == 40){
 			for (int i=0; i<16; i++) {array[i] = fire[i];}
 			std::cout<<"setting fire pic"<<std::endl;
-			if (!bpic.loadFromFile("fights/Images/fireball.png")) std::cout << "could not load attack 1 fire image" << std::endl;
-			bpic.loadFromFile("fights/Images/fireball.png");
+			if (!bpic.loadFromFile("fights/Images/fireball_explode.png")) std::cout << "could not load attack 1 fire image" << std::endl;
+			bpic.loadFromFile("fights/Images/fireball_explode.png");
 			if (!deleting_pic.loadFromFile("fights/Images/fireball_explode.png")) std::cout << "could not load attack 1 fire explode image" << std::endl;
 			deleting_pic.loadFromFile("fights/Images/fireball_explode.png");
-			};
+			}
 		//initialise image
 		bullet.setTexture(bpic);
-		std::cout<<"set texture"<<std::endl;
-		bullet.setTextureRect(sf::IntRect(array[0]*array[2],array[0]*array[3],array[2],array[3])); 	// This chooses which part of the sprite we use - first two arguments are where you start
+		bullet.setTextureRect(sf::IntRect(array[0]*array[2],array[1]*array[3],array[2],array[3])); 	// This chooses which part of the sprite we use - first two arguments are where you start
 																					// second 2 args are the size
 		bullet.setScale(sf::Vector2f(array[7], array[7]));
 		bullet.setOrigin(sf::Vector2f(bullet.getLocalBounds().width / 2, bullet.getLocalBounds().height / 2));

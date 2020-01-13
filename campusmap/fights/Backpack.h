@@ -2,7 +2,6 @@
 #include "Opponent.h"
 #include "Pokeball.h"
 #include "Pokemon_Button.h"
-#include "Backpack_Pokemon.cpp"
 
 class ReturnValue{
     public:
@@ -42,6 +41,7 @@ class Backpack
         void Pokeball_throw(Pokeball Poke,float& deltaTime, sf::RenderWindow& window);
         void draw (sf::RenderWindow &target) const;
         void draw (sf::RenderTexture& texture) const;
+        void reset();
 
         // Opponent
 		Opponent* opponent;

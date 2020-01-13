@@ -25,6 +25,10 @@
         ball.setPosition(xpos, ypos);
     }
 
+    void Pokeball::reset(){
+        bounce = 0;
+        ball.setPosition(200.f, 2000.f);
+    }
 
 
     int Pokeball::update(float deltaTime,sf::RenderWindow& window,float proba, sf::Clock &clock2, sf::Time &elapsed2, float opphealth) {

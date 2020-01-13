@@ -3,7 +3,7 @@
 #include "Artillery.h"
 #include "Pokeball.h"
 #include "Health.h"
-#include "Backpack_Pokemon.cpp"
+#include "Pokemon_Button.h"
 #include <SFML/Graphics.hpp>
 #include <string>
 
