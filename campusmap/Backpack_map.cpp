@@ -33,10 +33,10 @@ BackpackMap::BackpackMap() {
     
     //Set number of element of each item at beginning of game
     inventory["Normalball"] = 3;
-    inventory["Superball"] = 2;
-    inventory["Masterball"] = 1;
-    inventory["SmallHealthPotion"] = 2;
-    inventory["BigHealthPotion"] = 1;
+    inventory["Superball"] = 0;
+    inventory["Masterball"] = 0;
+    inventory["SmallHealthPotion"] = 0;
+    inventory["BigHealthPotion"] = 0;
     inventory["Torch"] = 0;
     
     //Set maximal capacity of backpack
