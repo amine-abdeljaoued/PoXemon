@@ -32,8 +32,8 @@ using namespace std;
  int main()
  {
         //the intro by Julien
-//        int poke_name = startgame();
-//        if (poke_name==1) return 0;
+        int poke_name = startgame();
+        if (poke_name==1) return 0;
 
      //Initializing the window
      sf::RenderWindow window(sf::VideoMode(1400, 700), "My window", sf::Style::Titlebar | sf::Style::Close);
@@ -53,22 +53,19 @@ using namespace std;
      int sizeAnim = 4;
 
      Trainer Arthur(playerMovementSpeed, sheetRect, sizeAnim);
-     Map map1(window);
+     Map map1(window, poke_name);
 
     // For the fights
  	Fight fight(window);
     bool start_fight = false;
 
-    //For the fights team uncomment this line:
-    /* Arthur.state="Fighting";
-    Arthur.fight_mode = 'w'; */
-
-    //For the fights team uncomment this line:
-    /* Arthur.state="Fighting";
-    Arthur.fight_mode = 'w'; */
-
     //TO NOT GET ANNOYED WITH FIGHTS:
     //JUST COMMENT in map.cpp in Fighting the trainer.state = "Fighting" in line 437
+  
+    sf::Music music;
+    if (!music.openFromFile("Sprites/bgm02.ogg")) std::cout << "Error loading music" << std::endl;
+    music.play();
+  
      while (window.isOpen())
      {
          sf::Event event;
