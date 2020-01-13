@@ -4,9 +4,11 @@
 #include "Pokemon_Button.h"
 #include "Backpack_Pokemon.cpp"
 
-
-//We carry this backpack throughout the game
-//->we need to talk with the other teams for that
+class ReturnValue{
+    public:
+    int i;
+    std::string string;
+};
 
 class Backpack
 {
@@ -23,8 +25,10 @@ class Backpack
         bool supernow;
         bool normalnow;
 
+        ReturnValue value;
+
         // Our Pokemons
-        Backpack_Pokemon* backpack_pokemons[3]; //maybe more ?
+        Backpack_Pokemon* backpack_pokemons[3]; 
 
         // Visuals for the fight
         std::map<std::string, int> dict_pokeball;
@@ -34,7 +38,7 @@ class Backpack
         sf::Sprite masterball;
     
         // Functions
-        int Pokeball_shoot(float& deltaTime, sf::RenderWindow& window, sf::Clock &clock2, sf::Time & elapsed2);// was void
+        ReturnValue Pokeball_shoot(float& deltaTime, sf::RenderWindow& window, sf::Clock &clock2, sf::Time & elapsed2);// was void
         void Pokeball_throw(Pokeball Poke,float& deltaTime, sf::RenderWindow& window);
         void draw (sf::RenderWindow &target) const;
         void draw (sf::RenderTexture& texture) const;

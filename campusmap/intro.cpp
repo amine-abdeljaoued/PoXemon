@@ -965,7 +965,7 @@ int choose(std::string prof, bool side) {
                     }
                     myfile.close();
                     choose.close();
-                    return 1;
+                    return -1;
                 }
             
             // Click button 2:
@@ -980,7 +980,7 @@ int choose(std::string prof, bool side) {
                     }
                     myfile.close();
                     choose.close();
-                    return 2;
+                    return -2;
                 }
                 
             // Click button 3:
@@ -995,7 +995,7 @@ int choose(std::string prof, bool side) {
                     }
                     myfile.close();
                     choose.close();
-                    return 3;
+                    return -3;
                 }
             
         choose.clear();
@@ -1018,6 +1018,11 @@ int choose(std::string prof, bool side) {
 }
 
 int startgame(){
+    int poke_name;
+    sf::Music music;
+    if (!music.openFromFile("Sprites/bgm02.ogg"))
+        std::cout << "Error loading music" << std::endl;
+    music.play();
     sf::Event event;
     int closed=0;
     closed = menu("Sprites/main_menu.jpg");
@@ -1045,13 +1050,15 @@ int startgame(){
         else{
           if (closed<10)closed = intro("Sprites/professor4.png",0,16);
           if (closed<10)closed = intro("Sprites/professor1.png",1,17);
-          if (closed<10) closed= choose("Sprites/professor6.png",1);
-          if(closed==1) closed = intro("Sprites/professor5.png",0,18);
-          else if(closed==2) closed = intro("Sprites/professor5.png",0,19);
-          else if(closed==3) closed = intro("Sprites/professor5.png",0,20);
+            if (closed<10) {
+                poke_name = choose("Sprites/professor6.png",1);
+                closed= poke_name;
+            }
+          if(closed==-1) closed = intro("Sprites/professor5.png",0,18);
+          else if(closed==-2) closed = intro("Sprites/professor5.png",0,19);
+          else if(closed==-3) closed = intro("Sprites/professor5.png",0,20);
         }
     }
-    if (closed<10) return 0;
+    if (closed<10) return poke_name;
     else return 1;
-
 }

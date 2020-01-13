@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <cmath>
+#include <random>
 
 #include "Pokeball.h"
 #include "Backpack.h"
@@ -11,25 +12,29 @@
 #include "Pokemon_Button.h"
 #include "StateFunctions.h"
 #include "../pokemons_structure.hpp"
+#include "../Backpack_map.hpp"
 
-class Fight 
+class Fight
 {
 public:
     // basic constructor
     Fight();
     ~Fight();
-    Fight(sf::RenderWindow& window); 
+    Fight(sf::RenderWindow& window);
 
     // start a specific fight
-    void initialise_wild (Backpack& pbag, sf::RenderWindow& window); // initialise a fight with a wild pokemon
-    void initialise_trainer (Backpack& pbag, Backpack& popponent_bag, sf::RenderWindow& window); // initilaise a fight with a trainer
+    void initialise_wild (BackpackMap& pbag_map, sf::RenderWindow& window); // initialise a fight with a wild pokemon
+    void initialise_trainer (BackpackMap& pbag_map, Backpack& popponent_bag, sf::RenderWindow& window); // initilaise a fight with a trainer
+    void initialise_basic(BackpackMap& pbag_map, sf::RenderWindow& window);
     Opponent* get_wild_pokemon(sf::RenderWindow& window, int type);
+    int update(sf::RenderWindow& window, BackpackMap& bag_map);   // Updating the window
 
     Backpack bag;
     Backpack opponent_bag;
+
     // Boundaries
 	float groundY; //Cannot go below this height
-    
+
     //Parameters of the game
     int state = 1;  // 0 = return to map
                     // 1 = start menu
@@ -55,9 +60,6 @@ public:
     StateFunctions1 functions1;
     StateFunctions56 functions56;
 
-    // Updating the window
-    int update(sf::RenderWindow& window);
-
     // Used for blurring
     sf::Shader shader;
 
@@ -69,7 +71,7 @@ public:
     // States 2,5,6
     float deltaTime;
     sf::Clock clock;
-    sf::Clock clock_regenerate_bullets;	
+    sf::Clock clock_regenerate_bullets;
     sf::Time elapsed;
     sf::Clock clock2;
     sf::Time elapsed2;
@@ -78,7 +80,7 @@ public:
 	sf::Text leave;
 	sf::Texture arrow;
 	sf::Sprite arrow_sprite;
-	
+
     // For the player
 	sf::Clock attack_1_clock;
 	sf::Clock attack_2_clock;
@@ -86,7 +88,7 @@ public:
 	sf::Time attack_1_time;
 	sf::Time attack_2_time;
 	sf::Time attack_3_time;
-	
+
     // For the opponent
 	sf::Clock attack_1_clock_opp;
 	sf::Clock attack_2_clock_opp;
@@ -94,7 +96,7 @@ public:
 	sf::Time attack_1_time_opp;
 	sf::Time attack_2_time_opp;
 	sf::Time attack_3_time_opp;
-    
+
 	int counter; // do we need these?
 	int i = 0;
 
@@ -104,7 +106,7 @@ public:
 	sf::Text choose_pokemon;
 	sf::Texture running;
 	sf::Sprite running_sprite;
-    int clicked_button; 
+    int clicked_button;
 
     // state 7
 	sf::Text wonlost;

@@ -52,7 +52,7 @@ Pokemon_Button::Pokemon_Button(std::string& name, int& lvl, int& h, int& i) {
 	outline.setSize(sf::Vector2f(120, 15));
 
 	//bar that shows the health
-	healthbar.setSize(sf::Vector2f(120, 15));
+	healthbar.setSize(sf::Vector2f(health * healthwidth / 100, healthheight));
 	//Bar changes from green to red as health decreases
 	if (health > 50) {
 		healthbar.setFillColor(sf::Color((100 - health) * 2.55 * 2, 255, 0));
@@ -132,7 +132,7 @@ void Pokemon_Button::update_mouse(sf::Vector2f& mouse_pos, int& clicked_button) 
 		if (bar.getGlobalBounds().contains(mouse_pos)) {//check if the mouse is on a pokemon button
 			bar.setColor(sf::Color(255, 99, 99));
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-				std::cout << "you pressed the button" << std::endl;
+				//std::cout << "you pressed the button" << std::endl;
 				clicked_button = index; //value changes if we click
 			}
 		}

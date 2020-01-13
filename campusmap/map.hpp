@@ -14,12 +14,13 @@
 #include "center.hpp"
 #include "Backpack_map.hpp"
 #include "fights/Backpack.h"
+#include "box.hpp"
 
 using namespace std;
 
 //This is our class for our map
 
-class Map 
+class Map
 {
     public:
         Map(sf::RenderWindow &window);
@@ -42,7 +43,10 @@ class Map
 
          //Checking opponent trainers
         void check_opponents(Backpack &bag);
-    
+
+        //Backpack
+        BackpackMap backpack;
+
     private:
         TileMap background1_1;
         TileMap background1_2;
@@ -59,9 +63,8 @@ class Map
         Interior background10;
         TileMap background11;
         TileMap background11_2;
-    
-        
-        
+        Interior background12
+
         map<string, const int*> collision_;
         string map_name;
         int alpha;
@@ -76,11 +79,11 @@ class Map
         sf::Sprite pokeBuilding;
         Shop shop;
         Center center;
-    
+
         //Places of Spawn of the Trainer
         int initialX;
         int initialY;
-    
+
         map<string,vector<vector<int>>> spawn_dict;
         int door;//which spwaning position
         vector<string> map_list;
@@ -88,7 +91,7 @@ class Map
         bool enter;
         bool fight;
         int nNpc;
-    
+
         //illusions
         void illuCenter(sf::RenderWindow &window);
         void illuShop(sf::RenderWindow &window);
@@ -96,16 +99,18 @@ class Map
         void illuTunnelL(sf::RenderWindow &window);
         void illuGrandhall(sf::RenderWindow &window);
         void illuBat80(sf::RenderWindow &window);
-    
+
         //Shader for the underground
         void light(sf::RenderWindow &window, sf::View &view);
-        
+
         //Flower animation
         void movingFlower(sf::RenderWindow &window, int x, int y);
         void flowerList(sf::RenderWindow &window);
-    
-        //Backpack
-        BackpackMap backpack;
 
-       
-};  
+
+        //Fish
+        void fish(sf::RenderWindow &window, sf::View &view, Trainer &trainer);
+
+        //Box
+        Box box;
+};

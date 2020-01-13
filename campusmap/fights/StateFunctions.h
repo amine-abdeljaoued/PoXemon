@@ -9,9 +9,21 @@
 
 class StateFunctions1 {
 public:
+	char mode;
     // all
     StateFunctions1();
-    void initialise(Opponent& opponent, Player& player, sf::RenderWindow& window, sf::Font& font);
+    void initialise(char& game_mode, Opponent& opponent, Player& player, sf::RenderWindow& window, sf::Font& font);
+
+	//starting state (where we choose outr pokemon)
+	sf::Text choose_pokemon;
+	sf::Text run_text;
+	sf::Sprite run_sprite;
+	sf::Text opp_name;
+	sf::Text opp_name_shadow;
+	sf::Text opp_lvl;
+	void initialize_state1(char& game_mode, sf::Sprite& opp_sprite, std::string& opp_n, int& opp_lvl, sf::RenderWindow& window, Pokemon_Button* buttons[], sf::Sprite& running_sprite, sf::Font& ffont);
+	void update_state1(sf::RenderWindow& window, sf::Clock& clock, Pokemon_Button* buttons[], int& clicked_button);
+	void draw_state1(sf::RenderWindow& window, Pokemon_Button* buttons[]);
 
     // menu
     sf::RectangleShape start_button;
@@ -26,7 +38,6 @@ public:
     void initialise_background(sf::RenderWindow& window, std::string path, sf::Sprite& background, sf::Texture& texture);
     void initialise_buttons(sf::RenderWindow& window, sf::Font& font);
     void draw1(sf::RenderWindow& window);
-    int update_state1(sf::RenderWindow& window, sf::Clock& clock);
 
     // How to play
     sf::Texture how_texture;
