@@ -13,6 +13,7 @@
 #include "StateFunctions.h"
 #include "../pokemons_structure.hpp"
 #include "../Backpack_map.hpp"
+#include "../box.hpp"
 
 class Fight
 {
@@ -26,14 +27,15 @@ public:
     void initialise_wild (BackpackMap& pbag_map, sf::RenderWindow& window); // initialise a fight with a wild pokemon
     void initialise_trainer (BackpackMap& pbag_map, Backpack& popponent_bag, sf::RenderWindow& window); // initilaise a fight with a trainer
     void initialise_basic(BackpackMap& pbag_map, sf::RenderWindow& window);
-    Opponent* get_wild_pokemon(sf::RenderWindow& window, int type);
-    int update(sf::RenderWindow& window, BackpackMap& bag_map);   // Updating the window
+    Opponent* get_wild_pokemon(sf::RenderWindow& window, std::string location);
+    int update(sf::RenderWindow& window, BackpackMap& bag_map, Box* box);   // Updating the window
 
     Backpack bag;
     Backpack opponent_bag;
 
     // Boundaries
 	float groundY; //Cannot go below this height
+    string location;
 
     //Parameters of the game
     int state = 1;  // 0 = return to map

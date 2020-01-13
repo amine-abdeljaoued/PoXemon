@@ -87,7 +87,7 @@ using namespace std;
                  start_fight = true;
              }
              else{
-                int i = fight.update(window, map1.backpack);
+                int i = fight.update(window, map1.backpack, &map1.box);
                 if(i==55){ //Won against trainer
                     Arthur.state = "Stop";
                     map1.check_opponents(*(Arthur.opponent_bag));

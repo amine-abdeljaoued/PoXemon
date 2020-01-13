@@ -51,7 +51,7 @@ Fight::Fight(sf::RenderWindow& window){
 
 void Fight::initialise_basic(BackpackMap& pbag_map, sf::RenderWindow& window){
 	// background - must change depending on where we are
-    functions1.initialise_background(window, "fights/Images/grassbg.png", background, BackgroundTexture);
+    functions1.initialise_background(window, "fights/Images/"+location+".png", background, BackgroundTexture);
 	std::cout << "ini background" << std::endl;
 	// initialise poke_buttons and the fight backpack of our player
     for (int i=0; i<3; i++){
@@ -59,6 +59,8 @@ void Fight::initialise_basic(BackpackMap& pbag_map, sf::RenderWindow& window){
 		if (pbag_map.backpack_pokemons[i]) {
 			poke_buttons[i] = &((pbag_map.backpack_pokemons[i])->button);
 			bag.backpack_pokemons[i] = pbag_map.backpack_pokemons[i];
+			(pbag_map.backpack_pokemons[i])->index = i;
+			(bag.backpack_pokemons[i])-> index = i;
 		}
 		else{bag.backpack_pokemons[i] = NULL;}
     }
@@ -82,12 +84,11 @@ void Fight::initialise_basic(BackpackMap& pbag_map, sf::RenderWindow& window){
 
 
 void Fight::initialise_wild (BackpackMap& pbag_map, sf::RenderWindow& window){
-	int type = 10; // must be implemented
+	location = pbag_map.location;
     game_mode = 'w';
 
-
 	// set up players
-	Opponent* opponent = get_wild_pokemon(window, type);
+	Opponent* opponent = get_wild_pokemon(window, location);
 	popponent = opponent;
 
 	std::cout << "about to initialize_basic" << std::endl;
@@ -114,19 +115,12 @@ void Fight::initialise_wild (BackpackMap& pbag_map, sf::RenderWindow& window){
 
 
 	//not very good generation but will do the job
-	std::cout << "about to get random_level" << std::endl;
 	int difference = (rand() % 7) - 3;
 	std::cout << difference << std::endl;
 	int random_level = abs((int)round(average) + difference);
-
-	std::cout << "random_level: " << random_level << std::endl;
-
 	popponent->level = random_level;
 
-
     bag.set_opponent(popponent);
-    //(*pplayer).set_enemy(popponent);
-	//(*popponent).set_enemy(pplayer);
 
 	// create an opponent 'backpack' for the scenario
 	Backpack_Pokemon* opoke1 = new Backpack_Pokemon((*opponent).name, (*opponent).level, (*opponent).index, (*opponent).health.health, (*opponent).type);
@@ -134,49 +128,43 @@ void Fight::initialise_wild (BackpackMap& pbag_map, sf::RenderWindow& window){
 }
 
 void Fight::initialise_trainer(BackpackMap& pbag_map, Backpack& popponent_bag, sf::RenderWindow& window){
-	//std::cout<<"ini";
+	location = "grass";
 	// basic setup
 	popponent = new Opponent(window, 200.f, 500.f, *popponent_bag.backpack_pokemons[0]);
 	//pplayer = new Player(window, 200.f, 500.f, *pbag_map.backpack_pokemons[0]);
 	opponent_bag = popponent_bag;
 	game_mode = 't';
 	initialise_basic(pbag_map, window);
-
     (bag).set_opponent(popponent);
-    //(*pplayer).set_enemy(popponent);
-	//(*popponent).set_enemy(pplayer);
-	//std::cout<<2;
 }
 
-Opponent* Fight::get_wild_pokemon(sf::RenderWindow& window, int type){
+Opponent* Fight::get_wild_pokemon(sf::RenderWindow& window, std::string location){
 	std::cout << "entering get_wild_pokemon" << std::endl;
 	// randomly choose an opponent - must be based on where we are
 	/*There are:
 	- Identifier for the type: 10 - earth (9 pokemons), 20 - water (5), 30 - air (5), 40 - fire (9)*/
 	int index; 			// which pokemon we will choose
-	std::string name; 	// the pokemon we get
-	if (type==10){
-		index = rand()%9 + 1;
-		name = Earth_Pokemons.find(index)->second;}
-	if (type==20){
+	std::string name; 	// the pokemon we get	
+	if (location=="grass"){
+		index = rand()%14 + 1;
+		name = Grass_Pokemons.find(index)->second;}
+	if (location=="water"){
+		std::cout<<"get wild water"<<std::endl;
 		index = rand()%5 + 1;
 		name = Water_Pokemons.find(index)->second;}
-	if (type==30){
-		index = rand()%5 + 1;
-		name = Air_Pokemons.find(index)->second;}
-	if (type==40){
+	if (location=="underground"){
 		index = rand()%9 + 1;
 		name = Fire_Pokemons.find(index)->second;}
 	std::cout << "just set type" << std::endl;
 
 
 	Opponent* opponent = new Opponent(window, Pokemons.find(name)->second.height, Pokemons.find(name)->second.velocity,
-								Backpack_Pokemon(Pokemons.find(name)->second.name, Pokemons.find(name)->second.level,
+								Backpack_Pokemon(Pokemons.find(name)->second.name, Pokemons.find(name)->second.level, 
 									Pokemons.find(name)->second.index, Pokemons.find(name)->second.health, Pokemons.find(name)->second.ptype));
 	return opponent;
 }
 
-int Fight::update(sf::RenderWindow& window, BackpackMap& bag_map){
+int Fight::update(sf::RenderWindow& window, BackpackMap& bag_map, Box* box){
     deltaTime = clock.restart().asSeconds();
     elapsed = clock_regenerate_bullets.getElapsedTime();
     elapsed2 = clock2.getElapsedTime();
@@ -522,7 +510,7 @@ int Fight::update(sf::RenderWindow& window, BackpackMap& bag_map){
 			caught.setPosition(window.getSize().x / 2, window.getSize().y / 3);
 			//if the backpack is not full add it and print "The pokemon was added to your backpack"
 			//else print you will be able to use it at the shop..
-
+			bool space = box->addPokemon(Backpack_Pokemon(popponent->name, popponent->level, popponent->index, (popponent->health).health, popponent->type), bag_map);
 			//i don't know which one was thown so i just reset them all (theres probably better things to do)
 			state = 11;
 		}
