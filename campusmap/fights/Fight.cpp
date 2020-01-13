@@ -211,7 +211,6 @@ int Fight::update(sf::RenderWindow& window, BackpackMap& bag_map, Box* box){
 
 
 	else if (state==15){ // how to menu
-		//functions1.howtoplay(window, deltaTime);
 		if (functions56.check_leave(functions1.quit, window)){state= 1;}
 		window.draw(background, &shader);
 		functions1.draw_how_to(window);

@@ -11,7 +11,7 @@ void Opponent::draw(sf::RenderWindow& target) {
 
 void Opponent::draw(sf::RenderTexture& texture){
 	texture.draw(sprite);
-	health.draw(texture);
+	// health.draw(texture);
 	bullets.draw(texture);
 }
 
