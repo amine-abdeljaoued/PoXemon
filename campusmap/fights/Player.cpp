@@ -12,12 +12,8 @@ void Player::draw(sf::RenderWindow& target) {
 
 void Player::draw(sf::RenderTexture& texture){
 	texture.draw(sprite);
-	health.draw(texture);
+	//health.draw(texture);
 	bullets.draw(texture);
-	if (health.health > 0) {
-		bullets.bulletbar.draw(texture);
-		bullets.attacksbar.draw(texture);
-	}
 }
 
 void Player::update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clock, 

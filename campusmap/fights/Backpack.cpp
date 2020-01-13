@@ -252,31 +252,9 @@ ReturnValue Backpack::Pokeball_shoot(float& deltaTime, sf::RenderWindow& window,
 	return value;
 }
 
-
-
-//void Backpack::Pokeball_throw(Pokeball Pokeball,float& deltaTime, sf::RenderWindow& window){
-//
-//
-//
-//}
-
-
 void Backpack::draw(sf::RenderWindow &target) const {
 
-    if(new_Normalball.in_air){
-        target.draw(new_Normalball.ball);
-    }
-    if(new_Superball.in_air){
-        target.draw(new_Superball.ball);
-    }
-    if(new_Masterball.in_air){
-        target.draw(new_Masterball.ball);
-    }
-
-    target.draw(clickbox);
-    target.draw(normalball);
-    target.draw(superball);
-    target.draw(masterball);
+    // don't actually want to have it drawn in blurry bg
 }
 
 void Backpack::draw(sf::RenderTexture& texture) const {
