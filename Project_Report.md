@@ -76,7 +76,7 @@ After this, I started to help the fight team. I concentrated myself on the backp
 
 First of all, Benjamin and Arthur took some time to explain me how the map team was working and explained me how to work with tilemaps, tilesets… Then, I started to create some new maps (I designed a total of 5 different maps). During the last week, I also work on some graphical elements such as the light spot in the underground map and on some easter eggs. During the last month, as my work was quite diverse and the fact that I have encounter some technical issues with XCode, I preferred to ask Arthur and Benjamin to commit the different things that I programmed. 
 
-### Clement Sterlin (PoXemon Team, Graphist):
+### Clement Sterlin (PoXemon Team, Graphist/Data manager):
 
 ### Antonin Wattel (Fight Team):
 
