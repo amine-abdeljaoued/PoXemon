@@ -108,3 +108,6 @@ First of all, Benjamin and Arthur took some time to explain me how the map team 
 ### Antonin Wattel (Fight Team, Fight Manager with Anya):
 
 ### Jiahe Zhu (Fight Team):
+
+During the project Jiahe tried at first to work with the Fight Team, she worked a bit on the opponent’s movement and how the opponents fight back against you. She also participated to the decisions in the group. She as well worked alongside Francois for some coding throughout the game. 
+During the first week, she also learnt like the others how to use the SFML library and how to code in C++ overall. 
