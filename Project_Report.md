@@ -42,7 +42,7 @@ Finally, I implemented with the help of clement the backpack and a box system to
 
 I realized after the winter holidays that I was committing on GitHub with a false account so most of my commits do not appear online.
 
-           To put in a nutshell, this project taught me how to work in such a big group in order to create a small video game. The atmosphere in the group was great even with all the frustration and hours of work. 
+To put in a nutshell, this project taught me how to work in such a big group in order to create a small video game. The atmosphere in the group was great even with all the frustration and hours of work. 
            
 ### Maxence Dulac (PoXemon Team, PoXemon Manager):
 
