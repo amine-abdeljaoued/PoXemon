@@ -49,6 +49,8 @@ class Map
         
         //Box
         Box box;
+    
+        string map_name;
 
     private:
         TileMap background1_1;
@@ -69,7 +71,6 @@ class Map
         Interior background12;
 
         map<string, const int*> collision_;
-        string map_name;
         int alpha;
         string state;
         int animationCounter;

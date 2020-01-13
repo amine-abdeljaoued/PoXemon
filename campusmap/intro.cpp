@@ -9,10 +9,13 @@
 
 //This is the menu that appears at the beggining of the game
 int menu(std::string picture) {
-    
-    // Create the main window
-    sf::VideoMode desktop = sf::VideoMode().getDesktopMode();
-    sf::RenderWindow menu(desktop, "PoXemon");
+    sf::RenderWindow menu(sf::VideoMode(1400, 700), "PoXemon", sf::Style::Titlebar | sf::Style::Close);
+    sf::View view(sf::Vector2f(272, 272), sf::Vector2f(544, 272));
+    view.zoom(0.6f);
+    menu.setPosition(sf::Vector2i(sf::VideoMode::getDesktopMode().width/8, 0));
+//    // Create the main window
+//    sf::VideoMode desktop = sf::VideoMode().getDesktopMode();
+//    sf::RenderWindow menu(desktop, "PoXemon");
 
     // Set the Icon
     sf::Image icon;
@@ -46,13 +49,13 @@ int menu(std::string picture) {
     sf::Text title("Start Game", font, 70);
     title.setStyle(sf::Text::Bold);
     title.setFillColor(sf::Color::Black);
-    title.setPosition(WindowSize.x*(0.455), WindowSize.y*(0.65));
+    title.setPosition(WindowSize.x*(0.390), WindowSize.y*(0.65));
     
     // Create an explanation
-    sf::Text expl("Click start game or press x to go forward", font, 40);
+    sf::Text expl("Press X to go forward", font, 30);
     expl.setStyle(sf::Text::Bold);
     expl.setFillColor(sf::Color::Black);
-    expl.setPosition(WindowSize.x*(0.70), WindowSize.y*(0.90));
+    expl.setPosition(WindowSize.x*(0.75), WindowSize.y*(0.90));
 
     // Start the game loop
     while (menu.isOpen())
@@ -87,10 +90,13 @@ int menu(std::string picture) {
 
 int loadgame(std::string picture) {
 
-        
-    // Create the main window
-    sf::VideoMode desktop = sf::VideoMode().getDesktopMode();
-    sf::RenderWindow menu(desktop, "PoXemon");
+    sf::RenderWindow menu(sf::VideoMode(1400, 700), "PoXemon", sf::Style::Titlebar | sf::Style::Close);
+    sf::View view(sf::Vector2f(272, 272), sf::Vector2f(544, 272));
+    view.zoom(0.6f);
+    menu.setPosition(sf::Vector2i(sf::VideoMode::getDesktopMode().width/8, 0));
+//    // Create the main window
+//    sf::VideoMode desktop = sf::VideoMode().getDesktopMode();
+//    sf::RenderWindow menu(desktop, "PoXemon");
 
     // Set the Icon
     sf::Image icon;
@@ -121,22 +127,22 @@ int loadgame(std::string picture) {
     if (!font.loadFromFile(/* resourcePath() + */ "Fonts/sansation.ttf")) {
         std::cout << "Error" << std::endl;
     }
-    sf::Text title("New Game", font, 70);
+    sf::Text title("New Game", font, 60);
     title.setStyle(sf::Text::Bold);
     title.setFillColor(sf::Color::Black);
-    title.setPosition(WindowSize.x*(0.3), WindowSize.y*(0.65));
-    sf::Text title2("Load Game", font, 70);
+    title.setPosition(WindowSize.x*(0.20), WindowSize.y*(0.60));
+    sf::Text title2("Load Game", font, 60);
     title2.setStyle(sf::Text::Bold);
     title2.setFillColor(sf::Color::Black);
-    title2.setPosition(WindowSize.x*(0.6), WindowSize.y*(0.65));
+    title2.setPosition(WindowSize.x*(0.60), WindowSize.y*(0.60));
     
     // Create an explanation
-    sf::Text expl("Click on your choice", font, 40);
+    sf::Text expl("Click on your choice", font, 30);
     expl.setStyle(sf::Text::Bold);
     expl.setFillColor(sf::Color::Black);
-    expl.setPosition(WindowSize.x*(0.80), WindowSize.y*(0.90));
+    expl.setPosition(WindowSize.x*(0.75), WindowSize.y*(0.90));
     
-    sf::Text expl2("Paste the load file path then press load game", font, 40);
+    sf::Text expl2("Paste the load file path then press load game", font, 30);
     expl2.setStyle(sf::Text::Bold);
     expl2.setFillColor(sf::Color::Black);
     expl2.setPosition(WindowSize.x*(0.38), WindowSize.y*(0.85));
@@ -146,7 +152,7 @@ int loadgame(std::string picture) {
     gamepath.setFillColor(sf::Color::Black);
     gamepath.setPosition(WindowSize.x*(0.42), WindowSize.y*(0.76));
     
-    sf::RectangleShape choice1(sf::Vector2f(700.f, 100.f));
+    sf::RectangleShape choice1(sf::Vector2f(400.f, 50.f));
     choice1.setOutlineThickness(10.f);
     choice1.setOutlineColor(sf::Color(1, 1, 1));
     choice1.setPosition(WindowSize.x*(0.4), WindowSize.y*(0.75));
@@ -222,12 +228,16 @@ int loadgame(std::string picture) {
 
 int intro(std::string picture, bool side, int which) {
     
+    sf::RenderWindow intro(sf::VideoMode(1400, 700), "PoXemon", sf::Style::Titlebar | sf::Style::Close);
+    sf::View view(sf::Vector2f(272, 272), sf::Vector2f(544, 272));
+    view.zoom(0.6f);
+    intro.setPosition(sf::Vector2i(sf::VideoMode::getDesktopMode().width/8, 0));
     // Create the main window
-    sf::VideoMode desktop = sf::VideoMode().getDesktopMode();
-    sf::RenderWindow intro(desktop, "PoXemon");
+//    sf::VideoMode desktop = sf::VideoMode().getDesktopMode();
+//    sf::RenderWindow intro(desktop, "PoXemon");
     
     sf::FloatRect rt;
-    sf::View view;
+//    sf::View view;
     rt.left = view.getCenter().x - view.getSize().x/2.f;
     rt.top  = view.getCenter().y - view.getSize().y/2.f;
     rt.width  = view.getSize().x;
@@ -265,11 +275,11 @@ int intro(std::string picture, bool side, int which) {
     }
     sf::Sprite professor;
     sf::Vector2u ImageSize;
-    professor.scale(sf::Vector2f(3.f, 3.f)); //Set scale
+    professor.scale(sf::Vector2f(1.f, 1.f)); //Set scale
     
     // Create a dialogue box
-    sf::RectangleShape dialogue(sf::Vector2f(1500.f, 400.f));
-    dialogue.setOutlineThickness(20.f);
+    sf::RectangleShape dialogue(sf::Vector2f(900.f, 200.f));
+    dialogue.setOutlineThickness(5.f);
     dialogue.setOutlineColor(sf::Color(1, 1, 1));
     
     // Create a graphical text to display
@@ -279,7 +289,7 @@ int intro(std::string picture, bool side, int which) {
         std::cout << "Error" << std::endl;
     }
     title.setFont(font);
-    title.setCharacterSize(70);
+    title.setCharacterSize(50);
     title.setStyle(sf::Text::Bold);
     title.setFillColor(sf::Color::Black);
     
@@ -287,24 +297,24 @@ int intro(std::string picture, bool side, int which) {
     sf::Text subtitle;
 
     subtitle.setFont(font);
-    subtitle.setCharacterSize(70);
+    subtitle.setCharacterSize(50);
     subtitle.setStyle(sf::Text::Bold);
     subtitle.setFillColor(sf::Color::Black);
     
     if (side == 0){
     professor.setPosition(rt.left + 0.15*rt.width, rt.top + 0.50*rt.height);
     professor.setTexture(image);
-    dialogue.setPosition(rt.left + 1.40*rt.width, rt.top + 0.20*rt.height);
-    title.setPosition(rt.left + 1.43*rt.width, rt.top + 0.24*rt.height);
-    subtitle.setPosition(rt.left + 1.43*rt.width, rt.top + 0.36*rt.height);
+    dialogue.setPosition(rt.left + 1*rt.width, rt.top - 0.5*rt.height);
+    title.setPosition(rt.left + 1*rt.width, rt.top - 0.4*rt.height);
+    subtitle.setPosition(rt.left + 1.3*rt.width, rt.top + 0.2*rt.height);
     }
         
     if (side == 1){
     professor.setPosition(rt.left + 1.80*rt.width, rt.top + 0.50*rt.height);
     professor.setTexture(image);
-    dialogue.setPosition(rt.left + 0.20*rt.width, rt.top + 0.20*rt.height);
-    title.setPosition(rt.left + 0.23*rt.width, rt.top + 0.24*rt.height);
-    subtitle.setPosition(rt.left + 0.23*rt.width, rt.top + 0.36*rt.height);
+    dialogue.setPosition(rt.left + 0.10*rt.width, rt.top - 0.5*rt.height);
+    title.setPosition(rt.left - 0.12*rt.width, rt.top - 0.4*rt.height);
+    subtitle.setPosition(rt.left + 0.23*rt.width, rt.top + 0.2*rt.height);
     }
     
     // Create an explanation
@@ -550,12 +560,16 @@ int intro(std::string picture, bool side, int which) {
 
 bool choice(std::string prof, bool side, int which) {
     
-    // Create the main window
-    sf::VideoMode desktop = sf::VideoMode().getDesktopMode();
-    sf::RenderWindow choice(desktop, "PoXemon");
+    sf::RenderWindow choice(sf::VideoMode(1400, 700), "PoXemon", sf::Style::Titlebar | sf::Style::Close);
+    sf::View view(sf::Vector2f(272, 272), sf::Vector2f(544, 272));
+    view.zoom(0.6f);
+    choice.setPosition(sf::Vector2i(sf::VideoMode::getDesktopMode().width/8, 0));
+//    // Create the main window
+//    sf::VideoMode desktop = sf::VideoMode().getDesktopMode();
+//    sf::RenderWindow choice(desktop, "PoXemon");
     
     sf::FloatRect rt;
-    sf::View view;
+//    sf::View view;
     rt.left = view.getCenter().x - view.getSize().x/2.f;
     rt.top  = view.getCenter().y - view.getSize().y/2.f;
     rt.width  = view.getSize().x;
@@ -594,21 +608,21 @@ bool choice(std::string prof, bool side, int which) {
     }
     sf::Sprite professor;
     sf::Vector2u ImageSize;
-    professor.scale(sf::Vector2f(3.f, 3.f)); //Set scale
+    professor.scale(sf::Vector2f(1.f, 1.f)); //Set scale
     
     // Create a dialogue box
-    sf::RectangleShape dialogue(sf::Vector2f(1500.f, 400.f));
-    dialogue.setOutlineThickness(20.f);
+    sf::RectangleShape dialogue(sf::Vector2f(900.f, 200.f));
+    dialogue.setOutlineThickness(5.f);
     dialogue.setOutlineColor(sf::Color(1, 1, 1));
     
     // Create a choice 1
-    sf::RectangleShape choice1(sf::Vector2f(700.f, 200.f));
-    choice1.setOutlineThickness(10.f);
+    sf::RectangleShape choice1(sf::Vector2f(400.f, 100.f));
+    choice1.setOutlineThickness(2.f);
     choice1.setOutlineColor(sf::Color(1, 1, 1));
     
     // Create a choice 2
-    sf::RectangleShape choice2(sf::Vector2f(700.f, 200.f));
-    choice2.setOutlineThickness(10.f);
+    sf::RectangleShape choice2(sf::Vector2f(400.f, 100.f));
+    choice2.setOutlineThickness(2.f);
     choice2.setOutlineColor(sf::Color(1, 1, 1));
     
     // Create a graphical text to display
@@ -618,7 +632,7 @@ bool choice(std::string prof, bool side, int which) {
         std::cout << "Error" << std::endl;
     }
     title.setFont(font);
-    title.setCharacterSize(70);
+    title.setCharacterSize(50);
     title.setStyle(sf::Text::Bold);
     title.setFillColor(sf::Color::Black);
     
@@ -626,7 +640,7 @@ bool choice(std::string prof, bool side, int which) {
     sf::Text subtitle;
 
     subtitle.setFont(font);
-    subtitle.setCharacterSize(70);
+    subtitle.setCharacterSize(50);
     subtitle.setStyle(sf::Text::Bold);
     subtitle.setFillColor(sf::Color::Black);
     
@@ -634,7 +648,7 @@ bool choice(std::string prof, bool side, int which) {
     sf::Text option1;
 
     option1.setFont(font);
-    option1.setCharacterSize(60);
+    option1.setCharacterSize(40);
     option1.setStyle(sf::Text::Bold);
     option1.setFillColor(sf::Color::Black);
     
@@ -642,16 +656,17 @@ bool choice(std::string prof, bool side, int which) {
     sf::Text option2;
 
     option2.setFont(font);
-    option2.setCharacterSize(60);
+    option2.setCharacterSize(40);
     option2.setStyle(sf::Text::Bold);
     option2.setFillColor(sf::Color::Black);
     
     if (side == 0){
     professor.setPosition(rt.left + 0.15*rt.width, rt.top + 0.50*rt.height);
     professor.setTexture(image);
-    dialogue.setPosition(rt.left + 1.40*rt.width, rt.top + 0.20*rt.height);
-    title.setPosition(rt.left + 1.43*rt.width, rt.top + 0.24*rt.height);
-    subtitle.setPosition(rt.left + 1.43*rt.width, rt.top + 0.36*rt.height);
+        
+    dialogue.setPosition(rt.left + 1*rt.width, rt.top - 0.5*rt.height);
+    title.setPosition(rt.left + 1*rt.width, rt.top - 0.4*rt.height);
+    subtitle.setPosition(rt.left + 1.3*rt.width, rt.top + 0.2*rt.height);
     choice1.setPosition(rt.left + 1.40*rt.width, rt.top + 0.80*rt.height);
     choice2.setPosition(rt.left + 2.10*rt.width, rt.top + 0.80*rt.height);
     option1.setPosition(rt.left + 1.00*rt.width, rt.top + 0.83*rt.height);
@@ -661,9 +676,10 @@ bool choice(std::string prof, bool side, int which) {
     if (side == 1){
     professor.setPosition(rt.left + 1.80*rt.width, rt.top + 0.50*rt.height);
     professor.setTexture(image);
-    dialogue.setPosition(rt.left + 0.20*rt.width, rt.top + 0.20*rt.height);
-    title.setPosition(rt.left + 0.23*rt.width, rt.top + 0.24*rt.height);
-    subtitle.setPosition(rt.left + 0.23*rt.width, rt.top + 0.36*rt.height);
+        
+    dialogue.setPosition(rt.left + 0.10*rt.width, rt.top - 0.5*rt.height);
+    title.setPosition(rt.left - 0.12*rt.width, rt.top - 0.4*rt.height);
+    subtitle.setPosition(rt.left + 0.23*rt.width, rt.top + 0.2*rt.height);
     choice1.setPosition(rt.left + 0.20*rt.width, rt.top + 0.80*rt.height);
     choice2.setPosition(rt.left + 0.90*rt.width, rt.top + 0.80*rt.height);
     option1.setPosition(rt.left - 0.20*rt.width, rt.top + 0.83*rt.height);
@@ -789,12 +805,16 @@ bool choice(std::string prof, bool side, int which) {
 
 int choose(std::string prof, bool side) {
     
-    // Create the main window
-    sf::VideoMode desktop = sf::VideoMode().getDesktopMode();
-    sf::RenderWindow choose(desktop, "PoXemon");
+    sf::RenderWindow choose(sf::VideoMode(1400, 700), "PoXemon", sf::Style::Titlebar | sf::Style::Close);
+    sf::View view(sf::Vector2f(272, 272), sf::Vector2f(544, 272));
+    view.zoom(0.6f);
+    choose.setPosition(sf::Vector2i(sf::VideoMode::getDesktopMode().width/8, 0));
+//    // Create the main window
+//    sf::VideoMode desktop = sf::VideoMode().getDesktopMode();
+//    sf::RenderWindow choose(desktop, "PoXemon");
     
     sf::FloatRect rt;
-    sf::View view;
+//    sf::View view;
     rt.left = view.getCenter().x - view.getSize().x/2.f;
     rt.top  = view.getCenter().y - view.getSize().y/2.f;
     rt.width  = view.getSize().x;
@@ -831,26 +851,26 @@ int choose(std::string prof, bool side) {
     }
     sf::Sprite professor;
     sf::Vector2u ImageSize;
-    professor.scale(sf::Vector2f(3.f, 3.f)); //Set scale
+    professor.scale(sf::Vector2f(1.f, 1.f)); //Set scale
     
     // Create a dialogue box
-    sf::RectangleShape dialogue(sf::Vector2f(1500.f, 400.f));
-    dialogue.setOutlineThickness(20.f);
+    sf::RectangleShape dialogue(sf::Vector2f(900.f, 200.f));
+    dialogue.setOutlineThickness(5.f);
     dialogue.setOutlineColor(sf::Color(1, 1, 1));
     
     // Create a choice 1
     sf::RectangleShape choice1(sf::Vector2f(400.f, 200.f));
-    choice1.setOutlineThickness(10.f);
+    choice1.setOutlineThickness(2.f);
     choice1.setOutlineColor(sf::Color(1, 1, 1));
     
     // Create a choice 2
     sf::RectangleShape choice2(sf::Vector2f(400.f, 200.f));
-    choice2.setOutlineThickness(10.f);
+    choice2.setOutlineThickness(2.f);
     choice2.setOutlineColor(sf::Color(1, 1, 1));
     
     // Create a choice 3
     sf::RectangleShape choice3(sf::Vector2f(400.f, 200.f));
-    choice3.setOutlineThickness(10.f);
+    choice3.setOutlineThickness(2.f);
     choice3.setOutlineColor(sf::Color(1, 1, 1));
     
     // Create a graphical text to display
@@ -860,7 +880,7 @@ int choose(std::string prof, bool side) {
         std::cout << "Error" << std::endl;
     }
     title.setFont(font);
-    title.setCharacterSize(70);
+    title.setCharacterSize(50);
     title.setStyle(sf::Text::Bold);
     title.setFillColor(sf::Color::Black);
     
@@ -868,7 +888,7 @@ int choose(std::string prof, bool side) {
     sf::Text subtitle;
 
     subtitle.setFont(font);
-    subtitle.setCharacterSize(70);
+    subtitle.setCharacterSize(50);
     subtitle.setStyle(sf::Text::Bold);
     subtitle.setFillColor(sf::Color::Black);
     
@@ -876,7 +896,7 @@ int choose(std::string prof, bool side) {
     sf::Text option1;
 
     option1.setFont(font);
-    option1.setCharacterSize(50);
+    option1.setCharacterSize(30);
     option1.setStyle(sf::Text::Bold);
     option1.setFillColor(sf::Color::Black);
     
@@ -884,7 +904,7 @@ int choose(std::string prof, bool side) {
     sf::Text option2;
 
     option2.setFont(font);
-    option2.setCharacterSize(50);
+    option2.setCharacterSize(30);
     option2.setStyle(sf::Text::Bold);
     option2.setFillColor(sf::Color::Black);
     
@@ -892,15 +912,15 @@ int choose(std::string prof, bool side) {
     sf::Text option3;
 
     option3.setFont(font);
-    option3.setCharacterSize(50);
+    option3.setCharacterSize(30);
     option3.setStyle(sf::Text::Bold);
     option3.setFillColor(sf::Color::Black);
 
     professor.setPosition(rt.left + 1.80*rt.width, rt.top + 0.50*rt.height);
     professor.setTexture(image);
-    dialogue.setPosition(rt.left + 0.20*rt.width, rt.top + 0.20*rt.height);
-    title.setPosition(rt.left + 0.23*rt.width, rt.top + 0.24*rt.height);
-    subtitle.setPosition(rt.left + 0.23*rt.width, rt.top + 0.36*rt.height);
+    dialogue.setPosition(rt.left + 0.10*rt.width, rt.top - 0.5*rt.height);
+    title.setPosition(rt.left - 0.12*rt.width, rt.top - 0.4*rt.height);
+    subtitle.setPosition(rt.left + 0.23*rt.width, rt.top + 0.2*rt.height);
     choice1.setPosition(rt.left + 0.20*rt.width, rt.top + 1.10*rt.height);
     choice2.setPosition(rt.left + 0.80*rt.width, rt.top + 1.10*rt.height);
     choice3.setPosition(rt.left + 1.40*rt.width, rt.top + 1.10*rt.height);
