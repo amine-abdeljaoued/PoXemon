@@ -52,7 +52,7 @@ void Player::update(float& deltaTime, sf::RenderWindow& window, sf::Clock& clock
     }
 
 	int i = bullets.update(window, deltaTime, clock, elapsed, clock1, clock2, clock3, (*enemy).sprite, groundY);
-	if(i!=0){(*enemy).health.decrease(i);}
+	if(i!=0){(*enemy).health.decrease(i+level);}
 
 	collision_opponent();
 	health.update();

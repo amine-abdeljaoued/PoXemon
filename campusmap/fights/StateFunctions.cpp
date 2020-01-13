@@ -207,7 +207,6 @@ void StateFunctions1::draw_how_to(sf::RenderWindow& window){
 //state 1--------------------------------------------------------------------------------------------------------------
 void StateFunctions1::initialize_state1(char& game_mode, sf::Sprite& opp_sprite,std::string& opp_n,int& opplvl, sf::RenderWindow& window, Pokemon_Button* buttons[], sf::Sprite& running_sprite, sf::Font& ffont) {
 	initialise_howto(window);
-	std::cout << "ini howto" << std::endl;
 	mode = game_mode;
 	//text elements
 	font = ffont;
@@ -431,14 +430,14 @@ int StateFunctions1::countdown(sf::RenderWindow& window, float deltatime, sf::Ti
 		draw_count = true;
 		text.setCharacterSize(max_char_size);
 		text.setString("Go!");
-		text.setPosition(0,0);	// centres the 'go' (different size to the numbers)
-		text.setOrigin(text.getLocalBounds().width/2, text.getLocalBounds().height);
-    	text.move(window.getSize().x/2 , 2*window.getSize().y/5);
 	}
 	else if (time.asSeconds()>4){
 			text.setString("3");//for the next time we call it
 		return 2;
 	}
+	text.setPosition(0,0);	// centres the 'go' (different size to the numbers)
+	text.setOrigin(text.getLocalBounds().width/2, text.getLocalBounds().height);
+	text.move(window.getSize().x/2 , 2*window.getSize().y/5);
 	return 10;
 }
 
@@ -495,17 +494,13 @@ void StateFunctions56::initialize_state_5_6(char game_mode, Pokemon* poke, sf::F
 	leave_fight.setPosition(target.getSize().x *2/3, target.getSize().y / 4);
 
 	//set position of the buttons
-	//std::cout <<"buttons[0]"<< buttons[0] << std::endl;
 	if (buttons[0]) buttons[0]->setPosition(target.getSize().x / placement, target.getSize().y * 7/16 );
 	if (buttons[1]) buttons[1]->setPosition(target.getSize().x / placement, target.getSize().y * 9/16 );
 	if (buttons[2]) buttons[2]->setPosition(target.getSize().x / placement, target.getSize().y * 11/16 );
 
 
 	//update life of the pokemon on its button
-	//std::cout << "index"<<poke->index << std::endl;
-	//std::cout << buttons[(*poke).index] << std::endl;
 	buttons[(*poke).index]->setHealth((*poke).health.health);
-	//std::cout << "just set life" << std::endl;
 }
 
 void const StateFunctions56::draw_state_5_6(char game_mode,  sf::Font& font, sf::Text& text_fainted, sf::Text choose_pokemon, sf::Text leave_fight, sf::RenderWindow& target, Pokemon_Button* buttons[], sf::Sprite& running_sprite) {
@@ -538,7 +533,6 @@ void StateFunctions56::update_state_5_6(char game_mode, sf::RenderWindow& window
 
 	//check for clicked pokemon buttons
 		for (int i = 0; i < 3; i++) {
-			//std::cout << "checked for clicked buttons" << std::endl;
 			if (buttons[i]) {
 				(*buttons[i]).update_mouse(mouse_pos, clicked_button);
 			}
@@ -550,7 +544,6 @@ void StateFunctions56::update_state_5_6(char game_mode, sf::RenderWindow& window
 			if (running_sprite.getGlobalBounds().contains(mouse_pos)) {
 				running_sprite.setScale(2.2, 2.2); // slightly bigger when the mouse is on the button
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-					//std::cout << "you pressed the run button" << std::endl;
 					clicked_button = -1;
 				}
 			}
@@ -608,7 +601,6 @@ bool StateFunctions56::check_leave(sf::Sprite &arrow_sprite, sf::RenderWindow& w
 		onquit = false;}
 
 	if ((sf::Mouse::isButtonPressed(sf::Mouse::Left))&&(arrow_sprite.getGlobalBounds().contains(mouse_pos))) {
-		//std::cout << "you pressed the run button" << std::endl;
 		return true;
 	}
 	return false;

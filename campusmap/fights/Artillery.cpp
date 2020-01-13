@@ -21,6 +21,10 @@ Artillery::~Artillery(){
 
 void Artillery::initialise(sf::RenderWindow& window){
     attacksbar.initialise(window);
+    float xpos = window.getSize().x/7;
+    xpos += window.getSize().x/28;
+	float ypos = 17*window.getSize().y/20;
+    bulletbar.setPosition(xpos, ypos);
 }
 
 void Artillery::draw(sf::RenderWindow& target){
@@ -69,7 +73,6 @@ void Artillery::new_shot(float& x, float& y, const sf::FloatRect& bounds, sf::Re
 }
 
 void Artillery::new_shot_special_attack1(float& x, float& y, const sf::FloatRect& bounds, sf::RenderWindow& window, const sf::Vector2i& mouse){
-    std::cout<<"news hot SA"<<std::endl;
     if (was_released && available_bullets > 0) {
         Bullet_Attack1* new_bullet = new Bullet_Attack1(type); // MUST BE GENERALISED TO TYPE
         sf::Vector2f initial_pos(x, y);

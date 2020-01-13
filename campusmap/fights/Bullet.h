@@ -85,7 +85,6 @@ public:
 			deleting_pic.loadFromFile("fights/Images/iceball.png");}
 		if(type == 40){
 			for (int i=0; i<16; i++) {array[i] = fire[i];}
-			std::cout<<"setting fire pic"<<std::endl;
 			if (!bpic.loadFromFile("fights/Images/fireball_explode.png")) std::cout << "could not load attack 1 fire image" << std::endl;
 			bpic.loadFromFile("fights/Images/fireball_explode.png");
 			if (!deleting_pic.loadFromFile("fights/Images/fireball_explode.png")) std::cout << "could not load attack 1 fire explode image" << std::endl;

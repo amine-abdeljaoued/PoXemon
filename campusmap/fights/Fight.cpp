@@ -52,10 +52,8 @@ Fight::Fight(sf::RenderWindow& window){
 void Fight::initialise_basic(BackpackMap& pbag_map, sf::RenderWindow& window){
 	// background - must change depending on where we are
     functions1.initialise_background(window, "fights/Images/"+location+".png", background, BackgroundTexture);
-	std::cout << "ini background" << std::endl;
 	// initialise poke_buttons and the fight backpack of our player
     for (int i=0; i<3; i++){
-		//std::cout<<i<<std::endl;
 		if (pbag_map.backpack_pokemons[i]) {
 			poke_buttons[i] = &((pbag_map.backpack_pokemons[i])->button); // create new button
 			poke_buttons[i]->setHealth((pbag_map.backpack_pokemons[i])->health); // updates clickability + color
@@ -91,9 +89,7 @@ void Fight::initialise_wild (BackpackMap& pbag_map, sf::RenderWindow& window){
 	Opponent* opponent = get_wild_pokemon(window, location);
 	popponent = opponent;
 
-	std::cout << "about to initialize_basic" << std::endl;
 	initialise_basic(pbag_map, window);
-	std::cout << "initialized basic" << std::endl;
 
 	//when we enconter a pokemon in the wild, it should have a level close to our pokemons
 	//we take the average of the levels of the pokemon and add a random integer between 5 and -5
@@ -105,16 +101,11 @@ void Fight::initialise_wild (BackpackMap& pbag_map, sf::RenderWindow& window){
 			sum_level += bag.backpack_pokemons[i]->level;
 		}
 	}
-	std::cout << nb_pokemons << std::endl;
-	std::cout << "computing average" << std::endl;
 	float average;
 	average = (float)sum_level / (float)nb_pokemons;
-	std::cout << "average" << average << std::endl;
-
 
 	//not very good generation but will do the job
 	int difference = (rand() % 7) - 3;
-	std::cout << difference << std::endl;
 	int random_level = abs((int)round(average) + difference);
 	popponent->level = random_level;
 
@@ -137,7 +128,6 @@ void Fight::initialise_trainer(BackpackMap& pbag_map, Backpack& popponent_bag, s
 }
 
 Opponent* Fight::get_wild_pokemon(sf::RenderWindow& window, std::string location){
-	std::cout << "entering get_wild_pokemon" << std::endl;
 	// randomly choose an opponent - must be based on where we are
 	/*There are:
 	- Identifier for the type: 10 - earth (9 pokemons), 20 - water (5), 30 - air (5), 40 - fire (9)*/
@@ -147,13 +137,11 @@ Opponent* Fight::get_wild_pokemon(sf::RenderWindow& window, std::string location
 		index = rand()%14 + 1;
 		name = Grass_Pokemons.find(index)->second;}
 	if (location=="water"){
-		std::cout<<"get wild water"<<std::endl;
 		index = rand()%5 + 1;
 		name = Water_Pokemons.find(index)->second;}
 	if (location=="underground"){
 		index = rand()%9 + 1;
 		name = Fire_Pokemons.find(index)->second;}
-	std::cout << "just set type" << std::endl;
 
 
 	Opponent* opponent = new Opponent(window, Pokemons.find(name)->second.height, Pokemons.find(name)->second.velocity,
@@ -181,6 +169,7 @@ int Fight::update(sf::RenderWindow& window, BackpackMap& bag_map, Box* box){
 			(bag).set_opponent(popponent);
 			(*pplayer).set_enemy(popponent);
 			(*popponent).set_enemy(pplayer);
+			functions1.initialise_countdown(window);
 			state = 10;//countdown
 		}
 		if (clicked_button == -1) {//we clicked on the run button
@@ -190,7 +179,7 @@ int Fight::update(sf::RenderWindow& window, BackpackMap& bag_map, Box* box){
 			state = 15;
 			clicked_button = -2;
 		}
-		clock.restart();
+		clock_regenerate_bullets.restart();
 	}
 
 
@@ -491,14 +480,12 @@ int Fight::update(sf::RenderWindow& window, BackpackMap& bag_map, Box* box){
 			caught.setFillColor(sf::Color::Black);
 			caught.setOrigin(caught.getGlobalBounds().width / 2, caught.getGlobalBounds().height / 2);
 			caught.setPosition(window.getSize().x / 2, window.getSize().y / 5);
-
-
 			bag.new_Masterball.in_air = false;
 			bag.new_Normalball.in_air = false;
 			bag.new_Superball.in_air = false;
 			bag.reset();
 			state = 12;//we need ta clock for the next state so i took this one arbitrarily
-			clock2.restart();
+
 		}
 
 	}

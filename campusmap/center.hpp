@@ -28,5 +28,5 @@ class Center {
         
         void Moveup(sf::Event &event);
         void Movedown(sf::Event &event);
-        void heal_pokemons(BackpackMap &backpack, sf::Event &event, Trainer &trainer):
+        void heal_pokemons(BackpackMap &backpack, sf::Event &event, Trainer &trainer);
 };
