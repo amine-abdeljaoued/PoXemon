@@ -32,8 +32,8 @@ using namespace std;
  int main()
  {
         //the intro by Julien
-        int poke_name = startgame();
-        if (poke_name==1) return 0;
+//        int poke_name = startgame();
+//        if (poke_name==1) return 0;
 
      //Initializing the window
      sf::RenderWindow window(sf::VideoMode(1400, 700), "My window", sf::Style::Titlebar | sf::Style::Close);
@@ -87,7 +87,7 @@ using namespace std;
                  start_fight = true;
              }
              else{
-                int i = fight.update(window);
+                int i = fight.update(window, map1.backpack);
                 if(i==55){ //Won against trainer
                     Arthur.state = "Stop";
                     map1.check_opponents(*(Arthur.opponent_bag));

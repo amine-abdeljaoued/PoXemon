@@ -63,7 +63,7 @@ class Map
         Interior background10;
         TileMap background11;
         TileMap background11_2;
-        Interior background12
+        Interior background12;
 
         map<string, const int*> collision_;
         string map_name;
