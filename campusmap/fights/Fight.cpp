@@ -57,8 +57,10 @@ void Fight::initialise_basic(BackpackMap& pbag_map, sf::RenderWindow& window){
     for (int i=0; i<3; i++){
 		//std::cout<<i<<std::endl;
 		if (pbag_map.backpack_pokemons[i]) {
-			poke_buttons[i] = &((pbag_map.backpack_pokemons[i])->button);
+			poke_buttons[i] = &((pbag_map.backpack_pokemons[i])->button); // create new button
+			poke_buttons[i]->setHealth((pbag_map.backpack_pokemons[i])->health); // updates clickability + color
 			bag.backpack_pokemons[i] = pbag_map.backpack_pokemons[i];
+			// reset indices in case they haven't been already
 			(pbag_map.backpack_pokemons[i])->index = i;
 			(bag.backpack_pokemons[i])-> index = i;
 		}
@@ -71,11 +73,9 @@ void Fight::initialise_basic(BackpackMap& pbag_map, sf::RenderWindow& window){
 
 	// for the states
     state = 1;
-	std::cout << "hey state1" << std::endl;
 
 	//functions1.initialise(mode, *popponent, *pplayer, window, font);
 	functions1.initialize_state1(game_mode, (*popponent).sprite, (*popponent).name, (*popponent).level, window, poke_buttons, running_sprite, font);
-	std::cout << "ini state 1" << std::endl;
     deltaTime = 0.0f;
     counter = 0;
     clicked_button = -2; // no button clicked
@@ -94,8 +94,6 @@ void Fight::initialise_wild (BackpackMap& pbag_map, sf::RenderWindow& window){
 	std::cout << "about to initialize_basic" << std::endl;
 	initialise_basic(pbag_map, window);
 	std::cout << "initialized basic" << std::endl;
-	//pplayer = new Player(window, 200.f, 500.f, *pbag_map.backpack_pokemons[0]);
-	//BAGCHECK: random level based on our level
 
 	//when we enconter a pokemon in the wild, it should have a level close to our pokemons
 	//we take the average of the levels of the pokemon and add a random integer between 5 and -5
@@ -170,28 +168,15 @@ int Fight::update(sf::RenderWindow& window, BackpackMap& bag_map, Box* box){
     elapsed2 = clock2.getElapsedTime();
 
 	if (state==1){ // Initial game menu
-		//state = functions1.update_state1(window, clock_regenerate_bullets);
-
-		//std::cout << clicked_button << std::endl;
 		window.clear();
 		window.draw(background);
-		//std::cout << "draw background" << std::endl;
-		//functions1.draw1(window);
 		functions1.draw_state1(window, poke_buttons);
-		//std::cout << "draw state 1" << std::endl;
 		functions1.update_state1(window, clock, poke_buttons, clicked_button);
-		//std::cout << "update state 1 " << std::endl;
-
-
-		//std::cout << clicked_button << std::endl;
 
 		if (clicked_button == -2) {//not clicked
 			state = 1;
 		}
 		if (0 <= clicked_button && clicked_button < 3) {//we clicked on a pokemon button
-			//std::cout << "clicked on a pokemon" << std::endl;
-			//remove stuff at the top
-			//Backpack_Pokemon new_player = *bag.backpack_pokemons[clicked_button];
 			pplayer = new Player(window, 200.f, 500.f, *bag.backpack_pokemons[clicked_button]);
 			(bag).set_opponent(popponent);
 			(*pplayer).set_enemy(popponent);
@@ -205,7 +190,6 @@ int Fight::update(sf::RenderWindow& window, BackpackMap& bag_map, Box* box){
 			state = 15;
 			clicked_button = -2;
 		}
-
 		clock.restart();
 	}
 
@@ -235,6 +219,8 @@ int Fight::update(sf::RenderWindow& window, BackpackMap& bag_map, Box* box){
 							attack_1_clock_opp, attack_2_clock_opp, attack_3_clock_opp, groundY);
 		window.clear(sf::Color::Blue);
 		window.draw(background);
+		(*pplayer).draw(window);
+		(*popponent).draw(window);
 		if (game_mode == 'w'){//we can only throw pokeballs at wild pokemons
 			ReturnValue value = bag.Pokeball_shoot(deltaTime, window, clock2, elapsed2); // BAGCHECK - control no of pokeballs
 			if (value.string!="None"){
@@ -243,9 +229,6 @@ int Fight::update(sf::RenderWindow& window, BackpackMap& bag_map, Box* box){
 
 			bag.draw(window);
 		}
-
-		(*pplayer).draw(window);
-		(*popponent).draw(window);
 		//player dies
 		if ((*pplayer).health.health <= 0) {
 			bag.backpack_pokemons[(*pplayer).index]->health = 0; //set health of the corresponding backpack pokemon to 0
@@ -305,11 +288,6 @@ int Fight::update(sf::RenderWindow& window, BackpackMap& bag_map, Box* box){
 				won = true;
 				functions56.initialize_state_8(popponent, font, text_fainted, window);
 				state = 8;
-
-				//text element : 'opponent fainted'
-				//text element : you won the fight against
-				//gained xp...
-				//go back to map
 			}
 
 		}
@@ -355,8 +333,6 @@ int Fight::update(sf::RenderWindow& window, BackpackMap& bag_map, Box* box){
 			delete popponent;
 
       	return 0;
-			//black screen
-			//go back to where we were on the map
 		}
 	}
 
@@ -373,9 +349,6 @@ int Fight::update(sf::RenderWindow& window, BackpackMap& bag_map, Box* box){
 		functions1.draw_blurry_background(window, background, bag, *pplayer, *popponent, &shader);
 
 		int index = (*popponent).index;
-		//you are about to fight + 'opponent'
-		//have an image, text etc...
-
 
 		functions56.update_state_5_6(game_mode, window, poke_buttons, clicked_button, running_sprite);//check for clicked buttons
 		functions56.draw_state_5_6(game_mode, font, text_fainted, choose_pokemon, leave_fight, window, poke_buttons, running_sprite);
@@ -464,7 +437,6 @@ int Fight::update(sf::RenderWindow& window, BackpackMap& bag_map, Box* box){
 		if(!won && functions56.check_leave(arrow_sprite, window)){
 			return 60; //lost against wild
 		}
-		/* if (functions56.check_leave(arrow_sprite, window)) return 0; */
 
 	} //wild opponent fainted
 
@@ -478,14 +450,11 @@ int Fight::update(sf::RenderWindow& window, BackpackMap& bag_map, Box* box){
 
 		int c = value.i;
 		if (value.string!="None"){
-			std::cout<<"before: "<<bag_map.inventory.find(value.string)->second<<std::endl;
-			// bag_map.inventory.find(value.string)->second -= 1;
-			bag_map.inventory[value.string] -= 1;
-			std::cout<<"after: "<<bag_map.inventory.find(value.string)->second<<std::endl;}
+			bag_map.inventory[value.string] -= 1;}
 
-		(bag).draw(window);
 		(*pplayer).draw(window);
 		(*popponent).draw(window);
+		(bag).draw(window);
 
 		//make gravity work
 		functions56.fall(pplayer, groundY, deltaTime);
@@ -515,9 +484,6 @@ int Fight::update(sf::RenderWindow& window, BackpackMap& bag_map, Box* box){
 		}
 
 		else if (c == 2) {//the pokeball didn't work
-
-			//CREATE SOME FUNCTION
-			//to be put in initialize_state_11 or 12
 			caught.setFont(font);
 			caught.setCharacterSize(30);
 			caught.setString("You failed to catch "+ popponent->name);

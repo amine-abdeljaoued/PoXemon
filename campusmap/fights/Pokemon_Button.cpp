@@ -102,9 +102,6 @@ void Pokemon_Button::update() {
 
 
 void Pokemon_Button::setPosition(float x, float y) {
-
-
-
 	// Background
 	bar.setPosition(x, y);
 
@@ -129,6 +126,7 @@ void Pokemon_Button::setPosition(float x, float y) {
 void Pokemon_Button::update_mouse(sf::Vector2f& mouse_pos, int& clicked_button) {
 	//when the mouse is on the button (not clicked), have a red contour, and make the pokemon jump
 	if (health > 0) {
+		
 		if (bar.getGlobalBounds().contains(mouse_pos)) {//check if the mouse is on a pokemon button
 			bar.setColor(sf::Color(255, 99, 99));
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
