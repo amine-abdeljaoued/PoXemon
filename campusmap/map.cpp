@@ -136,7 +136,7 @@ Map::Map(sf::RenderWindow &window, int poke_name)
     dialogueS.push_back("Welcome to our store!");
     dialogueS.push_back("What would you like to buy?");
     dialogueS.push_back("Shopping");
-    Npc* seller = new  Npc("seller","Sprites/NPC1.png",497,1026,-32,32,1.f,136,96,dialogueS, seller);
+    Npc* seller = new  Npc("seller","Sprites/NPC1.png",497,1026,-32,32,1.f,136,96,dialogueS, true);
     npcs_pokeShop.push_back(seller) ;
     npcs.insert(pair< string, vector<Npc*> >("pokeShop", npcs_pokeShop));
 
