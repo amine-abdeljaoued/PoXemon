@@ -38,8 +38,6 @@ class Box {
         void Moveright(sf::Event &event);
     
         void switchPoke(BackpackMap &backpack, sf::Event &event);
-
-        bool addPokemon(Backpack_Pokemon poke, BackpackMap &backpack);
     
         sf::Sprite background_screen;
     
@@ -100,5 +98,6 @@ class Box {
         bool release_up_right;
     
         bool pointerEmpty(int i);
+        bool addPokemon(Backpack_Pokemon poke, BackpackMap &backpack);
         bool addPokemonB(std::string name, int level, int index, int health, int type);
 };
