@@ -80,6 +80,8 @@ class Box {
         int swi2;
         int selectedPokemon_1;
         int selectedPokemon_2;
+    
+        bool addPokemon(Backpack_Pokemon poke, BackpackMap &backpack);
         
     private:
         sf::Texture background;
@@ -98,6 +100,5 @@ class Box {
         bool release_up_right;
     
         bool pointerEmpty(int i);
-        bool addPokemon(Backpack_Pokemon poke, BackpackMap &backpack);
         bool addPokemonB(std::string name, int level, int index, int health, int type);
 };
