@@ -1293,8 +1293,8 @@ void Map::fish(sf::RenderWindow &window, sf::View &view, Trainer &trainer){
         float probagenerated = dis(gen);
         if (probagenerated<0.005){
             trainer.text.setString("A wild Pokemon was caught!");
-//            trainer.state = "Fighting";
-//            trainer.fight_mode = "w";
+            trainer.state = "Fighting";
+            trainer.fight_mode = 'w';
         }
         else if (trainer.text.getString() != "A wild Pokemon was caught!")
             trainer.text.setString("Fishing...");
