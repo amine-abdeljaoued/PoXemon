@@ -50,7 +50,7 @@ bool Bullet::offscreen(sf::RenderWindow& window) {
 }
 
 void Bullet::reflect_ground(float& groundY) {
-	if (bullet.getPosition().y > groundY + 70){
+	if (bullet.getPosition().y > groundY + 30){
 		shoot_dir.y = -abs(shoot_dir.y); // make it 'bounce' on the ground
 		}
 }

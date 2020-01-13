@@ -85,13 +85,15 @@ public:
 			deleting_pic.loadFromFile("fights/Images/iceball.png");}
 		if(type == 40){
 			for (int i=0; i<16; i++) {array[i] = fire[i];}
+			std::cout<<"setting fire pic"<<std::endl;
 			if (!bpic.loadFromFile("fights/Images/fireball.png")) std::cout << "could not load attack 1 fire image" << std::endl;
 			bpic.loadFromFile("fights/Images/fireball.png");
 			if (!deleting_pic.loadFromFile("fights/Images/fireball_explode.png")) std::cout << "could not load attack 1 fire explode image" << std::endl;
-			deleting_pic.loadFromFile("fights/Images/fireball_explode.png");};
-
+			deleting_pic.loadFromFile("fights/Images/fireball_explode.png");
+			};
 		//initialise image
 		bullet.setTexture(bpic);
+		std::cout<<"set texture"<<std::endl;
 		bullet.setTextureRect(sf::IntRect(array[0]*array[2],array[0]*array[3],array[2],array[3])); 	// This chooses which part of the sprite we use - first two arguments are where you start
 																					// second 2 args are the size
 		bullet.setScale(sf::Vector2f(array[7], array[7]));

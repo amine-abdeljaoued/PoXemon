@@ -32,8 +32,8 @@ using namespace std;
  int main()
  {
         //the intro by Julien
-        /* int poke_name = startgame();
-        if (poke_name==1) return 0; */
+        int poke_name = startgame();
+        if (poke_name==1) return 0;
 
      //Initializing the window
      sf::RenderWindow window(sf::VideoMode(1400, 700), "My window", sf::Style::Titlebar | sf::Style::Close);
@@ -68,6 +68,8 @@ using namespace std;
   
      while (window.isOpen())
      {
+         
+
          sf::Event event;
          window.pollEvent(event);
 
@@ -98,9 +100,9 @@ using namespace std;
 
                  start_fight = false;
                  sf::Vector2f position = Arthur.spritePlayer.getPosition();
-                 view.setSize(sf::Vector2f(544.f, 544.f));
+                 view.setSize(sf::Vector2f(544.f, 272.f));
                  view.setCenter(sf::Vector2f(position.x, position.y));
-                 view.zoom(0.5f);
+                 view.zoom(0.6f);
              }
              map1.draw(window,view, Arthur, clock, event);
 

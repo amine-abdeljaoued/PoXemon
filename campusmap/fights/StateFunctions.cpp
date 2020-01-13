@@ -131,9 +131,6 @@ void StateFunctions1::initialise_buttons(sf::RenderWindow& window, sf::Font& fon
 	start_button.move(x/2 , y/2 - yoffset1);
 	info_text.move(x/2 , y/2 + yoffset2);
 	info_button.move(x/2, y/2 + yoffset2);
-	
-	//star.move(x/2 + xoffset, y/2 + yoffset3);
-	//opp.move(x/2 + xoffset, y/2 + yoffset3);
 }
 
 void StateFunctions1::draw1(sf::RenderWindow& window){

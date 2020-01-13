@@ -361,7 +361,7 @@ Map::Map(sf::RenderWindow &window, int poke_name)
     fight = false;
     
     if (poke_name == -1){
-        backpack.backpack_pokemons[0] = new Backpack_Pokemon("raporoy", 1, 0, 100, 30);
+        backpack.backpack_pokemons[0] = new Backpack_Pokemon("raporoy", 1, 0, 100, 40);
     }
     if (poke_name == -2){
         backpack.backpack_pokemons[0] = new Backpack_Pokemon("wapefet", 1, 0, 100, 40);
