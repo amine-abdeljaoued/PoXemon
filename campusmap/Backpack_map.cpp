@@ -89,12 +89,9 @@ BackpackMap::BackpackMap() {
         instruction.setString("Press [D] to Delete element");
         
         //Set pokemon
-        std::string name1 = "jistolwer";
-        std::string name2 = "auron";
-        std::string name3 = "husabus";
-        Backpack_Pokemon *poke1 = new Backpack_Pokemon(name1, 1, 0, 50, 10);
-        Backpack_Pokemon *poke2 = new Backpack_Pokemon(name2, 1, 1, 60, 20);
-        Backpack_Pokemon *poke3 = new Backpack_Pokemon(name3, 1, 2, 70, 30);
+        Backpack_Pokemon *poke1 = NULL;
+        Backpack_Pokemon *poke2 = NULL;
+        Backpack_Pokemon *poke3 = NULL;
         backpack_pokemons[0] = poke1;
         backpack_pokemons[1] = poke2;
         backpack_pokemons[2] = poke3;
