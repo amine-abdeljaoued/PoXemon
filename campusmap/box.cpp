@@ -540,7 +540,7 @@ bool Box::addPokemon(Backpack_Pokemon poke, BackpackMap &backpack){
     int type = poke.type;
     bool in = false;
     int i = 0;
-    while(i<2 && in == false){
+    while(i<3 && in == false){
         if (backpack.backpack_pokemons[i] == NULL){
             backpack.backpack_pokemons[i] = new Backpack_Pokemon(name,level,i,health,type);
             in = true;

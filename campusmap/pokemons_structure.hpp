@@ -57,6 +57,23 @@ const std::map<int, std::string> Fire_Pokemons = {
 		{9,"Raporoy"},
 	};
 
+const std::map<int, std::string> Grass_Pokemons = { //air and earth pokemons
+	{1,"Taukazam"},
+	{2,"Churita"},
+	{3,"Gixeor"},
+	{4,"Sandlax"},
+	{5,"Seemar"},
+	{6,"Venion"},
+	{7,"Vewaro"},
+	{8,"Withuble"},
+	{9,"Ganstakabra"},
+	{10,"Abata"},
+	{11,"Kangascuno"},
+	{12,"Marodactyl"},
+	{13,"Pulple"},
+	{14,"Wapefet"},
+};
+
 
 const std::map<std::string, Pokemon_info> Pokemons = {
 	//Air

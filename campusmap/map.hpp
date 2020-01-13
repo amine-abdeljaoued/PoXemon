@@ -46,6 +46,9 @@ class Map
 
         //Backpack
         BackpackMap backpack;
+        
+        //Box
+        Box box;
 
     private:
         TileMap background1_1;
@@ -111,6 +114,4 @@ class Map
         //Fish
         void fish(sf::RenderWindow &window, sf::View &view, Trainer &trainer);
 
-        //Box
-        Box box;
 };
