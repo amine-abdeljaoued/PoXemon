@@ -47,4 +47,4 @@ And the third one on fights to which we'd like to add more dynamism.
 Fonts: https://www.dafont.com/fr/search.php?q=Pokemon
 Tileset for the map: https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/
 C++ Library: https://www.sfml-dev.org/index.php
-Music: Youtube
+Music: https://downloads.khinsider.com
