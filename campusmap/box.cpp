@@ -79,10 +79,10 @@ Box::Box() {
     std::string name2 = "no";
     std::string name3 = "whynot";
     std::string name4 = "Empty";
-    Backpack_Pokemon *poke4 = new Backpack_Pokemon(name1, 1, 3, 50, 10);
-    Backpack_Pokemon *poke5 = new Backpack_Pokemon(name2, 1, 3, 60, 20);
-    Backpack_Pokemon *poke6 = new Backpack_Pokemon(name3, 1, 3, 70, 30);
-    Backpack_Pokemon *poke7 = NULL; //new Backpack_Pokemon(name4, 1, 3, 70, 30);
+    Backpack_Pokemon *poke4 = new Backpack_Pokemon(name1, 1, 1, 60, 20);
+    Backpack_Pokemon *poke5 = new Backpack_Pokemon(name2, 1, 1, 60, 20);
+    Backpack_Pokemon *poke6 = NULL;
+    Backpack_Pokemon *poke7 = NULL;
     Backpack_Pokemon *poke8 = NULL;
     Backpack_Pokemon *poke9 = NULL;
     Backpack_Pokemon *poke10 = NULL;
@@ -501,7 +501,7 @@ void Box::Moveleft(sf::Event &event) {
 }
 
 void Box::Moveright(sf::Event &event) {
-    if (actual_column==0) {
+    if (actual_column==0 && box_pokemons[0]) {
         if (event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::Right&&release == true){
             actual_column = 1;
             release_right = false;
@@ -578,7 +578,7 @@ void Box::switchPoke(BackpackMap &backpack, sf::Event &event){
             backpack.backpack_pokemons[swi1] = box_pokemons[swi2];
             box_pokemons[swi2] = tempP;
             
-            backpack.backpack_pokemons[swi1]->index = swi2;
+            backpack.backpack_pokemons[swi1]->index = swi1;
             box_pokemons[swi2]->index = 3;
         }
         else {
@@ -586,8 +586,8 @@ void Box::switchPoke(BackpackMap &backpack, sf::Event &event){
             box_pokemons[swi1] = backpack.backpack_pokemons[swi2];
             backpack.backpack_pokemons[swi2] = tempP;
             
-            backpack.backpack_pokemons[swi2]->index = swi1;
-            box_pokemons[swi2]->index = 3;
+            backpack.backpack_pokemons[swi2]->index = swi2;
+            box_pokemons[swi1]->index = 3;
         }
         
         sw = false;
@@ -596,3 +596,4 @@ void Box::switchPoke(BackpackMap &backpack, sf::Event &event){
         column = -1;
     }
 }
+
