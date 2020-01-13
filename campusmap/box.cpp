@@ -75,12 +75,8 @@ Box::Box() {
     selectedPokemon_right = 0;
     
     //Set pokemon
-    std::string name1 = "yes";
-    std::string name2 = "no";
-    std::string name3 = "whynot";
-    std::string name4 = "Empty";
-    Backpack_Pokemon *poke4 = new Backpack_Pokemon(name1, 1, 1, 60, 20);
-    Backpack_Pokemon *poke5 = new Backpack_Pokemon(name2, 1, 1, 60, 20);
+    Backpack_Pokemon *poke4 = NULL;
+    Backpack_Pokemon *poke5 = NULL;
     Backpack_Pokemon *poke6 = NULL;
     Backpack_Pokemon *poke7 = NULL;
     Backpack_Pokemon *poke8 = NULL;
@@ -99,8 +95,6 @@ Box::Box() {
     box_pokemons[7] = poke11;
     box_pokemons[8] = poke12;
     box_pokemons[9] = poke13;
-    
-    cout << box_pokemons[5] << endl;
 }
 
 //Function to get the bounds of the window in order to draw at the middle of the window
