@@ -33,10 +33,10 @@ BackpackMap::BackpackMap() {
     
     //Set number of element of each item at beginning of game
     inventory["Normalball"] = 3;
-    inventory["Superball"] = 2;
-    inventory["Masterball"] = 1;
-    inventory["SmallHealthPotion"] = 2;
-    inventory["BigHealthPotion"] = 1;
+    inventory["Superball"] = 0;
+    inventory["Masterball"] = 0;
+    inventory["SmallHealthPotion"] = 0;
+    inventory["BigHealthPotion"] = 0;
     inventory["Torch"] = 0;
     
     //Set maximal capacity of backpack
@@ -89,12 +89,9 @@ BackpackMap::BackpackMap() {
         instruction.setString("Press [D] to Delete element");
         
         //Set pokemon
-        std::string name1 = "jistolwer";
-        std::string name2 = "auron";
-        std::string name3 = "husabus";
-        Backpack_Pokemon *poke1 = new Backpack_Pokemon(name1, 1, 0, 50, 10);
-        Backpack_Pokemon *poke2 = new Backpack_Pokemon(name2, 1, 1, 60, 20);
-        Backpack_Pokemon *poke3 = new Backpack_Pokemon(name3, 1, 2, 70, 30);
+        Backpack_Pokemon *poke1 = NULL;
+        Backpack_Pokemon *poke2 = NULL;
+        Backpack_Pokemon *poke3 = NULL;
         backpack_pokemons[0] = poke1;
         backpack_pokemons[1] = poke2;
         backpack_pokemons[2] = poke3;

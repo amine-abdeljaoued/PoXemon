@@ -23,7 +23,7 @@ using namespace std;
 class Map
 {
     public:
-        Map(sf::RenderWindow &window);
+        Map(sf::RenderWindow &window, int poke_name);
         ~Map();
         void draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Clock& clock, sf::Event &event);
         void initialisation(sf::RenderWindow &window, Trainer &trainer, sf::View &view);

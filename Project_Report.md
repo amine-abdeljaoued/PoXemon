@@ -27,9 +27,26 @@ The other teams were also working on their side and we had a meeting with the fi
 Then they told us that what they had was ready. As the responsible of the git repository, I linked their work with ours. I first thought a lot on paper on the best way to do it. Then I did it. As the Git master, I also had to fix the problem of the team sometimes regarding branches, wrong manipulations…
 Finally after having linked the work, I implemented a subclass of NPCs for opponent trainers with whom we could fight. With Benjamin, I put some where needed for the scenario.
 
+This project was a wonderful experience. I can say that it's the first time that I was involved in a long-term project in which I worked a lot regularly. The progress we made were truly satisfying along the way, and I had the chance to be with an awesome team.
+I believe that now I know what's necessary to make a good CS project, both in pure coding and structural/ team work aspects.
+
 
 ### Arthur Collette (Map Team, Map manager):
 
+This group project was overall a very challenging experience, but it taught me a lot personally. I really enjoyed last year’s project in CSE104 in HTML, but I found it a bit naïve and we were quickly limited by the amount of time allowed and the number of people per group. During these 7 weeks, I learned the basics of video game programming, something that I would like to pursue in my studies later on. 
+
+Right from the beginning, I decided to join the map team with Benjamin and Amine. We first spent the first week learning about SFML and the different possibilities that it offers. We quickly created the first draft of a map and a moving character on it. We used Pokémon sprites in order to give a nice visual aspect to the game and save time for ourselves. 
+I implemented the algorithm to create the map out of a tileset of sprites of 16 by 16 pixels, based on an algorithm found on the official SFML website. After this, I worked on the trainer movement’s and its visual appearance. For the trainer, we used different states like “Walking” or “Speaking” that could be switched from one to the other by the input of the player.
+After this, I worked with Amine on the dialogues of the Npcs and their speaking states. Using this class, I created a Shop and a pokeCenter with a seller and a doctor in them. These buildings are at the heart of the Pokemon games mechanics, it allows the player to buy vital consumables such as Pokeballs and to heal the Pokémon in the backpack. 
+
+After this, I started implementing “Easter eggs” such as fishing, dying when opening the fridge, throwing a rock on a building’s window… I created illusions when entering the buildings, opening the doors of the shop and the center. The map started to look more “alive” with moving flowers and a lot of Npcs.
+
+Finally, I implemented with the help of clement the backpack and a box system to store the Pokémon after catching them. 
+
+I realized after the winter holidays that I was committing on GitHub with a false account so most of my commits do not appear online.
+
+To put in a nutshell, this project taught me how to work in such a big group in order to create a small video game. The atmosphere in the group was great even with all the frustration and hours of work. 
+           
 ### Maxence Dulac (PoXemon Team, PoXemon Manager):
 
 During this project I was part of the "PoXemon team" and throughout the duration I worked the most with Julien Luzzatto and we cooperated with the other teams of the project.
@@ -48,7 +65,20 @@ Finally we worked with the map team in order to create maps/collision maps in wh
 
 All in all, this project was super fun even though it generated a lot of frustration. Our group was amazing and the skills and creativity of everyone involved was off the charts. I think our end result is super cool and we hope you will enjoy as much as we did!
 
-### Anya Fries (Fight Team, Fight manager):
+### Anya Fries (Fight Team, Fight manager with Antonin):
+
+I worked on the fight mode of the project. Together with Antonin we implemented most of the fight. I was also in charge of setting up organisation. I set up a trello account with different boards for the different teams. Most of the organisation ended up being through telegram groups of the various teams, and bigger goals on trello.
+
+I started working on fights by creating the very basic scene: a sprite who can jump, move and shoot. I then started working on the live health bar, which shows the level of health of a pokemon during a fight and changes size and color as the pokemon loses health. At this point, our fights were becoming larger, so I sorted a lot of the code into different classes, including separating the shooting from the player. 
+
+Thereafter I started working on the opponent ‘bot’. I improved the shooting of the opponent slightly, adding a probability for when it shoots. I created the possibility of having "game states" (different parts of the game that are drawn and handled completely differently). This allowed our fight to advance. I created a start menu for the game which shows before commencing a fight. Later I improved the start menu, and added a countdown for when you press start, and added a how to play menu.
+
+I then started implementing a special attack, which are is another functionality in the fight scenario: a bullet that causes more damage and is animated. This was done in a subclass of our bullet function. I created the special attacks bar: this is a bar that works similarly to the health bar: a shrinking red rectangle as your time for the attack is running out, and a green growing one while it is regenerating. The bar also shows what the attack will look like: it has a picture of the special attack which goes black and white when the attack is no longer available.
+
+Later I did an enormous restructing the code, moving code from main to a new class 'Fight' so that our section can be linked to the rest of the game. This involved fixing many bugs. I fixed several major bugs that we had been having for a long time (segmentation fault bugs and pure virtual method bugs). 
+
+Finally I adjusted many objects scaling and placement according to window size, fixed minor bus, and did a large link to the map team, working with Arthur to make their backpack be linked to ours: handling pokemons we catch, the number of pokemons we have, etc. I also implemented the handling of catching pokemons in different areas. 
+
 
 ### Julien Luzzatto (PoXemon Team, Intro manager):
 
@@ -64,7 +94,7 @@ After finishing the introduction, we spent one week designing a Pokedex, which, 
 
 Afterwards, I started working more closely with the other teams, as my main objectives regarding my part were achieved. Hence, Maxence and I first collaborated with the Fights Team, developing several new types of attacks, ‘super-attacks’, which one would unlock throughout the game. Then, we started helping the map team, as realizing map is not a particularly difficult task, but it is very time-consuming. We realized three new maps: one representing the sports facilities of the campus, one displaying the Bachelor buildings on campus (the ones we live in), and finally a labyrinth one, from which one accesses the map leading to the final boss one has to defeat to complete the game. Finally, I discussed with the map team to decide the best ways to connect them to the game’s path and they realised the bridges between the maps.
 
-The project was overall a challenging experience but it taught me a lot. It was my first project in such a big group, and, on the one hand, it made me aware of the incredible amount of issues that can come out of nowhere on the last day (compatibility, misunderstandings, merging problems, etc.), on the other hand, it was instructive, insightful and fun.
+The project was overall a challenging experience but it taught me a lot. It was my first project in such a big group, and, on the one hand, it made me aware of the incredible amount of issues that can come out of nowhere on the last day (compatibility, misunderstandings, merging problems, etc.), on the other hand, it was instructive, insightful and really funny.
 
 ### Benjamin Montagnes (Map Team, Project leader):
 
@@ -76,8 +106,30 @@ After this, I started to help the fight team. I concentrated myself on the backp
 
 First of all, Benjamin and Arthur took some time to explain me how the map team was working and explained me how to work with tilemaps, tilesets… Then, I started to create some new maps (I designed a total of 5 different maps). During the last week, I also work on some graphical elements such as the light spot in the underground map and on some easter eggs. During the last month, as my work was quite diverse and the fact that I have encounter some technical issues with XCode, I preferred to ask Arthur and Benjamin to commit the different things that I programmed. 
 
-### Clement Sterlin (PoXemon Team, Graphist/Data manager):
+### Clement Sterlin (PoXemon Team, Data manager (Backpack, Shop, Box)):
 
-### Antonin Wattel (Fight Team):
+At the beginning of the project, I was supposed to work in the PoXemon Team, the team taking care of creating the poxemons (including pokedex with all the stats for each poxemon and the graphics).
+However, for the two first weeks, I had issues with my very old computer and I was not able to make SFML work. But after a few days I was able to get a more modern one and I was now able to start programming. 
+Rapidly, I saw that we were too many in the team to work only on the creation of poxemons and I observed that at one point, in the game, we would have to handle all the values concerning objects and poxemon.
+
+Thus, I decided to create and work on a Backpack (BackpackMap.hpp) that would store all the values for your objects and poxemons you have in the game. The Backpack at the beginning was just displaying the different objects you had in the backpack with their total number. Then I started implementing some other functions such as a “delete” one.
+
+But at this point, my Backpack was a window on its own, it was impossible to link it with the map, I had to draw it on the map. Thus it took me some time to understand how to draw on an existing window rather than creating a window each time I open the Backpack. To this purpose, I implemented a Backpack state and with the help of my colleagues, I was able to do so and draw the Backpack on the map. Then I was able to add many functions to my Backpack: Display of the current poxemons in the bag (with some cool stuff: healthbar, opening pokeball, types, …), healing poxemons with health potions and others.
+
+After implementing the Backpack, I worked on the notion of Money in the game. I started to create a value for each object and a wallet carried in the backpack. Then I was able, with a small help from Arthur to create the shop (shop.hpp) accessible from the PokeShop where you can buy the objects to fill your backpack. This was not hard to implement since I worked a lot on the Backpack before and to link it with the shop was easy.
+
+Then, we created the PokeCenter with Arthur (center.hpp), he did the Healing function and I did the Box (box.hpp) where you access all the poxemons you captured during the game. Thus, first, I had to display the poxemons in the box on one side and the one in the Backpack on the other side. Then the hardest part was the switch function. It is a very important function in the game, allowing you to change your team of 3 poxemons in your backpack with the poxemons in the box. It took me hours but finally managed to do it.
+
+Finally, the last days before the deadline, Arthur and I worked with the fight team to link our two backpacks.
+
+Just as an information, I had a lot of problems with github each time I was pushing, thus Arthur was pushing for me, that’s why I have no commit.
+
+To conclude, it was the first time for me working with a group of 10 people. I really liked it because it was challenging but in my opinion, we managed to produce a nice game because of the division of work that was very efficient, everybody knew what he had to do and thus, when I had a question to ask, I knew who to talk to. 
+
+
+### Antonin Wattel (Fight Team, Fight Manager with Anya):
 
 ### Jiahe Zhu (Fight Team):
+
+During the project Jiahe tried at first to work with the Fight Team, she worked a bit on the opponent’s movement and how the opponents fight back against you. She also participated to the decisions in the group. She as well worked alongside Francois for some coding throughout the game. 
+During the first week, she also learnt like the others how to use the SFML library and how to code in C++ overall. 
