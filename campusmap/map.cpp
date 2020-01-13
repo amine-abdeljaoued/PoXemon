@@ -1293,6 +1293,7 @@ void Map::check_opponents(Backpack &bag){
          (*(npcs["third"][1])).beaten = true;
          foot_players = true;
      }
+     backpack.wallet += 150;
  }
 
 void Map::fish(sf::RenderWindow &window, sf::View &view, Trainer &trainer){
