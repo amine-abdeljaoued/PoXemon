@@ -73,10 +73,10 @@ public:
 			deleting_pic.loadFromFile("fights/Images/rock_explode.png");}
 		if(type == 20){
 			for (int i=0; i<16; i++) {array[i] = water[i];}
-			if (!bpic.loadFromFile("fights/Images/water.png")) std::cout << "could not load attack 1 water image" << std::endl;
-			bpic.loadFromFile("fights/Images/water.png");
-			if (!deleting_pic.loadFromFile("fights/Images/water.png")) std::cout << "could not load attack 1 water explode image" << std::endl;
-			deleting_pic.loadFromFile("fights/Images/water.png");}
+			if (!bpic.loadFromFile("fights/Images/waterball.png")) std::cout << "could not load attack 1 water image" << std::endl;
+			bpic.loadFromFile("fights/Images/waterball.png");
+			if (!deleting_pic.loadFromFile("fights/Images/waterball.png")) std::cout << "could not load attack 1 water explode image" << std::endl;
+			deleting_pic.loadFromFile("fights/Images/waterball.png");}
 		if(type == 30){
 			for (int i=0; i<16; i++) {array[i] = air[i];}
 			if (!bpic.loadFromFile("fights/Images/iceball.png")) std::cout << "could not load attack 1 ice image" << std::endl;
