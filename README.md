@@ -12,9 +12,9 @@ And the third one on fights to which we'd like to add more dynamism.
 ## How to run the game:
 
 - Download SFML for Linux
-- run the makefile in the folder campusmap by writing "make game
+- run the makefile in the folder campusmap by writing "make game"
 - type "./game"
-- There is one bug that we are currently fixing: after each fight, it is possible that you have to wait around 10-20 seconds before being able to move again. Also using the bicycle may create some collision error, even thouh it is quite rare.
+- There is one bug that we are currently fixing: after each fight, it is possible that you have to wait around 10-20 seconds before being able to move again. Moreover, using the bicycle may create some errors by shifting the collision map, even though it is quite rare.
 
 ## How to play:
 
