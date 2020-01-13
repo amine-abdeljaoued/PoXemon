@@ -334,7 +334,7 @@ Map::Map(sf::RenderWindow &window, int poke_name)
     //Spawning position
     map_list = {"first","second","third","fourth","pokeShop","pokeCenter","home","maze","interior_80","room_clement","bossfinal", "hall"};
     //first map
-    spawn_dict.insert(pair< string, vector<vector<int> >>("first",{{264, 256},{8, 192},{184, 160},{280,528}}));
+    spawn_dict.insert(pair< string, vector<vector<int> >>("first",{{264, 256},{8, 192},{184, 160},{248,464}}));
     //underground
     spawn_dict.insert(pair< string, vector<vector<int> >>("second",{{488, 480},{520,16}}));
     //Sport
@@ -356,14 +356,7 @@ Map::Map(sf::RenderWindow &window, int poke_name)
     //bossfinal
     spawn_dict.insert(pair< string, vector<vector<int> >>("bossfinal",{{248,480}}));
     //bossfinal
-    spawn_dict.insert(pair< string, vector<vector<int> >>("hall",{{248,352}}));
-
-    //Scenario
-    scenario.insert(pair<string, vector<string>> ("bob", {"Nice Day!","You should go to the shop to buy what you need."}));
-    scenario.insert(pair<string, vector<string>> ("seller", {"Welcome to my Shop", "My name is Ms. Linz.", "Here you can buy everything that you will need to pass the test.", "But be carefull, everything has a price!", "Shopping"}));
-
-
-    scenario.insert(pair<string, vector<string>> ("toto", {"Oups"}));
+    spawn_dict.insert(pair< string, vector<vector<int> >>("hall",{{264,352}}));
 
     fight = false;
     
