@@ -128,6 +128,24 @@ To conclude, it was the first time for me working with a group of 10 people. I r
 
 
 ### Antonin Wattel (Fight Team, Fight Manager with Anya):
+	
+	I mainly worked with Anya to create the fights of the game. When we encounter a wild pokemon or fight against a trainer, we enter into a ‘fight’. The basic idea is that we are controlling a pokemon with the mouse and keyboard, and we have to win against the opponent pokemon (a bot). 
+
+	At first, we spent some time exchanging ideas, and quickly started to implement a draft of a pokemon that could move, jump and shoot. From there, we organized ourselves and split the work quite easily.
+
+	First, I worked on the ability of pokemons to shoot bullets. I implemented the player’s pokemon shooting. We shoot bullets in the direction of the mouse when we click. We have a limited number of available bullets that regenerates with time. In order to see how many bullets we have left, I also created a ‘bullet bar’. As a detail, I also made bullets ‘bounce on the ground’.
+
+	After that, I implemented movements of the bot, with the objective of giving it a ‘natural’ aspect, and not making it too easy to beat. I implemented a random ‘smooth’ movement, and made it avoid bullets coming to it by jumping. I also made the fighting pokemons always face each other.
+
+	I worked on updating pokemons’s life. Using the *Simple Collision Detection for SFML* library, I was able to detect collisions between bullets and pokemons,and then decrease the pokemons' life when they are hit by a bullet, and make their life bars update accordingly. I later made the pokemon’s level increase by one every time it wins a fight, and made pokemons cause more damage as they gain level.  
+
+	Finally, I spent some time working on different game states and menus. These are different based on several parameters : Are we fighting against a wild pokemon or against a trainer? What pokemon(s) are we fighting against? What pokemon(s) do we currently have in our backpack?... The goal was to have menus with messages, buttons and images adapted to all the different possibilities. 
+First, I worked on the game states related to pokemon deaths, and ‘end of game’ states. An important step was the creation of ‘pokemon buttons’, allowing us to continue a fight with a new pokemon of our backpack. 
+After that, I worked on game states related to throwing pokeballs, using Francois’ code for the implementation of pokeballs.
+Finally, I used Anya’s work and my previous work to recreate the start menu, to make it possible to choose a pokemon when we start a fight, and have text messages and buttons adapted to the game mode. 
+
+	Finally, I fixed issues, rearranged some pieces of code, and I discussed with other members of the fights and maps team, to exchange ideas and try to have a coherent project.
+
 
 ### Jiahe Zhu (Fight Team):
 
