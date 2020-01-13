@@ -33,7 +33,7 @@ I believe that now I know what's necessary to make a good CS project, both in pu
 
 ### Arthur Collette (Map Team, Map manager):
 
-This group project was overall a very challenging experience, but it thought me a lot personally. I really enjoyed last year’s project in CSE104 in HTML, but I found it a bit naïve and we were quickly limited by the amount of time allowed and the number of people per group. During these 7 weeks, I learned the basics of video game programming, something that I would like to pursue in my studies later on. 
+This group project was overall a very challenging experience, but it taught me a lot personally. I really enjoyed last year’s project in CSE104 in HTML, but I found it a bit naïve and we were quickly limited by the amount of time allowed and the number of people per group. During these 7 weeks, I learned the basics of video game programming, something that I would like to pursue in my studies later on. 
 
 Right from the beginning, I decided to join the map team with Benjamin and Amine. We first spent the first week learning about SFML and the different possibilities that it offers. We quickly created the first draft of a map and a moving character on it. We used Pokémon sprites in order to give a nice visual aspect to the game and save time for ourselves. 
 I implemented the algorithm to create the map out of a tileset of sprites of 16 by 16 pixels, based on an algorithm found on the official SFML website. After this, I worked on the trainer movement’s and its visual appearance. For the trainer, we used different states like “Walking” or “Speaking” that could be switched from one to the other by the input of the player.
@@ -94,7 +94,7 @@ After finishing the introduction, we spent one week designing a Pokedex, which, 
 
 Afterwards, I started working more closely with the other teams, as my main objectives regarding my part were achieved. Hence, Maxence and I first collaborated with the Fights Team, developing several new types of attacks, ‘super-attacks’, which one would unlock throughout the game. Then, we started helping the map team, as realizing map is not a particularly difficult task, but it is very time-consuming. We realized three new maps: one representing the sports facilities of the campus, one displaying the Bachelor buildings on campus (the ones we live in), and finally a labyrinth one, from which one accesses the map leading to the final boss one has to defeat to complete the game. Finally, I discussed with the map team to decide the best ways to connect them to the game’s path and they realised the bridges between the maps.
 
-The project was overall a challenging experience but it taught me a lot. It was my first project in such a big group, and, on the one hand, it made me aware of the incredible amount of issues that can come out of nowhere on the last day (compatibility, misunderstandings, merging problems, etc.), on the other hand, it was instructive, insightful and fun.
+The project was overall a challenging experience but it taught me a lot. It was my first project in such a big group, and, on the one hand, it made me aware of the incredible amount of issues that can come out of nowhere on the last day (compatibility, misunderstandings, merging problems, etc.), on the other hand, it was instructive, insightful and really funny.
 
 ### Benjamin Montagnes (Map Team, Project leader):
 
