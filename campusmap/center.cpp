@@ -133,12 +133,6 @@ void Center::switchPokemon(sf::RenderWindow &window, BackpackMap &backpack, sf::
             interface[counter][swi1] = interface[counter][swi2];
             interface[counter][swi2] = temp;
             
-            Backpack_Pokemon* tempP = backpack.backpack_pokemons[swi1];
-            backpack.backpack_pokemons[swi1] = backpack.backpack_pokemons[swi2];
-            backpack.backpack_pokemons[swi2] = tempP;
-            
-            backpack.backpack_pokemons[swi1]->index = swi1;
-            backpack.backpack_pokemons[swi2]->index = swi2;
             
             sw = false;
             swi1 = -1;
