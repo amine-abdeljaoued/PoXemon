@@ -9,13 +9,13 @@
 BackpackMap::BackpackMap() {
 
     //Load textures for backpack
-    if (!rectangle_texture.loadFromFile(/*/*resourcePath() + */  "Sprites/button.png")) {
+    if (!rectangle_texture.loadFromFile(/*resourcePath() + */  "Sprites/button.png")) {
         std::cout<<"error"<<std::endl;
     }
-    if (!money_texture.loadFromFile(/*/*resourcePath() + */  "Sprites/money.png")) {
+    if (!money_texture.loadFromFile(/*resourcePath() + */  "Sprites/money.png")) {
         std::cout<<"error"<<std::endl;
     }
-    if (!texture_background.loadFromFile(/*/*resourcePath() + */  "Sprites/screen_menu.jpg")){
+    if (!texture_background.loadFromFile(/*resourcePath() + */  "Sprites/screen_menu.jpg")){
         std::cout<<"error"<<std::endl;
     }
     if (!texture_backpack.loadFromFile(/*resourcePath() + */ "Sprites/Pt_bag.png")) {
@@ -87,7 +87,8 @@ BackpackMap::BackpackMap() {
         std::string name3 = "husabus";
         Backpack_Pokemon *poke1 = new Backpack_Pokemon(name1, 1, 0, 50, 10);
         Backpack_Pokemon *poke2 = new Backpack_Pokemon(name2, 1, 1, 60, 20);
-        Backpack_Pokemon *poke3 = new Backpack_Pokemon(name3, 1, 1, 70, 30);
+        Backpack_Pokemon *poke3 = NULL;
+    //new Backpack_Pokemon(name3, 1, 2, 70, 30);
         backpack_pokemons[0] = poke1;
         backpack_pokemons[1] = poke2;
         backpack_pokemons[2] = poke3; //uncomment to test with only two pokemons in the bag
@@ -125,6 +126,10 @@ BackpackMap::BackpackMap() {
         fire.setTextureRect(sf::IntRect(64,33,32,14));
 
         Selecteditem_pokemon = 0;
+    
+        sw = false;
+        swi1 = -1;
+        swi2 = -1;
     }
 
     //Function to get the bounds of the window in order to draw at the middle of the window
@@ -280,7 +285,7 @@ BackpackMap::BackpackMap() {
 
         if (actual_column == 0) {
             for (int i=0; i<3; i++) {
-                if (backpack_pokemons[i]->name != "Empty") {
+                if (backpack_pokemons[i]) {
                     if (i != Selecteditem_pokemon) {
                         not_selected_slot.setPosition(viewBounds.left+ 15, viewBounds.top + viewBounds.height/3.8 + (i*24));
                         not_selected_slot.setScale(0.8, 1);
@@ -298,7 +303,7 @@ BackpackMap::BackpackMap() {
         }
         else {
             for (int i=0; i<3; i++) {
-                if (backpack_pokemons[i]->name != "Empty") {
+                if (backpack_pokemons[i]) {
                     not_selected_slot.setPosition(viewBounds.left+ 15, viewBounds.top + viewBounds.height/3.8 + (i*24));
                     not_selected_slot.setScale(0.8, 1);
 
@@ -309,7 +314,7 @@ BackpackMap::BackpackMap() {
 
         if (actual_column == 0) {
             for (int i=0; i<3; i++) {
-                if (backpack_pokemons[i]->name != "Empty") {
+                if (backpack_pokemons[i]) {
                     if (i == Selecteditem_pokemon) {
                         poke_open.setOrigin(10, 12);
                         poke_open.setPosition(viewBounds.left+15, viewBounds.top + viewBounds.height/3.8 +(i*24) + 11);
@@ -328,7 +333,7 @@ BackpackMap::BackpackMap() {
         }
         else {
             for (int i=0; i<3; i++) {
-                if (backpack_pokemons[i]->name != "Empty") {
+                if (backpack_pokemons[i]) {
                     poke_close.setOrigin(10, 10);
                     poke_close.setPosition(viewBounds.left+15, viewBounds.top + viewBounds.height/3.8 +(i*24) +11);
 
@@ -339,7 +344,7 @@ BackpackMap::BackpackMap() {
 
         //Draw health bar
         for (int i=0; i<3; i++) {
-            if (backpack_pokemons[i]->name != "Empty") {
+            if (backpack_pokemons[i]) {
                 sf::RectangleShape health_bar;
                 health_poke = (float) (backpack_pokemons[i]->health)/100;
                 health_bar.setSize(sf::Vector2f(38.5*health_poke,3));
@@ -359,7 +364,7 @@ BackpackMap::BackpackMap() {
 
         //Draw Names and level of pokemon in backpack
         for (int i=0; i<3; i++) {
-            if (backpack_pokemons[i]->name != "Empty") {
+            if (backpack_pokemons[i]) {
                 poke_name.setString(backpack_pokemons[i]->name);
                 level.setString("lvl " + toString(backpack_pokemons[i]->level));
                 poke_name.setCharacterSize(10);
@@ -378,7 +383,7 @@ BackpackMap::BackpackMap() {
 
         //Draw Pokemon Type
         for (int i=0; i<3; i++) {
-            if (backpack_pokemons[i]->name != "Empty"){
+            if (backpack_pokemons[i]){
                 if (backpack_pokemons[i]->type == 10) {
                     earth.setScale(0.6, 0.4);
                     earth.setPosition(viewBounds.left+95, viewBounds.top+ viewBounds.height/3.8 +(i*24)+14);
@@ -406,6 +411,7 @@ BackpackMap::BackpackMap() {
     //Final Draw function for background and menu conditionally to the state
     void BackpackMap::draw(sf::RenderWindow &window, sf::View &view, sf::Event &event, Trainer &trainer) {
         if (trainer.state=="Backpack") {
+            switchPokemon(window, event, view, trainer);
             draw_background(window, view, event, trainer);
             draw_menu(window, view, event, trainer);
             draw_pokemon(window, view, event, trainer);
@@ -480,7 +486,7 @@ BackpackMap::BackpackMap() {
     void BackpackMap::Movedown_Pokemon(sf::Event &event) {
         if (actual_column==0) {
             if (event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::Down&&arrow == true){
-                if (Selecteditem_pokemon < 2 && backpack_pokemons[Selecteditem_pokemon+1]->name != "Empty") {
+                if (Selecteditem_pokemon < 2 && backpack_pokemons[Selecteditem_pokemon+1]) {
                     Selecteditem_pokemon++;
                 }
                 arrow = false;
@@ -519,3 +525,29 @@ BackpackMap::BackpackMap() {
     int BackpackMap::getPresseditem() {
         return Selecteditem;
     }
+
+    void BackpackMap::switchPokemon(sf::RenderWindow &window, sf::Event &event, sf::View &view, Trainer &trainer){
+        if (actual_column == 0){
+            if (event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::X&&sw==false){
+                
+                sw = true;
+                swi1 = Selecteditem_pokemon;
+            }
+            if (event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::X&&sw==true&&Selecteditem_pokemon!=swi1){
+                swi2 = Selecteditem_pokemon;
+                       
+                Backpack_Pokemon* tempP = backpack_pokemons[swi1];
+                backpack_pokemons[swi1] = backpack_pokemons[swi2];
+                backpack_pokemons[swi2] = tempP;
+                
+                backpack_pokemons[swi1]->index = swi1;
+                backpack_pokemons[swi2]->index = swi2;
+                       
+                sw = false;
+                swi1 = -1;
+                swi2 = -1;
+            }
+        }
+       
+    }
+

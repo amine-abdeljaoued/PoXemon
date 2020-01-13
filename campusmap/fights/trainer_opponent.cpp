@@ -14,53 +14,53 @@ void Trainer_opponent::speak(sf::RenderWindow &window, sf::View &view, Trainer &
         if (fixed == true){
         this->draw(window);
     }
-    
+
     else{
         if(trainer.facingDirection == "Down"){
             (spriteNpc).setTextureRect(sf::IntRect(sheetPosX,sheetPosY+sheetRectY,sheetRectX,sheetRectY));
             this->draw(window);
             }
-        
+
         if(trainer.facingDirection == "Up"){
             (spriteNpc).setTextureRect(sf::IntRect(sheetPosX,sheetPosY,sheetRectX,sheetRectY));
             this->draw(window);
         }
-        
+
         if(trainer.facingDirection == "Right"){
             (spriteNpc).setTextureRect(sf::IntRect(sheetPosX,sheetPosY+2*sheetRectY,sheetRectX,sheetRectY));
             this->draw(window);
         }
-        
+
         if(trainer.facingDirection == "Left"){
             (spriteNpc).setTextureRect(sf::IntRect(sheetPosX + sheetRectX,sheetPosY+2*sheetRectY,-sheetRectX,sheetRectY));
             this->draw(window);
         }
     }
-      
-    
+
+
     if (speakCounter >= discussion.size()){
         if (trainer.state != "Shopping"){
             if (trainer.state != "Dead") trainer.state = "Stop";
             speakCounter = -1;
-            
+
         }
         else speakCounter = 0;
     }
-    
+
      else{
            if (discussion[speakCounter] == "Fighting"){
-               std::cout<<"here"<<std::endl;
+               //std::cout<<"here"<<std::endl;
                //std::cout<<"ChEKCING1"<<(*(bag.backpack_pokemons[0])).name<<std::endl;
                trainer.fight_mode = 't';
                trainer.state = "Fighting";
-               std::cout<<"1 yes"<<std::endl;
+               //std::cout<<"1 yes"<<std::endl;
                trainer.opponent_bag = &bag;
-               std::cout<<"2 yes"<<std::endl;
-               std::cout<<"checking1"<<(*(trainer.opponent_bag)).masternow<<std::endl;
-               std::cout<<"ChEKCING2"<<(*((*(trainer.opponent_bag)).backpack_pokemons[0])).name<<std::endl;
+               //std::cout<<"2 yes"<<std::endl;
+               //std::cout<<"checking1"<<(*(trainer.opponent_bag)).masternow<<std::endl;
+               //std::cout<<"ChEKCING2"<<(*((*(trainer.opponent_bag)).backpack_pokemons[0])).name<<std::endl;
            }
-         
-           
+
+
            else{
                text.setString(discussion[speakCounter]);
                text.setCharacterSize(12);
@@ -93,5 +93,3 @@ void Trainer_opponent::speak(sf::RenderWindow &window, sf::View &view, Trainer &
     }
     
 }
-
-        
