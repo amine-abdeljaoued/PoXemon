@@ -23,8 +23,8 @@ class Shop
         
     private:
         sf::Font font;
-        sf::Text item[7];
-        sf::Text price_column[7];
+        sf::Text item[5];
+        sf::Text price_column[5];
         sf::FloatRect getViewBounds(const sf::View &view);
         int Selecteditem;
         void draw_shop(sf::RenderWindow &window, sf::View &view, sf::Event &event);
@@ -34,6 +34,7 @@ class Shop
         bool arrow;
         bool release;
 };
+
 
 
 

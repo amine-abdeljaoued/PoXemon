@@ -38,8 +38,6 @@ class Box {
         void Moveright(sf::Event &event);
     
         void switchPoke(BackpackMap &backpack, sf::Event &event);
-
-        bool addPokemon(Backpack_Pokemon poke, BackpackMap &backpack);
     
         sf::Sprite background_screen;
     
@@ -82,6 +80,8 @@ class Box {
         int swi2;
         int selectedPokemon_1;
         int selectedPokemon_2;
+    
+        bool addPokemon(Backpack_Pokemon poke, BackpackMap &backpack);
         
     private:
         sf::Texture background;

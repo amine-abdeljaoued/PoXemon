@@ -5,14 +5,12 @@ Shop::Shop(){
     arrow = true;
     
     //All the items that can be purchased
-    item_list = {"Normalball","Superball", "Masterball", "Incubator", "Starpowder", "SmallHealthPotion", "BigHealthPotion"};
+    item_list = {"Normalball","Superball", "Masterball", "SmallHealthPotion", "BigHealthPotion"};
     
     //Prices
     price["Normalball"] = 10;
     price["Superball"] = 20;
     price["Masterball"] = 50;
-    price["Incubator"] = 100;
-    price["Starpowder"] = 30;
     price["SmallHealthPotion"] = 40;
     price["BigHealthPotion"] = 70;
     
@@ -78,7 +76,7 @@ void Shop::Moveup(sf::Event &event) {
 
 void Shop::Movedown(sf::Event &event) {
     if (event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::Down&&arrow == true){
-        if (Selecteditem + 1 <= 6) {
+        if (Selecteditem + 1 <= 4) {
             item[Selecteditem].setFillColor(sf::Color::Black);
             Selecteditem++;
             item[Selecteditem].setFillColor(sf::Color::Red);
@@ -98,7 +96,7 @@ void Shop::draw_shop(sf::RenderWindow &window, sf::View &view, sf::Event &event)
     
     sf::FloatRect viewBounds = getViewBounds(view);
     
-    for (int i=0; i < 7; i++){
+    for (int i=0; i < 5; i++){
         item[i].setCharacterSize(10);
         item[i].setFillColor(sf::Color::Black);
         item[i].setFont(font);
@@ -108,7 +106,7 @@ void Shop::draw_shop(sf::RenderWindow &window, sf::View &view, sf::Event &event)
     
     item[Selecteditem].setFillColor(sf::Color::Red);
     
-    for (int i=0; i < 7; i++){
+    for (int i=0; i < 5; i++){
         price_column[i].setCharacterSize(10);
         price_column[i].setFillColor(sf::Color::Black);
         price_column[i].setFont(font);
@@ -118,7 +116,7 @@ void Shop::draw_shop(sf::RenderWindow &window, sf::View &view, sf::Event &event)
     
     price_column[Selecteditem].setFillColor(sf::Color::Red);
     
-    sf::RectangleShape rect(sf::Vector2f(viewBounds.width/2, viewBounds.height/3));
+    sf::RectangleShape rect(sf::Vector2f(viewBounds.width/2, viewBounds.height/2));
     rect.setFillColor(sf::Color::White);
     rect.setOutlineThickness(2);
     rect.setOutlineColor(sf::Color::Black);
@@ -126,7 +124,7 @@ void Shop::draw_shop(sf::RenderWindow &window, sf::View &view, sf::Event &event)
     
     window.draw(rect);
     
-    for(int i=0; i < 7; i++){
+    for(int i=0; i < 5; i++){
         window.draw(item[i]);
         window.draw(price_column[i]);
     }
@@ -167,4 +165,5 @@ void Shop::draw(sf::RenderWindow &window, sf::View &view, sf::Event &event, Trai
         draw_money(window, view, event, trainer, backpack);
     }
 }
+
 
