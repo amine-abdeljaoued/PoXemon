@@ -9,6 +9,13 @@ The first one is working on the map and the character.
 The second on Pokemons, the main menu and in-game features.
 And the third one on fights to which we'd like to add more dynamism.
 
+## How to run the game:
+
+- Download SFML for Linux
+- run the makefile in the folder campusmap by writing "make game"
+- type "./game"
+- There is one bug that we are currently fixing: after each fight, it is possible that you have to wait around 10-20 seconds before being able to move again. Moreover, using the bicycle may create some errors by shifting the collision map, even though it is quite rare.
+
 ## How to play:
 
 - To move around, use the arrows of your keyboard to walk normally, and press SHIFT to use the bycicle in order to go faster.
@@ -40,4 +47,4 @@ And the third one on fights to which we'd like to add more dynamism.
 Fonts: https://www.dafont.com/fr/search.php?q=Pokemon
 Tileset for the map: https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/
 C++ Library: https://www.sfml-dev.org/index.php
-Music: Youtube
+Music: https://downloads.khinsider.com
