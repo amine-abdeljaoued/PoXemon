@@ -136,7 +136,7 @@ Map::Map(sf::RenderWindow &window, int poke_name)
     dialogueS.push_back("Welcome to our store!");
     dialogueS.push_back("What would you like to buy?");
     dialogueS.push_back("Shopping");
-    Npc* seller = new  Npc("seller","Sprites/NPC1.png",497,1026,-32,32,1.f,136,96,dialogueS, seller);
+    Npc* seller = new  Npc("seller","Sprites/NPC1.png",497,1026,-32,32,1.f,136,96,dialogueS, true);
     npcs_pokeShop.push_back(seller) ;
     npcs.insert(pair< string, vector<Npc*> >("pokeShop", npcs_pokeShop));
 
@@ -468,20 +468,7 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
         //Exiting Shop and Center
         if (event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::W&&((map_name == "pokeShop"&&trainer.state == "Shopping")||(trainer.state == "Healing"&&map_name == "pokeCenter"))){
             if(trainer.state == "Healing"&&map_name == "pokeCenter"){
-                if (center.counter == 1){
-                    center.counter = 0;
-                    center.sw = false;
-                    center.swi1 = -1;
-                    center.swi2 = -1;
-                    center.Selecteditem = 0;
-                }
-                else{
-                    center.counter = 0;
-                    center.sw = false;
-                    center.swi1 = -1;
-                    center.swi2 = -1;
-                    trainer.state = "Stop";
-                }
+		trainer.state = "Stop";
             }
             else if(trainer.state == "Shopping"&&map_name == "pokeShop"){
                 trainer.state = "Stop";
@@ -588,12 +575,12 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
         }
 
         //Box
-         if (event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::X && center.Selecteditem == 2 && trainer.state == "Healing") {
+         if (event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::X && center.Selecteditem == 1 && trainer.state == "Healing") {
             trainer.state = "Box";
             view.setSize(sf::Vector2f(544.f, 544.f));
             view.zoom(0.5f);
         }
-        if(event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::W && center.Selecteditem == 2 && trainer.state == "Box") {
+        if(event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::W && center.Selecteditem == 1 && trainer.state == "Box") {
             trainer.state = "Healing";
             box.selectedPokemon_right = 0;
             box.selectedPokemon_left = 0;
