@@ -27,6 +27,9 @@ The other teams were also working on their side and we had a meeting with the fi
 Then they told us that what they had was ready. As the responsible of the git repository, I linked their work with ours. I first thought a lot on paper on the best way to do it. Then I did it. As the Git master, I also had to fix the problem of the team sometimes regarding branches, wrong manipulations…
 Finally after having linked the work, I implemented a subclass of NPCs for opponent trainers with whom we could fight. With Benjamin, I put some where needed for the scenario.
 
+This project was a wonderful experience. I can say that it's the first time that I was involved in a long-term project in which I worked a lot regularly. The progress we made were truly satisfying along the way, and I had the chance to be with an awesome team.
+I believe that now I know what's necessary to make a good CS project, both in pure coding and structural/ team work aspects.
+
 
 ### Arthur Collette (Map Team, Map manager):
 
