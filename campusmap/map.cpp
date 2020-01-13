@@ -409,10 +409,6 @@ void Map::end(sf::RenderWindow &window, Trainer &trainer){
 
 void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Event &event, sf::Clock& clock, sf::View &view){
 
-    cout << box.box_pokemons[5] << endl;
-    cout <<( box.box_pokemons[3] == NULL) << endl;
-    cout <<( box.box_pokemons[9] == NULL) << endl;
-
     sf::Vector2f position = trainer.spritePlayer.getPosition();
     int x = position.x + 16;
     int y = position.y + 16;
@@ -580,14 +576,18 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
         }
 
         //Box
-        if (event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::X && center.Selecteditem == 2 && trainer.state == "Healing") {
+         if (event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::X && center.Selecteditem == 2 && trainer.state == "Healing") {
             trainer.state = "Box";
+            view.setSize(sf::Vector2f(544.f, 544.f));
+            view.zoom(0.5f);
         }
         if(event.type == sf::Event::KeyPressed&&event.key.code == sf::Keyboard::W && center.Selecteditem == 2 && trainer.state == "Box") {
             trainer.state = "Healing";
             box.selectedPokemon_right = 0;
             box.selectedPokemon_left = 0;
             box.actual_column = 0;
+            view.setSize(sf::Vector2f(544.f, 272.f));
+            view.zoom(0.6f);
         }
 
         //Walking
@@ -622,7 +622,7 @@ void Map::trainerDisplacement(sf::RenderWindow &window, Trainer &trainer, sf::Ev
             mt19937 gen(rd());
             uniform_real_distribution<> dis(0.0, 1.0);
             float probagenerated = dis(gen);
-                if (probagenerated<0.02) {
+                if (probagenerated<0.01) {
                     fight = true;
                     std::cout<<"POKEEEEMMMOONNN"<<std::endl;
                     trainer.fight_mode = 'w'; //Which means single pokemon in grass
@@ -735,9 +735,6 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
 
     if (map_name == "first" || map_name == "fourth" || map_name == "third" || map_name == "home" || map_name == "maze" || map_name == "bossfinal") fillTree(window);
 
-
-    /* trainer.displacement(event, view); */
-
     sf::Vector2f pos =trainer.getPos();
     if (map_name== "first"){
         if (catched == true){
@@ -754,7 +751,6 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
             collision_.insert(pair<string, const int*>("second", collision2_passed));
         }
         window.draw(background2_1);
-//        window.draw(background2_2);
     }
 
     else if (map_name== "third"){
@@ -933,7 +929,6 @@ void Map::draw(sf::RenderWindow &window,sf::View &view, Trainer &trainer, sf::Cl
     illuShop(window);
     illuTunnelR(window);
     illuTunnelL(window);
-    illuGrandhall(window);
     illuBat80(window);
 
 
@@ -1291,7 +1286,7 @@ void Map::fish(sf::RenderWindow &window, sf::View &view, Trainer &trainer){
         mt19937 gen(rd());
         uniform_real_distribution<> dis(0.0, 1.0);
         float probagenerated = dis(gen);
-        if (probagenerated<0.005){
+        if (probagenerated<0.02){
             trainer.text.setString("A wild Pokemon was caught!");
 //            trainer.state = "Fighting";
 //            trainer.fight_mode = "w";
@@ -1305,10 +1300,10 @@ void Map::fish(sf::RenderWindow &window, sf::View &view, Trainer &trainer){
 
         trainer.bubble.setPointCount(8);
         trainer.bubble.setPoint(0, sf::Vector2f(float(viewBounds.left + 30), float(viewBounds.top + viewBounds.height - 60)));
-        trainer.bubble.setPoint(1, sf::Vector2f(float(viewBounds.left + viewBounds.height - 30), float(viewBounds.top + viewBounds.height - 60)));
-        trainer.bubble.setPoint(2, sf::Vector2f(float(viewBounds.left + viewBounds.height - 10), float(viewBounds.top + viewBounds.height - 45)));
-        trainer.bubble.setPoint(3, sf::Vector2f(float(viewBounds.left + viewBounds.height - 10), float(viewBounds.top + viewBounds.height - 25)));
-        trainer.bubble.setPoint(4, sf::Vector2f(float(viewBounds.left + viewBounds.height - 30), float(viewBounds.top + viewBounds.height - 10)));
+        trainer.bubble.setPoint(1, sf::Vector2f(float(viewBounds.left + viewBounds.width - 30), float(viewBounds.top + viewBounds.height - 60)));
+        trainer.bubble.setPoint(2, sf::Vector2f(float(viewBounds.left + viewBounds.width - 10), float(viewBounds.top + viewBounds.height - 45)));
+        trainer.bubble.setPoint(3, sf::Vector2f(float(viewBounds.left + viewBounds.width - 10), float(viewBounds.top + viewBounds.height - 25)));
+        trainer.bubble.setPoint(4, sf::Vector2f(float(viewBounds.left + viewBounds.width - 30), float(viewBounds.top + viewBounds.height - 10)));
         trainer.bubble.setPoint(5, sf::Vector2f(float(viewBounds.left + 30), float(viewBounds.top + viewBounds.height - 10)));
         trainer.bubble.setPoint(6, sf::Vector2f(float(viewBounds.left + 10), float(viewBounds.top + viewBounds.height - 25)));
         trainer.bubble.setPoint(7, sf::Vector2f(float(viewBounds.left + 10), float(viewBounds.top + viewBounds.height - 45)));
