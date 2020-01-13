@@ -326,7 +326,7 @@ Map::Map(sf::RenderWindow &window)
     //Spawning position
     map_list = {"first","second","third","fourth","pokeShop","pokeCenter","home","maze","interior_80","room_clement","bossfinal", "hall"};
     //first map
-    spawn_dict.insert(pair< string, vector<vector<int> >>("first",{{264, 256},{8, 192},{184, 160}}));
+    spawn_dict.insert(pair< string, vector<vector<int> >>("first",{{264, 256},{8, 192},{184, 160},{280,528}));
     //underground
     spawn_dict.insert(pair< string, vector<vector<int> >>("second",{{488, 480},{520,16}}));
     //Sport
