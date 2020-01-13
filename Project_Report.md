@@ -30,6 +30,20 @@ Finally after having linked the work, I implemented a subclass of NPCs for oppon
 
 ### Arthur Collette (Map Team, Map manager):
 
+This group project was overall a very challenging experience, but it thought me a lot personally. I really enjoyed last year’s project in CSE104 in HTML, but I found it a bit naïve and we were quickly limited by the amount of time allowed and the number of people per group. During these 7 weeks, I learned the basics of video game programming, something that I would like to pursue in my studies later on. 
+
+Right from the beginning, I decided to join the map team with Benjamin and Amine. We first spent the first week learning about SFML and the different possibilities that it offers. We quickly created the first draft of a map and a moving character on it. We used Pokémon sprites in order to give a nice visual aspect to the game and save time for ourselves. 
+I implemented the algorithm to create the map out of a tileset of sprites of 16 by 16 pixels, based on an algorithm found on the official SFML website. After this, I worked on the trainer movement’s and its visual appearance. For the trainer, we used different states like “Walking” or “Speaking” that could be switched from one to the other by the input of the player.
+After this, I worked with Amine on the dialogues of the Npcs and their speaking states. Using this class, I created a Shop and a pokeCenter with a seller and a doctor in them. These buildings are at the heart of the Pokemon games mechanics, it allows the player to buy vital consumables such as Pokeballs and to heal the Pokémon in the backpack. 
+
+After this, I started implementing “Easter eggs” such as fishing, dying when opening the fridge, throwing a rock on a building’s window… I created illusions when entering the buildings, opening the doors of the shop and the center. The map started to look more “alive” with moving flowers and a lot of Npcs.
+
+Finally, I implemented with the help of clement the backpack and a box system to store the Pokémon after catching them. 
+
+I realized after the winter holidays that I was committing on GitHub with a false account so most of my commits do not appear online.
+
+           To put in a nutshell, this project taught me how to work in such a big group in order to create a small video game. The atmosphere in the group was great even with all the frustration and hours of work. 
+           
 ### Maxence Dulac (PoXemon Team, PoXemon Manager):
 
 During this project I was part of the "PoXemon team" and throughout the duration I worked the most with Julien Luzzatto and we cooperated with the other teams of the project.
