@@ -26,6 +26,9 @@ And the third one on fights to which we'd like to add more dynamism.
     - use arrows to move around the objects
     - press X to buy objects
     - to close the shop press W
+- During the intro:
+    - press Enter to go forward
+    - press the arrows when having to make a choice
 - During a fight:
     - move your Pokemon using W,A,S,D or the arrows on your keyboard
     - press 1 to use your special attack
